@@ -8,369 +8,499 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0d1117; --surface: #161b22; --surface-hover: #1c2333;
-  --border: #30363d; --border-accent: #484f58;
-  --text: #e6edf3; --text-muted: #8b949e; --text-dim: #6e7681;
-  --accent: #58a6ff; --accent-dim: rgba(88,166,255,0.12);
-  --green: #3fb950; --green-dim: rgba(63,185,80,0.12);
-  --yellow: #d29922; --yellow-dim: rgba(210,153,34,0.12);
-  --red: #f85149; --red-dim: rgba(248,81,73,0.12);
-  --purple: #bc8cff; --purple-dim: rgba(188,140,255,0.12);
-  --orange: #f0883e; --orange-dim: rgba(240,136,62,0.12);
+  --bg: #0c0c0f;
+  --surface: #14141a;
+  --surface-hover: #1c1c24;
+  --border: #2a2a36;
+  --border-accent: #3d3d50;
+  --text: #e8e6e3;
+  --text-muted: #8a8a9a;
+  --text-dim: #5a5a6a;
+  --accent: #c4a35a;
+  --accent-dim: rgba(196, 163, 90, 0.15);
+  --green: #5cb270;
+  --green-dim: rgba(92, 178, 112, 0.12);
+  --red: #d45454;
+  --red-dim: rgba(212, 84, 84, 0.12);
+  --yellow: #d4a754;
+  --yellow-dim: rgba(212, 167, 84, 0.12);
+  --blue: #5a8fd4;
+  --blue-dim: rgba(90, 143, 212, 0.12);
   --mono: 'DM Mono', monospace;
   --serif: 'Instrument Serif', serif;
-  --sans: 'Manrope', -apple-system, sans-serif;
+  --sans: 'Manrope', sans-serif;
 }
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; }
 body {
   background: var(--bg); color: var(--text); font-family: var(--sans);
-  font-size: 14px; line-height: 1.5; min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
+  line-height: 1.7; min-height: 100vh; -webkit-font-smoothing: antialiased;
 }
 ::selection { background: var(--accent-dim); color: var(--accent); }
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
-.grain {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  pointer-events: none; opacity: 0.03; z-index: 9999;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+body::after {
+  content: ''; position: fixed; inset: 0; z-index: 9999;
+  pointer-events: none; opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
 
-/* Header */
-.header {
-  background: linear-gradient(180deg, rgba(88,166,255,0.04) 0%, var(--bg) 100%);
-  border-bottom: 1px solid var(--border); padding: 48px 32px 32px; text-align: center;
+/* ─── Layout ──────────────────────────────────────────────────────── */
+.app { display: flex; min-height: 100vh; }
+
+nav {
+  position: fixed; left: 0; top: 0; bottom: 0; width: 280px;
+  background: var(--surface); border-right: 1px solid var(--border);
+  padding: 40px 0; overflow-y: auto; z-index: 100;
 }
-.header h1 {
-  font-family: var(--serif); font-size: 2.8rem; font-weight: 400;
-  letter-spacing: -0.02em; color: var(--accent); font-style: italic; margin-bottom: 8px;
+nav .nav-title {
+  font-family: var(--serif); font-style: italic; font-size: 1.4rem;
+  color: var(--accent); padding: 0 24px; margin-bottom: 8px;
 }
-.header .subtitle {
-  font-family: var(--mono); font-size: 0.8rem; color: var(--text-muted);
-  letter-spacing: 0.08em; text-transform: uppercase;
+nav .nav-sub {
+  font-family: var(--mono); font-size: 0.65rem; color: var(--text-dim);
+  text-transform: uppercase; letter-spacing: 0.08em; padding: 0 24px; margin-bottom: 24px;
+}
+nav .nav-search {
+  padding: 0 16px; margin-bottom: 20px;
+}
+nav .nav-search input {
+  width: 100%; background: var(--bg); color: var(--text); border: 1px solid var(--border);
+  border-radius: 4px; padding: 6px 10px; font-family: var(--mono); font-size: 0.7rem; outline: none;
+}
+nav .nav-search input:focus { border-color: var(--accent); }
+nav .nav-search input::placeholder { color: var(--text-dim); }
+nav .nav-section {
+  font-family: var(--mono); font-size: 0.55rem; color: var(--text-dim);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  padding: 20px 16px 6px; margin-top: 4px; border-top: 1px solid var(--border);
+}
+nav .nav-section:first-of-type { border-top: none; margin-top: 0; }
+nav a.nav-link {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 16px 5px 28px; font-family: var(--mono); font-size: 0.7rem;
+  color: var(--text-muted); text-decoration: none; transition: all 0.2s;
+  border-left: 2px solid transparent;
+}
+nav a.nav-link:hover { color: var(--text); background: var(--surface-hover); text-decoration: none; }
+nav .nav-dot {
+  display: inline-block; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+}
+nav .nav-dot-green { background: var(--green); }
+nav .nav-dot-blue { background: var(--blue); }
+nav .nav-dot-yellow { background: var(--yellow); }
+nav .nav-dot-dim { background: var(--text-dim); }
+nav .nav-filters {
+  padding: 0 16px; margin-bottom: 16px; display: flex; gap: 6px;
+}
+nav .filter-btn {
+  font-family: var(--mono); font-size: 0.55rem; text-transform: uppercase;
+  letter-spacing: 0.04em; padding: 3px 8px; border-radius: 3px;
+  background: transparent; color: var(--text-dim); border: 1px solid var(--border);
+  cursor: pointer; transition: all 0.2s;
+}
+nav .filter-btn:hover { border-color: var(--text-muted); color: var(--text-muted); }
+nav .filter-btn.active { color: var(--accent); border-color: var(--accent); background: var(--accent-dim); }
+
+main {
+  margin-left: 280px; flex: 1; padding: 40px 48px 80px; max-width: 1100px;
 }
 
-/* Stats bar */
-.stats {
-  display: flex; justify-content: center; gap: 32px; padding: 20px 32px;
-  border-bottom: 1px solid var(--border); flex-wrap: wrap;
+/* ─── Header ──────────────────────────────────────────────────────── */
+.page-header { padding-bottom: 48px; margin-bottom: 48px; border-bottom: 1px solid var(--border); }
+.page-header h1 {
+  font-family: var(--serif); font-style: italic; font-size: 3.2rem;
+  font-weight: 400; color: var(--text); margin-bottom: 4px;
 }
-.stat {
-  display: flex; flex-direction: column; align-items: center; gap: 2px;
+.page-header h1 span { color: var(--accent); }
+.title-rule {
+  width: 80px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  margin: 16px 0;
 }
-.stat-value { font-size: 1.6rem; font-weight: 700; font-family: var(--mono); }
-.stat-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.page-header p { color: var(--text-muted); font-size: 0.95rem; }
 
-/* Filters */
-.filters {
-  padding: 14px 32px; border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+/* ─── Stats Bar ───────────────────────────────────────────────────── */
+.stats-bar {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1px; background: var(--border); border: 1px solid var(--border);
+  border-radius: 8px; overflow: hidden; margin-bottom: 48px;
 }
-.filter-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-select, .search-input {
-  background: var(--bg); color: var(--text); border: 1px solid var(--border);
-  border-radius: 6px; padding: 5px 10px; font-size: 13px; font-family: inherit; outline: none;
+.stat-card { background: var(--surface); padding: 20px 24px; text-align: center; }
+.stat-card .stat-value { font-family: var(--serif); font-size: 2rem; color: var(--text); }
+.stat-card .stat-label {
+  font-family: var(--mono); font-size: 0.6rem; color: var(--text-dim);
+  text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px;
 }
-select:focus, .search-input:focus { border-color: var(--accent); }
-.search-input { flex: 1; min-width: 180px; }
-.search-input::placeholder { color: var(--text-muted); }
+.stat-card.accent .stat-value { color: var(--accent); }
+.stat-card.green .stat-value { color: var(--green); }
+.stat-card.blue .stat-value { color: var(--blue); }
+.stat-card.yellow .stat-value { color: var(--yellow); }
 
-/* Category sections */
-.content { max-width: 1100px; margin: 0 auto; padding: 24px 32px; }
-.category { margin-bottom: 32px; }
-.category-header {
-  font-family: var(--serif); font-size: 1.5rem; font-weight: 400;
-  color: var(--text); margin-bottom: 12px; padding-bottom: 8px;
-  border-bottom: 1px solid var(--border);
+/* ─── Section Headers ─────────────────────────────────────────────── */
+.section { margin-bottom: 48px; }
+.section-header {
+  display: flex; align-items: baseline; gap: 12px; margin-bottom: 20px;
+  padding-bottom: 12px; border-bottom: 1px solid var(--border);
 }
-.category-header .count {
-  font-family: var(--mono); font-size: 0.8rem; color: var(--text-muted); margin-left: 8px;
-}
+.section-header h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 400; }
+.section-header .count { font-family: var(--mono); font-size: 0.7rem; color: var(--text-dim); }
 
-/* Project cards */
-.card-grid { display: flex; flex-direction: column; gap: 8px; }
-.card {
+/* ─── Project Cards ───────────────────────────────────────────────── */
+.project-grid { display: flex; flex-direction: column; gap: 10px; }
+.project-card {
   background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
-  padding: 14px 16px; transition: border-color 0.15s; border-left: 3px solid var(--border);
-  display: block; text-decoration: none !important; color: var(--text);
+  padding: 16px 20px; transition: all 0.25s; cursor: pointer; display: block;
+  text-decoration: none !important; color: var(--text); position: relative;
 }
-.card:hover { border-color: var(--text-muted); background: var(--surface-hover); }
-.card-top { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
-.card-name { font-size: 15px; font-weight: 600; color: var(--accent); }
-.card-summary { font-size: 13px; color: var(--text-muted); line-height: 1.4; }
-.card-meta { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.project-card:hover { border-color: var(--border-accent); background: var(--surface-hover); text-decoration: none !important; }
 
-.tag {
-  font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 10px;
-  letter-spacing: 0.3px; display: inline-block;
+.card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.project-card h3 { font-family: var(--sans); font-weight: 600; font-size: 1rem; color: var(--text); }
+
+.status-badge {
+  font-family: var(--mono); font-size: 0.6rem; text-transform: uppercase;
+  letter-spacing: 0.06em; padding: 3px 8px; border-radius: 3px; border: 1px solid;
 }
-.tag-swift { background: var(--orange-dim); color: var(--orange); }
-.tag-typescript { background: var(--accent-dim); color: var(--accent); }
-.tag-python { background: var(--green-dim); color: var(--green); }
-.tag-kotlin { background: var(--purple-dim); color: var(--purple); }
-.tag-html { background: var(--red-dim); color: var(--red); }
-.tag-markdown { background: var(--yellow-dim); color: var(--yellow); }
-.tag-bash { background: rgba(139,148,158,0.15); color: var(--text-muted); }
-.tag-mixed { background: rgba(139,148,158,0.15); color: var(--text-muted); }
+.status-badge.active { color: var(--green); border-color: var(--green); background: var(--green-dim); }
+.status-badge.stable { color: var(--blue); border-color: var(--blue); background: var(--blue-dim); }
+.status-badge.planning { color: var(--yellow); border-color: var(--yellow); background: var(--yellow-dim); }
+.status-badge.empty { color: var(--text-dim); border-color: var(--border-accent); background: var(--surface-hover); }
 
-.badge {
-  font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 10px;
-  text-transform: uppercase; letter-spacing: 0.3px;
-}
-.badge-active { background: var(--green-dim); color: var(--green); }
-.badge-stable { background: var(--accent-dim); color: var(--accent); }
-.badge-planning { background: var(--yellow-dim); color: var(--yellow); }
-.badge-empty { background: rgba(139,148,158,0.15); color: var(--text-muted); }
-
-.card.status-active { border-left-color: var(--green); }
-.card.status-stable { border-left-color: var(--accent); }
-.card.status-planning { border-left-color: var(--yellow); }
-.card.status-empty { border-left-color: var(--text-dim); }
-
-/* Footer */
-.footer {
-  border-top: 1px solid var(--border); padding: 16px 32px; text-align: center;
-  font-size: 12px; color: var(--text-dim); font-family: var(--mono);
+.tagline { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px; }
+.tech-stack { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.tech-tag {
+  font-family: var(--mono); font-size: 0.6rem; color: var(--text-muted);
+  background: var(--bg); padding: 2px 8px; border-radius: 3px; border: 1px solid var(--border);
 }
 
-@media (max-width: 640px) {
-  .header { padding: 32px 16px 24px; }
-  .header h1 { font-size: 2rem; }
-  .stats { gap: 16px; padding: 16px; }
-  .filters { padding: 12px 16px; }
-  .content { padding: 16px; }
+.card-org {
+  font-family: var(--mono); font-size: 0.55rem; color: var(--text-dim);
+  text-transform: uppercase; letter-spacing: 0.04em; margin-top: 8px;
+}
+
+/* ─── Mobile ──────────────────────────────────────────────────────── */
+@media (max-width: 800px) {
+  nav { display: none; }
+  main { margin-left: 0; padding: 24px 16px 60px; }
+  .page-header h1 { font-size: 2.2rem; }
+  .stats-bar { grid-template-columns: repeat(2, 1fr); }
 }
 </style>
 </head>
 <body>
-<div class="grain"></div>
+<div class="app">
 
-<div class="header">
-  <h1>My Projects</h1>
-  <div class="subtitle">Comprehensive overview of all active projects</div>
-</div>
-
-<div class="stats">
-  <div class="stat"><div class="stat-value">25</div><div class="stat-label">Projects</div></div>
-  <div class="stat"><div class="stat-value" style="color:var(--green)">12</div><div class="stat-label">Active</div></div>
-  <div class="stat"><div class="stat-value" style="color:var(--accent)">8</div><div class="stat-label">Stable</div></div>
-  <div class="stat"><div class="stat-value" style="color:var(--yellow)">3</div><div class="stat-label">Planning</div></div>
-  <div class="stat"><div class="stat-value" style="color:var(--text-dim)">2</div><div class="stat-label">Empty</div></div>
-</div>
-
-<div class="filters">
-  <span class="filter-label">Filter</span>
-  <select id="orgFilter" onchange="filterCards()">
-    <option value="">All Orgs</option>
-    <option value="mikefullerton">mikefullerton</option>
-    <option value="agentic-cookbook">agentic-cookbook</option>
-    <option value="temporal-company">temporal-company</option>
-  </select>
-  <select id="statusFilter" onchange="filterCards()">
-    <option value="">All Status</option>
-    <option value="active">Active</option>
-    <option value="stable">Stable</option>
-    <option value="planning">Planning</option>
-    <option value="empty">Empty</option>
-  </select>
-  <input type="text" class="search-input" id="search" placeholder="Search projects..." oninput="filterCards()">
-</div>
-
-<div class="content">
-
-<!-- macOS Native Apps -->
-<div class="category" data-category="macos">
-  <div class="category-header">macOS Native Apps <span class="count">4</span></div>
-  <div class="card-grid">
-    <a href="projects/Hairball.html" class="card status-active" data-org="mikefullerton" data-status="active" data-search="hairball menu bar window task context swift swiftui appkit">
-      <div class="card-top"><span class="card-name">Hairball</span><span class="badge badge-active">Active</span></div>
-      <div class="card-summary">Menu bar app for window-level task context management</div>
-      <div class="card-meta"><span class="tag tag-swift">Swift</span><span class="tag tag-swift">SwiftUI/AppKit</span></div>
-    </a>
-    <a href="projects/scratching-post.html" class="card status-stable" data-org="mikefullerton" data-status="stable" data-search="scratching post catnip ide document terminal notes file browser swift swiftui appkit">
-      <div class="card-top"><span class="card-name">Scratching Post</span><span class="badge badge-stable">Stable</span></div>
-      <div class="card-summary">Catnip IDE — document-based multi-window IDE with terminal, notes, file browser, AI summarization</div>
-      <div class="card-meta"><span class="tag tag-swift">Swift</span><span class="tag tag-swift">SwiftUI/AppKit</span><span class="tag tag-swift">SQLite</span></div>
-    </a>
-    <a href="projects/catnip-terminal.html" class="card status-stable" data-org="mikefullerton" data-status="stable" data-search="catnip terminal emulator ai session summarization swift swiftui appkit">
-      <div class="card-top"><span class="card-name">Catnip Terminal</span><span class="badge badge-stable">Stable</span></div>
-      <div class="card-summary">Terminal emulator with AI-powered session summarization</div>
-      <div class="card-meta"><span class="tag tag-swift">Swift</span><span class="tag tag-swift">SwiftTerm</span></div>
-    </a>
-    <a href="projects/Whippet.html" class="card status-active" data-org="mikefullerton" data-status="active" data-search="whippet menu bar claude code session monitor swift appkit">
-      <div class="card-top"><span class="card-name">Whippet</span><span class="badge badge-active">Active</span></div>
-      <div class="card-summary">Menu bar utility monitoring Claude Code sessions</div>
-      <div class="card-meta"><span class="tag tag-swift">Swift</span><span class="tag tag-swift">AppKit/SwiftUI</span><span class="tag tag-swift">SQLite</span></div>
-    </a>
+<nav>
+  <div class="nav-title">Projects</div>
+  <div class="nav-sub">25 projects &middot; 3 organizations</div>
+  <div class="nav-search"><input type="text" id="navSearch" placeholder="Search..." oninput="filterAll()"></div>
+  <div class="nav-filters">
+    <button class="filter-btn active" data-filter="" onclick="setFilter(this)">All</button>
+    <button class="filter-btn" data-filter="active" onclick="setFilter(this)">Active</button>
+    <button class="filter-btn" data-filter="stable" onclick="setFilter(this)">Stable</button>
+    <button class="filter-btn" data-filter="planning" onclick="setFilter(this)">Plan</button>
   </div>
-</div>
 
-<!-- Cross-Platform -->
-<div class="category" data-category="cross-platform">
-  <div class="category-header">Cross-Platform Apps <span class="count">2</span></div>
-  <div class="card-grid">
-    <a href="projects/temporal.html" class="card status-active" data-org="temporal-company" data-status="active" data-search="temporal cross platform ai assistant community forum gamification kotlin swift react">
-      <div class="card-top"><span class="card-name">Temporal</span><span class="badge badge-active">Active</span></div>
-      <div class="card-summary">Cross-platform AI assistant with community forum, gamification, real-time messaging</div>
-      <div class="card-meta"><span class="tag tag-kotlin">Kotlin MP</span><span class="tag tag-swift">SwiftUI</span><span class="tag tag-typescript">React</span><span class="tag tag-kotlin">Ktor</span></div>
-    </a>
-    <a href="projects/temporal-platform.html" class="card status-planning" data-org="temporal-company" data-status="planning" data-search="temporal platform spec driven specification framework cross platform">
-      <div class="card-top"><span class="card-name">Temporal Platform</span><span class="badge badge-planning">Planning</span></div>
-      <div class="card-summary">Spec-driven application platform — shares specifications across platforms for native implementations</div>
-      <div class="card-meta"><span class="tag tag-kotlin">Kotlin</span><span class="tag tag-swift">Swift</span><span class="tag tag-typescript">TypeScript</span></div>
-    </a>
+  <div class="nav-section">macOS Native Apps</div>
+  <a class="nav-link" href="#Hairball" data-status="active"><span class="nav-dot nav-dot-green"></span>Hairball</a>
+  <a class="nav-link" href="#scratching-post" data-status="stable"><span class="nav-dot nav-dot-blue"></span>Scratching Post</a>
+  <a class="nav-link" href="#catnip-terminal" data-status="stable"><span class="nav-dot nav-dot-blue"></span>Catnip Terminal</a>
+  <a class="nav-link" href="#Whippet" data-status="active"><span class="nav-dot nav-dot-green"></span>Whippet</a>
+
+  <div class="nav-section">Cross-Platform</div>
+  <a class="nav-link" href="#temporal" data-status="active"><span class="nav-dot nav-dot-green"></span>Temporal</a>
+  <a class="nav-link" href="#temporal-platform" data-status="planning"><span class="nav-dot nav-dot-yellow"></span>Temporal Platform</a>
+
+  <div class="nav-section">Agentic Cookbook</div>
+  <a class="nav-link" href="#cookbook" data-status="active"><span class="nav-dot nav-dot-green"></span>Cookbook</a>
+  <a class="nav-link" href="#cookbook-web" data-status="active"><span class="nav-dot nav-dot-green"></span>Cookbook Web</a>
+  <a class="nav-link" href="#dev-team" data-status="active"><span class="nav-dot nav-dot-green"></span>Dev Team</a>
+  <a class="nav-link" href="#roadmaps" data-status="active"><span class="nav-dot nav-dot-green"></span>Roadmaps</a>
+  <a class="nav-link" href="#tools" data-status="stable"><span class="nav-dot nav-dot-blue"></span>Tools</a>
+  <a class="nav-link" href="#official-agent-registry" data-status="active"><span class="nav-dot nav-dot-green"></span>Agent Registry</a>
+  <a class="nav-link" href="#agentic-auth-service" data-status="stable"><span class="nav-dot nav-dot-blue"></span>Auth Service</a>
+  <a class="nav-link" href="#agentic-kitchen" data-status="empty"><span class="nav-dot nav-dot-dim"></span>Agentic Kitchen</a>
+
+  <div class="nav-section">Web Apps & SaaS</div>
+  <a class="nav-link" href="#learntruefacts" data-status="planning"><span class="nav-dot nav-dot-yellow"></span>Learn True Facts</a>
+  <a class="nav-link" href="#myagenticprojects" data-status="stable"><span class="nav-dot nav-dot-blue"></span>MyAgenticProjects</a>
+  <a class="nav-link" href="#mikefullerton.com" data-status="stable"><span class="nav-dot nav-dot-blue"></span>mikefullerton.com</a>
+
+  <div class="nav-section">Claude Code Tools</div>
+  <a class="nav-link" href="#cat-herding" data-status="active"><span class="nav-dot nav-dot-green"></span>Cat Herding</a>
+  <a class="nav-link" href="#code-review-pipline" data-status="active"><span class="nav-dot nav-dot-green"></span>Code Review Pipeline</a>
+  <a class="nav-link" href="#social-media-bot" data-status="active"><span class="nav-dot nav-dot-green"></span>Social Media Bot</a>
+
+  <div class="nav-section">Fun & Creative</div>
+  <a class="nav-link" href="#name-craft" data-status="planning"><span class="nav-dot nav-dot-yellow"></span>Name-Craft</a>
+  <a class="nav-link" href="#catnip" data-status="stable"><span class="nav-dot nav-dot-blue"></span>Catnip</a>
+
+  <div class="nav-section">Infrastructure</div>
+  <a class="nav-link" href="#mysetup" data-status="stable"><span class="nav-dot nav-dot-blue"></span>MySetup</a>
+  <a class="nav-link" href="#my-projects" data-status="active"><span class="nav-dot nav-dot-green"></span>My Projects</a>
+  <a class="nav-link" href="#myagenticworkspace" data-status="empty"><span class="nav-dot nav-dot-dim"></span>MyAgenticWorkspace</a>
+</nav>
+
+<main>
+  <div class="page-header">
+    <h1><span>Project</span> Overview</h1>
+    <div class="title-rule"></div>
+    <p>Comprehensive documentation of all active projects &mdash; 25 projects across plugins, AI tools, web apps, native apps, and infrastructure.</p>
   </div>
-</div>
 
-<!-- Agentic Cookbook -->
-<div class="category" data-category="agentic-cookbook">
-  <div class="category-header">Agentic Cookbook Ecosystem <span class="count">8</span></div>
-  <div class="card-grid">
-    <a href="projects/cookbook.html" class="card status-active" data-org="agentic-cookbook" data-status="active" data-search="cookbook knowledge base principles guidelines recipes markdown">
-      <div class="card-top"><span class="card-name">Cookbook</span><span class="badge badge-active">Active</span></div>
-      <div class="card-summary">Knowledge base of principles, guidelines, ingredients, recipes for AI-assisted development (196 artifacts)</div>
-      <div class="card-meta"><span class="tag tag-markdown">Markdown</span><span class="tag tag-typescript">Vitest</span></div>
-    </a>
-    <a href="projects/cookbook-web.html" class="card status-active" data-org="agentic-cookbook" data-status="active" data-search="cookbook web website agentic-cookbook.com react cloudflare">
-      <div class="card-top"><span class="card-name">Cookbook Web</span><span class="badge badge-active">Active</span></div>
-      <div class="card-summary">Public website for the Agentic Cookbook at agentic-cookbook.com</div>
-      <div class="card-meta"><span class="tag tag-typescript">React 19</span><span class="tag tag-typescript">TypeScript</span><span class="tag tag-typescript">Cloudflare</span></div>
-    </a>
-    <a href="projects/dev-team.html" class="card status-active" data-org="agentic-cookbook" data-status="active" data-search="dev team multi agent plugin specialists specialty teams python">
-      <div class="card-top"><span class="card-name">Dev Team</span><span class="badge badge-active">Active</span></div>
-      <div class="card-summary">Claude Code plugin — multi-agent platform with 20 specialists and 232 specialty-teams</div>
-      <div class="card-meta"><span class="tag tag-python">Python</span><span class="tag tag-markdown">Markdown</span><span class="tag tag-python">pytest</span></div>
-    </a>
-    <a href="projects/roadmaps.html" class="card status-active" data-org="agentic-cookbook" data-status="active" data-search="roadmaps feature planning implementation system flask sqlite dashboard">
-      <div class="card-top"><span class="card-name">Roadmaps</span><span class="badge badge-active">Active</span></div>
-      <div class="card-summary">Feature planning and implementation system for Claude Code with live dashboards</div>
-      <div class="card-meta"><span class="tag tag-python">Python</span><span class="tag tag-python">Flask</span><span class="tag tag-python">SQLite</span></div>
-    </a>
-    <a href="projects/tools.html" class="card status-stable" data-org="agentic-cookbook" data-status="stable" data-search="tools skills rules guidance agentic cookbook bash">
-      <div class="card-top"><span class="card-name">Tools</span><span class="badge badge-stable">Stable</span></div>
-      <div class="card-summary">20 Claude Code skills and 8 guidance rules for the agentic cookbook ecosystem</div>
-      <div class="card-meta"><span class="tag tag-bash">Bash</span><span class="tag tag-markdown">Markdown</span></div>
-    </a>
-    <a href="projects/official-agent-registry.html" class="card status-active" data-org="agentic-cookbook" data-status="active" data-search="official agent registry dns identity platform react hono postgresql">
-      <div class="card-top"><span class="card-name">Official Agent Registry</span><span class="badge badge-active">Active</span></div>
-      <div class="card-summary">"DNS for AI agents" — identity platform for registering and discovering AI agents</div>
-      <div class="card-meta"><span class="tag tag-typescript">React</span><span class="tag tag-typescript">Hono</span><span class="tag tag-typescript">PostgreSQL</span></div>
-    </a>
-    <a href="projects/agentic-auth-service.html" class="card status-stable" data-org="agentic-cookbook" data-status="stable" data-search="agentic auth service jwt authentication rs256 hono node typescript">
-      <div class="card-top"><span class="card-name">Agentic Auth Service</span><span class="badge badge-stable">Stable</span></div>
-      <div class="card-summary">Shared RS256 JWT authentication microservice</div>
-      <div class="card-meta"><span class="tag tag-typescript">Hono</span><span class="tag tag-typescript">TypeScript</span><span class="tag tag-typescript">Railway</span></div>
-    </a>
-    <a href="projects/agentic-kitchen.html" class="card status-empty" data-org="agentic-cookbook" data-status="empty" data-search="agentic kitchen empty placeholder">
-      <div class="card-top"><span class="card-name">Agentic Kitchen</span><span class="badge badge-empty">Empty</span></div>
-      <div class="card-summary">Empty placeholder repository (freshly initialized)</div>
-      <div class="card-meta"></div>
-    </a>
+  <div class="stats-bar">
+    <div class="stat-card accent"><div class="stat-value">25</div><div class="stat-label">Projects</div></div>
+    <div class="stat-card green"><div class="stat-value">12</div><div class="stat-label">Active</div></div>
+    <div class="stat-card blue"><div class="stat-value">8</div><div class="stat-label">Stable</div></div>
+    <div class="stat-card yellow"><div class="stat-value">3</div><div class="stat-label">Planning</div></div>
+    <div class="stat-card"><div class="stat-value">3</div><div class="stat-label">Organizations</div></div>
   </div>
-</div>
 
-<!-- Web Apps -->
-<div class="category" data-category="web-apps">
-  <div class="category-header">Web Applications & SaaS <span class="count">3</span></div>
-  <div class="card-grid">
-    <a href="projects/learntruefacts.html" class="card status-planning" data-org="agentic-cookbook" data-status="planning" data-search="learntruefacts ai comedian chat react hono cloudflare llm">
-      <div class="card-top"><span class="card-name">Learn True Facts</span><span class="badge badge-planning">Planning</span></div>
-      <div class="card-summary">AI improv comedian chat app (planning complete, pre-implementation)</div>
-      <div class="card-meta"><span class="tag tag-typescript">React 19</span><span class="tag tag-typescript">Hono</span><span class="tag tag-typescript">Cloudflare</span></div>
-    </a>
-    <a href="projects/myagenticprojects.html" class="card status-stable" data-org="agentic-cookbook" data-status="stable" data-search="myagenticprojects saas platform auth feature flags react hono railway cloudflare">
-      <div class="card-top"><span class="card-name">MyAgenticProjects</span><span class="badge badge-stable">Stable</span></div>
-      <div class="card-summary">Full-stack SaaS platform with auth, feature flags, messaging, feedback</div>
-      <div class="card-meta"><span class="tag tag-typescript">React 19</span><span class="tag tag-typescript">Hono</span><span class="tag tag-typescript">Railway</span></div>
-    </a>
-    <a href="projects/mikefullerton.com.html" class="card status-stable" data-org="mikefullerton" data-status="stable" data-search="mikefullerton.com personal portfolio website html css github pages">
-      <div class="card-top"><span class="card-name">mikefullerton.com</span><span class="badge badge-stable">Stable</span></div>
-      <div class="card-summary">Personal portfolio/resume website</div>
-      <div class="card-meta"><span class="tag tag-html">HTML/CSS</span><span class="tag tag-html">GitHub Pages</span></div>
-    </a>
+  <!-- macOS Native Apps -->
+  <div class="section" data-section="macos">
+    <div class="section-header"><h2>macOS Native Apps</h2><span class="count">4</span></div>
+    <div class="project-grid">
+      <a href="projects/Hairball.html" class="project-card" id="Hairball" data-status="active" data-search="hairball menu bar window task context swift swiftui appkit accessibility">
+        <div class="card-top"><h3>Hairball</h3><span class="status-badge active">Active</span></div>
+        <div class="tagline">Menu bar app for window-level task context management using Accessibility APIs</div>
+        <div class="tech-stack"><span class="tech-tag">Swift</span><span class="tech-tag">SwiftUI</span><span class="tech-tag">AppKit</span><span class="tech-tag">Accessibility API</span></div>
+        <div class="card-org">mikefullerton</div>
+      </a>
+      <a href="projects/scratching-post.html" class="project-card" id="scratching-post" data-status="stable" data-search="scratching post catnip ide document terminal notes file browser ai summarization">
+        <div class="card-top"><h3>Scratching Post</h3><span class="status-badge stable">Stable</span></div>
+        <div class="tagline">Catnip IDE &mdash; document-based multi-window IDE with terminal, notes, file browser, AI summarization</div>
+        <div class="tech-stack"><span class="tech-tag">Swift</span><span class="tech-tag">SwiftUI</span><span class="tech-tag">AppKit</span><span class="tech-tag">SQLite</span><span class="tech-tag">SwiftTerm</span></div>
+        <div class="card-org">mikefullerton</div>
+      </a>
+      <a href="projects/catnip-terminal.html" class="project-card" id="catnip-terminal" data-status="stable" data-search="catnip terminal emulator ai session summarization multi provider">
+        <div class="card-top"><h3>Catnip Terminal</h3><span class="status-badge stable">Stable</span></div>
+        <div class="tagline">Terminal emulator with AI-powered session summarization (Claude, OpenAI, Gemini)</div>
+        <div class="tech-stack"><span class="tech-tag">Swift</span><span class="tech-tag">SwiftUI</span><span class="tech-tag">AppKit</span><span class="tech-tag">SwiftTerm</span></div>
+        <div class="card-org">mikefullerton</div>
+      </a>
+      <a href="projects/Whippet.html" class="project-card" id="Whippet" data-status="active" data-search="whippet menu bar claude code session monitor events sqlite">
+        <div class="card-top"><h3>Whippet</h3><span class="status-badge active">Active</span></div>
+        <div class="tagline">Menu bar utility monitoring Claude Code sessions via file-based event queue</div>
+        <div class="tech-stack"><span class="tech-tag">Swift</span><span class="tech-tag">AppKit</span><span class="tech-tag">SwiftUI</span><span class="tech-tag">SQLite</span></div>
+        <div class="card-org">mikefullerton</div>
+      </a>
+    </div>
   </div>
-</div>
 
-<!-- Claude Code Tools -->
-<div class="category" data-category="claude-tools">
-  <div class="category-header">Claude Code Extensions & Tools <span class="count">3</span></div>
-  <div class="card-grid">
-    <a href="projects/cat-herding.html" class="card status-active" data-org="mikefullerton" data-status="active" data-search="cat herding plugins skills cli site-manager webinator python bash">
-      <div class="card-top"><span class="card-name">Cat Herding</span><span class="badge badge-active">Active</span></div>
-      <div class="card-summary">Collection of 6 plugins, 10 skills, 2 CLIs (site-manager, webinator) for Claude Code</div>
-      <div class="card-meta"><span class="tag tag-python">Python</span><span class="tag tag-bash">Bash</span><span class="tag tag-typescript">JavaScript</span></div>
-    </a>
-    <a href="projects/code-review-pipline.html" class="card status-active" data-org="agentic-cookbook" data-status="active" data-search="code review pipeline automated claude code cli daemon python sqlite github">
-      <div class="card-top"><span class="card-name">Code Review Pipeline</span><span class="badge badge-active">Active</span></div>
-      <div class="card-summary">Automated code review using Claude Code CLI as macOS daemon</div>
-      <div class="card-meta"><span class="tag tag-python">Python</span><span class="tag tag-python">SQLite</span><span class="tag tag-python">GitHub API</span></div>
-    </a>
-    <a href="projects/social-media-bot.html" class="card status-active" data-org="mikefullerton" data-status="active" data-search="social media bot ai content pipeline git commits x linkedin bluesky substack python">
-      <div class="card-top"><span class="card-name">Social Media Bot</span><span class="badge badge-active">Active</span></div>
-      <div class="card-summary">AI content pipeline — analyzes git commits, drafts posts for X/LinkedIn/Bluesky/Substack</div>
-      <div class="card-meta"><span class="tag tag-python">Python</span><span class="tag tag-python">claude-agent-sdk</span><span class="tag tag-python">SQLite</span></div>
-    </a>
+  <!-- Cross-Platform -->
+  <div class="section" data-section="cross-platform">
+    <div class="section-header"><h2>Cross-Platform Apps</h2><span class="count">2</span></div>
+    <div class="project-grid">
+      <a href="projects/temporal.html" class="project-card" id="temporal" data-status="active" data-search="temporal cross platform ai assistant community forum gamification kotlin multiplatform swift react ktor postgresql">
+        <div class="card-top"><h3>Temporal</h3><span class="status-badge active">Active</span></div>
+        <div class="tagline">Cross-platform AI assistant with 8-phase community forum, gamification, real-time messaging across 7+ platforms</div>
+        <div class="tech-stack"><span class="tech-tag">Kotlin MP</span><span class="tech-tag">SwiftUI</span><span class="tech-tag">Compose</span><span class="tech-tag">React</span><span class="tech-tag">Ktor</span><span class="tech-tag">PostgreSQL</span></div>
+        <div class="card-org">temporal-company</div>
+      </a>
+      <a href="projects/temporal-platform.html" class="project-card" id="temporal-platform" data-status="planning" data-search="temporal platform spec driven specification framework conformance tests">
+        <div class="card-top"><h3>Temporal Platform</h3><span class="status-badge planning">Planning</span></div>
+        <div class="tagline">Spec-driven application platform &mdash; shares behavioral specifications across platforms for native implementations</div>
+        <div class="tech-stack"><span class="tech-tag">Kotlin</span><span class="tech-tag">Swift</span><span class="tech-tag">TypeScript</span><span class="tech-tag">C#</span></div>
+        <div class="card-org">temporal-company</div>
+      </a>
+    </div>
   </div>
-</div>
 
-<!-- Fun & Creative -->
-<div class="category" data-category="fun">
-  <div class="category-header">Fun & Creative <span class="count">2</span></div>
-  <div class="card-grid">
-    <a href="projects/name-craft.html" class="card status-planning" data-org="mikefullerton" data-status="planning" data-search="name craft character name generator children books claude ai flask python">
-      <div class="card-top"><span class="card-name">Name-Craft</span><span class="badge badge-planning">Planning</span></div>
-      <div class="card-summary">Children's book character name generator using Claude AI with sound symbolism</div>
-      <div class="card-meta"><span class="tag tag-python">Python</span><span class="tag tag-python">Flask</span><span class="tag tag-python">Claude API</span></div>
-    </a>
-    <a href="projects/catnip.html" class="card status-stable" data-org="mikefullerton" data-status="stable" data-search="catnip web dashboard monitoring claude code agent progress react hono websocket">
-      <div class="card-top"><span class="card-name">Catnip</span><span class="badge badge-stable">Stable</span></div>
-      <div class="card-summary">Web dashboard for monitoring Claude Code agent progress in real-time</div>
-      <div class="card-meta"><span class="tag tag-typescript">React 19</span><span class="tag tag-typescript">Hono</span><span class="tag tag-typescript">WebSocket</span></div>
-    </a>
+  <!-- Agentic Cookbook -->
+  <div class="section" data-section="agentic-cookbook">
+    <div class="section-header"><h2>Agentic Cookbook Ecosystem</h2><span class="count">8</span></div>
+    <div class="project-grid">
+      <a href="projects/cookbook.html" class="project-card" id="cookbook" data-status="active" data-search="cookbook knowledge base principles guidelines ingredients recipes workflows markdown">
+        <div class="card-top"><h3>Cookbook</h3><span class="status-badge active">Active</span></div>
+        <div class="tagline">Structured library of principles, guidelines, ingredients, recipes for AI-assisted development</div>
+        <div class="tech-stack"><span class="tech-tag">Markdown</span><span class="tech-tag">YAML</span><span class="tech-tag">Vitest</span></div>
+        <div class="card-org">agentic-cookbook</div>
+      </a>
+      <a href="projects/cookbook-web.html" class="project-card" id="cookbook-web" data-status="active" data-search="cookbook web website agentic-cookbook.com react cloudflare workers tailwind">
+        <div class="card-top"><h3>Cookbook Web</h3><span class="status-badge active">Active</span></div>
+        <div class="tagline">Public website for the Agentic Cookbook at agentic-cookbook.com</div>
+        <div class="tech-stack"><span class="tech-tag">React 19</span><span class="tech-tag">TypeScript</span><span class="tech-tag">Tailwind</span><span class="tech-tag">Cloudflare Workers</span></div>
+        <div class="card-org">agentic-cookbook</div>
+      </a>
+      <a href="projects/dev-team.html" class="project-card" id="dev-team" data-status="active" data-search="dev team multi agent plugin specialists specialty teams interview workflows python">
+        <div class="card-top"><h3>Dev Team</h3><span class="status-badge active">Active</span></div>
+        <div class="tagline">Claude Code plugin &mdash; multi-agent platform with 20 specialists, 232 specialty-teams, 8 workflows</div>
+        <div class="tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">Markdown</span><span class="tech-tag">pytest</span><span class="tech-tag">SQLite</span></div>
+        <div class="card-org">agentic-cookbook</div>
+      </a>
+      <a href="projects/roadmaps.html" class="project-card" id="roadmaps" data-status="active" data-search="roadmaps feature planning implementation system flask sqlite dashboard skills">
+        <div class="card-top"><h3>Roadmaps</h3><span class="status-badge active">Active</span></div>
+        <div class="tagline">Feature planning and implementation system with live dashboards and automated step execution</div>
+        <div class="tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">Flask</span><span class="tech-tag">SQLite</span><span class="tech-tag">Bash</span></div>
+        <div class="card-org">agentic-cookbook</div>
+      </a>
+      <a href="projects/tools.html" class="project-card" id="tools" data-status="stable" data-search="tools skills rules guidance agentic cookbook bash claude code">
+        <div class="card-top"><h3>Tools</h3><span class="status-badge stable">Stable</span></div>
+        <div class="tagline">21 Claude Code skills and 7 guidance rules for the agentic cookbook ecosystem</div>
+        <div class="tech-stack"><span class="tech-tag">Bash</span><span class="tech-tag">Markdown</span><span class="tech-tag">YAML</span></div>
+        <div class="card-org">agentic-cookbook</div>
+      </a>
+      <a href="projects/official-agent-registry.html" class="project-card" id="official-agent-registry" data-status="active" data-search="official agent registry dns identity platform personas react hono postgresql cloudflare">
+        <div class="card-top"><h3>Official Agent Registry</h3><span class="status-badge active">Active</span></div>
+        <div class="tagline">&ldquo;DNS for AI agents&rdquo; &mdash; identity platform for registering and discovering AI agents</div>
+        <div class="tech-stack"><span class="tech-tag">React</span><span class="tech-tag">TypeScript</span><span class="tech-tag">Hono</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Cloudflare</span></div>
+        <div class="card-org">agentic-cookbook</div>
+      </a>
+      <a href="projects/agentic-auth-service.html" class="project-card" id="agentic-auth-service" data-status="stable" data-search="agentic auth service jwt authentication rs256 hono node typescript railway drizzle">
+        <div class="card-top"><h3>Agentic Auth Service</h3><span class="status-badge stable">Stable</span></div>
+        <div class="tagline">Shared RS256 JWT authentication microservice for the agentic ecosystem</div>
+        <div class="tech-stack"><span class="tech-tag">Node.js</span><span class="tech-tag">Hono</span><span class="tech-tag">TypeScript</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Railway</span></div>
+        <div class="card-org">agentic-cookbook</div>
+      </a>
+      <a href="projects/agentic-kitchen.html" class="project-card" id="agentic-kitchen" data-status="empty" data-search="agentic kitchen empty placeholder">
+        <div class="card-top"><h3>Agentic Kitchen</h3><span class="status-badge empty">Empty</span></div>
+        <div class="tagline">Empty placeholder repository</div>
+        <div class="card-org">agentic-cookbook</div>
+      </a>
+    </div>
   </div>
-</div>
 
-<!-- Infrastructure -->
-<div class="category" data-category="infra">
-  <div class="category-header">Infrastructure & Meta <span class="count">3</span></div>
-  <div class="card-grid">
-    <a href="projects/mysetup.html" class="card status-stable" data-org="mikefullerton" data-status="stable" data-search="mysetup development infrastructure automation macos windows bash python homebrew">
-      <div class="card-top"><span class="card-name">MySetup</span><span class="badge badge-stable">Stable</span></div>
-      <div class="card-summary">Development infrastructure automation for macOS and Windows (WSL)</div>
-      <div class="card-meta"><span class="tag tag-bash">Bash</span><span class="tag tag-python">Python</span></div>
-    </a>
-    <a href="projects/my-projects.html" class="card status-active" data-org="mikefullerton" data-status="active" data-search="my projects management dashboard tracking git repos react vite node">
-      <div class="card-top"><span class="card-name">My Projects</span><span class="badge badge-active">Active</span></div>
-      <div class="card-summary">Project management dashboard tracking ~35 git repos</div>
-      <div class="card-meta"><span class="tag tag-typescript">React 19</span><span class="tag tag-typescript">Vite</span><span class="tag tag-typescript">Node.js</span></div>
-    </a>
-    <a href="projects/myagenticworkspace.html" class="card status-empty" data-org="agentic-cookbook" data-status="empty" data-search="myagenticworkspace empty placeholder">
-      <div class="card-top"><span class="card-name">MyAgenticWorkspace</span><span class="badge badge-empty">Empty</span></div>
-      <div class="card-summary">Empty placeholder repository (freshly initialized)</div>
-      <div class="card-meta"></div>
-    </a>
+  <!-- Web Apps -->
+  <div class="section" data-section="web-apps">
+    <div class="section-header"><h2>Web Applications & SaaS</h2><span class="count">3</span></div>
+    <div class="project-grid">
+      <a href="projects/learntruefacts.html" class="project-card" id="learntruefacts" data-status="planning" data-search="learntruefacts ai comedian chat persona react hono cloudflare multi llm">
+        <div class="card-top"><h3>Learn True Facts</h3><span class="status-badge planning">Planning</span></div>
+        <div class="tagline">AI improv comedian chat app &mdash; blends real facts with absurd fiction (design complete, pre-implementation)</div>
+        <div class="tech-stack"><span class="tech-tag">React 19</span><span class="tech-tag">Hono</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Cloudflare</span><span class="tech-tag">Multi-LLM</span></div>
+        <div class="card-org">agentic-cookbook</div>
+      </a>
+      <a href="projects/myagenticprojects.html" class="project-card" id="myagenticprojects" data-status="stable" data-search="myagenticprojects saas platform auth feature flags messaging feedback react hono railway cloudflare">
+        <div class="card-top"><h3>MyAgenticProjects</h3><span class="status-badge stable">Stable</span></div>
+        <div class="tagline">Full-stack SaaS platform with auth, feature flags, messaging, feedback &mdash; scaffolded from site-manager</div>
+        <div class="tech-stack"><span class="tech-tag">React 19</span><span class="tech-tag">Hono</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Railway</span><span class="tech-tag">Cloudflare</span></div>
+        <div class="card-org">agentic-cookbook</div>
+      </a>
+      <a href="projects/mikefullerton.com.html" class="project-card" id="mikefullerton.com" data-status="stable" data-search="mikefullerton.com personal portfolio resume website html css github pages">
+        <div class="card-top"><h3>mikefullerton.com</h3><span class="status-badge stable">Stable</span></div>
+        <div class="tagline">Personal portfolio and resume website</div>
+        <div class="tech-stack"><span class="tech-tag">HTML</span><span class="tech-tag">CSS</span><span class="tech-tag">GitHub Pages</span></div>
+        <div class="card-org">mikefullerton</div>
+      </a>
+    </div>
   </div>
-</div>
 
-</div>
+  <!-- Claude Code Tools -->
+  <div class="section" data-section="claude-tools">
+    <div class="section-header"><h2>Claude Code Extensions & Tools</h2><span class="count">3</span></div>
+    <div class="project-grid">
+      <a href="projects/cat-herding.html" class="project-card" id="cat-herding" data-status="active" data-search="cat herding plugins skills cli site-manager webinator marketplace python bash">
+        <div class="card-top"><h3>Cat Herding</h3><span class="status-badge active">Active</span></div>
+        <div class="tagline">6 plugins, 11 skills, 2 CLIs (site-manager, webinator) &mdash; local plugin marketplace for Claude Code</div>
+        <div class="tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">Bash</span><span class="tech-tag">JavaScript</span></div>
+        <div class="card-org">mikefullerton</div>
+      </a>
+      <a href="projects/code-review-pipline.html" class="project-card" id="code-review-pipline" data-status="active" data-search="code review pipeline automated claude code cli daemon github app launchd python sqlite">
+        <div class="card-top"><h3>Code Review Pipeline</h3><span class="status-badge active">Active</span></div>
+        <div class="tagline">Automated code review via Claude Code CLI &mdash; runs as macOS launchd daemon with GitHub App identity</div>
+        <div class="tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">SQLite</span><span class="tech-tag">GitHub API</span><span class="tech-tag">Claude CLI</span></div>
+        <div class="card-org">agentic-cookbook</div>
+      </a>
+      <a href="projects/social-media-bot.html" class="project-card" id="social-media-bot" data-status="active" data-search="social media bot ai content pipeline git commits analysis x linkedin bluesky substack 12 bots python">
+        <div class="card-top"><h3>Social Media Bot</h3><span class="status-badge active">Active</span></div>
+        <div class="tagline">12-bot AI content pipeline &mdash; analyzes commits, researches topics, drafts posts for X/LinkedIn/Bluesky/Substack</div>
+        <div class="tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">claude-agent-sdk</span><span class="tech-tag">SQLite</span><span class="tech-tag">click</span></div>
+        <div class="card-org">mikefullerton</div>
+      </a>
+    </div>
+  </div>
 
-<div class="footer">Generated 2026-04-07 &mdash; 25 projects across 3 organizations</div>
+  <!-- Fun & Creative -->
+  <div class="section" data-section="fun">
+    <div class="section-header"><h2>Fun & Creative</h2><span class="count">2</span></div>
+    <div class="project-grid">
+      <a href="projects/name-craft.html" class="project-card" id="name-craft" data-status="planning" data-search="name craft character name generator children books claude ai flask sound symbolism word builder">
+        <div class="card-top"><h3>Name-Craft</h3><span class="status-badge planning">Planning</span></div>
+        <div class="tagline">Children&rsquo;s book character name generator using Claude AI with sound symbolism and genre templates</div>
+        <div class="tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">Flask</span><span class="tech-tag">Claude API</span><span class="tech-tag">SQLite</span></div>
+        <div class="card-org">mikefullerton (local)</div>
+      </a>
+      <a href="projects/catnip.html" class="project-card" id="catnip" data-status="stable" data-search="catnip web dashboard monitoring claude code agent progress react hono websocket github oauth">
+        <div class="card-top"><h3>Catnip</h3><span class="status-badge stable">Stable</span></div>
+        <div class="tagline">Web dashboard for monitoring Claude Code agent progress in real-time with WebSocket updates</div>
+        <div class="tech-stack"><span class="tech-tag">React 19</span><span class="tech-tag">Hono</span><span class="tech-tag">WebSocket</span><span class="tech-tag">Railway</span><span class="tech-tag">Cloudflare</span></div>
+        <div class="card-org">mikefullerton</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Infrastructure -->
+  <div class="section" data-section="infra">
+    <div class="section-header"><h2>Infrastructure & Meta</h2><span class="count">3</span></div>
+    <div class="project-grid">
+      <a href="projects/mysetup.html" class="project-card" id="mysetup" data-status="stable" data-search="mysetup development infrastructure automation macos windows wsl bash python homebrew declarative setup">
+        <div class="card-top"><h3>MySetup</h3><span class="status-badge stable">Stable</span></div>
+        <div class="tagline">Declarative development environment automation for macOS and Windows (WSL) with 20+ utility scripts</div>
+        <div class="tech-stack"><span class="tech-tag">Bash</span><span class="tech-tag">Python</span><span class="tech-tag">Homebrew</span></div>
+        <div class="card-org">mikefullerton</div>
+      </a>
+      <a href="projects/my-projects.html" class="project-card" id="my-projects" data-status="active" data-search="my projects management dashboard tracking git repos react vite node scanner">
+        <div class="card-top"><h3>My Projects</h3><span class="status-badge active">Active</span></div>
+        <div class="tagline">Project management dashboard tracking ~35 git repos with git scanning and cross-project metadata</div>
+        <div class="tech-stack"><span class="tech-tag">React 19</span><span class="tech-tag">Vite</span><span class="tech-tag">Node.js</span><span class="tech-tag">Bash</span></div>
+        <div class="card-org">mikefullerton</div>
+      </a>
+      <a href="projects/myagenticworkspace.html" class="project-card" id="myagenticworkspace" data-status="empty" data-search="myagenticworkspace empty placeholder">
+        <div class="card-top"><h3>MyAgenticWorkspace</h3><span class="status-badge empty">Empty</span></div>
+        <div class="tagline">Empty placeholder repository</div>
+        <div class="card-org">agentic-cookbook</div>
+      </a>
+    </div>
+  </div>
+
+</main>
+</div>
 
 <script>
-function filterCards() {
-  const org = document.getElementById('orgFilter').value;
-  const status = document.getElementById('statusFilter').value;
-  const search = document.getElementById('search').value.toLowerCase();
-  document.querySelectorAll('.card').forEach(card => {
-    const matchOrg = !org || card.dataset.org === org;
-    const matchStatus = !status || card.dataset.status === status;
-    const matchSearch = !search || card.dataset.search.includes(search) || card.querySelector('.card-name').textContent.toLowerCase().includes(search);
-    card.style.display = (matchOrg && matchStatus && matchSearch) ? '' : 'none';
+let activeFilter = '';
+
+function setFilter(btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeFilter = btn.dataset.filter;
+  filterAll();
+}
+
+function filterAll() {
+  const search = document.getElementById('navSearch').value.toLowerCase();
+
+  // Filter nav links
+  document.querySelectorAll('nav a.nav-link').forEach(link => {
+    const matchStatus = !activeFilter || link.dataset.status === activeFilter;
+    const matchSearch = !search || link.textContent.toLowerCase().includes(search);
+    link.style.display = (matchStatus && matchSearch) ? '' : 'none';
   });
-  document.querySelectorAll('.category').forEach(cat => {
-    const visible = cat.querySelectorAll('.card[style=""], .card:not([style])').length;
-    cat.style.display = visible ? '' : 'none';
+
+  // Filter cards
+  document.querySelectorAll('.project-card').forEach(card => {
+    const matchStatus = !activeFilter || card.dataset.status === activeFilter;
+    const matchSearch = !search || card.dataset.search.includes(search) || card.querySelector('h3').textContent.toLowerCase().includes(search);
+    card.style.display = (matchStatus && matchSearch) ? '' : 'none';
+  });
+
+  // Hide empty sections
+  document.querySelectorAll('.section').forEach(sec => {
+    const visible = sec.querySelectorAll('.project-card:not([style*="display: none"])').length;
+    sec.style.display = visible ? '' : 'none';
+  });
+
+  // Hide empty nav sections
+  document.querySelectorAll('nav .nav-section').forEach(sec => {
+    let next = sec.nextElementSibling;
+    let hasVisible = false;
+    while (next && !next.classList.contains('nav-section')) {
+      if (next.classList.contains('nav-link') && next.style.display !== 'none') hasVisible = true;
+      next = next.nextElementSibling;
+    }
+    sec.style.display = hasVisible ? '' : 'none';
   });
 }
 </script>
