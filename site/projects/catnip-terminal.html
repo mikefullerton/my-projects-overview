@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Catnip Terminal — My Projects Overview</title>
+<title>Catnip Terminal - Project Overview &mdash; My Projects Overview</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -79,36 +79,40 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 <div class="grain"></div>
 <div class="header">
   <a href="../index.html" class="back">&larr; All Projects</a>
-  <span class="header-title">Catnip Terminal</span>
+  <span class="header-title">Catnip Terminal - Project Overview</span>
   <span class="header-meta">mikefullerton</span>
 </div>
 <div class="content">
 <h2>Project Summary</h2>
-<p>Catnip Terminal is a native macOS terminal emulator built with SwiftUI/AppKit and Swift, featuring AI-powered session summarization that automatically tracks what the user is doing in each terminal session.</p>
-<h2>Type & Tech Stack</h2>
+<p>Catnip Terminal is a native macOS terminal emulator built with SwiftUI/AppKit and Swift, featuring AI-powered session summarization that automatically tracks what the user is doing in each terminal session. Supports multiple AI providers (Claude, OpenAI, Google Gemini) and customizable terminal profiles.</p>
+<h2>Type &amp; Tech Stack</h2>
 <ul>
 <li><strong>Project Type:</strong> Native macOS GUI Application</li>
 <li><strong>Language:</strong> Swift 5.0</li>
-<li><strong>UI:</strong> SwiftUI + Native AppKit (hybrid, recently converted from full SwiftUI)</li>
-<li><strong>Terminal Emulation:</strong> SwiftTerm v1.12.0</li>
-<li><strong>Dependencies:</strong> SwiftTerm, swift-argument-parser v1.7.1</li>
+<li><strong>UI:</strong> SwiftUI + Native AppKit (hybrid, AppKit conversion in progress via worktree)</li>
+<li><strong>Terminal Emulation:</strong> SwiftTerm v1.2.0+</li>
+<li><strong>Project Tool:</strong> XcodeGen (<code>project.yml</code>)</li>
+<li><strong>IDE:</strong> Xcode 16.0</li>
 <li><strong>Deployment Target:</strong> macOS 14.0 (Sonoma)</li>
 <li><strong>Bundle ID:</strong> com.catnip.CatnipTerminal v1.0.0</li>
+<li><strong>Category:</strong> Developer Tools</li>
 </ul>
 <h2>GitHub URL</h2>
 <p><code>git@github.com:mikefullerton/catnip-terminal.git</code></p>
 <h2>Directory Structure</h2>
-<pre><code>catnip-terminal/
+<pre><code>
+catnip-terminal/
 ├── .claude/
 │   ├── settings.local.json          # Permissions: git commit/push, gh pr, lint-skill
-│   └── worktrees/appkit-conversion/
+│   └── worktrees/
+│       └── appkit-conversion/       # Full AppKit rewrite worktree (in progress)
 ├── CatnipTerminal/                   # 21 Swift source files
 │   ├── CatnipTerminalApp.swift       # SwiftUI @main entry point
 │   ├── AppDelegate.swift             # App lifecycle
 │   ├── ContentView.swift             # Main window: split view (session list + terminal)
+│   ├── TerminalViewRepresentable.swift # SwiftUI wrapper for SwiftTerm
 │   ├── SessionManager.swift          # Multi-session lifecycle, coordinates summarization
 │   ├── TerminalSession.swift         # Single PTY session, OSC escape handling
-│   ├── TerminalViewRepresentable.swift # SwiftUI wrapper for SwiftTerm
 │   ├── SessionSummarizer.swift       # AI-powered session title generation
 │   ├── SummarizationCoordinator.swift # Orchestrates when summarization runs
 │   ├── AIProvider.swift              # Multi-provider: Anthropic, OpenAI, Google, Custom
@@ -117,7 +121,7 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 │   ├── TerminalProfile.swift         # Color palettes, cursor styles, fonts
 │   ├── ProfilesSettingsView.swift    # Terminal profile management
 │   ├── SettingsView.swift            # Settings window (General, Profiles, AI tabs)
-│   ├── GeneralSettingsView.swift
+│   ├── GeneralSettingsView.swift     # General preferences
 │   ├── KeychainHelper.swift          # Secure API key storage
 │   ├── Logging.swift                 # Unified os.log subsystems
 │   ├── SessionLayoutState.swift      # Layout persistence
@@ -125,43 +129,79 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 │   ├── SettingsKeys.swift            # UserDefaults constants
 │   └── WindowAccessor.swift          # Window frame persistence
 ├── CatnipTerminal.xcodeproj/
-├── CLAUDE.md
-└── project.yml                       # XcodeGen configuration</code></pre>
-<h2>Key Components</h2>
+├── CLAUDE.md                         # Minimal project marker
+└── project.yml                       # XcodeGen configuration
+</code></pre>
+<h2>Key Files &amp; Components</h2>
 <p><strong>AI Session Summarization:</strong></p>
 <ul>
-<li>Reads scrollback buffer, queries AI provider for short summary</li>
-<li>Detects topic changes (UNCHANGED vs new summary)</li>
-<li>Multi-provider: Claude (Haiku/Sonnet/Opus), OpenAI (GPT-4), Google (Gemini)</li>
+<li><code>SessionSummarizer.swift</code> -- Reads scrollback buffer, queries AI provider for short summary</li>
+<li><code>SummarizationCoordinator.swift</code> -- Orchestrates when summarization runs; detects topic changes</li>
+<li><code>AIProvider.swift</code> -- Multi-provider support: Claude (Haiku/Sonnet/Opus), OpenAI (GPT-4), Google (Gemini), Custom</li>
+<li><code>AIRequestBuilder.swift</code> -- Builds HTTP requests for each AI provider&#x27;s API</li>
 <li>Debounced 5s on directory/process change, periodic 60s refresh</li>
 <li>Min: 5 lines/100 chars. Max output: 32 tokens. Timeout: 60s</li>
-<li>Recommended: Haiku 4.5 (~$0.80/M tokens)</li>
 </ul>
 <p><strong>Terminal Features:</strong></p>
 <ul>
-<li>Split-view layout (sidebar sessions + terminal)</li>
-<li>Multi-window with independent session lists</li>
-<li>PTY management spawning actual shell processes</li>
-<li>OSC escape sequence support (OSC 7: working dir, OSC 2: title, OSC 7770: custom)</li>
-<li>Customizable profiles with color palettes, fonts, cursor styles</li>
+<li><code>TerminalViewRepresentable.swift</code> -- SwiftUI wrapper for SwiftTerm library</li>
+<li><code>TerminalSession.swift</code> -- PTY management, spawns actual shell processes, OSC escape support (OSC 7: working dir, OSC 2: title)</li>
+<li><code>SessionManager.swift</code> -- Multi-session lifecycle management</li>
+<li><code>TerminalProfile.swift</code> -- Customizable color palettes, fonts, cursor styles</li>
+</ul>
+<p><strong>Settings:</strong></p>
+<ul>
+<li><code>SettingsView.swift</code> -- Sidebar navigation layout with General, Profiles, AI tabs</li>
+<li><code>KeychainHelper.swift</code> -- Secure API key storage in macOS Keychain</li>
 </ul>
 <h2>Claude Configuration</h2>
 <ul>
-<li>Permissions: git commit/push, gh pr, lint-skill</li>
-<li>Worktrees for feature branches</li>
+<li><strong><code>CLAUDE.md</code></strong> -- Minimal (just project name)</li>
+<li><strong><code>.claude/settings.local.json</code></strong> -- Permissions for git commit, push, lint-skill skill, and gh pr commands</li>
+<li>Active worktree at <code>.claude/worktrees/appkit-conversion/</code> for SwiftUI-to-AppKit port</li>
 </ul>
-<h2>Git History & Current State</h2>
+<h2>Planning &amp; Research Documents</h2>
+<p>None found in the repository.</p>
+<h2>Git History &amp; Current State</h2>
 <ul>
-<li><strong>Branch:</strong> feature/ai-session-summarization (1 commit ahead)</li>
+<li><strong>Branch:</strong> <code>feature/ai-session-summarization</code> (not on main)</li>
+<li><strong>Total commits:</strong> 7</li>
 <li><strong>Working tree:</strong> Clean</li>
-<li><strong>Recent (2026-04-06):</strong> Add CLAUDE.md, standardize worktree directory</li>
-<li><strong>Key milestones:</strong> Initial project, full AppKit conversion, AI session summarization</li>
+<li><strong>Recent activity (2026-04-06):</strong> Add CLAUDE.md, standardize worktree directory</li>
 </ul>
-<h2>Build & Test Commands</h2>
-<pre><code>xcodebuild -scheme CatnipTerminal -configuration Debug
-xcodebuild -scheme CatnipTerminal -configuration Release
-open CatnipTerminal.xcodeproj</code></pre>
+<p>Recent commits:</p>
+<pre><code>
+d3bb5de chore: add CLAUDE.md
+50cdef8 chore: standardize worktree directory to .claude/worktrees/
+a634235 feat: AI-powered session summarization with multi-provider support
+35505c0 fix: remove sidebar toggle button from settings window
+714ce30 refactor: switch settings to sidebar layout per litterbox spec
+5de22f2 fix: apply litterbox specs for window frame persistence and titles
+26a612e feat: initial Catnip Terminal project
+</code></pre>
+<h2>Build &amp; Test Commands</h2>
+<pre><code>
+# Build via Xcode
+xcodebuild -project CatnipTerminal.xcodeproj -scheme CatnipTerminal -configuration Debug build
+xcodebuild -project CatnipTerminal.xcodeproj -scheme CatnipTerminal -configuration Release build
+
+# Generate project from project.yml (requires XcodeGen)
+xcodegen generate
+
+# Open in Xcode
+open CatnipTerminal.xcodeproj
+</code></pre>
 <p>No test suite configured yet. ~2500 lines of Swift source code.</p>
+<h2>Notes</h2>
+<ul>
+<li>Currently on <code>feature/ai-session-summarization</code> branch -- not yet merged to main</li>
+<li>AppKit conversion is in progress via a worktree at <code>.claude/worktrees/appkit-conversion/</code> containing a full rewrite of all SwiftUI views to AppKit (TerminalWindowController, SettingsWindowController, SessionListViewController, etc.)</li>
+<li>Uses SwiftTerm (external package from Miguel de Icaza) for terminal emulation</li>
+<li>AI summarization supports multiple providers through an abstraction layer</li>
+<li>Settings follow a &quot;litterbox spec&quot; for sidebar layout, window frame persistence, and titles</li>
+<li>Product name: &quot;Catnip Terminal&quot;</li>
+<li>Recommended AI provider for summarization: Haiku 4.5 (~$0.80/M tokens)</li>
+</ul>
 </div>
 <div class="footer">Generated 2026-04-07</div>
 </body>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Agentic Auth Service - Project Overview — My Projects Overview</title>
+<title>Agentic Auth Service - Project Overview &mdash; My Projects Overview</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -85,27 +85,27 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 <div class="content">
 <h2>Project Summary</h2>
 <p>A standalone <strong>RS256 JWT authentication service</strong> that provides centralized user management and token issuance for all projects in the agentic ecosystem. Every site delegates auth to this single service rather than implementing its own user management, enabling seamless cross-project authentication via asymmetric JWT validation.</p>
-<h2>Type & Tech Stack</h2>
+<h2>Type &amp; Tech Stack</h2>
 <p><strong>Project Type:</strong> Backend authentication microservice (production-deployed)</p>
-<p><strong>Runtime & Framework:</strong></p>
+<p><strong>Runtime &amp; Framework:</strong></p>
 <ul>
 <li>Node.js 22 (LTS)</li>
 <li>Hono 4.7.0 (lightweight web framework)</li>
 <li>TypeScript 5.7.0</li>
 </ul>
-<p><strong>Database & ORM:</strong></p>
+<p><strong>Database &amp; ORM:</strong></p>
 <ul>
 <li>PostgreSQL (hosted on Railway)</li>
 <li>Drizzle ORM 0.36.0</li>
 </ul>
-<p><strong>Authentication & Security:</strong></p>
+<p><strong>Authentication &amp; Security:</strong></p>
 <ul>
 <li>JWT (jose 6.0.0) - RS256 algorithm (asymmetric)</li>
 <li>bcrypt 5.1.1 - password hashing (minimum 12 chars)</li>
 <li>Refresh token rotation with SHA-256 hashing</li>
 <li>Token revocation on server side (opaque refresh tokens stored in DB)</li>
 </ul>
-<p><strong>Build & Deployment:</strong></p>
+<p><strong>Build &amp; Deployment:</strong></p>
 <ul>
 <li>TypeScript compiler (tsc)</li>
 <li>Docker containerization (Node 22 slim image)</li>
@@ -118,9 +118,14 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 <li>Drizzle Kit 0.30.0 - schema generation and migrations</li>
 </ul>
 <h2>GitHub URL</h2>
-<p><strong>Repository:</strong> <code>git@github.com:agentic-cookbook/agentic-auth-service.git</code> <strong>GitHub HTTPS:</strong> <code>https://github.com/agentic-cookbook/agentic-auth-service</code> <strong>Deployed URL:</strong> <code>https://backend-production-9b1f.up.railway.app</code></p>
+<p><strong>Repository:</strong> <code>git@github.com:agentic-cookbook/agentic-auth-service.git</code></p>
+<p><strong>GitHub HTTPS:</strong> <code>https://github.com/agentic-cookbook/agentic-auth-service</code></p>
+<p><strong>Deployed URL:</strong> <code>https://backend-production-9b1f.up.railway.app</code></p>
 <h2>Directory Structure</h2>
-<pre><code>agentic-auth-service/
+<pre><code>
+agentic-auth-service/
+├── .claude/
+│   └── CLAUDE.md                # Detailed project context for Claude Code
 ├── src/
 │   ├── index.ts                 # Entry point: loads keys, starts Hono server
 │   ├── app.ts                   # Hono app setup, global middleware, route registration
@@ -156,9 +161,6 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 │   └── research/
 │       └── shared-auth-service.md  # Comprehensive architecture &amp; design document
 │
-├── node_modules/                # npm dependencies
-├── src/db/migrations/           # Generated Drizzle migration files
-│
 ├── package.json                 # Dependencies: hono, drizzle-orm, jose, bcrypt, pg
 ├── package-lock.json            # Locked dependency versions
 ├── tsconfig.json                # TypeScript compiler config (ES2022, strict mode)
@@ -166,11 +168,10 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 ├── Dockerfile                   # Multi-stage Docker build for Railway
 ├── railway.toml                 # Railway deployment config (builder, healthcheck)
 ├── .env.example                 # Environment variable template
-├── .gitignore                   # Git ignore rules
-└── .git/                        # Git repository metadata
+└── .gitignore                   # Git ignore rules
 </code></pre>
-<h2>Key Files & Components</h2>
-<h3>Entry Point & Server</h3>
+<h2>Key Files &amp; Components</h2>
+<h3>Entry Point &amp; Server</h3>
 <p><strong><code>src/index.ts</code></strong></p>
 <ul>
 <li>Loads JWT keys via <code>loadKeys()</code></li>
@@ -200,7 +201,7 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 <li>Exports <code>CryptoKey</code> objects for JWT operations</li>
 <li>Generates JWK representation with <code>kid: &quot;auth-service-1&quot;</code> for JWKS endpoint</li>
 </ul>
-<h3>Authentication & Authorization</h3>
+<h3>Authentication &amp; Authorization</h3>
 <p><strong><code>src/auth/jwt.ts</code></strong></p>
 <ul>
 <li><code>signAccessToken()</code> - Issues RS256 access token (4-hour expiry)</li>
@@ -232,7 +233,7 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 <li><code>id</code> (UUID PK, auto-generated)</li>
 <li><code>email</code> (unique, not null)</li>
 <li><code>password_hash</code> (bcrypt, not null)</li>
-<li><code>role</code> (text, default "user"; values: "admin" | "user")</li>
+<li><code>role</code> (text, default &quot;user&quot;; values: &quot;admin&quot; | &quot;user&quot;)</li>
 <li><code>created_at</code>, <code>updated_at</code> (timestamps)</li>
 </ul>
 <ul>
@@ -370,13 +371,15 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 <li>Catches all thrown errors</li>
 <li>Returns RFC 7807 problem detail format:</li>
 </ul>
-<pre><code>  { &quot;type&quot;: &quot;about:blank&quot;, &quot;title&quot;: &quot;...&quot;, &quot;status&quot;: 400, &quot;detail&quot;: &quot;...&quot; }</code></pre>
+<pre><code>
+  { &quot;type&quot;: &quot;about:blank&quot;, &quot;title&quot;: &quot;...&quot;, &quot;status&quot;: 400, &quot;detail&quot;: &quot;...&quot; }
+</code></pre>
 <p><strong><code>src/middleware/logger.ts</code></strong></p>
 <ul>
 <li>Custom request logging with <code>requestId</code> (UUID)</li>
 <li>Stores in context for error tracking</li>
 </ul>
-<h3>Deployment & Configuration</h3>
+<h3>Deployment &amp; Configuration</h3>
 <p><strong><code>Dockerfile</code></strong></p>
 <ul>
 <li>Multi-stage build: compile TypeScript, generate migrations, copy to slim image</li>
@@ -405,19 +408,28 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 <li>Also served via <code>/.well-known/jwks.json</code></li>
 </ul>
 <h2>Claude Configuration</h2>
-<p><strong>No <code>.claude/</code> directory found</strong> — project does not use Claude-specific automation hooks or custom commands.</p>
-<h2>Planning & Research Documents</h2>
+<p><strong><code>.claude/CLAUDE.md</code></strong> -- Comprehensive project context including:</p>
+<ul>
+<li>Project structure and file descriptions</li>
+<li>API routes with auth requirements</li>
+<li>Environment variable reference</li>
+<li>Build/dev/deploy commands</li>
+<li>Coding conventions (strict TypeScript, ESM, RFC 7807 errors, Hono typed env)</li>
+<li>Key design decisions (RS256 over HS256, refresh token rotation, stateless validation)</li>
+</ul>
+<p>No settings.json, rules, skills, or commands configured.</p>
+<h2>Planning &amp; Research Documents</h2>
 <h3><code>docs/research/shared-auth-service.md</code></h3>
 <p>Comprehensive architecture document covering:</p>
-<p><strong>Problem & Solution:</strong></p>
+<p><strong>Problem &amp; Solution:</strong></p>
 <ul>
 <li>Explains why per-site auth or shared DB are problematic</li>
 <li>Asymmetric JWT (RS256) as the solution</li>
 </ul>
 <p><strong>Architecture Diagram:</strong></p>
 <ul>
-<li>Auth service (Railway + Postgres) → private key, issues tokens</li>
-<li>Multiple consuming sites ← public key, validate locally</li>
+<li>Auth service (Railway + Postgres) -- private key, issues tokens</li>
+<li>Multiple consuming sites -- public key, validate locally</li>
 <li>Stateless validation (no network calls to auth service at request time)</li>
 </ul>
 <p><strong>Key Design Decisions:</strong></p>
@@ -430,13 +442,7 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 <p><strong>Token Details:</strong></p>
 <ul>
 <li>Access token (RS256, 4h expiry): Contains <code>sub</code>, <code>email</code>, <code>role</code>; stored in-memory client-side</li>
-<li>Refresh token (opaque, 30d expiry): SHA-256 hash stored in Postgres; enablesstateful revocation</li>
-</ul>
-<p><strong>API Surface & Error Format:</strong></p>
-<ul>
-<li>Public routes: register, login, refresh, logout, me, JWKS, health</li>
-<li>Admin routes: list/update/delete users</li>
-<li>Error format: RFC 7807 problem detail</li>
+<li>Refresh token (opaque, 30d expiry): SHA-256 hash stored in Postgres; enables stateful revocation</li>
 </ul>
 <p><strong>Integration Guide:</strong></p>
 <ul>
@@ -444,23 +450,17 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 <li>Verify token on each request with <code>jose</code> or any JWT library supporting RS256</li>
 <li>Extract <code>sub</code>, <code>role</code> from claims</li>
 </ul>
-<p><strong>Operational Notes:</strong></p>
-<ul>
-<li>Seeding: <code>npm run db:seed</code> (standalone, only needs <code>DATABASE_URL</code>)</li>
-<li>Migrations: <code>npm run db:migrate</code> (standalone)</li>
-<li>Key rotation: Add new key with new <code>kid</code>, keep old until tokens expire (4h max)</li>
-</ul>
 <p><strong>Open Questions / Future Work:</strong></p>
 <ul>
 <li>Rate limiting (no brute-force protection yet)</li>
-<li>Email verification (registration doesn't verify ownership)</li>
+<li>Email verification (registration doesn&#x27;t verify ownership)</li>
 <li>Password reset flow</li>
 <li>Multi-factor auth</li>
 <li>Session management UI</li>
 <li>CORS lockdown (currently <code>*</code>)</li>
 <li>Key rotation tooling automation</li>
 </ul>
-<h2>Git History & Current State</h2>
+<h2>Git History &amp; Current State</h2>
 <h3>Recent Commits (last 5)</h3>
 <table>
 <tr>
@@ -491,17 +491,16 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 <tr>
 <td>2026-04-06 15:15</td>
 <td>7c610b5</td>
-<td>feat: initial scaffold — RS256 JWT auth service</td>
+<td>feat: initial scaffold -- RS256 JWT auth service</td>
 </tr>
 </table>
-<h3>Current Branch & Status</h3>
+<h3>Current Branch &amp; Status</h3>
 <ul>
 <li><strong>Branch:</strong> <code>main</code></li>
-<li><strong>Status:</strong> Clean working tree (no uncommitted changes)</li>
-<li><strong>Ahead of Remote:</strong> 2 commits ahead of <code>origin/main</code></li>
+<li><strong>Status:</strong> Untracked <code>.claude/</code> directory (CLAUDE.md not yet committed)</li>
 <li><strong>Remote:</strong> <code>git@github.com:agentic-cookbook/agentic-auth-service.git</code></li>
 </ul>
-<h3>Full Commit Log (30 recent)</h3>
+<h3>Full Commit Log</h3>
 <p>Only 5 commits in history (project very new):</p>
 <ol>
 <li>Initial scaffold (RS256 JWT auth service)</li>
@@ -510,45 +509,58 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 <li>Replace KeyLike type with CryptoKey</li>
 <li>Add architecture research document</li>
 </ol>
-<h2>Build & Test Commands</h2>
+<h2>Build &amp; Test Commands</h2>
 <h3>Development</h3>
-<pre><code>npm run dev</code></pre>
+<pre><code>
+npm run dev
+</code></pre>
 <ul>
 <li>Starts TypeScript watch mode with tsx</li>
 <li>Auto-reloads on file changes</li>
 <li>Listens on PORT (default 3000)</li>
 </ul>
 <h3>Production Build</h3>
-<pre><code>npm run build</code></pre>
+<pre><code>
+npm run build
+</code></pre>
 <ul>
 <li>Compiles TypeScript to JavaScript in <code>dist/</code> directory</li>
 </ul>
 <h3>Running Production Build</h3>
-<pre><code>npm start</code></pre>
+<pre><code>
+npm start
+</code></pre>
 <ul>
-<li>Runs migrations: <code>node dist/db/migrate.js</code></li>
-<li>Starts server: <code>node dist/index.js</code></li>
+<li>Runs <code>node dist/index.js</code> (run build first)</li>
 </ul>
 <h3>Database</h3>
-<pre><code>npm run db:generate</code></pre>
+<pre><code>
+npm run db:generate
+</code></pre>
 <ul>
 <li>Generates Drizzle ORM schema types and SQL</li>
 </ul>
-<pre><code>npm run db:migrate</code></pre>
+<pre><code>
+npm run db:migrate
+</code></pre>
 <ul>
 <li>Runs pending Drizzle migrations</li>
 <li>Requires <code>DATABASE_URL</code> env var</li>
 <li>Standalone script (no app startup)</li>
 </ul>
-<pre><code>npm run db:seed</code></pre>
+<pre><code>
+npm run db:seed
+</code></pre>
 <ul>
 <li>Creates admin user in database</li>
 <li>Requires <code>DATABASE_URL</code> env var</li>
 <li>Standalone script (no app startup)</li>
 </ul>
 <h3>Docker</h3>
-<pre><code>docker build -t agentic-auth-service .
-docker run -e DATABASE_URL=... -e JWT_PRIVATE_KEY=... -e JWT_PUBLIC_KEY=... -p 3000:3000 agentic-auth-service</code></pre>
+<pre><code>
+docker build -t agentic-auth-service .
+docker run -e DATABASE_URL=... -e JWT_PRIVATE_KEY=... -e JWT_PUBLIC_KEY=... -p 3000:3000 agentic-auth-service
+</code></pre>
 <ul>
 <li>Multi-stage build</li>
 <li>Runs migrations on startup</li>
@@ -557,20 +569,17 @@ docker run -e DATABASE_URL=... -e JWT_PRIVATE_KEY=... -e JWT_PUBLIC_KEY=... -p 3
 <h2>Environment Variables</h2>
 <p><strong>Required:</strong></p>
 <ul>
-<li><code>DATABASE_URL</code> — PostgreSQL connection string (e.g., <code>postgresql://user:pass@host:5432/db</code>)</li>
-<li><code>JWT_PRIVATE_KEY</code> — PEM-encoded RSA private key (RS256)</li>
-<li><code>JWT_PUBLIC_KEY</code> — PEM-encoded RSA public key (RS256)</li>
+<li><code>DATABASE_URL</code> -- PostgreSQL connection string (e.g., <code>postgresql://user:pass@host:5432/db</code>)</li>
+<li><code>JWT_PRIVATE_KEY</code> -- PEM-encoded RSA private key (RS256)</li>
+<li><code>JWT_PUBLIC_KEY</code> -- PEM-encoded RSA public key (RS256)</li>
 </ul>
 <p><strong>Optional:</strong></p>
 <ul>
-<li><code>PORT</code> — Server port (default: 3000)</li>
-<li><code>NODE_ENV</code> — Environment name (development/production)</li>
-<li><code>CORS_ORIGIN</code> — Allowed CORS origins, comma-separated (default: <code>*</code>)</li>
+<li><code>PORT</code> -- Server port (default: 3000)</li>
+<li><code>NODE_ENV</code> -- Environment name (development/production)</li>
+<li><code>CORS_ORIGIN</code> -- Allowed CORS origins, comma-separated (default: <code>*</code>)</li>
 </ul>
-<p><strong>Generate RSA Keys:</strong></p>
-<pre><code>openssl genpkey -algorithm RSA -out private.pem -pkeyopt rsa_keygen_bits:2048
-openssl rsa -in private.pem -pubout -out public.pem</code></pre>
-<h2>Notes & Interesting Details</h2>
+<h2>Notes</h2>
 <h3>Project Maturity</h3>
 <ul>
 <li><strong>Very fresh:</strong> Only 5 commits, created 2026-04-06</li>
@@ -580,9 +589,9 @@ openssl rsa -in private.pem -pubout -out public.pem</code></pre>
 <h3>Design Philosophy</h3>
 <p><strong>Stateless by Design:</strong></p>
 <ul>
-<li>Consuming sites validate JWTs locally — auth service can go down without breaking authenticated sessions</li>
+<li>Consuming sites validate JWTs locally -- auth service can go down without breaking authenticated sessions</li>
 <li>Only revocation (logout) requires network calls to auth service</li>
-<li>Public key distributed via JWKS endpoint (1-hour cache) — auto-discovery for key rotation</li>
+<li>Public key distributed via JWKS endpoint (1-hour cache) -- auto-discovery for key rotation</li>
 </ul>
 <p><strong>Security Features:</strong></p>
 <ul>
@@ -590,30 +599,6 @@ openssl rsa -in private.pem -pubout -out public.pem</code></pre>
 <li>Bcrypt password hashing with 12-char minimum requirement</li>
 <li>Refresh token rotation: each refresh revokes old token</li>
 <li>Opaque refresh tokens stored as SHA-256 hashes (not plaintext)</li>
-</ul>
-<h3>Deployment Pipeline</h3>
-<ul>
-<li>Railway with Dockerfile builder</li>
-<li>Runs migrations automatically on container start</li>
-<li>Healthcheck via <code>GET /api/health</code> (120s timeout)</li>
-<li>Auto-restart on failure (max 3 retries)</li>
-</ul>
-<h3>Integration Story</h3>
-<p>Consuming projects use this service by:</p>
-<ol>
-<li>Getting public key from <code>/.well-known/jwks.json</code> (or embed <code>.site/jwt-public.pem</code>)</li>
-<li>Users log in via <code>POST /api/auth/login</code> (returns access + refresh tokens)</li>
-<li>On each request, sites verify JWT locally with public key</li>
-<li>Zero network calls to auth service needed for request validation</li>
-<li>Refresh tokens rotated to detect token theft</li>
-</ol>
-<h3>Code Quality</h3>
-<ul>
-<li>Full TypeScript with strict mode</li>
-<li>Type-safe Drizzle ORM queries</li>
-<li>RFC 7807 error formatting (standardized)</li>
-<li>Request logging with UUID tracking</li>
-<li>Separation of concerns: auth, DB, routes, middleware into modules</li>
 </ul>
 <h3>Future Priorities</h3>
 <p>Based on research doc:</p>

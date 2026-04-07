@@ -23,7 +23,7 @@ agentic-kitchen/
 
 ## Key Files & Components
 
-None — repository contains only git metadata.
+None -- repository contains only git metadata.
 
 ## Claude Configuration
 
@@ -38,15 +38,13 @@ None found.
 - **Current Branch:** main
 - **Commits:** None (freshly initialized)
 - **Uncommitted Changes:** None
-- **Remote:** origin → `git@github.com:agentic-cookbook/agentic-kitchen.git`
+- **Remote:** origin -- `git@github.com:agentic-cookbook/agentic-kitchen.git`
 
 ## Build & Test Commands
 
-Not available — no project files present.
+Not available -- no project files present.
 
 ## Notes
 
 - Part of the `agentic-cookbook` organization
 - Appears to be a placeholder/future project within the agentic ecosystem
-- The organization also hosts: roadmaps, dev-team, tools, learntruefacts, and other agentic projects
-- Organization contact: agentic-cookbook@mikefullerton.com

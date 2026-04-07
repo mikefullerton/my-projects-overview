@@ -49,6 +49,8 @@ A standalone **RS256 JWT authentication service** that provides centralized user
 
 ```
 agentic-auth-service/
+├── .claude/
+│   └── CLAUDE.md                # Detailed project context for Claude Code
 ├── src/
 │   ├── index.ts                 # Entry point: loads keys, starts Hono server
 │   ├── app.ts                   # Hono app setup, global middleware, route registration
@@ -84,9 +86,6 @@ agentic-auth-service/
 │   └── research/
 │       └── shared-auth-service.md  # Comprehensive architecture & design document
 │
-├── node_modules/                # npm dependencies
-├── src/db/migrations/           # Generated Drizzle migration files
-│
 ├── package.json                 # Dependencies: hono, drizzle-orm, jose, bcrypt, pg
 ├── package-lock.json            # Locked dependency versions
 ├── tsconfig.json                # TypeScript compiler config (ES2022, strict mode)
@@ -94,9 +93,7 @@ agentic-auth-service/
 ├── Dockerfile                   # Multi-stage Docker build for Railway
 ├── railway.toml                 # Railway deployment config (builder, healthcheck)
 ├── .env.example                 # Environment variable template
-├── .gitignore                   # Git ignore rules
-└── .git/                        # Git repository metadata
-
+└── .gitignore                   # Git ignore rules
 ```
 
 ---
@@ -262,7 +259,15 @@ agentic-auth-service/
 
 ## Claude Configuration
 
-**No `.claude/` directory found** — project does not use Claude-specific automation hooks or custom commands.
+**`.claude/CLAUDE.md`** -- Comprehensive project context including:
+- Project structure and file descriptions
+- API routes with auth requirements
+- Environment variable reference
+- Build/dev/deploy commands
+- Coding conventions (strict TypeScript, ESM, RFC 7807 errors, Hono typed env)
+- Key design decisions (RS256 over HS256, refresh token rotation, stateless validation)
+
+No settings.json, rules, skills, or commands configured.
 
 ---
 
@@ -277,8 +282,8 @@ Comprehensive architecture document covering:
 - Asymmetric JWT (RS256) as the solution
 
 **Architecture Diagram:**
-- Auth service (Railway + Postgres) → private key, issues tokens
-- Multiple consuming sites ← public key, validate locally
+- Auth service (Railway + Postgres) -- private key, issues tokens
+- Multiple consuming sites -- public key, validate locally
 - Stateless validation (no network calls to auth service at request time)
 
 **Key Design Decisions:**
@@ -289,22 +294,12 @@ Comprehensive architecture document covering:
 
 **Token Details:**
 - Access token (RS256, 4h expiry): Contains `sub`, `email`, `role`; stored in-memory client-side
-- Refresh token (opaque, 30d expiry): SHA-256 hash stored in Postgres; enablesstateful revocation
-
-**API Surface & Error Format:**
-- Public routes: register, login, refresh, logout, me, JWKS, health
-- Admin routes: list/update/delete users
-- Error format: RFC 7807 problem detail
+- Refresh token (opaque, 30d expiry): SHA-256 hash stored in Postgres; enables stateful revocation
 
 **Integration Guide:**
 - Consuming sites need to fetch public key (embed `.pem` or fetch JWKS)
 - Verify token on each request with `jose` or any JWT library supporting RS256
 - Extract `sub`, `role` from claims
-
-**Operational Notes:**
-- Seeding: `npm run db:seed` (standalone, only needs `DATABASE_URL`)
-- Migrations: `npm run db:migrate` (standalone)
-- Key rotation: Add new key with new `kid`, keep old until tokens expire (4h max)
 
 **Open Questions / Future Work:**
 - Rate limiting (no brute-force protection yet)
@@ -327,16 +322,15 @@ Comprehensive architecture document covering:
 | 2026-04-06 19:01 | bb9a47c | chore: replace KeyLike with CryptoKey type in keys config |
 | 2026-04-06 16:19 | 08a9668 | fix: standalone seed script, add deployed manifest and public key |
 | 2026-04-06 16:16 | 5696997 | fix: standalone migration runner, increase healthcheck timeout |
-| 2026-04-06 15:15 | 7c610b5 | feat: initial scaffold — RS256 JWT auth service |
+| 2026-04-06 15:15 | 7c610b5 | feat: initial scaffold -- RS256 JWT auth service |
 
 ### Current Branch & Status
 
 - **Branch:** `main`
-- **Status:** Clean working tree (no uncommitted changes)
-- **Ahead of Remote:** 2 commits ahead of `origin/main`
+- **Status:** Untracked `.claude/` directory (CLAUDE.md not yet committed)
 - **Remote:** `git@github.com:agentic-cookbook/agentic-auth-service.git`
 
-### Full Commit Log (30 recent)
+### Full Commit Log
 
 Only 5 commits in history (project very new):
 1. Initial scaffold (RS256 JWT auth service)
@@ -370,8 +364,7 @@ npm run build
 ```bash
 npm start
 ```
-- Runs migrations: `node dist/db/migrate.js`
-- Starts server: `node dist/index.js`
+- Runs `node dist/index.js` (run build first)
 
 ### Database
 
@@ -409,24 +402,18 @@ docker run -e DATABASE_URL=... -e JWT_PRIVATE_KEY=... -e JWT_PUBLIC_KEY=... -p 3
 ## Environment Variables
 
 **Required:**
-- `DATABASE_URL` — PostgreSQL connection string (e.g., `postgresql://user:pass@host:5432/db`)
-- `JWT_PRIVATE_KEY` — PEM-encoded RSA private key (RS256)
-- `JWT_PUBLIC_KEY` — PEM-encoded RSA public key (RS256)
+- `DATABASE_URL` -- PostgreSQL connection string (e.g., `postgresql://user:pass@host:5432/db`)
+- `JWT_PRIVATE_KEY` -- PEM-encoded RSA private key (RS256)
+- `JWT_PUBLIC_KEY` -- PEM-encoded RSA public key (RS256)
 
 **Optional:**
-- `PORT` — Server port (default: 3000)
-- `NODE_ENV` — Environment name (development/production)
-- `CORS_ORIGIN` — Allowed CORS origins, comma-separated (default: `*`)
-
-**Generate RSA Keys:**
-```bash
-openssl genpkey -algorithm RSA -out private.pem -pkeyopt rsa_keygen_bits:2048
-openssl rsa -in private.pem -pubout -out public.pem
-```
+- `PORT` -- Server port (default: 3000)
+- `NODE_ENV` -- Environment name (development/production)
+- `CORS_ORIGIN` -- Allowed CORS origins, comma-separated (default: `*`)
 
 ---
 
-## Notes & Interesting Details
+## Notes
 
 ### Project Maturity
 
@@ -437,39 +424,15 @@ openssl rsa -in private.pem -pubout -out public.pem
 ### Design Philosophy
 
 **Stateless by Design:**
-- Consuming sites validate JWTs locally — auth service can go down without breaking authenticated sessions
+- Consuming sites validate JWTs locally -- auth service can go down without breaking authenticated sessions
 - Only revocation (logout) requires network calls to auth service
-- Public key distributed via JWKS endpoint (1-hour cache) — auto-discovery for key rotation
+- Public key distributed via JWKS endpoint (1-hour cache) -- auto-discovery for key rotation
 
 **Security Features:**
 - RS256 (asymmetric) prevents token forgery if one consuming site is compromised
 - Bcrypt password hashing with 12-char minimum requirement
 - Refresh token rotation: each refresh revokes old token
 - Opaque refresh tokens stored as SHA-256 hashes (not plaintext)
-
-### Deployment Pipeline
-
-- Railway with Dockerfile builder
-- Runs migrations automatically on container start
-- Healthcheck via `GET /api/health` (120s timeout)
-- Auto-restart on failure (max 3 retries)
-
-### Integration Story
-
-Consuming projects use this service by:
-1. Getting public key from `/.well-known/jwks.json` (or embed `.site/jwt-public.pem`)
-2. Users log in via `POST /api/auth/login` (returns access + refresh tokens)
-3. On each request, sites verify JWT locally with public key
-4. Zero network calls to auth service needed for request validation
-5. Refresh tokens rotated to detect token theft
-
-### Code Quality
-
-- Full TypeScript with strict mode
-- Type-safe Drizzle ORM queries
-- RFC 7807 error formatting (standardized)
-- Request logging with UUID tracking
-- Separation of concerns: auth, DB, routes, middleware into modules
 
 ### Future Priorities
 
@@ -481,4 +444,3 @@ Based on research doc:
 5. Session management UI
 6. Restrict CORS to known origins
 7. Automate key rotation
-
