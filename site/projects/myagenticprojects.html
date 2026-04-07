@@ -84,76 +84,116 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 </div>
 <div class="content">
 <h2>Project Summary</h2>
-<p>MyAgenticProjects is a full-stack SaaS platform bootstrapped from site-manager v1.3.0. Features a Hono backend API with PostgreSQL, three React+TypeScript frontends on Cloudflare Workers, shared type definitions, and integrated auth, feature flags, messaging, and feedback systems.</p>
+<p>MyAgenticProjects is a full-stack SaaS platform bootstrapped from site-manager v1.3.0. Features a Hono backend API with PostgreSQL on Railway, three React+TypeScript frontends on Cloudflare Workers, shared type definitions, and integrated auth, feature flags, messaging, and feedback systems. All services are deployed and live.</p>
 <h2>Type & Tech Stack</h2>
 <ul>
-<li><strong>Project Type:</strong> Full-stack SaaS Application (multi-site architecture)</li>
+<li><strong>Project Type:</strong> Full-stack SaaS Application (multi-site monorepo)</li>
 <li><strong>Backend:</strong> Hono 4.7.0, Node.js 22, TypeScript 5.7, PostgreSQL 16, Drizzle ORM 0.39.0</li>
-<li><strong>Auth:</strong> JWT (jose 6.0.0), bcrypt, GitHub/Google OAuth</li>
+<li><strong>Auth:</strong> JWT (jose 6.0.0), bcrypt, GitHub/Google OAuth, email/password</li>
 <li><strong>Validation:</strong> Zod 3.24.0</li>
-<li><strong>Frontend (3 SPAs):</strong> React 19, TanStack Router 1.93.0, TanStack React Query 5.62.0, Tailwind CSS 4, Vite 6</li>
-<li><strong>Deployment:</strong> Railway (backend/Docker), Cloudflare Workers (frontends)</li>
-<li><strong>Shared Library:</strong> TypeScript + Zod schemas for all apps</li>
+<li><strong>Frontend (3 SPAs):</strong> React 19, TanStack Router, TanStack React Query, Tailwind CSS 4, Vite</li>
+<li><strong>Deployment:</strong> Railway (backend via Docker), Cloudflare Workers (3 frontends via GitHub Actions)</li>
+<li><strong>Database:</strong> PostgreSQL 16 (Railway) + D1 SQLite (dashboard)</li>
+<li><strong>Shared Library:</strong> TypeScript + Zod schemas for cross-app types</li>
+<li><strong>Package Manager:</strong> npm workspaces monorepo</li>
+<li><strong>Domain:</strong> myagenticprojects.com (DNS not yet pointed to Cloudflare)</li>
 </ul>
 <h2>GitHub URL</h2>
 <p><code>git@github.com:agentic-cookbook/myagenticprojects.git</code></p>
 <h2>Directory Structure</h2>
-<pre><code>myagenticprojects/
-├── .env.example, .env
-├── docker-compose.yml                 # Local PostgreSQL
-├── Dockerfile                         # Multi-stage production build
-├── railway.toml
-├── package.json                       # npm workspaces monorepo
-├── site-manifest.json                 # Deployment URLs
-├── .site/manifest.json                # site-manager v1.3.0 config
-├── .github/workflows/                 # deploy-main.yml, deploy-admin.yml, deploy-dashboard.yml
+<pre><code>
+myagenticprojects/
+├── .env, .env.example                 # Environment variables
+├── docker-compose.yml                 # Local PostgreSQL 16-alpine
+├── Dockerfile                         # Multi-stage Node 22 production build
+├── railway.toml                       # Railway deployment config
+├── package.json                       # npm workspaces monorepo root
+├── site-manifest.json                 # Public deployment URLs
+├── .site/
+│   ├── manifest.json                  # site-manager v1.3.0 config
+│   └── issues.json                    # Known deployment issues (2 blocking, 3 warnings)
+├── .github/workflows/
+│   ├── deploy-main.yml                # Auto-deploy main site on push
+│   ├── deploy-admin.yml               # Auto-deploy admin site on push
+│   └── deploy-dashboard.yml           # Auto-deploy dashboard on push
 ├── shared/
 │   └── src/                           # index.ts, types.ts, constants.ts, api-client.ts
 ├── backend/
 │   └── src/
-│       ├── index.ts, app.ts
+│       ├── index.ts, app.ts           # Hono server entry
 │       ├── routes/                    # health, auth, public, admin/{users,flags,messaging,feedback}
 │       ├── auth/                      # middleware, session, password, github OAuth
 │       ├── db/
 │       │   ├── schema.ts             # users, oauth_accounts, feature_flags, message_logs, feedback_submissions
 │       │   ├── client.ts, migrate.ts, seed.ts, migrations/
-│       └── middleware/
+│       └── middleware/, services/, config/
 ├── sites/
-│   ├── main/                          # Public-facing website (React + Vite + Tailwind + Cloudflare Worker)
-│   ├── admin/                         # Admin dashboard (users, flags, messaging, feedback routes)
+│   ├── main/                          # Public-facing website (wrangler.jsonc)
+│   ├── admin/                         # Admin dashboard
 │   └── dashboard/                     # Dashboard with D1 SQLite
-└── node_modules/</code></pre>
-<h2>Key Components</h2>
-<p><strong>Database Schema:</strong> users, oauth_accounts, feature_flags, message_logs, feedback_submissions</p>
-<p><strong>API Routes:</strong> health, auth (register/login/refresh), public endpoints, admin CRUD for users/flags/messaging/feedback</p>
-<p><strong>Auth:</strong> Email/password + GitHub/Google OAuth, JWT access+refresh tokens, bcrypt</p>
-<p><strong>Deployment:</strong> Railway backend at <code>myagenticprojects-backend-production.up.railway.app</code>, 3 Cloudflare Workers frontends with GitHub Actions auto-deploy</p>
+└── node_modules/
+</code></pre>
+<h2>Key Files & Components</h2>
+<p><strong>Database Schema:</strong> users, oauth_accounts, feature_flags, message_logs, feedback_submissions (Drizzle ORM + PostgreSQL)</p>
+<p><strong>API Routes:</strong> health check, auth (register/login/refresh), public endpoints, admin CRUD for users/flags/messaging/feedback</p>
+<p><strong>Auth System:</strong> Email/password + GitHub/Google OAuth, JWT access+refresh tokens, bcrypt password hashing</p>
+<p><strong>Deployment Pipeline:</strong></p>
+<ul>
+<li>Backend: Railway (Docker multi-stage build, healthcheck at <code>/api/health</code>)</li>
+<li>Main site: <code>myagenticprojects-main.mwfullerton.workers.dev</code></li>
+<li>Admin site: <code>myagenticprojects-admin.mwfullerton.workers.dev</code></li>
+<li>Dashboard: <code>myagenticprojects-dashboard.mwfullerton.workers.dev</code></li>
+</ul>
+<p><strong>Known Issues (.site/issues.json):</strong></p>
+<ul>
+<li>BLOCKING: Auth routes return 404 (router not registered in app.ts)</li>
+<li>BLOCKING: DNS not yet pointing to Cloudflare (nameservers still at GoDaddy)</li>
+<li>3 warnings: missing manifest fields</li>
+</ul>
 <h2>Claude Configuration</h2>
-<p>No <code>.claude/</code> directory. Default Claude Code behavior.</p>
+<p>No <code>.claude/</code> directory or <code>CLAUDE.md</code>. Default Claude Code behavior.</p>
+<h2>Planning & Research Documents</h2>
+<p>None. Project was scaffolded from site-manager v1.3.0 templates.</p>
 <h2>Git History & Current State</h2>
 <ul>
-<li><strong>Branch:</strong> main (up to date with origin)</li>
+<li><strong>Branch:</strong> main</li>
 <li><strong>Working tree:</strong> Clean</li>
-<li><strong>Recent (2026-04-06):</strong> Seed script updates, manifest deployment URLs, site-manager v1.3.0 template updates</li>
-<li><strong>11 commits total</strong> — scaffolded from site-manager, then deployed</li>
+<li><strong>Total Commits:</strong> 11</li>
 </ul>
+<p><strong>Recent Commits (2026-04-06):</strong></p>
+<ol>
+<li><code>b9981d8</code> — fix: update seed script to support password resets and lower minimum to 10 chars</li>
+<li><code>553f8fe</code> — chore: update manifest with deployment URLs</li>
+<li><code>11441c7</code> — chore: update templates to site-manager v1.3.0</li>
+<li><code>446f449</code> — chore: update manifest with deployment URLs</li>
+<li><code>5b1fcea</code> — chore: remove custom domain routes pending DNS setup</li>
+</ol>
+<p><strong>Origin:</strong> Scaffolded from site-manager v1.2.0, then upgraded to v1.3.0</p>
 <h2>Build & Test Commands</h2>
-<pre><code>npm run dev               # Run all services concurrently
+<pre><code>
+npm run dev               # Run all services concurrently (backend + 3 frontends)
 npm run build:all         # Build shared + backend + all sites
-npm run deploy:all        # Deploy all sites
-npm run db:migrate        # Run migrations
+npm run deploy:all        # Deploy all Cloudflare Worker sites
+npm run db:generate       # Generate Drizzle migrations
+npm run db:migrate        # Run database migrations
 npm run db:seed           # Seed admin user
 
 # Individual workspaces
-npm run dev -w backend    # Backend dev (:3000)
-npm run dev -w sites/main # Frontend dev (:5173)
-npm test -w backend       # Vitest</code></pre>
-<p>Local: <code>docker-compose up</code> (PostgreSQL) → <code>npm install</code> → <code>npm run db:migrate</code> → <code>npm run db:seed</code> → <code>npm run dev</code></p>
+npm run dev -w backend           # Backend dev (:3000)
+npm run dev -w sites/main        # Frontend dev
+npm run dev -w sites/admin       # Admin dev
+npm run dev -w sites/dashboard   # Dashboard dev
+npm test -w backend              # Vitest
+</code></pre>
+<p><strong>Local setup:</strong> <code>docker-compose up</code> (PostgreSQL) → <code>npm install</code> → <code>npm run db:migrate</code> → <code>npm run db:seed</code> → <code>npm run dev</code></p>
 <h2>Notes</h2>
 <ul>
-<li>npm workspaces monorepo with shared types</li>
+<li>npm workspaces monorepo with shared types library</li>
 <li>Scaffolded from agentic-cookbook's site-manager v1.3.0</li>
+<li>All 4 services are deployed (backend on Railway, 3 frontends on Cloudflare Workers)</li>
 <li>Feature flags, messaging (Postmark), SMS (Twilio) configured but not yet active</li>
+<li>Auth routes have a known blocking issue (404s, router not registered)</li>
+<li>Custom domain DNS migration from GoDaddy to Cloudflare still pending</li>
 <li>No README.md or CLAUDE.md currently</li>
 </ul>
 </div>

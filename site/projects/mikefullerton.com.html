@@ -84,44 +84,45 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 </div>
 <div class="content">
 <h2>Project Summary</h2>
-<p>Mike Fullerton's personal portfolio and resume website showcasing his professional background as a software engineer and creative pursuits as a drummer. Static HTML/CSS site deployed via GitHub Pages.</p>
+<p>Mike Fullerton's personal portfolio and resume website showcasing his professional background as a software engineer and creative pursuits as a drummer. Static HTML/CSS site deployed via GitHub Pages at mikefullerton.com.</p>
 <h2>Type & Tech Stack</h2>
 <ul>
 <li><strong>Project Type:</strong> Static personal website/portfolio</li>
 <li><strong>Technologies:</strong> HTML5, CSS3 (custom styles with CSS variables), vanilla (no frameworks)</li>
 <li><strong>Font:</strong> Inter (Google Fonts)</li>
 <li><strong>Hosting:</strong> GitHub Pages</li>
-<li><strong>Deployment:</strong> GitHub Actions workflow</li>
-<li><strong>Design:</strong> Mobile-responsive grid-based layout with dark theme</li>
+<li><strong>Deployment:</strong> GitHub Actions workflow (<code>actions/deploy-pages@v4</code>)</li>
+<li><strong>Design:</strong> Mobile-responsive grid-based layout with dark theme (#0a0a0a)</li>
+<li><strong>SEO:</strong> Open Graph, Twitter Cards, JSON-LD Person schema</li>
 </ul>
 <h2>GitHub URL</h2>
-<p><code>https://github.com/mikefullerton/mikefullerton.com</code></p>
+<p><code>git@github.com:mikefullerton/mikefullerton.com.git</code></p>
 <h2>Directory Structure</h2>
-<pre><code>mikefullerton.com/
+<pre><code>
+mikefullerton.com/
 ├── .claude/
 │   ├── settings.local.json          # Local settings with bash permissions
 │   └── worktrees/
-│       └── new-website-design/      # Experimental React/Vite redesign
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml               # GitHub Actions Pages deployment
-├── .superpowers/
-│   └── brainstorm/
+├── .superpowers/                    # (untracked) brainstorm artifacts
 ├── images/
-│   ├── mike-drums.jpg              # Hero image (840KB)
-│   └── og-image.jpg                # Open Graph preview (241KB)
+│   ├── mike-drums.jpg              # Hero image (860KB, optimized from 16MB)
+│   └── og-image.jpg                # Open Graph preview (247KB)
 ├── .gitignore
 ├── .nojekyll                        # GitHub Pages Jekyll disable flag
 ├── CNAME                            # Domain: mikefullerton.com
 ├── CLAUDE.md                        # Auto-merge PR rule
-├── index.html                       # Main website (92 lines)
-├── styles.css                       # Styling (309 lines)
-└── cats_and_dogs_quotes.md         # Untracked notes file</code></pre>
+├── index.html                       # Main website
+├── styles.css                       # Styling
+└── cats_and_dogs_quotes.md         # (untracked) notes file
+</code></pre>
 <h2>Key Files & Components</h2>
 <p><strong>index.html</strong> — Semantic HTML5 with:</p>
 <ul>
-<li>SEO optimization: meta descriptions, Open Graph tags, Twitter Card tags, JSON-LD schema</li>
-<li>Hero section with photo (clickable lightbox)</li>
+<li>SEO optimization: meta descriptions, Open Graph tags, Twitter Card tags, JSON-LD Person schema</li>
+<li>Hero section with photo</li>
 <li>Bio covering drumming, Scratchy Fish band, software engineering (Microsoft, Apple)</li>
 <li>Social links (LinkedIn, Twitter/X, Facebook, Instagram) with SVG icons</li>
 </ul>
@@ -130,20 +131,21 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 <li>Background: #0a0a0a, Text: #e8e8e8</li>
 <li>Accent colors: blue (#6db3ff) for professional, red (#ff8e8e) for creative</li>
 <li>2-column grid on desktop (300px photo + text), responsive mobile</li>
-<li>Lightbox, hover effects, transitions</li>
+<li>Hover effects, transitions</li>
 </ul>
-<p><strong>CLAUDE.md</strong> — Auto-merge all PRs: <code>gh pr merge --squash --admin</code> immediately after creation</p>
+<p><strong>CLAUDE.md</strong> — Auto-merge all PRs: <code>gh pr merge —squash —admin</code> immediately after creation</p>
+<p><strong>.github/workflows/deploy.yml</strong> — Deploys to GitHub Pages on push to <code>gh-pages</code> using <code>actions/deploy-pages@v4</code></p>
 <h2>Claude Configuration</h2>
 <ul>
-<li><code>.claude/settings.local.json</code> — Allows git operations, tree command, file opening</li>
-<li><code>.claude/worktrees/new-website-design/</code> — Experimental React/Vite redesign (separate from deployed version)</li>
+<li><strong>CLAUDE.md:</strong> Auto-merge all PRs with <code>gh pr merge —squash —admin</code></li>
+<li><strong>.claude/settings.local.json:</strong> Allows git operations (init, remote, fetch, checkout, add, commit, push, reset), tree command, and file opening</li>
+<li><strong>.claude/worktrees/</strong> — Worktree support directory</li>
 </ul>
 <h2>Planning & Research Documents</h2>
-<ul>
-<li><code>.superpowers/brainstorm/</code> — Brainstorming artifacts from development sessions</li>
-<li><code>cats_and_dogs_quotes.md</code> — Untracked notes (not committed)</li>
-</ul>
+<p>None committed. <code>.superpowers/</code> directory exists but is untracked.</p>
 <h2>Git History & Current State</h2>
+<p><strong>Current Branch:</strong> gh-pages</p>
+<p><strong>Total Commits:</strong> 15</p>
 <p><strong>Recent Commits:</strong></p>
 <ol>
 <li><code>2026-04-06</code> — chore: add .gitignore (HEAD)</li>
@@ -159,17 +161,17 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 <li>Hero image optimization 16MB → 844KB (#4)</li>
 <li>GitHub Pages deployment setup (#1-#3)</li>
 </ul>
-<p><strong>Current Branch:</strong> gh-pages <strong>Status:</strong> 1 commit ahead of origin, untracked files (.superpowers/, quotes file)</p>
+<p><strong>Status:</strong> Untracked files: <code>.superpowers/</code>, <code>cats_and_dogs_quotes.md</code></p>
 <h2>Build & Test Commands</h2>
 <p>No build step — static site deployed directly to GitHub Pages.</p>
-<p><strong>Deployment:</strong> Push to <code>gh-pages</code> → GitHub Actions deploys via <code>deploy.yml</code> <strong>Local testing:</strong> Open <code>index.html</code> in browser, test responsive at 320px/768px/900px</p>
+<p><strong>Deployment:</strong> Push to <code>gh-pages</code> → GitHub Actions deploys via <code>deploy.yml</code></p>
+<p><strong>Local testing:</strong> Open <code>index.html</code> in browser</p>
 <h2>Notes</h2>
 <ul>
 <li>Intentionally dependency-free static site for performance and simplicity</li>
-<li>Auto-merge PR policy indicates "ship it" philosophy</li>
-<li>Custom domain <code>mikefullerton.com</code> via CNAME</li>
-<li>Site emphasizes three aspects: drummer, professional engineer (Microsoft/Apple), creative builder</li>
-<li>Experimental React/Vite redesign exists in worktrees but is not deployed</li>
+<li>Auto-merge PR policy indicates "ship it" philosophy for this project</li>
+<li>Custom domain <code>mikefullerton.com</code> via CNAME record</li>
+<li>Site emphasizes three aspects: drummer, professional engineer (Microsoft/Apple), creative builder (Scratchy Fish)</li>
 </ul>
 </div>
 <div class="footer">Generated 2026-04-07</div>

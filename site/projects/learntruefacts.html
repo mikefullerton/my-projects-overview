@@ -84,36 +84,40 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 </div>
 <div class="content">
 <h2>Project Summary</h2>
-<p>Learn True Facts is a free, public-facing chat application featuring an AI improv comedian persona that blends real historical facts with absurdly plausible fictional details. It's designed as a test bed for a modern tech stack (Cloudflare + Railway) and persona-driven AI applications before scaling to production.</p>
+<p>Learn True Facts is a free, public-facing chat application featuring an AI improv comedian persona that blends real historical facts with absurdly plausible fictional details. It's designed as a test bed for a modern tech stack (Cloudflare + Railway) and persona-driven AI applications before scaling to production use with Temporal.</p>
 <h2>Type & Tech Stack</h2>
 <ul>
 <li><strong>Project Type:</strong> Full-stack web application with AI chat interface</li>
-<li><strong>Frontend:</strong> React 19 + Vite + Tailwind CSS 4 + TanStack Router/Query</li>
-<li><strong>Backend API:</strong> Hono framework + Drizzle ORM + PostgreSQL + Zod validation</li>
-<li><strong>Admin Portal:</strong> React 19 + Vite + Tailwind CSS 4</li>
-<li><strong>Dashboard:</strong> React 19 + Vite + Tailwind CSS 4 + D1 SQLite</li>
+<li><strong>Status:</strong> Pre-development (design and research phase, no commits)</li>
+<li><strong>Frontend (planned):</strong> React 19 + Vite + Tailwind CSS 4 + TanStack Router/Query</li>
+<li><strong>Backend API (planned):</strong> Hono framework + Drizzle ORM + PostgreSQL + Zod validation</li>
+<li><strong>Admin Portal (planned):</strong> React 19 + Vite + Tailwind CSS 4</li>
+<li><strong>Dashboard (planned):</strong> React 19 + Vite + Tailwind CSS 4 + D1 SQLite</li>
 <li><strong>Authentication:</strong> RS256 JWT via shared <code>agentic-auth-service</code></li>
 <li><strong>Streaming:</strong> Server-Sent Events (SSE) for real-time responses</li>
 <li><strong>Hosting:</strong> Cloudflare Workers (frontend), Railway (backend/API)</li>
 <li><strong>LLM Strategy:</strong> Multi-provider abstraction supporting Cloudflare Workers AI, Google Gemini, Groq, Claude (premium)</li>
+<li><strong>Planned Domain:</strong> learntruefacts.com</li>
 </ul>
 <h2>GitHub URL</h2>
 <p><code>git@github.com:agentic-cookbook/learntruefacts.git</code></p>
 <h2>Directory Structure</h2>
-<pre><code>learntruefacts/
+<pre><code>
+learntruefacts/
 ├── .git/
 └── docs/
     ├── design/
     │   └── initial-idea.md        # Complete product design and architecture
     └── research/
-        └── llm-chat-widget-research.md  # Cost analysis, LLM options, infrastructure</code></pre>
+        └── llm-chat-widget-research.md  # Cost analysis, LLM options, infrastructure
+</code></pre>
 <h2>Key Files & Components</h2>
-<h3><code>/docs/design/initial-idea.md</code></h3>
+<h3><code>docs/design/initial-idea.md</code></h3>
 <p>Comprehensive product design document covering:</p>
 <ul>
 <li>Persona design: improv comedian AI making "true facts"</li>
 <li>Core experience: terminal-style chat with typewriter streaming</li>
-<li>Content safety requirements: prompt-level and application-level guards</li>
+<li>Content safety requirements: prompt-level and application-level guards (child-safe, non-negotiable)</li>
 <li>Model strategy: abstraction layer for provider switching (free tier, premium tier)</li>
 <li>Architecture: full stack diagram with component breakdown</li>
 <li>Data model: conversations, messages, users, shared_conversations tables</li>
@@ -123,14 +127,15 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 <li>Test harness: red team testing for character consistency and safety</li>
 <li>Rollout plan: 4 phases from MVP to premium + registry</li>
 </ul>
-<h3><code>/docs/research/llm-chat-widget-research.md</code></h3>
+<h3><code>docs/research/llm-chat-widget-research.md</code></h3>
 <p>Cost analysis and infrastructure research:</p>
 <ul>
-<li><strong>Claude Haiku pricing:</strong> ~$0.013/conversation at ~6K input tokens + ~1.5K output tokens</li>
-<li><strong>At 1M conversations:</strong> $13K (standard) → $7.5K (with prompt caching) → $4-5K (both optimizations)</li>
+<li><strong>Claude Haiku 4.5 pricing:</strong> ~$0.013/conversation at ~6K input tokens + ~1.5K output tokens</li>
+<li><strong>At 1M conversations:</strong> $13K (standard), $7.5K (with prompt caching), $4-5K (both optimizations)</li>
 <li><strong>Free tier options:</strong> Google Gemini (15 req/min, 1.5K req/day), Groq, OpenRouter, Cloudflare Workers AI</li>
 <li><strong>Recommended MVP:</strong> Cloudflare Workers AI (zero new infrastructure, zero cost)</li>
 <li><strong>Self-hosting:</strong> Ollama for local development, vLLM for production GPU deployments</li>
+<li><strong>Model comparison:</strong> Quality tradeoffs across free, Haiku, Sonnet, and Opus tiers</li>
 </ul>
 <h3>Key Design Decisions</h3>
 <ul>
@@ -141,7 +146,7 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 <li>Premium tier targets Claude models (Haiku/Sonnet/Opus)</li>
 </ul>
 <h2>Claude Configuration</h2>
-<p>No <code>.claude/</code> directory exists yet — project is pre-implementation.</p>
+<p>No <code>.claude/</code> directory or <code>CLAUDE.md</code> exists yet — project is pre-implementation.</p>
 <h2>Planning & Research Documents</h2>
 <p><strong>Design Phase (Complete):</strong></p>
 <ul>
@@ -149,9 +154,10 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 </ul>
 <p><strong>Research Phase (Complete):</strong></p>
 <ul>
-<li>Cost analysis showing prompt caching as key optimization ($0.013 → $0.0009 per conversation)</li>
+<li>Cost analysis showing prompt caching as key optimization lever</li>
 <li>Free tier economics via Cloudflare Workers AI or Gemini</li>
 <li>Self-hosting vs. API cost tradeoff ($5-10K/month break-even)</li>
+<li>Model pricing reference table (April 2026)</li>
 </ul>
 <p><strong>Open Questions from Design:</strong></p>
 <ul>
@@ -166,8 +172,8 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 <h2>Git History & Current State</h2>
 <ul>
 <li><strong>Current Branch:</strong> main</li>
-<li><strong>Commits:</strong> None (fresh repository)</li>
-<li><strong>Untracked files:</strong> docs/</li>
+<li><strong>Commits:</strong> None (empty repository, no initial commit)</li>
+<li><strong>Untracked files:</strong> <code>.DS_Store</code>, <code>docs/</code></li>
 <li><strong>Remote:</strong> origin → <code>git@github.com:agentic-cookbook/learntruefacts.git</code></li>
 <li><strong>Status:</strong> Ready for initial commit</li>
 </ul>
@@ -186,22 +192,8 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 <li>Designed to test new tech stack before scaling to production use with Temporal</li>
 <li>First user-facing AI persona application in the portfolio</li>
 <li>Stress-tests: content safety at scale, model abstraction, conversation recording, persona registration</li>
+<li>Architecture follows site-manager conventions used across the agentic-cookbook organization</li>
 </ul>
-<p><strong>Integration Points:</strong></p>
-<ul>
-<li>Shared auth service (<code>agentic-auth-service</code>) for JWT auth</li>
-<li>Official Agent Registry for persona registration</li>
-<li>Cloudflare Workers for frontend hosting</li>
-<li>Railway for backend API</li>
-</ul>
-<p><strong>Next Steps:</strong></p>
-<ol>
-<li>Name the comedian persona</li>
-<li>Verify domain availability</li>
-<li>Initial git commit with docs</li>
-<li>Create <code>.claude/</code> configuration</li>
-<li>Begin Phase 1: MVP with Cloudflare Workers AI backend</li>
-</ol>
 </div>
 <div class="footer">Generated 2026-04-07</div>
 </body>

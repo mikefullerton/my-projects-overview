@@ -9,9 +9,9 @@ My Projects is a personal project management dashboard that tracks ~35 git repos
 - **Project Type:** Web Dashboard / Project Management System
 - **Frontend:** React 19.2.4, Vite 8.0.5, Vanilla CSS (21KB)
 - **Backend:** Node.js HTTP server (port 3456)
-- **Scanner:** Bash/Python scripts for git repo scanning
-- **Storage:** localStorage adapter pattern (SQLite support stubbed for future)
-- **Data:** ProjectDB class with pluggable adapter interface
+- **Scanner:** Bash (scan-projects.sh) + Python (scan-branches.py, scan-modified.py)
+- **Storage:** localStorage adapter pattern (pluggable -- `ApiAdapter` stubbed for future)
+- **Data:** ProjectDB class with adapter interface (getAll, get, put, remove, clear)
 
 ## GitHub URL
 
@@ -26,62 +26,79 @@ my-projects/
 ├── config.json                        # Project registry (~35 projects with paths)
 ├── docs/
 │   ├── unified-data-abstraction.md    # Design: unify Roadmaps, Dev-Team, Bot under shared backend
-│   ├── local-file-writing-projects.md # Current data architecture
+│   ├── local-file-writing-projects.md # Current data architecture across 3 projects
 │   ├── requirements/
 │   │   └── myagenticprojects-storage-requirements.md
 │   └── superpowers/specs/
-│       └── 2026-04-06-react-conversion-design.md
-├── projects/                          # Per-project markdown notes
+├── projects/                          # Per-project markdown notes (8 files)
 ├── scanner/
-│   ├── scan-projects.sh               # Main scanner (461 lines)
+│   ├── scan-projects.sh               # Main scanner script
 │   ├── scan-branches.py
 │   └── scan-modified.py
 ├── server/
-│   ├── server.js                      # HTTP server with /api/refresh
+│   ├── server.js                      # HTTP server with /api/refresh endpoint
 │   └── start.sh
 └── site/                              # React + Vite frontend
     ├── vite.config.js                 # React plugin + API proxy to :3456
-    ├── package.json
+    ├── package.json                   # project-hub v1.0.0
     └── src/
         ├── main.jsx
-        ├── App.jsx
+        ├── App.jsx                    # Main app with sidebar, stats, project views
         ├── index.css                  # All styles (21KB)
         ├── context/DataContext.jsx     # ProjectDB provider
         ├── hooks/useData.js
-        ├── components/                # Sidebar, StatsBar, ProjectGrid, ProjectDetail, AttentionView, TodosView, IssuesView, DecisionsView, GitIndicators, ItemList
+        ├── components/                # Sidebar, StatsBar, ProjectGrid, ProjectDetail, etc.
         └── lib/
             ├── db.js                  # ProjectDB + adapter pattern
             ├── config.js
-            └── seed.js                # SEED_DATA with project metadata
+            ├── seed.js                # SEED_DATA with project metadata
+            └── theme.js               # Centralized color mappings
 ```
 
-## Key Components
+## Key Files & Components
 
-**Scanner:** Walks git repos, gathers status/branches/commits, outputs JSON. Auto-generates todos for uncommitted files and open branches.
+**Scanner:** Walks git repos, gathers status/branches/commits/modified files, outputs JSON. Auto-generates todos for uncommitted files and open branches.
 
 **/refresh skill:** Scans all projects, runs git commands, detects tech stack, preserves manual data, bumps SEED_VERSION.
 
-**Components:** Sidebar (nav/project tree), StatsBar (5 stat cards), ProjectGrid (grouped cards), ProjectDetail (full view), AttentionView (uncommitted/high-priority), TodosView, IssuesView, DecisionsView
+**Components:** Sidebar (nav/project tree), StatsBar (5 stat cards), ProjectGrid (grouped cards), ProjectDetail (full view), AttentionView (uncommitted/high-priority), TodosView, IssuesView, DecisionsView, GitIndicators
 
-**Data Model:** projects, todos, issues, concerns, decisions, dependencies — 6 tables with auto-generated and manual entries.
+**Data Model:** 6 tables -- projects, todos, issues, concerns, decisions, dependencies -- with auto-generated and manual entries.
+
+**config.json:** Registry of ~35 projects across categories (active, paused, deprecated, tests, personal, other) with relative paths.
 
 ## Claude Configuration
 
 - `/refresh` skill for scanning and updating project data
-- No other Claude-specific configuration
+- No CLAUDE.md, settings.json, or rules configured
 
 ## Planning & Research Documents
 
-- **unified-data-abstraction.md** — Unify Roadmaps, Dev-Team, Social Media Bot under 10 core entity types
-- **react-conversion-design.md** — Vanilla JS → React + Vite port (zero visual changes)
-- **myagenticprojects-storage-requirements.md** — Server-side persistent storage specs
-- **local-file-writing-projects.md** — Current data architecture across 3 projects
+| Document | Description |
+|----------|-------------|
+| `docs/unified-data-abstraction.md` | Design to unify Roadmaps, Dev-Team, Social Media Bot under 10 core entity types |
+| `docs/local-file-writing-projects.md` | Documents 3 projects that write local files (Roadmaps, Dev-Team, Social Media Bot) |
+| `docs/requirements/myagenticprojects-storage-requirements.md` | Server-side persistent storage specs replacing localStorage |
+| `docs/superpowers/specs/` | React conversion design spec |
+| `projects/` | Per-project markdown notes: cat-herding, my-agentic-interviews, my-projects, mysetup, name-craft, scratchyfish, social-media-bot-tests, social-media-bot |
 
 ## Git History & Current State
 
-- **Branch:** main (up to date with origin)
-- **Uncommitted changes:** DataContext.jsx, seed.js modified
-- **Recent (2026-04-06):** Inline git status, scanner async/spinner, React conversion, repo reorganization
+- **Branch:** main
+- **Total Commits:** 12
+- **Uncommitted changes:** `site/src/context/DataContext.jsx`, `site/src/lib/seed.js` modified
+
+**Recent Commits (2026-04-06):**
+1. `aa8dd4b` -- feat: inline git status after project name, remove colored subtitles
+2. `a752d51` -- feat: replace colored subtitles with git status info for dirty repos
+3. `d95ea0e` -- fix: make scanner run async, add scanning spinner to refresh button
+4. `505ad58` -- fix: refresh button now works without page reload
+5. `02bd89f` -- feat: update DataContext and seed data
+
+**Major milestones:**
+- React + Vite conversion from vanilla JS (`b6c3a7f`)
+- Repo reorganization into site/, scanner/, server/ (`30c9d95`)
+- Initial project management dashboard (`86bcff0`)
 
 ## Build & Test Commands
 
@@ -100,5 +117,7 @@ cd server && ./start.sh    # Start on port 3456
 ## Notes
 
 - Recently converted from monolithic vanilla JS (1700 lines) to modular React + Vite
-- Future: Replace localStorage adapter with ApiAdapter for persistent backend
-- Vision: unify data across Roadmaps, Dev-Team, and Social Media Bot systems
+- Two uncommitted files in working tree (DataContext.jsx, seed.js)
+- Future: Replace localStorage adapter with ApiAdapter for persistent backend storage
+- Vision: Unify data across Roadmaps, Dev-Team, and Social Media Bot systems into shared entity types
+- Centralized color/theme system in `theme.js`

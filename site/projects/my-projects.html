@@ -90,71 +90,109 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 <li><strong>Project Type:</strong> Web Dashboard / Project Management System</li>
 <li><strong>Frontend:</strong> React 19.2.4, Vite 8.0.5, Vanilla CSS (21KB)</li>
 <li><strong>Backend:</strong> Node.js HTTP server (port 3456)</li>
-<li><strong>Scanner:</strong> Bash/Python scripts for git repo scanning</li>
-<li><strong>Storage:</strong> localStorage adapter pattern (SQLite support stubbed for future)</li>
-<li><strong>Data:</strong> ProjectDB class with pluggable adapter interface</li>
+<li><strong>Scanner:</strong> Bash (scan-projects.sh) + Python (scan-branches.py, scan-modified.py)</li>
+<li><strong>Storage:</strong> localStorage adapter pattern (pluggable — <code>ApiAdapter</code> stubbed for future)</li>
+<li><strong>Data:</strong> ProjectDB class with adapter interface (getAll, get, put, remove, clear)</li>
 </ul>
 <h2>GitHub URL</h2>
 <p><code>git@github.com:mikefullerton/my-projects.git</code></p>
 <h2>Directory Structure</h2>
-<pre><code>my-projects/
+<pre><code>
+my-projects/
 ├── .claude/
 │   └── skills/refresh/SKILL.md       # /refresh skill - scans projects, updates seed data
 ├── config.json                        # Project registry (~35 projects with paths)
 ├── docs/
 │   ├── unified-data-abstraction.md    # Design: unify Roadmaps, Dev-Team, Bot under shared backend
-│   ├── local-file-writing-projects.md # Current data architecture
+│   ├── local-file-writing-projects.md # Current data architecture across 3 projects
 │   ├── requirements/
 │   │   └── myagenticprojects-storage-requirements.md
 │   └── superpowers/specs/
-│       └── 2026-04-06-react-conversion-design.md
-├── projects/                          # Per-project markdown notes
+├── projects/                          # Per-project markdown notes (8 files)
 ├── scanner/
-│   ├── scan-projects.sh               # Main scanner (461 lines)
+│   ├── scan-projects.sh               # Main scanner script
 │   ├── scan-branches.py
 │   └── scan-modified.py
 ├── server/
-│   ├── server.js                      # HTTP server with /api/refresh
+│   ├── server.js                      # HTTP server with /api/refresh endpoint
 │   └── start.sh
 └── site/                              # React + Vite frontend
     ├── vite.config.js                 # React plugin + API proxy to :3456
-    ├── package.json
+    ├── package.json                   # project-hub v1.0.0
     └── src/
         ├── main.jsx
-        ├── App.jsx
+        ├── App.jsx                    # Main app with sidebar, stats, project views
         ├── index.css                  # All styles (21KB)
         ├── context/DataContext.jsx     # ProjectDB provider
         ├── hooks/useData.js
-        ├── components/                # Sidebar, StatsBar, ProjectGrid, ProjectDetail, AttentionView, TodosView, IssuesView, DecisionsView, GitIndicators, ItemList
+        ├── components/                # Sidebar, StatsBar, ProjectGrid, ProjectDetail, etc.
         └── lib/
             ├── db.js                  # ProjectDB + adapter pattern
             ├── config.js
-            └── seed.js                # SEED_DATA with project metadata</code></pre>
-<h2>Key Components</h2>
-<p><strong>Scanner:</strong> Walks git repos, gathers status/branches/commits, outputs JSON. Auto-generates todos for uncommitted files and open branches.</p>
+            ├── seed.js                # SEED_DATA with project metadata
+            └── theme.js               # Centralized color mappings
+</code></pre>
+<h2>Key Files & Components</h2>
+<p><strong>Scanner:</strong> Walks git repos, gathers status/branches/commits/modified files, outputs JSON. Auto-generates todos for uncommitted files and open branches.</p>
 <p><strong>/refresh skill:</strong> Scans all projects, runs git commands, detects tech stack, preserves manual data, bumps SEED_VERSION.</p>
-<p><strong>Components:</strong> Sidebar (nav/project tree), StatsBar (5 stat cards), ProjectGrid (grouped cards), ProjectDetail (full view), AttentionView (uncommitted/high-priority), TodosView, IssuesView, DecisionsView</p>
-<p><strong>Data Model:</strong> projects, todos, issues, concerns, decisions, dependencies — 6 tables with auto-generated and manual entries.</p>
+<p><strong>Components:</strong> Sidebar (nav/project tree), StatsBar (5 stat cards), ProjectGrid (grouped cards), ProjectDetail (full view), AttentionView (uncommitted/high-priority), TodosView, IssuesView, DecisionsView, GitIndicators</p>
+<p><strong>Data Model:</strong> 6 tables — projects, todos, issues, concerns, decisions, dependencies — with auto-generated and manual entries.</p>
+<p><strong>config.json:</strong> Registry of ~35 projects across categories (active, paused, deprecated, tests, personal, other) with relative paths.</p>
 <h2>Claude Configuration</h2>
 <ul>
 <li><code>/refresh</code> skill for scanning and updating project data</li>
-<li>No other Claude-specific configuration</li>
+<li>No CLAUDE.md, settings.json, or rules configured</li>
 </ul>
 <h2>Planning & Research Documents</h2>
-<ul>
-<li><strong>unified-data-abstraction.md</strong> — Unify Roadmaps, Dev-Team, Social Media Bot under 10 core entity types</li>
-<li><strong>react-conversion-design.md</strong> — Vanilla JS → React + Vite port (zero visual changes)</li>
-<li><strong>myagenticprojects-storage-requirements.md</strong> — Server-side persistent storage specs</li>
-<li><strong>local-file-writing-projects.md</strong> — Current data architecture across 3 projects</li>
-</ul>
+<table>
+<thead><tr>
+<th>Document</th>
+<th>Description</th>
+</tr></thead><tbody>
+<tr>
+<td><code>docs/unified-data-abstraction.md</code></td>
+<td>Design to unify Roadmaps, Dev-Team, Social Media Bot under 10 core entity types</td>
+</tr>
+<tr>
+<td><code>docs/local-file-writing-projects.md</code></td>
+<td>Documents 3 projects that write local files (Roadmaps, Dev-Team, Social Media Bot)</td>
+</tr>
+<tr>
+<td><code>docs/requirements/myagenticprojects-storage-requirements.md</code></td>
+<td>Server-side persistent storage specs replacing localStorage</td>
+</tr>
+<tr>
+<td><code>docs/superpowers/specs/</code></td>
+<td>React conversion design spec</td>
+</tr>
+<tr>
+<td><code>projects/</code></td>
+<td>Per-project markdown notes: cat-herding, my-agentic-interviews, my-projects, mysetup, name-craft, scratchyfish, social-media-bot-tests, social-media-bot</td>
+</tr>
+</tbody></table>
 <h2>Git History & Current State</h2>
 <ul>
-<li><strong>Branch:</strong> main (up to date with origin)</li>
-<li><strong>Uncommitted changes:</strong> DataContext.jsx, seed.js modified</li>
-<li><strong>Recent (2026-04-06):</strong> Inline git status, scanner async/spinner, React conversion, repo reorganization</li>
+<li><strong>Branch:</strong> main</li>
+<li><strong>Total Commits:</strong> 12</li>
+<li><strong>Uncommitted changes:</strong> <code>site/src/context/DataContext.jsx</code>, <code>site/src/lib/seed.js</code> modified</li>
+</ul>
+<p><strong>Recent Commits (2026-04-06):</strong></p>
+<ol>
+<li><code>aa8dd4b</code> — feat: inline git status after project name, remove colored subtitles</li>
+<li><code>a752d51</code> — feat: replace colored subtitles with git status info for dirty repos</li>
+<li><code>d95ea0e</code> — fix: make scanner run async, add scanning spinner to refresh button</li>
+<li><code>505ad58</code> — fix: refresh button now works without page reload</li>
+<li><code>02bd89f</code> — feat: update DataContext and seed data</li>
+</ol>
+<p><strong>Major milestones:</strong></p>
+<ul>
+<li>React + Vite conversion from vanilla JS (<code>b6c3a7f</code>)</li>
+<li>Repo reorganization into site/, scanner/, server/ (<code>30c9d95</code>)</li>
+<li>Initial project management dashboard (<code>86bcff0</code>)</li>
 </ul>
 <h2>Build & Test Commands</h2>
-<pre><code># Frontend
+<pre><code>
+# Frontend
 cd site &amp;&amp; npm run dev     # Vite dev (:5173, proxies /api to :3456)
 cd site &amp;&amp; npm run build   # Production build
 
@@ -162,12 +200,15 @@ cd site &amp;&amp; npm run build   # Production build
 cd server &amp;&amp; ./start.sh    # Start on port 3456
 
 # Scanner
-./scanner/scan-projects.sh</code></pre>
+./scanner/scan-projects.sh
+</code></pre>
 <h2>Notes</h2>
 <ul>
 <li>Recently converted from monolithic vanilla JS (1700 lines) to modular React + Vite</li>
-<li>Future: Replace localStorage adapter with ApiAdapter for persistent backend</li>
-<li>Vision: unify data across Roadmaps, Dev-Team, and Social Media Bot systems</li>
+<li>Two uncommitted files in working tree (DataContext.jsx, seed.js)</li>
+<li>Future: Replace localStorage adapter with ApiAdapter for persistent backend storage</li>
+<li>Vision: Unify data across Roadmaps, Dev-Team, and Social Media Bot systems into shared entity types</li>
+<li>Centralized color/theme system in <code>theme.js</code></li>
 </ul>
 </div>
 <div class="footer">Generated 2026-04-07</div>
