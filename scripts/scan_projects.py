@@ -20,7 +20,7 @@ import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Dict, List, Optional, Tuple
 
 PROJECTS_DIR = Path.home() / "projects" / "active"
 OVERVIEW_REPO = PROJECTS_DIR / "my-projects-overview"
@@ -55,7 +55,7 @@ DEPLOYMENT_FILES = {
 DOC_DIRS = ["docs", "research", "planning", "Roadmaps"]
 
 
-def run_git(project_dir: Path, args: list[str], timeout: int = 10) -> str | None:
+def run_git(project_dir: Path, args: List[str], timeout: int = 10) -> Optional[str]:
     try:
         result = subprocess.run(
             ["git", "-C", str(project_dir)] + args,
@@ -69,7 +69,7 @@ def run_git(project_dir: Path, args: list[str], timeout: int = 10) -> str | None
 
 
 def gather_git(project_dir: Path) -> dict[str, Any]:
-    info: dict[str, Any] = {
+    info: Dict[str, Any] = {
         "remote_url": None, "org": None, "branch": None,
         "clean": None, "dirty_files": [], "recent_commits": [],
         "last_commit_date": None,
@@ -109,7 +109,7 @@ def gather_git(project_dir: Path) -> dict[str, Any]:
     return info
 
 
-def read_file_safe(path: Path, max_lines: int | None = None) -> str | None:
+def read_file_safe(path: Path, max_lines: Optional[int] = None) -> Optional[str]:
     try:
         text = path.read_text(encoding="utf-8", errors="replace")
         if max_lines:
@@ -121,7 +121,7 @@ def read_file_safe(path: Path, max_lines: int | None = None) -> str | None:
 
 
 def detect_tech(project_dir: Path) -> dict[str, Any]:
-    info: dict[str, Any] = {
+    info: Dict[str, Any] = {
         "type": "unknown", "config_file": None, "language": None,
         "frameworks": [], "dependencies": {}, "scripts": {},
         "deployment": None,
@@ -245,13 +245,13 @@ def _detect_swift_frameworks(project_dir: Path, info: dict) -> None:
 
 
 def build_tree(project_dir: Path, max_depth: int = 3) -> str:
-    lines: list[str] = []
+    lines: List[str] = []
     _walk_tree(project_dir, "", 0, max_depth, lines)
     return "\n".join(lines)
 
 
 def _walk_tree(
-    directory: Path, prefix: str, depth: int, max_depth: int, lines: list[str],
+    directory: Path, prefix: str, depth: int, max_depth: int, lines: List[str],
 ) -> None:
     if depth >= max_depth:
         return
@@ -272,8 +272,8 @@ def _walk_tree(
             lines.append(f"{prefix}{connector}{entry.name}")
 
 
-def gather_docs(project_dir: Path) -> tuple[dict[str, str | None], dict[str, str]]:
-    root_docs: dict[str, str | None] = {
+def gather_docs(project_dir: Path) -> Tuple[Dict[str, Optional[str]], Dict[str, str]]:
+    root_docs: Dict[str, Optional[str]] = {
         "README.md": None,
         "CLAUDE.md": None,
     }
@@ -282,7 +282,7 @@ def gather_docs(project_dir: Path) -> tuple[dict[str, str | None], dict[str, str
         if path.exists():
             root_docs[name] = read_file_safe(path, max_lines=MAX_DOC_LINES)
 
-    planning_docs: dict[str, str] = {}
+    planning_docs: Dict[str, str] = {}
     for doc_dir_name in DOC_DIRS:
         doc_dir = project_dir / doc_dir_name
         if not doc_dir.is_dir():
@@ -297,7 +297,7 @@ def gather_docs(project_dir: Path) -> tuple[dict[str, str | None], dict[str, str
 
 
 def gather_claude_config(project_dir: Path) -> dict[str, Any]:
-    config: dict[str, Any] = {
+    config: Dict[str, Any] = {
         "rules": [], "skills": [], "settings": {}, "commands": [],
     }
     claude_dir = project_dir / ".claude"
@@ -351,7 +351,7 @@ def generate_template(
     name: str, git: dict, tech: dict, structure: str,
     docs: dict, planning_docs: dict, claude_config: dict,
 ) -> str:
-    lines: list[str] = []
+    lines: List[str] = []
 
     lines.append(f"# {name}")
     lines.append("")
@@ -465,7 +465,7 @@ def scan_project(name: str, project_dir: Path) -> dict[str, Any]:
     }
 
 
-def discover_projects(projects_dir: Path) -> list[str]:
+def discover_projects(projects_dir: Path) -> List[str]:
     if not projects_dir.is_dir():
         return []
     names = []
@@ -483,8 +483,8 @@ def discover_projects(projects_dir: Path) -> list[str]:
 
 
 def diff_projects(
-    live: list[str], existing_dir: Path,
-) -> tuple[list[str], list[str], list[str]]:
+    live: List[str], existing_dir: Path,
+) -> Tuple[List[str], List[str], List[str]]:
     existing = set()
     if existing_dir.is_dir():
         existing = {
@@ -499,9 +499,9 @@ def diff_projects(
 
 
 def scan_all(
-    projects_dir: Path, projects_subdir: Path, single_project: str | None = None,
-) -> dict[str, Any]:
-    errors: list[str] = []
+    projects_dir: Path, projects_subdir: Path, single_project: Optional[str] = None,
+) -> Dict[str, Any]:
+    errors: List[str] = []
 
     if single_project:
         project_dir = projects_dir / single_project
@@ -522,7 +522,7 @@ def scan_all(
     live = discover_projects(projects_dir)
     new, removed, existing = diff_projects(live, projects_subdir)
     to_scan = new + existing
-    projects: dict[str, Any] = {}
+    projects: Dict[str, Any] = {}
 
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
         futures = {}
@@ -552,7 +552,7 @@ def scan_all(
 
 
 def regenerate_index(projects_subdir: Path, index_file: Path) -> None:
-    entries: list[dict[str, str]] = []
+    entries: List[Dict[str, str]] = []
 
     if not projects_subdir.is_dir():
         return
@@ -613,8 +613,8 @@ def regenerate_index(projects_subdir: Path, index_file: Path) -> None:
     existing_categories = _parse_existing_categories(index_file)
 
     # Assign categories
-    categorized: dict[str, list[dict]] = {}
-    uncategorized: list[dict] = []
+    categorized: Dict[str, List[dict]] = {}
+    uncategorized: List[dict] = []
 
     for entry in entries:
         found = False
@@ -661,7 +661,7 @@ def regenerate_index(projects_subdir: Path, index_file: Path) -> None:
         lines.append("")
 
     # Quick Reference
-    by_org: dict[str, list[str]] = {}
+    by_org: Dict[str, List[str]] = {}
     for e in entries:
         org = e["org"] or "unknown"
         by_org.setdefault(org, []).append(e["name"])
@@ -681,7 +681,7 @@ def regenerate_index(projects_subdir: Path, index_file: Path) -> None:
 
 def _parse_existing_categories(index_file: Path) -> dict[str, list[str]]:
     """Parse existing index.md to find which projects are in which categories."""
-    categories: dict[str, list[str]] = {}
+    categories: Dict[str, List[str]] = {}
     if not index_file.exists():
         return categories
 
