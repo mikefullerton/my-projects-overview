@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Temporal Platform - Project Overview — My Projects Overview</title>
+<title>Temporal Platform — My Projects Overview</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -79,686 +79,119 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 <div class="grain"></div>
 <div class="header">
   <a href="../index.html" class="back">&larr; All Projects</a>
-  <span class="header-title">Temporal Platform - Project Overview</span>
+  <span class="header-title">Temporal Platform</span>
   <span class="header-meta">temporal-company</span>
 </div>
 <div class="content">
-<p><strong>Last Updated</strong>: 2026-04-07 <strong>Repository</strong>: https://github.com/temporal-company/temporal-platform</p>
 <h2>Project Summary</h2>
-<p>Temporal Platform is a spec-driven application platform for building offline-first, cross-platform applications. Instead of sharing code across platforms (like Kotlin Multiplatform, React Native, or Flutter), it shares <strong>behavioral specifications</strong> — precise markdown documents that an LLM can use to generate correct, testable implementations on any platform. Each platform implements specs natively using its own language and frameworks, with conformance test vectors ensuring all implementations behave identically.</p>
-<h2>Type & Tech Stack</h2>
-<h3>Project Type</h3>
+<p>A spec-driven application platform for building offline-first, cross-platform apps. Instead of sharing code across platforms (like KMP, React Native, Flutter), Temporal Platform shares behavioral specifications -- markdown documents precise enough for an LLM to generate correct, testable implementations on any platform. Each platform implements specs natively using its own language and frameworks, while conformance test vectors ensure identical behavior. The repo contains specifications only -- no application code. Extracted from the Temporal app project as a reusable platform layer.</p>
+<h2>Type &amp; Tech Stack</h2>
 <ul>
-<li><strong>Specification Framework</strong> (not application code)</li>
-<li><strong>LLM-Driven Code Generation Platform</strong></li>
-<li><strong>Conformance Testing Framework</strong></li>
-<li><strong>Infrastructure for offline-first, cross-platform applications</strong></li>
-</ul>
-<h3>Architecture</h3>
-<p>Client-server architecture with:</p>
-<table>
-<tr>
-<th>Component</th>
-<th>Language</th>
-<th>Framework</th>
-<th>Platforms</th>
-</tr>
-<tr>
-<td><strong>Shared Data Layer</strong></td>
-<td>Markdown specs</td>
-<td>N/A</td>
-<td>Cross-platform</td>
-</tr>
-<tr>
-<td><strong>Backend/Server</strong></td>
-<td>Kotlin</td>
-<td>Ktor + PostgreSQL</td>
-<td>JVM (Railway deployment)</td>
-</tr>
-<tr>
-<td><strong>Apple Clients</strong></td>
-<td>Swift</td>
-<td>SwiftUI</td>
-<td>iOS, macOS, watchOS, tvOS, visionOS</td>
-</tr>
-<tr>
-<td><strong>Android Clients</strong></td>
-<td>Kotlin</td>
-<td>Jetpack Compose + Material 3</td>
-<td>Android phone/tablet/foldable</td>
-</tr>
-<tr>
-<td><strong>Windows Client</strong></td>
-<td>C#</td>
-<td>WinUI 3</td>
-<td>Windows Desktop (x64)</td>
-</tr>
-<tr>
-<td><strong>Web Client</strong></td>
-<td>TypeScript</td>
-<td>React 19 + Tailwind CSS</td>
-<td>All modern browsers</td>
-</tr>
-<tr>
-<td><strong>Admin Dashboard</strong></td>
-<td>TypeScript</td>
-<td>React</td>
-<td>Web</td>
-</tr>
-<tr>
-<td><strong>Monitoring Dashboard</strong></td>
-<td>TypeScript/JavaScript</td>
-<td>Cloudflare Workers + D1</td>
-<td>Web (status.*.today)</td>
-</tr>
-<tr>
-<td><strong>Conformance Tests (TypeScript)</strong></td>
-<td>TypeScript</td>
-<td>Vitest</td>
-<td>Node.js</td>
-</tr>
-<tr>
-<td><strong>Conformance Tests (Swift)</strong></td>
-<td>Swift</td>
-<td>XCTest</td>
-<td>iOS/macOS</td>
-</tr>
-</table>
-<h3>Technology Highlights</h3>
-<ul>
-<li><strong>Sync Engine</strong>: Last-Writer-Wins (LWW) conflict resolution with edit operations</li>
-<li><strong>Persistence</strong>: SQLite with dual-table architecture (base + snapshot)</li>
-<li><strong>Authentication</strong>: JWT-based with OAuth providers</li>
-<li><strong>Feature Modules</strong>: Plugin architecture (discussions, messaging, gamification, notifications, calendar integration, feature flags, feedback, OAuth providers)</li>
-<li><strong>Testing</strong>: JSON-based conformance test vectors with per-platform runners</li>
-<li><strong>Deployment</strong>: Railway (backend), platform-native for clients</li>
-<li><strong>Skill Framework</strong>: Claude Code skills for onboarding (init-platform) and spec planning (temporal-plan-spec)</li>
+<li><strong>Type</strong>: Specification repository / platform framework (no application code)</li>
+<li><strong>Format</strong>: Markdown specifications with YAML frontmatter, JSON test vectors</li>
+<li><strong>Spec features</strong>: Concrete data structures, algorithmic pseudocode, exact SQL DDL, wire format examples, conformance test vectors</li>
+<li><strong>Target platforms</strong>: Apple (Swift/SwiftUI), Android (Kotlin/Compose), Windows (Kotlin/Compose Multiplatform), Web (TypeScript/React)</li>
+<li><strong>Verification</strong>: JSON test vectors with per-platform runners (Swift/XCTest, Kotlin/JUnit, TypeScript/Vitest)</li>
+<li><strong>Templating</strong>: <code>{{placeholder}}</code> tokens for app-specific values (app_name, org_package, api_base_url, etc.)</li>
+<li><strong>Copyright</strong>: Proprietary (2026 Mike Fullerton / Temporal)</li>
 </ul>
 <h2>GitHub URL</h2>
-<pre><code>git@github.com:temporal-company/temporal-platform.git
-https://github.com/temporal-company/temporal-platform</code></pre>
-<p><strong>Owned by</strong>: Temporal Company <strong>Current Branch</strong>: main (up to date with origin/main) <strong>Uncommitted Changes</strong>: None (working tree clean)</p>
+<p><code>git@github.com:temporal-company/temporal-platform.git</code></p>
 <h2>Directory Structure</h2>
-<pre><code>temporal-platform/                           Root
-├── README.md                                 Overview and getting started guide
-├── CLAUDE.md                                 Development guidelines, rules, standards
-├── .gitignore                                (.build/, .DS_Store, .temporal/, .claude/worktrees/)
-├── .git/                                     Git repository metadata
-├── .claude/                                  Claude Code configuration (currently empty)
-│
-├── client-server/                            Client-server architecture specs
-│   ├── blueprints/                           Behavioral specifications (78 markdown files)
-│   │   ├── shared/                           Cross-platform data layer (14 specs)
-│   │   │   ├── auth/                         Authentication &amp; authorization
-│   │   │   │   ├── authentication.md         JWT, OAuth, password auth specs
-│   │   │   │   └── authorization.md         Capabilities-based authorization
-│   │   │   ├── models/                       Core entity specs (6 models)
-│   │   │   │   ├── syncable.md               Base interface for syncable entities
-│   │   │   │   ├── content.md                Generic content entity
-│   │   │   │   ├── project.md                Project entity
-│   │   │   │   ├── user.md                   User entity
-│   │   │   │   ├── calendar-event.md         Calendar event entity
-│   │   │   │   └── edit-operation.md         Field-level edit change log
-│   │   │   ├── persistence/                  Local database specs
-│   │   │   │   ├── local-database.md         SQLite schema with dual-table architecture
-│   │   │   │   └── repositories.md           CRUD repository patterns
-│   │   │   ├── sync/                         Sync engine specs (3 specs)
-│   │   │   │   ├── sync-engine.md            LWW sync orchestration
-│   │   │   │   ├── snapshot-builder.md       Replay edits on base records
-│   │   │   │   └── conflict-resolution.md    Last-Writer-Wins algorithm
-│   │   │   └── content-types/                Plugin architecture
-│   │   │       └── content-type-system.md    ContentType interface for extensibility
-│   │   │
-│   │   ├── server/                           Backend specifications
-│   │   │   ├── backend/                      API, database, services
-│   │   │   │   ├── overview.md               Backend architecture overview
-│   │   │   │   ├── api/                      REST API specs (4 specs)
-│   │   │   │   │   ├── conventions.md        API design conventions
-│   │   │   │   │   ├── content-endpoints.md  CRUD endpoints for content
-│   │   │   │   │   ├── project-endpoints.md  CRUD endpoints for projects
-│   │   │   │   │   └── sync-protocol.md      Sync request/response protocol
-│   │   │   │   ├── database/                 Schema specs
-│   │   │   │   │   └── schema.md             PostgreSQL schema, migrations
-│   │   │   │   ├── services/                 Server-side logic specs
-│   │   │   │   │   ├── sync-server.md        Server-side sync orchestration
-│   │   │   │   │   └── auth-server.md        JWT issuance and validation
-│   │   │   │   ├── deployment/               Infrastructure specs
-│   │   │   │   │   ├── railway.md            Railway deployment configuration
-│   │   │   │   │   ├── docker.md             Dockerfile and container specs
-│   │   │   │   │   └── environment.md        Environment variables, secrets
-│   │   │   │   └── module-integration.md     How modules extend the backend
-│   │   │   │
-│   │   │   ├── admin-dashboard/              Admin panel specs (3 specs)
-│   │   │   │   ├── overview.md               Admin dashboard purpose and structure
-│   │   │   │   ├── api.md                    Admin API endpoints
-│   │   │   │   └── deployment.md             Admin dashboard deployment
-│   │   │   │
-│   │   │   └── monitoring-dashboard/         Status page specs (5 specs)
-│   │   │       ├── overview.md               Monitoring dashboard overview
-│   │   │       ├── metrics.md                Health metrics and dashboards
-│   │   │       ├── incidents.md              Incident tracking and history
-│   │   │       ├── deployments.md            Deployment status and history
-│   │   │       └── database.md               Monitoring database schema
-│   │   │
-│   │   ├── clients/                          Per-platform client specs
-│   │   │   ├── apple/                        Apple platforms (5 specs)
-│   │   │   │   ├── architecture.md           SwiftUI app structure
-│   │   │   │   ├── auth.md                   Apple-specific auth integration
-│   │   │   │   ├── data.md                   SwiftData/SQLite integration
-│   │   │   │   ├── daemon.md                 macOS daemon with Mach services IPC
-│   │   │   │   └── deployment.md             App Store Connect, TestFlight specs
-│   │   │   │
-│   │   │   ├── android/                      Android platform (4 specs)
-│   │   │   │   ├── architecture.md           Jetpack Compose app structure
-│   │   │   │   ├── auth.md                   Android-specific auth integration
-│   │   │   │   ├── data.md                   Room/SQLite integration
-│   │   │   │   └── deployment.md             Google Play distribution specs
-│   │   │   │
-│   │   │   ├── windows/                      Windows platform (4 specs)
-│   │   │   │   ├── architecture.md           WinUI 3 app structure
-│   │   │   │   ├── auth.md                   Windows-specific auth integration
-│   │   │   │   ├── daemon.md                 Named-pipe IPC to Kotlin/Native daemon
-│   │   │   │   └── deployment.md             MSIX packaging and distribution
-│   │   │   │
-│   │   │   └── web/                          Web platform (3 specs)
-│   │   │       ├── architecture.md           React 19 app structure
-│   │   │       ├── auth.md                   Web-specific auth (cookies, tokens)
-│   │   │       └── deployment.md             Vercel/CloudFlare deployment
-│   │   │
-│   │   ├── modules/                          Optional feature modules (8 modules)
-│   │   │   ├── _module-template/             Template for creating new modules
-│   │   │   │   ├── TEMPLATE.md               17-section spec template
-│   │   │   │   └── module.json               Module manifest schema
-│   │   │   │
-│   │   │   ├── discussions/                  Community forums
-│   │   │   │   └── module.json               Models, API, database specs
-│   │   │   │
-│   │   │   ├── messaging/                    Direct messaging
-│   │   │   │   └── module.json               WebSocket real-time delivery
-│   │   │   │
-│   │   │   ├── gamification/                 Points, badges, leaderboards
-│   │   │   │   └── module.json
-│   │   │   │
-│   │   │   ├── notifications/                Push/email/SMS notifications
-│   │   │   │   └── module.json
-│   │   │   │
-│   │   │   ├── calendar-integration/         Google Calendar, Apple EventKit
-│   │   │   │   └── module.json
-│   │   │   │
-│   │   │   ├── feature-flags/                Server-controlled feature toggles
-│   │   │   │   └── module.json
-│   │   │   │
-│   │   │   ├── feedback/                     In-app feedback collection
-│   │   │   │   └── module.json
-│   │   │   │
-│   │   │   └── oauth-providers/              Google/Apple Sign-In
-│   │   │       └── module.json
-│   │   │
-│   │   └── docs/                             Blueprint documentation
-│   │       └── tbd.md                        Placeholder
-│   │
-│   ├── recipes/                              Operational runbooks (3 recipes)
-│   │   ├── RECIPE-TEMPLATE.md                 4-phase recipe template (detection, install, auth, smoke tests)
-│   │   ├── railway-cli-setup.md              Railway CLI setup and authentication
-│   │   └── cloudflare-cli-setup.md           Cloudflare CLI setup and authentication
-│   │
-│   └── verification/                         Conformance testing
-│       ├── vectors/                          Test vectors (JSON)
-│       │   ├── _schema/                      Vector file JSON schema
-│       │   │   └── vector-file.schema.json   Schema definition
-│       │   ├── core/                         Core conformance test vectors
-│       │   │   ├── api/                      API wire format tests
-│       │   │   ├── models/                   Model serialization tests
-│       │   │   └── sync/                     Sync algorithm tests
-│       │   └── modules/                      Module-specific test vectors
-│       │
-│       └── runners/                          Per-platform test runners
-│           ├── swift/                        Apple (XCTest)
-│           │   ├── Package.swift              Swift Package definition
-│           │   ├── Sources/                  Test support code
-│           │   └── Tests/                    Conformance test suite
-│           │
-│           ├── kotlin/                        Android (JUnit) — runner implementation pending
-│           │
-│           ├── typescript/                    Web (Vitest)
-│           │   ├── package.json               npm dependencies (TypeScript, Vitest)
-│           │   ├── tsconfig.json
-│           │   └── tests/                     Conformance test suite
-│           │
-│           └── csharp/                        Windows (NUnit) — runner implementation pending
-│
-├── apps/                                      Per-platform runnable app scaffolds
-│   ├── apple/                                 iOS/macOS/watchOS/tvOS/visionOS scaffolds
-│   │   └── tbd.md
-│   ├── android/                               Android scaffold
-│   │   └── tbd.md
-│   ├── windows/                               Windows scaffold
-│   │   └── tbd.md
-│   └── web/                                   React web scaffold
-│       └── tbd.md
-│
-├── playbooks/                                 High-level orchestration (2 playbooks + template)
-│   ├── PLAYBOOK-TEMPLATE.md                   Multi-phase playbook template
-│   ├── full-stack-verification.md            End-to-end verification workflow
-│   └── tbd.md                                 Placeholder for future playbooks
-│
-├── tools/                                     Skills, agents, and platform tooling
-│   ├── skills/                                Claude Code skills
-│   │   ├── init-platform/                     Onboarding wizard skill
-│   │   │   ├── SKILL.md                       Interactive wizard (6 phases)
-│   │   │   ├── platform.json                  Platform metadata (modules, specs, versions)
-│   │   │   └── templates/                     Consumer project templates
-│   │   │       ├── consumer-claude-md.md      CLAUDE.md template for consumer projects
-│   │   │       ├── consumer-readme.md         README template for consumer projects
-│   │   │       └── platform-config.json       Config template with source version tracking
-│   │   │
-│   │   └── temporal-plan-spec/                Spec planning skill
-│   │       └── SKILL.md                       Interactive conversation for spec planning
-│   │
-│   └── agents/                                Claude Code agents
-│       └── tbd.md                             Placeholder for custom agents
-│
-└── docs/                                      Explanatory documentation
-    └── client-server/                         Mirrors architecture hierarchy
-        ├── architecture.md                    Vision, product components, data layer
-        ├── rationale.md                       Why spec-driven (4.6k words)
-        └── conformance-testing.md             Test vector format and strategy</code></pre>
-<h2>Key Files & Components</h2>
-<h3>Core Documentation</h3>
-<ol>
-<li><strong><code>README.md</code></strong> (9.6 KB)</li>
-</ol>
+<pre><code>
+temporal-platform/
+├── .claude/
+│   └── (settings)
+├── client-server/                     # Client-server architecture
+│   ├── blueprints/                    # Behavioral specifications
+│   │   ├── shared/                    # Cross-platform data layer
+│   │   │   (models, sync, persistence, auth, content-types)
+│   │   ├── server/                    # Server-side specs
+│   │   │   ├── backend/              # API contracts, database, services, deployment
+│   │   │   ├── admin-dashboard/      # Admin dashboard specs
+│   │   │   └── monitoring-dashboard/ # Status/monitoring dashboard specs
+│   │   ├── clients/                   # Per-platform client specs
+│   │   │   ├── apple/
+│   │   │   ├── android/
+│   │   │   ├── web/
+│   │   │   └── windows/
+│   │   └── modules/                   # Optional feature modules
+│   │       (discussions, messaging, gamification, notifications, calendar,
+│   │        feature-flags, feedback, admin, oauth-providers)
+│   ├── recipes/                       # Operational runbooks
+│   │   ├── cloudflare-cli-setup.md
+│   │   ├── railway-cli-setup.md
+│   │   └── RECIPE-TEMPLATE.md
+│   └── verification/                  # Conformance testing
+│       ├── vectors/                   # Test vectors (JSON)
+│       ├── runners/                   # Per-platform test runners
+│       └── ci-configs/                # CI pipeline configs
+├── apps/                              # Per-platform runnable app scaffolds
+│   ├── apple/
+│   ├── android/
+│   ├── web/
+│   └── windows/
+├── playbooks/                         # High-level orchestration
+│   ├── full-stack-verification.md
+│   └── PLAYBOOK-TEMPLATE.md
+├── tools/                             # Skills, agents, and tooling
+│   ├── skills/                        # Claude Code skills (init-platform, temporal-plan-spec)
+│   └── agents/                        # Claude Code agents
+├── docs/                              # Documentation
+│   └── client-server/                 # Docs mirroring architecture hierarchy
+├── CLAUDE.md                          # Comprehensive spec authoring guide (14K)
+└── README.md                          # Platform overview and getting started
+</code></pre>
+<h2>Key Files &amp; Components</h2>
 <ul>
-<li>Getting started guide</li>
-<li>What's in the box (models, sync, persistence, auth, content types, modules)</li>
-<li>Spec authoring standards (5 pillars: concrete data structures, algorithmic precision, exact SQL, wire format examples, test vectors)</li>
-<li>Templating system with placeholder variables</li>
-<li>Repository structure overview</li>
-<li>Origin story (extracted from Temporal cross-platform app)</li>
-</ul>
-<ol>
-<li><strong><code>CLAUDE.md</code></strong> (14 KB)</li>
-</ol>
-<ul>
-<li>Development guidelines and implementation rules (18 rules)</li>
-<li>Spec format with frontmatter and 17 standard sections</li>
-<li>Template variable definitions</li>
-<li>Test vector formats (behavioral table vs. JSON data)</li>
-<li>Logging requirements with per-platform frameworks</li>
-<li>Implementation rules (native controls, design decisions, post-generation verification, commits, testing, async, progress, deep linking, accessibility, localization, RTL, privacy, feature flags, analytics, A/B testing, debug mode, linting)</li>
-<li>Best practices references (HIG, Material Design, WCAG, Kotlin conventions, Swift guidelines)</li>
-<li>Engineering principles (simplicity, composition, DI, immutability, fail fast, idempotency, design for deletion)</li>
-</ul>
-<ol>
-<li><strong><code>docs/client-server/rationale.md</code></strong> (6.1 KB)</li>
-</ol>
-<ul>
-<li>Deep analysis of why spec-driven > shared code for this use case</li>
-<li>The original KMP experience: 151-line Gradle file, 5 plugins, XCFramework generation, C interop</li>
-<li>Numbers: 4,633 lines of shared code: 40% types, 39% logic, 21% plumbing</li>
-<li>The web client proof: never used KMP, already spec-driven against REST API</li>
-<li>General principle: specs win when logic is simple, sharing overhead is high, platforms diverge, team is small</li>
-<li>Virtuous cycle: write specs → LLM generation → conformance tests → spec refinement → repeat</li>
-<li>Trade-offs: N x implementation, coordination overhead, bug duplication risk, spec maintenance</li>
-<li>Gains: build simplicity, debugging, idiomatic code, independent deployment, LLM-assisted generation, onboarding, IDE support</li>
-</ul>
-<ol>
-<li><strong><code>docs/client-server/architecture.md</code></strong> (8.6 KB)</li>
-</ol>
-<ul>
-<li>Vision statement (spec = single source of truth, not code)</li>
-<li>Product components (backend: Ktor+PostgreSQL on Railway; clients: 4 platforms)</li>
-<li>Shared data layer (models, LWW sync, SQLite dual-table, ContentType plugins, JWT auth)</li>
-<li>Module system (composable features)</li>
-<li>Consumer workflow (fork platform repo, run /init-platform, customize specs, implement)</li>
-</ul>
-<h3>Specifications (78 markdown files)</h3>
-<p><strong>Shared Layer</strong> (14 specs):</p>
-<ul>
-<li>Models: <code>syncable.md</code>, <code>content.md</code>, <code>project.md</code>, <code>user.md</code>, <code>calendar-event.md</code>, <code>edit-operation.md</code></li>
-<li>Sync: <code>sync-engine.md</code>, <code>snapshot-builder.md</code>, <code>conflict-resolution.md</code></li>
-<li>Persistence: <code>local-database.md</code>, <code>repositories.md</code></li>
-<li>Auth: <code>authentication.md</code>, <code>authorization.md</code></li>
-<li>Plugins: <code>content-type-system.md</code></li>
-</ul>
-<p><strong>Backend</strong> (12 specs):</p>
-<ul>
-<li>API: <code>conventions.md</code>, <code>content-endpoints.md</code>, <code>project-endpoints.md</code>, <code>sync-protocol.md</code></li>
-<li>Database: <code>schema.md</code></li>
-<li>Services: <code>sync-server.md</code>, <code>auth-server.md</code></li>
-<li>Deployment: <code>railway.md</code>, <code>docker.md</code>, <code>environment.md</code></li>
-<li>Integration: <code>module-integration.md</code>, <code>overview.md</code></li>
-</ul>
-<p><strong>Clients</strong> (16 specs):</p>
-<ul>
-<li>Apple: 5 specs (architecture, auth, data, daemon, deployment)</li>
-<li>Android: 4 specs (architecture, auth, data, deployment)</li>
-<li>Windows: 4 specs (architecture, auth, daemon, deployment)</li>
-<li>Web: 3 specs (architecture, auth, deployment)</li>
-</ul>
-<p><strong>Admin/Monitoring</strong> (8 specs):</p>
-<ul>
-<li>Admin: overview, api, deployment</li>
-<li>Monitoring: overview, metrics, incidents, deployments, database</li>
-</ul>
-<p><strong>Modules</strong> (8 modules with manifests):</p>
-<ul>
-<li>discussions, messaging, gamification, notifications, calendar-integration, feature-flags, feedback, oauth-providers</li>
-</ul>
-<h3>Test Infrastructure</h3>
-<ol>
-<li><strong><code>client-server/verification/vectors/</code></strong> (JSON test vectors)</li>
-</ol>
-<ul>
-<li><code>_schema/vector-file.schema.json</code> — JSON Schema for test vectors</li>
-<li><code>core/api/</code> — API wire format tests</li>
-<li><code>core/models/</code> — Model serialization tests</li>
-<li><code>core/sync/</code> — Sync algorithm tests</li>
-<li><code>modules/</code> — Module-specific vectors</li>
-</ul>
-<ol>
-<li><strong><code>client-server/verification/runners/</code></strong> (Per-platform test runners)</li>
-</ol>
-<ul>
-<li><strong>Swift</strong> (XCTest): Package.swift, Sources/, Tests/</li>
-<li><strong>TypeScript</strong> (Vitest): package.json, tsconfig.json, tests/</li>
-<li><strong>Kotlin</strong> (JUnit) — pending</li>
-<li><strong>C#</strong> (NUnit) — pending</li>
-</ul>
-<ol>
-<li><strong><code>tools/skills/init-platform/platform.json</code></strong> (Platform metadata)</li>
-</ol>
-<ul>
-<li>Platform version: 0.2.0</li>
-<li>All specs indexed by category</li>
-<li>Module list with categories</li>
-<li>Template variables definition</li>
-<li>Supported platforms with runner paths</li>
-</ul>
-<h3>Tooling</h3>
-<ol>
-<li><strong><code>/init-platform</code> Skill</strong> (Onboarding wizard)</li>
-</ol>
-<ul>
-<li>6 phases: app identity, API config, module selection, platform targets, customization, generation</li>
-<li>Interactive prompts with defaults</li>
-<li>Generates customized specs with resolved placeholders</li>
-<li>Templates: CLAUDE.md, README.md, platform-config.json</li>
-<li>Stores platform source version for upstream contribution</li>
-</ul>
-<ol>
-<li><strong><code>/temporal-plan-spec</code> Skill</strong> (Spec planning)</li>
-</ol>
-<ul>
-<li>Interactive conversation for spec planning</li>
-<li>Discovery phase: feature identity, location, platforms, dependencies</li>
-<li>Requirements phase: REQ-NNN enumeration with RFC 2119 keywords</li>
-<li>Data structures: JSON Schema, field tables, examples</li>
-<li>API contract: endpoints, request/response, errors</li>
-<li>Test vectors: behavioral table + data JSON</li>
-<li>Edge cases, logging, deep linking, privacy, accessibility, feature flags, analytics, platform notes, design decisions</li>
-</ul>
-<h3>Recipes (3 operational runbooks)</h3>
-<ol>
-<li><strong><code>RECIPE-TEMPLATE.md</code></strong> (4 phases)</li>
-</ol>
-<ul>
-<li>Detection: check if tool is installed/authenticated</li>
-<li>Installation: platform-specific install commands</li>
-<li>Authentication: interactive login (user hands off to browser)</li>
-<li>Smoke tests: verify access and permissions</li>
-</ul>
-<ol>
-<li><strong><code>railway-cli-setup.md</code></strong> — Railway CLI authentication and verification</li>
-<li><strong><code>cloudflare-cli-setup.md</code></strong> — Cloudflare CLI authentication and verification</li>
-</ol>
-<h3>Playbooks (2 orchestration workflows)</h3>
-<ol>
-<li><strong><code>PLAYBOOK-TEMPLATE.md</code></strong> (Multi-phase orchestration)</li>
-</ol>
-<ul>
-<li>State management via <code>.temporal/playbook-state.json</code></li>
-<li>Phases with checkpoint gates</li>
-<li>Teardown section for resource cleanup</li>
-<li>Design decisions and changelog</li>
-</ul>
-<ol>
-<li><strong><code>full-stack-verification.md</code></strong> (End-to-end verification)</li>
-</ol>
-<ul>
-<li>Combines recipes and blueprints</li>
-<li>Verifies conformance across all platforms</li>
-<li>Produces JUnit XML, JSON summary, determinism reports</li>
+<li><code>CLAUDE.md</code> -- Comprehensive guide (14K): spec format, template variables, test vector formats, implementation rules (18 rules), best practices references, engineering principles</li>
+<li><code>README.md</code> -- Platform overview explaining the spec-driven approach, module system, sync architecture, content type plugin system, onboarding</li>
+<li><code>client-server/blueprints/shared/</code> -- Core specs: syncable, content, project, user, calendar-event, edit-operation, sync-engine, snapshot-builder, conflict-resolution, local-database, repositories, content-type-system, authentication, authorization</li>
+<li><code>client-server/blueprints/modules/</code> -- 9 optional modules: Discussions, Messaging, Gamification, Notifications, Calendar Integration, Feature Flags, Feedback, Admin, OAuth Providers</li>
+<li><code>client-server/blueprints/modules/_module-template/TEMPLATE.md</code> -- Canonical spec template</li>
+<li><code>playbooks/full-stack-verification.md</code> -- Full-stack verification playbook</li>
+<li><code>tools/skills/</code> -- Claude Code skills including <code>init-platform</code> onboarding wizard</li>
 </ul>
 <h2>Claude Configuration</h2>
-<p>The <code>.claude/</code> directory is currently empty. No local Claude Code settings, commands, rules, plugins, or scripts are configured yet.</p>
-<p><strong>Potential future use cases</strong>:</p>
 <ul>
-<li>Custom Claude Code hooks for spec validation</li>
-<li>Linting rules for spec authoring</li>
-<li>Commands for generating from specs</li>
-<li>Settings for workspace-wide configuration</li>
+<li><code>CLAUDE.md</code> acts as the primary Claude configuration document with detailed spec authoring standards and implementation rules</li>
+<li>References shared project: <code>agentic-roadmaps</code> (expected at <code>../agentic-roadmaps/</code>)</li>
+<li>Skills globally installed as symlinks from <code>~/.claude/skills/</code> to <code>../agentic-roadmaps/skills/</code></li>
 </ul>
-<h2>Planning & Research Documents</h2>
-<h3>Architecture Documentation</h3>
+<h2>Planning &amp; Research Documents</h2>
 <ul>
-<li><strong><code>docs/client-server/architecture.md</code></strong> — Complete vision, product components, shared data layer, module system, consumer workflow</li>
-<li><strong><code>docs/client-server/rationale.md</code></strong> — Detailed analysis of spec-driven vs. shared code, with historical context from the original Temporal app</li>
+<li><code>playbooks/</code> -- Orchestration playbooks (full-stack-verification.md, PLAYBOOK-TEMPLATE.md)</li>
+<li><code>docs/client-server/</code> -- Documentation mirroring the architecture hierarchy</li>
+<li><code>client-server/recipes/</code> -- Infrastructure CLI setup runbooks (Cloudflare, Railway)</li>
 </ul>
-<h3>Specification Authoring Guides</h3>
-<ul>
-<li><strong><code>CLAUDE.md</code></strong> — Comprehensive spec format, 18 implementation rules, logging requirements, best practices references</li>
-<li><strong><code>client-server/blueprints/modules/_module-template/TEMPLATE.md</code></strong> — 17-section template for new modules</li>
-<li><strong><code>client-server/recipes/RECIPE-TEMPLATE.md</code></strong> — 4-phase template for operational runbooks</li>
-<li><strong><code>playbooks/PLAYBOOK-TEMPLATE.md</code></strong> — Multi-phase template for orchestration workflows</li>
-</ul>
-<h3>Metadata & Configuration</h3>
-<ul>
-<li><strong><code>tools/skills/init-platform/platform.json</code></strong> — Platform inventory: 78 specs across 8 categories, 8 modules, supported platforms</li>
-</ul>
-<h2>Git History & Current State</h2>
-<h3>Recent Commits (5 most recent)</h3>
-<pre><code>2026-04-06 16:18:01 -0700  chore: standardize worktree directory to .claude/worktrees/
-2026-03-31 06:36:57 -0700  chore: rename cat-herding → agentic-roadmaps in shared project reference
-2026-03-27 11:12:24 -0700  Update CLAUDE.md: litterbox → agentic-cookbook
-2026-03-25 21:54:07 -0700  fix: remove Swift .build artifacts and fix .gitignore
-2026-03-25 19:10:48 -0700  feat: add full-stack verification playbook</code></pre>
-<h3>Full History (Last 30 commits)</h3>
-<pre><code>f600b40 chore: standardize worktree directory to .claude/worktrees/
-cf2749c chore: rename cat-herding → agentic-roadmaps in shared project reference
-83c4a21 Update CLAUDE.md: litterbox → agentic-cookbook
-a3e849b fix: remove Swift .build artifacts and fix .gitignore
-6cf7187 feat: add full-stack verification playbook
-02456c0 feat: add playbook template format
-76e33c0 fix: update all path references for new directory structure
-6ea0d3e chore: replace .gitkeep with tbd.md in placeholder directories
-f02ca9c refactor: reorganize into multi-architecture platform structure
-6066390 refactor: move vectors/ and runners/ under verification/
-8de380f refactor: move all specs under blueprints/ directory
-9846534 docs: add cat-herding shared project and recipes dir to CLAUDE.md
-0b0fdee feat: add Railway CLI setup recipe
-ac061e5 feat: add Cloudflare CLI setup recipe
-02231c5 feat: add recipe template for infrastructure CLI setup runbooks
-2db3815 feat: add /temporal-plan-spec skill
-aeeec51 refactor: reorganize as full product platform
-19d5e33 feat: complete spec-driven application platform
-006d94e docs: initial spec-driven architecture design</code></pre>
-<h3>Current State</h3>
+<h2>Git History &amp; Current State</h2>
 <ul>
 <li><strong>Branch</strong>: main</li>
-<li><strong>Remote</strong>: origin/main (up to date, no divergence)</li>
-<li><strong>Working Tree</strong>: clean (no uncommitted changes)</li>
-<li><strong>Repository Size</strong>: 4.1 MB</li>
-<li><strong>Git Ignored</strong>: <code>.build/</code>, <code>.DS_Store</code>, <code>.temporal/</code>, <code>.claude/worktrees/</code></li>
+<li><strong>Last commit</strong>: 2026-04-06 -- &quot;chore: standardize worktree directory to .claude/worktrees/&quot;</li>
+<li><strong>Working tree</strong>: Clean</li>
+<li><strong>Recent activity</strong>: Moderate (several commits per week through early April 2026)</li>
+<li><strong>Key recent changes</strong>: Worktree standardization, agentic-roadmaps rename, Swift .build artifact cleanup, full-stack verification playbook, multi-architecture platform restructuring</li>
 </ul>
-<h2>Build & Test Commands</h2>
-<h3>Conformance Testing</h3>
-<p><strong>TypeScript/Web conformance tests</strong>:</p>
-<pre><code>cd client-server/verification/runners/typescript/
-npm install
-npm run test          # Run once
-npm run test:watch    # Run in watch mode</code></pre>
-<p><strong>Swift/Apple conformance tests</strong>:</p>
-<pre><code>cd client-server/verification/runners/swift/
-swift build
-swift test</code></pre>
-<p><strong>Kotlin/Android conformance tests</strong> (runner pending implementation):</p>
+<h2>Build &amp; Test Commands</h2>
+<pre><code>
+# This is a specification-only repository -- no build commands
+# Consumer projects use the /init-platform skill to generate customized specs
+
+# For contributors editing specs:
+# Follow the authoring standards in CLAUDE.md
+# Use the template at client-server/blueprints/modules/_module-template/TEMPLATE.md
+</code></pre>
+<h2>Notes</h2>
 <ul>
-<li>Planned to use JUnit with gradle</li>
-<li>Will load same JSON vectors as other runners</li>
-</ul>
-<p><strong>C#/Windows conformance tests</strong> (runner pending implementation):</p>
-<ul>
-<li>Planned to use NUnit</li>
-<li>Will load same JSON vectors as other runners</li>
-</ul>
-<h3>Spec Authoring & Generation</h3>
-<p><strong>Interactive platform initialization</strong> (from any consumer project):</p>
-<pre><code>/init-platform</code></pre>
-<p>This launches the 6-phase onboarding wizard that:</p>
-<ol>
-<li>Collects app identity (name, org, package)</li>
-<li>Configures API URLs and database name</li>
-<li>Selects optional modules</li>
-<li>Chooses target platforms</li>
-<li>Customizes any specs</li>
-<li>Generates fully resolved specs with no placeholder tokens</li>
-</ol>
-<p><strong>Spec planning</strong> (from temporal-platform repo):</p>
-<pre><code>/temporal-plan-spec</code></pre>
-<p>Interactive skill for planning new specifications — produces structured outline without writing files.</p>
-<h3>No Traditional Build Commands</h3>
-<p>This repository contains <strong>specifications only</strong> — no application code to build. The <code>/init-platform</code> and <code>/temporal-plan-spec</code> skills are the primary interfaces for consuming and extending the platform.</p>
-<h2>Notes & Interesting Aspects</h2>
-<h3>Origin Story</h3>
-<p>Temporal Platform was extracted from <a href="https://github.com/temporal-company/temporal">Temporal</a>, a real cross-platform productivity app that originally used Kotlin Multiplatform (KMP) to share ~1,000 lines of sync logic across 7 platforms. The KMP build infrastructure (XCFramework generation, SKIE plugin, C interop, 5 Gradle plugins, 151-line Gradle config) was complex relative to the ~983 lines of actual shared logic (mostly simple: LWW conflict resolution, CRUD repositories, JWT auth). The web client never used KMP and instead implemented specs natively — proving the concept worked. This experience led to the full spec-driven platform architecture.</p>
-<h3>Shared Project Dependency</h3>
-<p>The project references a shared project for roadmap planning:</p>
-<ul>
-<li><strong>Project</strong>: <code>agentic-roadmaps</code></li>
-<li><strong>Repo</strong>: <code>git@github.com:mikefullerton/agentic-roadmaps.git</code></li>
-<li><strong>Expected Path</strong>: <code>../agentic-roadmaps/</code></li>
-<li><strong>Usage</strong>: Roadmap planning, implementation, and review skills are globally installed as symlinks from <code>~/.claude/skills/</code> back to <code>../agentic-roadmaps/skills/</code></li>
-</ul>
-<h3>Philosophy: The Spec is the Platform</h3>
-<p>Key insight from README and CLAUDE.md:</p>
-<ul>
-<li>Traditional frameworks share code (React Native, Flutter, KMP)</li>
-<li>This platform shares <strong>specifications</strong> — the reusable artifact is precision documentation, not code</li>
-<li>Each platform implements natively using best-in-class tools</li>
-<li>Conformance test vectors (JSON) guarantee identical behavior across implementations</li>
-<li>Specs must be precise enough for LLM code generation: concrete data structures, algorithmic pseudocode, exact SQL, wire format examples, test vectors</li>
-<li>"Litmus test": Can an engineer implement this spec having read only this file and its declared dependencies?</li>
-</ul>
-<h3>Modular Architecture</h3>
-<p>The platform supports 8 optional feature modules that compose cleanly:</p>
-<ol>
-<li><strong>Discussions</strong> (community forums with threads, replies, reactions, polls, bookmarks, tags)</li>
-<li><strong>Messaging</strong> (direct messages with WebSocket real-time delivery)</li>
-<li><strong>Gamification</strong> (points, badges, levels, leaderboards)</li>
-<li><strong>Notifications</strong> (push/email/SMS)</li>
-<li><strong>Calendar Integration</strong> (Google Calendar, Apple EventKit)</li>
-<li><strong>Feature Flags</strong> (server-controlled feature toggles)</li>
-<li><strong>Feedback</strong> (in-app feedback collection)</li>
-<li><strong>OAuth Providers</strong> (Google Sign-In, Apple Sign-In)</li>
-</ol>
-<p>Each module declares dependencies (core + optional other modules) and contributions (models, API endpoints, database tables, content types, sync entity types) via <code>module.json</code> manifest.</p>
-<h3>Offline-First Sync Architecture</h3>
-<p>Three-layer data model on each platform:</p>
-<pre><code>UI reads from ──&gt; [Snapshot Table]  (pre-computed, fast)
-                        ^
-                        |
-                  [SnapshotBuilder]  (replays edits on base)
-                        ^
-                  /           \
-          [Base Table]  [EditOperation Table]
-              ^              ^
-              |              |
-        sync engine      UI writes</code></pre>
-<ul>
-<li><strong>Base records</strong>: Last-synced server state, updated by sync</li>
-<li><strong>Edit operations</strong>: Field-level change log, synced independently</li>
-<li><strong>Snapshots</strong>: Materialized view, rebuilt after sync</li>
-<li><strong>Conflict resolution</strong>: Last-Writer-Wins (LWW) via timestamp comparison</li>
-</ul>
-<h3>Consumer Workflow</h3>
-<ol>
-<li>Fork the platform repo (or initialize from /init-platform)</li>
-<li>Run <code>/init-platform</code> to customize specs for your app</li>
-<li>Modify specs as your app evolves</li>
-<li>Generate code per-platform using Claude Code (specs → LLM → platform-native code)</li>
-<li>Run conformance test vectors to verify all implementations behave identically</li>
-<li>Optionally contribute improvements back via <code>/contribute-upstream</code></li>
-</ol>
-<h3>Implementation Standards</h3>
-<p>18 rules for implementing from specs:</p>
-<ol>
-<li>Prefer native controls and libraries</li>
-<li>Surface all design decisions for user approval</li>
-<li>Post-generation verification (build, test, lint, log verification, accessibility audit, code review)</li>
-<li>Small, atomic commits (one logical change per commit)</li>
-<li>Comprehensive testing (unit over integration)</li>
-<li>No blocking the main thread (async everywhere)</li>
-<li>Always show progress (determinate or indeterminate)</li>
-<li>Deep linking (Universal Links/custom schemes on Apple, App Links on Android, URLs on Web)</li>
-<li>Accessibility from day one (roles, labels, keyboard nav, Dynamic Type, contrast, focus order)</li>
-<li>Localizability (no hardcoded strings)</li>
-<li>RTL layout support (leading/trailing, not left/right)</li>
-<li>Privacy and security by default (data minimization, consent, secure storage, no PII logging, TLS only, input sanitization)</li>
-<li>Feature flags (gate all features from initial implementation via FeatureFlagProvider interface)</li>
-<li>Analytics (instrument via AnalyticsProvider interface, no direct coupling to backend)</li>
-<li>A/B testing (ExperimentProvider interface for variant assignment)</li>
-<li>Debug mode (feature flag overrides, analytics log, experiment picker, environment info)</li>
-<li>Linting from day one (SwiftLint, ktlint, ESLint per platform)</li>
-<li>Scriptable and automatable (AppIntents/Shortcuts on Apple, AppActions on Android, API on Web)</li>
-</ol>
-<h3>Logging Requirements</h3>
-<p>Every behavioral spec MUST include logging section with exact log messages. Enables verification via grepping output rather than visual inspection.</p>
-<p>Format: <code>Subsystem: {{org_package}} | Category: ComponentName</code></p>
-<p>Per-platform logging:</p>
-<ul>
-<li><strong>Apple</strong>: <code>os.log</code> (Logger from os module) — subsystem matching bundle ID, category per component</li>
-<li><strong>Android/Kotlin</strong>: <code>Timber</code> or <code>android.util.Log</code></li>
-<li><strong>Web/JS/TS</strong>: <code>console</code> with structured prefixes, or <code>pino</code>/<code>winston</code> in Node</li>
-</ul>
-<h3>Conformance Testing Strategy</h3>
-<p>Shared JSON test vectors with per-platform runners:</p>
-<ul>
-<li><strong>Swift runner</strong> (XCTest): Loads vectors from <code>../../vectors</code>, asserts outcomes</li>
-<li><strong>TypeScript runner</strong> (Vitest): Same vectors, TypeScript assertions</li>
-<li><strong>Kotlin runner</strong> (JUnit): Pending, will load same vectors</li>
-<li><strong>C# runner</strong> (NUnit): Pending, will load same vectors</li>
-</ul>
-<p>Two vector formats:</p>
-<ol>
-<li><strong>Behavioral table</strong> (state/action/outcome tests)</li>
-<li><strong>Data JSON blocks</strong> (serialization, algorithms, wire formats)</li>
-</ol>
-<h2>Project Maturity</h2>
-<ul>
-<li><strong>Status</strong>: Active development</li>
-<li><strong>Version</strong>: 0.2.0 (platform), 1.0.0 (shared specs and runners)</li>
-<li><strong>Copyright</strong>: 2026 Mike Fullerton / Temporal. All rights reserved. (Proprietary)</li>
-<li><strong>Last Major Update</strong>: 2026-04-06 (worktree standardization)</li>
-<li><strong>Completeness</strong>: </li>
-<li>Core architecture: Complete (14 shared specs, 12 backend specs, 16 client specs, 8 modules)</li>
-<li>Verification: Partial (Swift and TypeScript runners implemented; Kotlin and C# pending)</li>
-<li>Skills: 2 implemented (/init-platform, /temporal-plan-spec)</li>
-<li>Playbooks: 1 implemented (full-stack-verification)</li>
-<li>Recipes: 2 implemented (railway-cli-setup, cloudflare-cli-setup)</li>
-</ul>
-<h2>Quick Start for New Team Members</h2>
-<ol>
-<li><strong>Understand the philosophy</strong>: Read <code>README.md</code> and <code>docs/client-server/rationale.md</code></li>
-<li><strong>Learn the spec format</strong>: Read <code>CLAUDE.md</code> sections on "Spec format" and "Standard sections"</li>
-<li><strong>Review an example spec</strong>: Start with <code>client-server/blueprints/shared/models/syncable.md</code></li>
-<li><strong>See how specs become code</strong>: Review a platform spec like <code>client-server/blueprints/clients/apple/architecture.md</code></li>
-<li><strong>Understand conformance testing</strong>: Read <code>docs/client-server/conformance-testing.md</code> and explore <code>client-server/verification/vectors/</code></li>
-<li><strong>Try the onboarding</strong>: Run <code>/init-platform</code> to generate customized specs for a test project</li>
-<li><strong>Plan a new spec</strong>: Use <code>/temporal-plan-spec</code> to practice spec planning</li>
-</ol>
-<p><strong>Generated</strong>: 2026-04-07 <strong>Project Location</strong>: <code>/Users/mfullerton/projects/active/temporal-platform/</code></p>
-</div>
+<li>This is a specs-only repository -- no application code lives here</li>
+<li>Extracted from the Temporal app project; the original app used KMP to share ~1,000 lines of sync logic across 7 platforms, but build complexity outweighed the benefit</li>
+<li>The spec-driven approach trades shared code for shared specifications -- each platform gets native tooling while conformance tests guarantee consistent behavior</li>
+<li>Core sync engine uses Last-Writer-Wins (LWW) conflict resolution with a three-layer data architecture: base records, edit operations, and materialized snapshots</li>
+<li>Content Type Plugin System allows adding new feature areas (Notes, Projects, Reminders, etc.) without switch statements or hardcoded feature lists</li>
+<li>Each module has a <code>module.json</code> manifest declaring models, API endpoints, database tables, dependencies, and integration points</li>
+<li>18 implementation rules in CLAUDE.md covering native controls, design decisions, accessibility, localization, RTL, privacy, feature flags, analytics, A/B testing, debug mode, linting, and scriptability</li>
+<li>The <code>/init-platform</code> skill walks consumers through app identity, API config, module selection, platform targets, and generates fully resolved specs</li>
+</ul></div>
 <div class="footer">Generated 2026-04-07</div>
 </body>
 </html>

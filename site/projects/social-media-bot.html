@@ -84,104 +84,132 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 </div>
 <div class="content">
 <h2>Project Summary</h2>
-<p>Social Media Bot is an AI-powered autonomous content pipeline that analyzes development work (git commits), identifies compelling topics, researches them, and drafts social media posts across X, LinkedIn, Bluesky, and Substack. Uses a Python coordinator to orchestrate 12 specialized Claude Code agents that run sequentially through the pipeline.</p>
-<h2>Type & Tech Stack</h2>
+<p>AI-powered content pipeline that analyzes development work (git commits, diffs), finds compelling topics, researches them via web search and competitor tracking, and drafts social media posts across X, LinkedIn, Bluesky, and Substack. Runs 12 bots sequentially in a pipeline: analysis (commit-analyzer, topic-organizer, topic-researcher) -&gt; research (online-researcher, live-event-tracker, competitor-tracker, interview-extractor) -&gt; output (draft-post-creator, reading-list-creator, dev-process-advisor) -&gt; publishing (auto-poster, engagement-analyst). Includes a self-teaching feedback loop from engagement data back to draft creation. Data is stored in iCloud for cross-device access, with a live HTML dashboard that auto-refreshes during runs.</p>
+<h2>Type &amp; Tech Stack</h2>
 <ul>
-<li><strong>Project Type:</strong> Python CLI tool + Agent-driven content platform</li>
-<li><strong>Language:</strong> Python 3.12+</li>
-<li><strong>Agent Framework:</strong> claude-agent-sdk (spawns Claude Code agents)</li>
-<li><strong>CLI:</strong> click</li>
-<li><strong>Config:</strong> pyyaml</li>
-<li><strong>Platform Integrations:</strong> tweepy (X/Twitter), atproto (Bluesky), python-substack, requests (LinkedIn)</li>
-<li><strong>Storage:</strong> SQLite3 (operational state), macOS Keychain (credentials via keyring)</li>
-<li><strong>Testing:</strong> pytest, pytest-asyncio</li>
+<li><strong>Type</strong>: CLI tool / autonomous agent pipeline</li>
+<li><strong>Language</strong>: Python 3.12+</li>
+<li><strong>Framework</strong>: Click (CLI), claude-agent-sdk (bot orchestration)</li>
+<li><strong>Dependencies</strong>: click, pyyaml, keyring, tweepy (X/Twitter), atproto (Bluesky), python-substack, requests, claude-agent-sdk</li>
+<li><strong>Testing</strong>: pytest, pytest-asyncio (134 unit tests)</li>
+<li><strong>Build system</strong>: setuptools via pyproject.toml</li>
+<li><strong>Entry point</strong>: <code>smbot</code> CLI command (<code>coordinator.cli:cli</code>)</li>
+<li><strong>Data storage</strong>: SQLite (operational state), JSON files (per-run outputs), iCloud directory for persistent data</li>
 </ul>
 <h2>GitHub URL</h2>
-<p><code>https://github.com/mikefullerton/social-media-bot</code></p>
+<p><code>git@github.com:mikefullerton/social-media-bot.git</code></p>
 <h2>Directory Structure</h2>
-<pre><code>social-media-bot/
+<pre><code>
+social-media-bot/
 ├── .claude/
-│   ├── settings.local.json
-│   └── skills/start-run/SKILL.md      # Pipeline run skill
+│   ├── settings.local.json          # Permission allowlists
+│   └── skills/start-run/SKILL.md    # Pipeline run skill
+├── bots/
+│   ├── interaction/                  # Interview-related bots
+│   └── research/                     # Research-related bots
 ├── config/
-│   ├── config.yaml                     # Bot schedules, platform settings, budgets
-│   ├── interests.md                    # Topics to track/exclude
-│   └── voice.md                        # Brand voice guidelines (TBD)
-├── coordinator/                        # Python orchestration (3,563 LOC)
-│   ├── cli.py (1238 LOC)              # Click CLI: run, status, queue, approve, reject, show, setup-credentials
-│   ├── run_manager.py (790 LOC)       # Run context, manifest, HTML dashboard generation
-│   ├── db.py (454 LOC)               # SQLite: bot_runs, drafts, posts, metrics, reading_list, commit_analyses
-│   ├── activity_scanner.py            # Recursive repo discovery, commit filtering
-│   ├── commit_analyzer.py             # Calls deep-commit-analyzer agent
-│   ├── spawner.py                     # claude-agent-sdk wrapper
-│   ├── json_extract.py                # Robust JSON extraction from LLM outputs
-│   ├── keychain.py                    # macOS Keychain wrapper
-│   ├── scheduler.py, health.py, search.py, config.py
-├── platforms/                          # Platform clients (317 LOC)
-│   ├── base.py, x.py, linkedin.py, bluesky.py, substack.py, mock.py
-├── bots/                               # Claude Code agent prompts (markdown)
-│   ├── research/                       # deep_commit_analyzer, activity_aggregator, topic_organizer, topic_researcher, online_researcher, live_event_tracker, competitor_tracker, engagement_analyst, interview_extractor
-│   └── interaction/                    # draft_post_creator, reading_list_creator, dev_process_advisor, interviewer, auto_poster.py
-├── templates/                          # HTML dashboards (index, overview, config, actionable)
-├── tests/                              # 134+ unit tests (1,329 LOC)
-│   ├── test_cli.py, test_db.py, test_activity_scanner.py, test_bot_prompts.py, etc.
-│   └── test_platforms/                 # Per-platform tests
-├── docs/superpowers/
-│   ├── specs/2026-04-01-social-media-bot-system-design.md
-│   └── plans/2026-04-01-phase1-content-pipeline.md
-├── pyproject.toml
-└── README.md</code></pre>
-<h2>Key Components</h2>
-<p><strong>12-Bot Pipeline (sequential):</strong></p>
-<ol>
-<li>deep-commit-analyzer → Analyzes git diffs for WHY (motivations, decisions, trade-offs)</li>
-<li>activity-aggregator → Scans repos for interesting commits</li>
-<li>topic-organizer → Groups analyses into narratives</li>
-<li>topic-researcher → Web research on selected topics</li>
-<li>online-researcher → Trending AI/agentic dev news</li>
-<li>live-event-tracker → Conferences, launches, events</li>
-<li>competitor-tracker → Monitors prominent AI builders</li>
-<li>engagement-analyst → Analyzes metrics on posted content</li>
-<li>interview-extractor → Extracts topics from transcripts</li>
-<li>draft-post-creator → Transforms research into platform-specific drafts</li>
-<li>reading-list-creator → Curates articles worth reading</li>
-<li>auto-poster → Posts approved drafts to platforms</li>
-</ol>
-<p><strong>CLI Commands:</strong> <code>smbot run</code>, <code>status</code>, <code>queue</code>, <code>approve &lt;id&gt;</code>, <code>reject &lt;id&gt;</code>, <code>show &lt;id&gt;</code>, <code>setup-credentials</code></p>
-<p><strong>Data:</strong> iCloud storage at <code>~/Library/Mobile Documents/com~apple~CloudDocs/social-media-bot/</code> with per-run artifact directories and live HTML dashboards</p>
-<p><strong>Rate Limits:</strong> X: 2/day, LinkedIn: 1/day, Bluesky: 2/day, Substack Notes: 1/day, Newsletter: 1/week</p>
+│   ├── config.yaml                   # Bot schedules, settings, platform config
+│   ├── interests.md                  # Topics to track and exclusion filters
+│   └── voice.md                      # Brand voice guidelines
+├── coordinator/
+│   ├── cli.py                        # Main CLI and pipeline orchestration (63K)
+│   ├── run_manager.py                # Per-run state management (31K)
+│   ├── db.py                         # SQLite database layer
+│   ├── commit_analyzer.py            # Deep commit analysis with diff reading
+│   ├── activity_scanner.py           # Recursive repo discovery
+│   ├── json_extract.py               # Robust JSON extraction from LLM output
+│   ├── config.py                     # Configuration loader
+│   ├── health.py                     # Health/backoff system
+│   ├── keychain.py                   # Platform credential storage
+│   ├── scheduler.py                  # Bot scheduling
+│   ├── search.py                     # Search utilities
+│   ├── spawner.py                    # Claude agent spawner
+│   └── test_logger.py               # Test logging utilities
+├── platforms/
+│   ├── base.py                       # Platform base class
+│   ├── x.py                          # X/Twitter client (tweepy)
+│   ├── linkedin.py                   # LinkedIn client
+│   ├── bluesky.py                    # Bluesky client (atproto)
+│   ├── substack.py                   # Substack client
+│   └── mock.py                       # Mock platform for testing
+├── templates/
+│   ├── index.html                    # Run history dashboard
+│   ├── overview.html                 # Per-run live dashboard
+│   ├── config.html                   # Bot selection UI
+│   └── actionable.html               # Actionable items page
+├── tests/                            # 134 unit tests
+├── Mike Fullerton/                   # Personal context (resume, etc.)
+├── pyproject.toml                    # Project metadata and dependencies
+├── README.md                         # Documentation
+└── .gitignore
+</code></pre>
+<h2>Key Files &amp; Components</h2>
+<ul>
+<li><code>coordinator/cli.py</code> -- Main CLI with <code>smbot run</code>, <code>smbot status</code>, <code>smbot queue</code>, <code>smbot approve</code>, <code>smbot reject</code>, <code>smbot show</code>, <code>smbot setup-credentials</code> commands</li>
+<li><code>coordinator/run_manager.py</code> -- Per-run data model, manifest management, HTML dashboard generation</li>
+<li><code>coordinator/commit_analyzer.py</code> -- Analyzes actual git diffs to extract motivations, design decisions, patterns, and trade-offs</li>
+<li><code>coordinator/activity_scanner.py</code> -- Discovers and scans git repos for recent activity</li>
+<li><code>bots/</code> -- Markdown prompt files for Claude Code agents (12 bots total)</li>
+<li><code>platforms/</code> -- Thin API wrappers for X, LinkedIn, Bluesky, Substack</li>
+<li><code>templates/</code> -- HTML templates for dashboards (live-updating overview, config UI, run history)</li>
+<li><code>config/config.yaml</code> -- Pipeline configuration</li>
+<li><code>config/interests.md</code> -- Topic filters and interests</li>
+<li>Data stored at: <code>~/Library/Mobile Documents/com~apple~CloudDocs/social-media-bot/</code></li>
+</ul>
 <h2>Claude Configuration</h2>
 <ul>
-<li><code>/start-run</code> skill reads run config, executes pipeline, opens live dashboard</li>
-<li>Permissions: pdftotext, file ops, git, pip install, web search (specific domains)</li>
+<li><strong>Skills</strong>: <code>start-run</code> -- reads run-config.json, shows bot summary, executes pipeline, opens live overview page</li>
+<li><strong>Settings (local)</strong>: Permission allowlists for web search, web fetch (GitHub, PyPI, docs sites), file operations, pip, claude agent execution</li>
+<li><strong>No CLAUDE.md</strong> in the project root (uses README.md for documentation)</li>
 </ul>
-<h2>Planning & Research Documents</h2>
+<h2>Planning &amp; Research Documents</h2>
 <ul>
-<li><strong>system-design.md</strong> — Goals, architecture, platform targets, data flow</li>
-<li><strong>phase1-content-pipeline.md</strong> — Implementation plan with task breakdown and acceptance criteria</li>
+<li><code>docs/superpowers/</code> -- Contains planning/superpowers documentation</li>
+<li><code>tests/test-design.md</code> -- Test design methodology document</li>
 </ul>
-<h2>Git History & Current State</h2>
+<h2>Git History &amp; Current State</h2>
 <ul>
-<li><strong>Branch:</strong> main (up to date with origin)</li>
-<li><strong>Working tree:</strong> Clean</li>
-<li><strong>Recent (2026-04-06):</strong> iCloud data migration, actionable items page, pipeline improvements, worktree standardization, interview system, per-run data storage</li>
+<li><strong>Branch</strong>: main</li>
+<li><strong>Last commit</strong>: 2026-04-06 -- &quot;feat: iCloud data dir migration, actionable items page, and pipeline improvements&quot;</li>
+<li><strong>Working tree</strong>: Clean</li>
+<li><strong>Recent activity</strong>: Active development (daily commits through early April 2026)</li>
+<li><strong>Key recent changes</strong>: iCloud data directory migration, actionable items page, interview system, per-run data storage with live HTML dashboard, deep activity pipeline with commit-by-commit analysis</li>
 </ul>
-<h2>Build & Test Commands</h2>
-<pre><code>pip install -e .                       # Install
-smbot run                              # Full pipeline
-smbot run --bot deep-commit-analyzer   # Single bot
-smbot queue                            # Review drafts
-pytest tests/ -x -q                    # 134+ tests
-/start-run                             # Claude Code skill</code></pre>
+<h2>Build &amp; Test Commands</h2>
+<pre><code>
+# Setup
+python -m venv .venv &amp;&amp; source .venv/bin/activate
+pip install -e .
+
+# Run pipeline
+smbot run                                    # Full pipeline
+smbot run --bot deep-commit-analyzer         # Single bot
+smbot run --run-id &lt;run-id&gt;                  # Continue existing run
+smbot run --skip auto-poster,engagement-analyst  # Skip bots
+
+# CLI commands
+smbot status                                 # Recent bot runs
+smbot queue                                  # Pending drafts
+smbot approve &lt;id&gt; | --all                   # Approve drafts
+smbot reject &lt;id&gt;                            # Reject draft
+smbot show &lt;id&gt;                              # Display draft
+smbot setup-credentials                      # Store API keys
+
+# Tests
+python -m pytest tests/ -x -q               # 134 unit tests
+
+# Configure bots
+open ~/Library/Mobile\ Documents/com\~apple\~CloudDocs/social-media-bot/config.html
+</code></pre>
 <h2>Notes</h2>
 <ul>
-<li>Python coordinator + Claude Code agents: Python owns scheduling/state/health; agents are stateless workers</li>
-<li>Deep commit analysis extracts WHY, not just WHAT changed</li>
-<li>Per-run isolated artifact directories with live HTML dashboards (5s auto-refresh)</li>
-<li>Keychain-based secrets (not env vars)</li>
-<li>Self-teaching loop: engagement metrics feed back into draft creation</li>
-</ul>
-</div>
+<li>The pipeline uses claude-agent-sdk to spawn Claude Code agents for each bot</li>
+<li>Data is stored in iCloud (<code>~/Library/Mobile Documents/com~apple~CloudDocs/social-media-bot/</code>) for cross-device access and persistence outside the repo</li>
+<li>The commit analyzer reads actual diffs to understand <em>why</em> changes were made, not just <em>what</em> changed</li>
+<li>Overview pages auto-refresh every 5 seconds during active runs with pulsing status indicators</li>
+<li>The self-teaching feedback loop feeds engagement data from the engagement-analyst back into the draft-post-creator</li>
+<li>Bot prompts live in <code>bots/</code> as markdown files, organized into <code>interaction/</code> and <code>research/</code> subdirectories</li>
+</ul></div>
 <div class="footer">Generated 2026-04-07</div>
 </body>
 </html>

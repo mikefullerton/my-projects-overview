@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Agentic Cookbook Tools Repository Overview — My Projects Overview</title>
+<title>Tools — My Projects Overview</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -79,353 +79,122 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 <div class="grain"></div>
 <div class="header">
   <a href="../index.html" class="back">&larr; All Projects</a>
-  <span class="header-title">Agentic Cookbook Tools Repository Overview</span>
+  <span class="header-title">Tools</span>
   <span class="header-meta">agentic-cookbook</span>
 </div>
 <div class="content">
 <h2>Project Summary</h2>
-<p>The <strong>agentic-cookbook/tools</strong> repository provides user-facing skills and guidance rules for interacting with the agentic cookbook system. This is a companion repository to the cookbook itself, offering reusable skills for project authoring, linting, planning, and cookbook integration across all projects using the agentic cookbook workflow.</p>
-<h2>Type & Tech Stack</h2>
-<p><strong>Project Type:</strong> Framework/Tools Repository (CLI Skills and Rules)</p>
+<p>User-facing tools for interacting with the agentic cookbook system. Provides reusable Claude Code skills, guidance rules, and scripts for project authoring, linting, planning, and cookbook integration. This is a companion repository to the agentic-cookbook/cookbook (principles, guidelines, recipes, workflows) and agentic-cookbook/dev-team (multi-agent dev team for project discovery, generation, building, and review). The tools repo delivers the installable skills and rules that projects use to interact with the cookbook workflow.</p>
+<h2>Type &amp; Tech Stack</h2>
 <ul>
-<li>Not a traditional software project, but rather a collection of Claude Code skills, rules, and scripts</li>
-<li>Tools for the agentic cookbook ecosystem</li>
-<li>Focused on workflow automation and quality assurance for cookbook-integrated projects</li>
+<li><strong>Type</strong>: Claude Code tooling repository (skills, rules, scripts)</li>
+<li><strong>Format</strong>: Markdown skill definitions (SKILL.md files), markdown rule files, shell scripts</li>
+<li><strong>No build system</strong>: No package.json, pyproject.toml, or other build configuration</li>
+<li><strong>Runtime</strong>: Claude Code (skills invoked via slash commands), bash (scripts)</li>
 </ul>
-<p><strong>Tech Stack:</strong></p>
-<ul>
-<li>Bash (scripts)</li>
-<li>Markdown (rules and documentation)</li>
-<li>YAML (frontmatter in skill definitions)</li>
-<li>JSON (configuration and state management)</li>
-<li>jq (for JSON parsing in bash scripts)</li>
-<li>Claude Code skills (executable guidance with model invocation)</li>
-</ul>
-<p><strong>Languages:</strong> Bash, Markdown, YAML, JSON</p>
 <h2>GitHub URL</h2>
-<p><code>https://github.com/agentic-cookbook/tools.git</code></p>
-<ul>
-<li>Remote: <code>git@github.com:agentic-cookbook/tools.git</code></li>
-</ul>
+<p><code>git@github.com:agentic-cookbook/tools.git</code></p>
 <h2>Directory Structure</h2>
-<pre><code>tools/
+<pre><code>
+tools/
 ├── .claude/
-│   └── CLAUDE.md                    # Project documentation
-├── .git/                            # Git repository metadata
-├── .gitignore                       # Git ignore rules (.DS_Store, .claude/worktrees/)
-├── README.md                        # Main readme with related repos
-├── rules/                           # Guidance rules for authoring and cookbook
-│   ├── authoring-ground-rules.md
-│   ├── cookbook.md                  # Full cookbook rule implementation
-│   ├── extension-authoring.md
-│   ├── generated-cookbook-template.md
-│   ├── permissions.md
-│   ├── skill-authoring.md
-│   └── skill-versioning.md
+│   └── CLAUDE.md                      # Project-level Claude instructions
+├── rules/                             # Guidance rule files (7 rules)
+│   ├── authoring-ground-rules.md      # Authoring standards
+│   ├── cookbook.md                     # Cookbook conventions (14K)
+│   ├── extension-authoring.md         # Extension authoring guide
+│   ├── generated-cookbook-template.md  # Template for generated cookbooks
+│   ├── permissions.md                 # Permission model
+│   ├── skill-authoring.md             # Skill creation guide
+│   └── skill-versioning.md            # Skill version management
+├── skills/                            # 21 Claude Code skills
+│   ├── configure-cookbook/             # Configure cookbook settings
+│   ├── contribute-to-cookbook/         # Contribute improvements back
+│   ├── cookbook-bug/                   # Report cookbook bugs
+│   ├── cookbook-help/                  # Get help with cookbook
+│   ├── cookbook-next/                  # Next steps guidance
+│   ├── cookbook-start/                 # Start a new cookbook project
+│   ├── cookbook-suggestion/            # Suggest cookbook improvements
+│   ├── install-cookbook/               # Install cookbook into a project
+│   ├── install-recommended-tools/     # Install recommended tooling
+│   ├── install-worktree-rule/         # Install git worktree rule
+│   ├── lint-agent/                    # Lint agent definitions
+│   ├── lint-compliance/               # Lint for compliance
+│   ├── lint-project-with-cookbook/     # Lint project against cookbook
+│   ├── lint-recipe/                   # Lint recipe files
+│   ├── lint-skill/                    # Lint skill definitions
+│   ├── optimize-rules/                # Optimize rule files
+│   ├── plan-cookbook-recipe/           # Plan new recipes
+│   ├── port-swiftui-to-appkit/        # Port SwiftUI to AppKit
+│   ├── uninstall-cookbook/             # Remove cookbook from project
+│   └── validate-cookbook/              # Validate cookbook configuration
 ├── scripts/
-│   └── cookbook-statusline.sh       # Status line progress display for cookbook pipeline
-└── skills/                          # 20 Claude Code skills (indexed below)
-    ├── configure-cookbook/
-    ├── contribute-to-cookbook/
-    ├── cookbook-bug/
-    ├── cookbook-help/
-    ├── cookbook-next/
-    ├── cookbook-start/
-    ├── cookbook-suggestion/
-    ├── install-cookbook/
-    ├── install-recommended-tools/
-    ├── install-worktree-rule/
-    ├── lint-agent/
-    ├── lint-compliance/
-    ├── lint-project-with-cookbook/
-    ├── lint-recipe/
-    ├── lint-skill/
-    ├── optimize-rules/
-    ├── plan-cookbook-recipe/
-    ├── port-swiftui-to-appkit/
-    ├── uninstall-cookbook/
-    └── validate-cookbook/</code></pre>
-<h2>Key Files & Components</h2>
-<h3>Core Guidance Rules (8 files)</h3>
-<table>
-<tr>
-<th>File</th>
-<th>Purpose</th>
-</tr>
-<tr>
-<td><code>rules/authoring-ground-rules.md</code></td>
-<td>Foundation rule for all authoring (skills, agents, rules, code). Mandatory prerequisite. Covers context confirmation, scope clarity, change approval, incremental verification.</td>
-</tr>
-<tr>
-<td><code>rules/cookbook.md</code></td>
-<td>Complete agentic cookbook rule. 282 lines of mandatory guardrails for planning, implementation, and verification. Covers all 18 principles, guideline checklist, recipe search/conformance, 3-phase discipline.</td>
-</tr>
-<tr>
-<td><code>rules/skill-authoring.md</code></td>
-<td>Procedural rule for creating/modifying Claude Code skills. Covers inventory checks, naming conflicts, structure, versioning, linting.</td>
-</tr>
-<tr>
-<td><code>rules/extension-authoring.md</code></td>
-<td>Optional authoring guidance for skills, agents, and rules. Lighter guidance applying cookbook best practices.</td>
-</tr>
-<tr>
-<td><code>rules/skill-versioning.md</code></td>
-<td>Versioning strategy and implementation for skills.</td>
-</tr>
-<tr>
-<td><code>rules/permissions.md</code></td>
-<td>Permission model for skill tool access.</td>
-</tr>
-<tr>
-<td><code>rules/generated-cookbook-template.md</code></td>
-<td>Template for generating cookbook from recipe/guideline sources.</td>
-</tr>
-</table>
-<h3>Claude Code Skills (20 total)</h3>
-<p><strong>Cookbook Integration (8 skills):</strong></p>
+│   └── cookbook-statusline.sh          # Status line integration script
+├── README.md                          # Repository overview
+└── .gitignore
+</code></pre>
+<h2>Key Files &amp; Components</h2>
 <ul>
-<li><code>configure-cookbook/</code> (v5.0.0) — Manage cookbook preferences, rule installation, migration from legacy installations</li>
-<li><code>install-cookbook/</code> (v12.0.0) — Install cookbook into new projects with minimal always-on rule and pipeline skills</li>
-<li><code>uninstall-cookbook/</code> — Remove cookbook installation</li>
-<li><code>cookbook-start/</code> (v2.0.0) — Initialize planning/implementation pipeline, track state through 38 guideline concerns</li>
-<li><code>cookbook-next/</code> — Advance pipeline one step at a time</li>
-<li><code>contribute-to-cookbook/</code> — Walk through contribution workflow for new recipes</li>
-<li><code>install-worktree-rule/</code> — Install worktree management rule</li>
-<li><code>install-recommended-tools/</code> — Install recommended tools for cookbook projects</li>
+<li><code>rules/cookbook.md</code> -- Core cookbook conventions document (14K), the main rule file governing cookbook behavior</li>
+<li><code>rules/skill-authoring.md</code> -- Guide for creating new Claude Code skills</li>
+<li><code>rules/skill-versioning.md</code> -- Version management for skills</li>
+<li><code>rules/authoring-ground-rules.md</code> -- Ground rules for all authoring</li>
+<li><code>rules/permissions.md</code> -- Permission model documentation</li>
+<li><code>rules/extension-authoring.md</code> -- Extension creation guide</li>
+<li><code>skills/install-cookbook/</code> -- Primary entry point for adding cookbook to a project</li>
+<li><code>skills/lint-*</code> -- 5 linting skills (agent, compliance, project, recipe, skill)</li>
+<li><code>skills/cookbook-start/</code> -- Start a new cookbook project</li>
+<li><code>scripts/cookbook-statusline.sh</code> -- Status line integration for cookbook operations</li>
+<li><code>.claude/CLAUDE.md</code> -- References sibling repos: <code>../cookbook</code> (cookbook principles) and <code>../dev-team</code> (multi-agent dev team)</li>
 </ul>
-<p><strong>Linting Skills (5 skills):</strong></p>
+<h2>Claude Configuration</h2>
 <ul>
-<li><code>lint-skill/</code> (v1.1.0) — Lint Claude Code skills against best practices and structure</li>
-<li><code>lint-agent/</code> — Lint Claude Code agents</li>
-<li><code>lint-compliance/</code> — Lint for compliance with cookbook guidelines</li>
-<li><code>lint-recipe/</code> — Lint cookbook recipes</li>
-<li><code>lint-project-with-cookbook/</code> — Full project linting with cookbook integration</li>
+<li><code>.claude/CLAUDE.md</code> -- Project-level instructions referencing sibling repositories (cookbook, dev-team)</li>
+<li>No settings.json or settings.local.json</li>
+<li>Skills are designed to be globally installed via symlinks from <code>~/.claude/skills/</code></li>
 </ul>
-<p><strong>Cookbook Guidance (3 skills):</strong></p>
+<h2>Planning &amp; Research Documents</h2>
 <ul>
-<li><code>cookbook-help/</code> — Help and FAQ for cookbook usage</li>
-<li><code>cookbook-suggestion/</code> — Suggest improvements to recipes/guidelines</li>
-<li><code>cookbook-bug/</code> — Report bugs in cookbook content</li>
+<li>No dedicated planning or research directories</li>
+<li><code>rules/</code> directory serves as the authoritative reference for all cookbook conventions</li>
 </ul>
-<p><strong>Planning & Recipes (2 skills):</strong></p>
+<h2>Git History &amp; Current State</h2>
 <ul>
-<li><code>plan-cookbook-recipe/</code> — Plan and document a new cookbook recipe</li>
-<li><code>validate-cookbook/</code> — Validate cookbook installation and structure</li>
+<li><strong>Branch</strong>: main</li>
+<li><strong>Last commit</strong>: 2026-04-06 -- &quot;feat: add lint skill directories (agent, compliance, project, recipe, skill)&quot;</li>
+<li><strong>Working tree</strong>: Clean</li>
+<li><strong>Recent activity</strong>: Young repository (4 commits total, created 2026-04-03)</li>
+<li><strong>Commit history</strong>:</li>
 </ul>
-<p><strong>Specialized Skills (2 skills):</strong></p>
-<ul>
-<li><code>optimize-rules/</code> — Optimize rule files for performance and clarity</li>
-<li><code>port-swiftui-to-appkit/</code> — Port SwiftUI code to AppKit (reference implementation with 7.2KB common pitfalls guide)</li>
-</ul>
-<h3>Scripts (1 file)</h3>
-<ul>
-<li><code>cookbook-statusline.sh</code> — Bash script for displaying cookbook pipeline progress in Claude Code's status line. Reads <code>.cookbook/pipeline.json</code> and outputs progress like "Planning: Step 2/5 — security". Invoked via settings.json statusLine mechanism.</li>
-</ul>
-<h3>Documentation Files</h3>
-<ul>
-<li><code>.claude/CLAUDE.md</code> — Project CLAUDE.md noting dependency on sibling repos (<code>../cookbook/</code> and <code>../dev-team/</code>)</li>
-<li><code>README.md</code> — Links to related repositories (cookbook and dev-team)</li>
-</ul>
-<h2>Claude Configuration (from .claude/)</h2>
-<p><strong>Directory contents:</strong></p>
-<ul>
-<li><code>.claude/CLAUDE.md</code> — Project README explaining sibling repo dependencies</li>
-</ul>
-<p><strong>Configuration notes:</strong></p>
-<ul>
-<li>Project follows Claude Code conventions</li>
-<li>Uses git worktrees (tracked in <code>.claude/worktrees/</code>, ignored by git)</li>
-<li>Designed to be deployed alongside the main cookbook and dev-team repos</li>
-</ul>
-<h2>Planning & Research Documents</h2>
-<p>No dedicated planning or research directories found. All guidance is embedded in the rules/ and skills/ directories as markdown documents with YAML frontmatter.</p>
-<p><strong>Key design docs within skills:</strong></p>
-<ul>
-<li><code>skills/lint-skill/references/skill-checklist.md</code> — 5.5KB checklist for skill quality</li>
-<li><code>skills/lint-skill/references/skill-structure-reference.md</code> — Reference for skill structure and frontmatter fields</li>
-<li><code>skills/port-swiftui-to-appkit/references/common-pitfalls.md</code> — 7.2KB guide to common AppKit migration issues</li>
-</ul>
-<h2>Git History & Current State</h2>
-<p><strong>Recent Activity (last 5 commits):</strong></p>
-<table>
-<tr>
-<th>Commit</th>
-<th>Date</th>
-<th>Message</th>
-</tr>
-<tr>
-<td>80b2526</td>
-<td>2026-04-06 18:40:58</td>
-<td>feat: add lint skill directories (agent, compliance, project, recipe, skill)</td>
-</tr>
-<tr>
-<td>60b97e1</td>
-<td>2026-04-06 16:18:01</td>
-<td>chore: standardize worktree directory to .claude/worktrees/</td>
-</tr>
-<tr>
-<td>102490f</td>
-<td>2026-04-03 08:21:31</td>
-<td>Add cookbook-statusline.sh script from dev-team repo</td>
-</tr>
-<tr>
-<td>6288621</td>
-<td>2026-04-03 07:50:14</td>
-<td>Initial commit: tools repo with rules, skills, and project setup</td>
-</tr>
-</table>
-<p><strong>Current State:</strong></p>
-<ul>
-<li><strong>Branch:</strong> main</li>
-<li><strong>Status:</strong> Working tree clean, no uncommitted changes</li>
-<li><strong>Git Status:</strong> Ahead of origin/main by 1 commit (waiting to push)</li>
-<li><strong>Total Commits:</strong> 4 (young repo, created ~2 weeks ago on Apr 3)</li>
-</ul>
-<h2>Build & Test Commands</h2>
-<p>No traditional build or test pipeline. This is a tools/rules repository.</p>
-<p><strong>Verification commands (if implementing):</strong></p>
-<ul>
-<li><code>git status</code> — Check for uncommitted changes</li>
-<li><code>/lint-skill &lt;path&gt;</code> — Lint any skill in this repo</li>
-<li><code>find ./skills -name &quot;SKILL.md&quot; | wc -l</code> — Count total skills (currently 20)</li>
-<li>Bash scripts are manually verified; no unit tests</li>
-</ul>
-<p><strong>Expected integration commands:</strong></p>
-<ul>
-<li><code>/install-cookbook</code> — Deploy to consuming projects</li>
-<li><code>/configure-cookbook</code> — Adjust preferences in consuming projects</li>
-<li><code>/cookbook-start</code> — Begin planning/implementation workflow</li>
-<li><code>/cookbook-next</code> — Advance through pipeline</li>
-</ul>
+<p>  - 2026-04-06: Added lint skill directories</p>
+<p>  - 2026-04-06: Standardize worktree directory</p>
+<p>  - 2026-04-03: Add cookbook-statusline.sh script</p>
+<p>  - 2026-04-03: Initial commit with rules, skills, and project setup</p>
+<h2>Build &amp; Test Commands</h2>
+<pre><code>
+# No build system -- this is a tooling/skills repository
+# Skills are invoked via Claude Code slash commands after installation
+
+# Install cookbook into a project:
+# /install-cookbook
+
+# Lint a project:
+# /lint-project-with-cookbook
+
+# Start a new cookbook project:
+# /cookbook-start
+</code></pre>
 <h2>Notes</h2>
-<h3>Architecture & Design</h3>
-<ol>
-<li><strong>Modular Skills System:</strong> Each skill is self-contained in <code>skills/&lt;name&gt;/</code> with:</li>
-</ol>
 <ul>
-<li><code>SKILL.md</code> — Executable guidance with YAML frontmatter (name, version, description, allowed-tools)</li>
-<li><code>references/</code> — Supporting docs (e.g., checklists, references)</li>
-<li><code>examples/</code> — Usage examples (if applicable)</li>
-</ul>
-<ol>
-<li><strong>Rules Hierarchy:</strong> Rules are organized by concern:</li>
-</ol>
-<ul>
-<li>Foundation: <code>authoring-ground-rules.md</code> (read first, always)</li>
-<li>Domain-specific: <code>cookbook.md</code> (full workflow), <code>skill-authoring.md</code> (skill creation), etc.</li>
-<li>All rules are markdown with YAML frontmatter</li>
-</ul>
-<ol>
-<li><strong>Versioning Strategy:</strong></li>
-</ol>
-<ul>
-<li>Each skill carries a <code>version:</code> in YAML frontmatter</li>
-<li>Skills support <code>--version</code> flag for checking installed vs. running version</li>
-<li>Version check logic is consistent across all skills</li>
-</ul>
-<ol>
-<li><strong>Pipeline State Management:</strong></li>
-</ol>
-<ul>
-<li>Pipeline skills (<code>/cookbook-start</code>, <code>/cookbook-next</code>) maintain <code>.cookbook/pipeline.json</code></li>
-<li>Status line script (<code>cookbook-statusline.sh</code>) reads this for progress display</li>
-<li>Supports cross-session continuity</li>
-</ul>
-<ol>
-<li><strong>Integration Model:</strong></li>
-</ol>
-<ul>
-<li>Tools are deployed to <code>../agentic-cookbook/</code> (cookbook) and consuming projects</li>
-<li>Each tool is independent but references the central cookbook for content</li>
-<li>Minimal rule footprint (~10 lines) keeps everyday overhead low</li>
-<li>Heavy content loaded on-demand by skills</li>
-</ul>
-<h3>Key Statistics</h3>
-<ul>
-<li><strong>Repository Age:</strong> ~4 weeks old (initial commit Apr 3, 2026)</li>
-<li><strong>Total Files:</strong> 162</li>
-<li><strong>Total Size:</strong> 912 KB</li>
-<li><strong>Skills:</strong> 20 (each with SKILL.md, references, and examples)</li>
-<li><strong>Rules:</strong> 8 markdown files (500–3000 lines each)</li>
-<li><strong>Scripts:</strong> 1 bash script for status display</li>
-<li><strong>Lines of Code/Content:</strong> ~50KB in skills, ~15KB in rules</li>
-</ul>
-<h3>Unique Features</h3>
-<ol>
-<li><strong>On-Demand Pipeline Skills:</strong> Rather than one monolithic rule, the cookbook is split into:</li>
-</ol>
-<ul>
-<li>Always-on minimal rule (guardrails only)</li>
-<li>On-demand skills (/cookbook-start, /cookbook-next) that load full workflow</li>
-</ul>
-<ol>
-<li><strong>Reference Material:</strong> Each skill carries accompanying docs:</li>
-</ol>
-<ul>
-<li>Checklists, structure references, common pitfalls guides</li>
-<li>No external documentation required; all content self-contained</li>
-</ul>
-<ol>
-<li><strong>Linting Tools:</strong> Comprehensive linting for all artifact types:</li>
-</ol>
-<ul>
-<li>Skills, agents, rules, recipes, compliance checks, full project lints</li>
-</ul>
-<ol>
-<li><strong>Cookbook Integration:</strong> Seamless installation and configuration:</li>
-</ol>
-<ul>
-<li>Single <code>/install-cookbook</code> command deploys everything</li>
-<li>Preferences system allows teams to customize behavior</li>
-</ul>
-<h3>Dependencies</h3>
-<ul>
-<li><strong>Hard dependency:</strong> <code>../agentic-cookbook/</code> — The cookbook itself must be present for most skills to work</li>
-<li><strong>Hard dependency:</strong> <code>../dev-team/</code> — Referenced in CLAUDE.md for multi-agent development</li>
-<li><strong>Tools:</strong> bash, jq, git, Claude Code (for skill execution)</li>
-<li><strong>No external package managers:</strong> No package.json, Cargo.toml, or similar</li>
-</ul>
-<h3>Sibling Repositories (from CLAUDE.md)</h3>
-<p>This repo is part of a three-repo ecosystem:</p>
-<table>
-<tr>
-<th>Repo</th>
-<th>Purpose</th>
-</tr>
-<tr>
-<td><code>../cookbook/</code></td>
-<td>Principles, guidelines, recipes, workflows, and reference material</td>
-</tr>
-<tr>
-<td><code>../dev-team/</code></td>
-<td>Multi-agent dev team: agents, rules, scripts, and docs for discovery, generation, building, and review</td>
-</tr>
-<tr>
-<td><code>../tools/</code> (this repo)</td>
-<td>User-facing skills and rules for interacting with the cookbook system</td>
-</tr>
-</table>
-<p>All three live at the same directory level (<code>/Users/mfullerton/projects/active/</code>).</p>
-<h3>Design Philosophy Reflected in This Repo</h3>
-<ol>
-<li><strong>Simplicity:</strong> Minimal rule overhead; heavy content loaded on-demand</li>
-<li><strong>Composition:</strong> Hundreds of small skills vs. one monolithic rule</li>
-<li><strong>Explicit over Implicit:</strong> YAML frontmatter lists exactly what each skill does and what tools it needs</li>
-<li><strong>Design for Deletion:</strong> Each skill is self-contained and can be removed without affecting others</li>
-<li><strong>Fail Fast:</strong> Skills check prerequisites immediately and provide clear error messages</li>
-<li><strong>Tight Feedback Loops:</strong> Status line script provides real-time pipeline progress</li>
-</ol>
-<h3>Recommended Next Steps for Maintainers</h3>
-<ol>
-<li>Monitor the 4-week-old repo for stability (very new)</li>
-<li>Track the 1 unpushed commit and merge when ready</li>
-<li>Ensure all 20 skills are regularly tested in consuming projects</li>
-<li>Watch for skill version drift (version check warnings)</li>
-<li>Consider adding automated linting of all skills/rules in CI/CD</li>
-<li>Monitor cross-repo dependencies to catch cookbook API changes early</li>
-</ol>
-<p><strong>Generated:</strong> 2026-04-07 <strong>Repository:</strong> agentic-cookbook/tools <strong>Location:</strong> <code>/Users/mfullerton/projects/active/tools/</code> <strong>Size:</strong> 912 KB, 162 files, 4 commits</p>
-</div>
+<li>Part of the agentic-cookbook ecosystem (3 repos: cookbook, tools, dev-team)</li>
+<li>The tools repo is the user-facing entry point -- it provides the skills that projects invoke</li>
+<li>Sibling repos expected at <code>../cookbook</code> and <code>../dev-team</code></li>
+<li>Very young repository (4 commits, created April 2026)</li>
+<li>Contains 21 skills organized by function: installation, linting, planning, configuration, contribution</li>
+<li>5 lint skills added recently for checking agents, compliance, projects, recipes, and skills</li>
+<li>The <code>port-swiftui-to-appkit</code> skill is a notable specialized tool for macOS UI porting</li>
+<li>Rules serve as both documentation and runtime configuration for Claude Code behavior</li>
+</ul></div>
 <div class="footer">Generated 2026-04-07</div>
 </body>
 </html>
