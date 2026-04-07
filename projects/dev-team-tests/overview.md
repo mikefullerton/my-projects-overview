@@ -2,41 +2,49 @@
 
 ## Project Summary
 
-Test directory for dev-team. Minimal config, no active code or git history.
+An empty/stub test directory for the dev-team project. Contains only an empty `config/` directory. No git repository has been initialized, no source code exists, and no test infrastructure has been set up.
 
 ## Type & Tech Stack
 
-- **Location:** ~/projects/tests/dev-team-tests
-- **Tech:** None
+- **Type**: Test directory (empty/stub)
+- **Language**: None (no source files)
+- **Status**: Uninitialized
 
 ## GitHub URL
 
-No git remote configured.
+None (no git repository)
 
 ## Directory Structure
 
-See project directory for current layout.
+```
+dev-team-tests/
+└── config/                          # Empty directory
+```
 
 ## Key Files & Components
 
-Refer to project source.
+None -- the directory is empty aside from the `config/` subdirectory.
 
 ## Claude Configuration
 
-Check .claude/ directory in project for current configuration.
+None.
 
 ## Planning & Research Documents
 
-Check docs/ or research/ directories if present.
+None.
 
 ## Git History & Current State
 
-Run `git log` in the project directory for current history.
+- **Git**: Not initialized (no `.git/` directory)
+- **Working tree**: Empty aside from config/ directory
+- **Status**: Placeholder only
 
 ## Build & Test Commands
 
-Check README.md or project configuration files.
+None -- no project infrastructure exists.
 
 ## Notes
 
-- **Parent directory:** ~/projects/tests/
+- This appears to be a placeholder directory created for future dev-team testing
+- No git repo, no source code, no configuration files
+- The corresponding active project is at `~/projects/active/dev-team/`
