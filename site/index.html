@@ -257,44 +257,31 @@ main {
   <div class="nav-sub">25 projects &middot; 3 organizations</div>
   <div class="nav-search"><input type="text" id="navSearch" placeholder="Search..." oninput="filterAll()"></div>
 
-  <div class="nav-section">macOS Native Apps</div>
-  <a class="nav-link" href="#Hairball">Hairball</a>
-  <a class="nav-link" href="#scratching-post">Scratching Post</a>
-  <a class="nav-link" href="#catnip-terminal">Catnip Terminal</a>
+    <a class="nav-link" href="#Hairball">Hairball</a>
   <a class="nav-link" href="#Whippet">Whippet</a>
-
-  <div class="nav-section">Cross-Platform</div>
-  <a class="nav-link" href="#temporal">Temporal</a>
-  <a class="nav-link" href="#temporal-platform">Temporal Platform</a>
-
-  <div class="nav-section">Agentic Cookbook</div>
+  <a class="nav-link" href="#agentic-auth-service">Agentic Auth Service</a>
+  <a class="nav-link" href="#agentic-kitchen">Agentic Kitchen</a>
+  <a class="nav-link" href="#cat-herding">Cat Herding</a>
+  <a class="nav-link" href="#catnip">Catnip</a>
+  <a class="nav-link" href="#catnip-terminal">Catnip Terminal</a>
+  <a class="nav-link" href="#code-review-pipline">Code Review Pipeline</a>
   <a class="nav-link" href="#cookbook">Cookbook</a>
   <a class="nav-link" href="#cookbook-web">Cookbook Web</a>
   <a class="nav-link" href="#dev-team">Dev Team</a>
-  <a class="nav-link" href="#roadmaps">Roadmaps</a>
-  <a class="nav-link" href="#tools">Tools</a>
-  <a class="nav-link" href="#official-agent-registry">Agent Registry</a>
-  <a class="nav-link" href="#agentic-auth-service">Auth Service</a>
-  <a class="nav-link" href="#agentic-kitchen">Agentic Kitchen</a>
-
-  <div class="nav-section">Web Apps & SaaS</div>
   <a class="nav-link" href="#learntruefacts">Learn True Facts</a>
-  <a class="nav-link" href="#myagenticprojects">MyAgenticProjects</a>
   <a class="nav-link" href="#mikefullerton.com">mikefullerton.com</a>
-
-  <div class="nav-section">Claude Code Tools</div>
-  <a class="nav-link" href="#cat-herding">Cat Herding</a>
-  <a class="nav-link" href="#code-review-pipline">Code Review Pipeline</a>
-  <a class="nav-link" href="#social-media-bot">Social Media Bot</a>
-
-  <div class="nav-section">Fun & Creative</div>
-  <a class="nav-link" href="#name-craft">Name-Craft</a>
-  <a class="nav-link" href="#catnip">Catnip</a>
-
-  <div class="nav-section">Infrastructure</div>
-  <a class="nav-link" href="#mysetup">MySetup</a>
   <a class="nav-link" href="#my-projects">My Projects</a>
+  <a class="nav-link" href="#myagenticprojects">MyAgenticProjects</a>
   <a class="nav-link" href="#myagenticworkspace">MyAgenticWorkspace</a>
+  <a class="nav-link" href="#mysetup">MySetup</a>
+  <a class="nav-link" href="#name-craft">Name-Craft</a>
+  <a class="nav-link" href="#official-agent-registry">Official Agent Registry</a>
+  <a class="nav-link" href="#roadmaps">Roadmaps</a>
+  <a class="nav-link" href="#scratching-post">Scratching Post</a>
+  <a class="nav-link" href="#social-media-bot">Social Media Bot</a>
+  <a class="nav-link" href="#temporal">Temporal</a>
+  <a class="nav-link" href="#temporal-platform">Temporal Platform</a>
+  <a class="nav-link" href="#tools">Tools</a>
 </nav>
 
 <main>
@@ -311,26 +298,13 @@ main {
     <div class="stat-card"><div class="stat-value">3</div><div class="stat-label">Organizations</div></div>
   </div>
 
-  <!-- macOS Native Apps -->
-  <div class="section" data-section="macos">
-    <div class="section-header"><h2>macOS Native Apps</h2><span class="count">4</span></div>
+  <div class="section">
+    <div class="section-header"><h2>All Projects</h2><span class="count">25</span></div>
     <div class="project-grid">
       <a href="projects/Hairball.html" class="project-card" id="Hairball" data-search="hairball menu bar window task context swift swiftui appkit accessibility">
         <div class="card-top"><h3>Hairball</h3></div>
         <div class="tagline">Menu bar app for window-level task context management using Accessibility APIs</div>
         <div class="tech-stack"><span class="tech-tag">Swift</span><span class="tech-tag">SwiftUI</span><span class="tech-tag">AppKit</span><span class="tech-tag">Accessibility API</span></div>
-        <div class="card-org">mikefullerton</div>
-      </a>
-      <a href="projects/scratching-post.html" class="project-card" id="scratching-post" data-search="scratching post catnip ide document terminal notes file browser ai summarization">
-        <div class="card-top"><h3>Scratching Post</h3></div>
-        <div class="tagline">Catnip IDE &mdash; document-based multi-window IDE with terminal, notes, file browser, AI summarization</div>
-        <div class="tech-stack"><span class="tech-tag">Swift</span><span class="tech-tag">SwiftUI</span><span class="tech-tag">AppKit</span><span class="tech-tag">SQLite</span><span class="tech-tag">SwiftTerm</span></div>
-        <div class="card-org">mikefullerton</div>
-      </a>
-      <a href="projects/catnip-terminal.html" class="project-card" id="catnip-terminal" data-search="catnip terminal emulator ai session summarization multi provider">
-        <div class="card-top"><h3>Catnip Terminal</h3></div>
-        <div class="tagline">Terminal emulator with AI-powered session summarization (Claude, OpenAI, Gemini)</div>
-        <div class="tech-stack"><span class="tech-tag">Swift</span><span class="tech-tag">SwiftUI</span><span class="tech-tag">AppKit</span><span class="tech-tag">SwiftTerm</span></div>
         <div class="card-org">mikefullerton</div>
       </a>
       <a href="projects/Whippet.html" class="project-card" id="Whippet" data-search="whippet menu bar claude code session monitor events sqlite">
@@ -339,32 +313,41 @@ main {
         <div class="tech-stack"><span class="tech-tag">Swift</span><span class="tech-tag">AppKit</span><span class="tech-tag">SwiftUI</span><span class="tech-tag">SQLite</span></div>
         <div class="card-org">mikefullerton</div>
       </a>
-    </div>
-  </div>
-
-  <!-- Cross-Platform -->
-  <div class="section" data-section="cross-platform">
-    <div class="section-header"><h2>Cross-Platform Apps</h2><span class="count">2</span></div>
-    <div class="project-grid">
-      <a href="projects/temporal.html" class="project-card" id="temporal" data-search="temporal cross platform ai assistant community forum gamification kotlin multiplatform swift react ktor postgresql">
-        <div class="card-top"><h3>Temporal</h3></div>
-        <div class="tagline">Cross-platform AI assistant with 8-phase community forum, gamification, real-time messaging across 7+ platforms</div>
-        <div class="tech-stack"><span class="tech-tag">Kotlin MP</span><span class="tech-tag">SwiftUI</span><span class="tech-tag">Compose</span><span class="tech-tag">React</span><span class="tech-tag">Ktor</span><span class="tech-tag">PostgreSQL</span></div>
-        <div class="card-org">temporal-company</div>
+      <a href="projects/agentic-auth-service.html" class="project-card" id="agentic-auth-service" data-search="agentic auth service jwt authentication rs256 hono node typescript railway drizzle">
+        <div class="card-top"><h3>Agentic Auth Service</h3></div>
+        <div class="tagline">Shared RS256 JWT authentication microservice for the agentic ecosystem</div>
+        <div class="tech-stack"><span class="tech-tag">Node.js</span><span class="tech-tag">Hono</span><span class="tech-tag">TypeScript</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Railway</span></div>
+        <div class="card-org">agentic-cookbook</div>
       </a>
-      <a href="projects/temporal-platform.html" class="project-card" id="temporal-platform" data-search="temporal platform spec driven specification framework conformance tests">
-        <div class="card-top"><h3>Temporal Platform</h3></div>
-        <div class="tagline">Spec-driven application platform &mdash; shares behavioral specifications across platforms for native implementations</div>
-        <div class="tech-stack"><span class="tech-tag">Kotlin</span><span class="tech-tag">Swift</span><span class="tech-tag">TypeScript</span><span class="tech-tag">C#</span></div>
-        <div class="card-org">temporal-company</div>
+      <a href="projects/agentic-kitchen.html" class="project-card" id="agentic-kitchen" data-search="agentic kitchen empty placeholder">
+        <div class="card-top"><h3>Agentic Kitchen</h3></div>
+        <div class="tagline">Empty placeholder repository</div>
+        <div class="card-org">agentic-cookbook</div>
       </a>
-    </div>
-  </div>
-
-  <!-- Agentic Cookbook -->
-  <div class="section" data-section="agentic-cookbook">
-    <div class="section-header"><h2>Agentic Cookbook Ecosystem</h2><span class="count">8</span></div>
-    <div class="project-grid">
+      <a href="projects/cat-herding.html" class="project-card" id="cat-herding" data-search="cat herding plugins skills cli site-manager webinator marketplace python bash">
+        <div class="card-top"><h3>Cat Herding</h3></div>
+        <div class="tagline">6 plugins, 11 skills, 2 CLIs (site-manager, webinator) &mdash; local plugin marketplace for Claude Code</div>
+        <div class="tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">Bash</span><span class="tech-tag">JavaScript</span></div>
+        <div class="card-org">mikefullerton</div>
+      </a>
+      <a href="projects/catnip.html" class="project-card" id="catnip" data-search="catnip web dashboard monitoring claude code agent progress react hono websocket github oauth">
+        <div class="card-top"><h3>Catnip</h3></div>
+        <div class="tagline">Web dashboard for monitoring Claude Code agent progress in real-time with WebSocket updates</div>
+        <div class="tech-stack"><span class="tech-tag">React 19</span><span class="tech-tag">Hono</span><span class="tech-tag">WebSocket</span><span class="tech-tag">Railway</span><span class="tech-tag">Cloudflare</span></div>
+        <div class="card-org">mikefullerton</div>
+      </a>
+      <a href="projects/catnip-terminal.html" class="project-card" id="catnip-terminal" data-search="catnip terminal emulator ai session summarization multi provider">
+        <div class="card-top"><h3>Catnip Terminal</h3></div>
+        <div class="tagline">Terminal emulator with AI-powered session summarization (Claude, OpenAI, Gemini)</div>
+        <div class="tech-stack"><span class="tech-tag">Swift</span><span class="tech-tag">SwiftUI</span><span class="tech-tag">AppKit</span><span class="tech-tag">SwiftTerm</span></div>
+        <div class="card-org">mikefullerton</div>
+      </a>
+      <a href="projects/code-review-pipline.html" class="project-card" id="code-review-pipline" data-search="code review pipeline automated claude code cli daemon github app launchd python sqlite">
+        <div class="card-top"><h3>Code Review Pipeline</h3></div>
+        <div class="tagline">Automated code review via Claude Code CLI &mdash; runs as macOS launchd daemon with GitHub App identity</div>
+        <div class="tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">SQLite</span><span class="tech-tag">GitHub API</span><span class="tech-tag">Claude CLI</span></div>
+        <div class="card-org">agentic-cookbook</div>
+      </a>
       <a href="projects/cookbook.html" class="project-card" id="cookbook" data-search="cookbook knowledge base principles guidelines ingredients recipes workflows markdown">
         <div class="card-top"><h3>Cookbook</h3></div>
         <div class="tagline">Structured library of principles, guidelines, ingredients, recipes for AI-assisted development</div>
@@ -383,52 +366,10 @@ main {
         <div class="tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">Markdown</span><span class="tech-tag">pytest</span><span class="tech-tag">SQLite</span></div>
         <div class="card-org">agentic-cookbook</div>
       </a>
-      <a href="projects/roadmaps.html" class="project-card" id="roadmaps" data-search="roadmaps feature planning implementation system flask sqlite dashboard skills">
-        <div class="card-top"><h3>Roadmaps</h3></div>
-        <div class="tagline">Feature planning and implementation system with live dashboards and automated step execution</div>
-        <div class="tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">Flask</span><span class="tech-tag">SQLite</span><span class="tech-tag">Bash</span></div>
-        <div class="card-org">agentic-cookbook</div>
-      </a>
-      <a href="projects/tools.html" class="project-card" id="tools" data-search="tools skills rules guidance agentic cookbook bash claude code">
-        <div class="card-top"><h3>Tools</h3></div>
-        <div class="tagline">21 Claude Code skills and 7 guidance rules for the agentic cookbook ecosystem</div>
-        <div class="tech-stack"><span class="tech-tag">Bash</span><span class="tech-tag">Markdown</span><span class="tech-tag">YAML</span></div>
-        <div class="card-org">agentic-cookbook</div>
-      </a>
-      <a href="projects/official-agent-registry.html" class="project-card" id="official-agent-registry" data-search="official agent registry dns identity platform personas react hono postgresql cloudflare">
-        <div class="card-top"><h3>Official Agent Registry</h3></div>
-        <div class="tagline">&ldquo;DNS for AI agents&rdquo; &mdash; identity platform for registering and discovering AI agents</div>
-        <div class="tech-stack"><span class="tech-tag">React</span><span class="tech-tag">TypeScript</span><span class="tech-tag">Hono</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Cloudflare</span></div>
-        <div class="card-org">agentic-cookbook</div>
-      </a>
-      <a href="projects/agentic-auth-service.html" class="project-card" id="agentic-auth-service" data-search="agentic auth service jwt authentication rs256 hono node typescript railway drizzle">
-        <div class="card-top"><h3>Agentic Auth Service</h3></div>
-        <div class="tagline">Shared RS256 JWT authentication microservice for the agentic ecosystem</div>
-        <div class="tech-stack"><span class="tech-tag">Node.js</span><span class="tech-tag">Hono</span><span class="tech-tag">TypeScript</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Railway</span></div>
-        <div class="card-org">agentic-cookbook</div>
-      </a>
-      <a href="projects/agentic-kitchen.html" class="project-card" id="agentic-kitchen" data-search="agentic kitchen empty placeholder">
-        <div class="card-top"><h3>Agentic Kitchen</h3></div>
-        <div class="tagline">Empty placeholder repository</div>
-        <div class="card-org">agentic-cookbook</div>
-      </a>
-    </div>
-  </div>
-
-  <!-- Web Apps -->
-  <div class="section" data-section="web-apps">
-    <div class="section-header"><h2>Web Applications & SaaS</h2><span class="count">3</span></div>
-    <div class="project-grid">
       <a href="projects/learntruefacts.html" class="project-card" id="learntruefacts" data-search="learntruefacts ai comedian chat persona react hono cloudflare multi llm">
         <div class="card-top"><h3>Learn True Facts</h3></div>
         <div class="tagline">AI improv comedian chat app &mdash; blends real facts with absurd fiction (design complete, pre-implementation)</div>
         <div class="tech-stack"><span class="tech-tag">React 19</span><span class="tech-tag">Hono</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Cloudflare</span><span class="tech-tag">Multi-LLM</span></div>
-        <div class="card-org">agentic-cookbook</div>
-      </a>
-      <a href="projects/myagenticprojects.html" class="project-card" id="myagenticprojects" data-search="myagenticprojects saas platform auth feature flags messaging feedback react hono railway cloudflare">
-        <div class="card-top"><h3>MyAgenticProjects</h3></div>
-        <div class="tagline">Full-stack SaaS platform with auth, feature flags, messaging, feedback &mdash; scaffolded from site-manager</div>
-        <div class="tech-stack"><span class="tech-tag">React 19</span><span class="tech-tag">Hono</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Railway</span><span class="tech-tag">Cloudflare</span></div>
         <div class="card-org">agentic-cookbook</div>
       </a>
       <a href="projects/mikefullerton.com.html" class="project-card" id="mikefullerton.com" data-search="mikefullerton.com personal portfolio resume website html css github pages">
@@ -437,24 +378,52 @@ main {
         <div class="tech-stack"><span class="tech-tag">HTML</span><span class="tech-tag">CSS</span><span class="tech-tag">GitHub Pages</span></div>
         <div class="card-org">mikefullerton</div>
       </a>
-    </div>
-  </div>
-
-  <!-- Claude Code Tools -->
-  <div class="section" data-section="claude-tools">
-    <div class="section-header"><h2>Claude Code Extensions & Tools</h2><span class="count">3</span></div>
-    <div class="project-grid">
-      <a href="projects/cat-herding.html" class="project-card" id="cat-herding" data-search="cat herding plugins skills cli site-manager webinator marketplace python bash">
-        <div class="card-top"><h3>Cat Herding</h3></div>
-        <div class="tagline">6 plugins, 11 skills, 2 CLIs (site-manager, webinator) &mdash; local plugin marketplace for Claude Code</div>
-        <div class="tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">Bash</span><span class="tech-tag">JavaScript</span></div>
+      <a href="projects/my-projects.html" class="project-card" id="my-projects" data-search="my projects management dashboard tracking git repos react vite node scanner">
+        <div class="card-top"><h3>My Projects</h3></div>
+        <div class="tagline">Project management dashboard tracking ~35 git repos with git scanning and cross-project metadata</div>
+        <div class="tech-stack"><span class="tech-tag">React 19</span><span class="tech-tag">Vite</span><span class="tech-tag">Node.js</span><span class="tech-tag">Bash</span></div>
         <div class="card-org">mikefullerton</div>
       </a>
-      <a href="projects/code-review-pipline.html" class="project-card" id="code-review-pipline" data-search="code review pipeline automated claude code cli daemon github app launchd python sqlite">
-        <div class="card-top"><h3>Code Review Pipeline</h3></div>
-        <div class="tagline">Automated code review via Claude Code CLI &mdash; runs as macOS launchd daemon with GitHub App identity</div>
-        <div class="tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">SQLite</span><span class="tech-tag">GitHub API</span><span class="tech-tag">Claude CLI</span></div>
+      <a href="projects/myagenticprojects.html" class="project-card" id="myagenticprojects" data-search="myagenticprojects saas platform auth feature flags messaging feedback react hono railway cloudflare">
+        <div class="card-top"><h3>MyAgenticProjects</h3></div>
+        <div class="tagline">Full-stack SaaS platform with auth, feature flags, messaging, feedback &mdash; scaffolded from site-manager</div>
+        <div class="tech-stack"><span class="tech-tag">React 19</span><span class="tech-tag">Hono</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Railway</span><span class="tech-tag">Cloudflare</span></div>
         <div class="card-org">agentic-cookbook</div>
+      </a>
+      <a href="projects/myagenticworkspace.html" class="project-card" id="myagenticworkspace" data-search="myagenticworkspace empty placeholder">
+        <div class="card-top"><h3>MyAgenticWorkspace</h3></div>
+        <div class="tagline">Empty placeholder repository</div>
+        <div class="card-org">agentic-cookbook</div>
+      </a>
+      <a href="projects/mysetup.html" class="project-card" id="mysetup" data-search="mysetup development infrastructure automation macos windows wsl bash python homebrew declarative setup">
+        <div class="card-top"><h3>MySetup</h3></div>
+        <div class="tagline">Declarative development environment automation for macOS and Windows (WSL) with 20+ utility scripts</div>
+        <div class="tech-stack"><span class="tech-tag">Bash</span><span class="tech-tag">Python</span><span class="tech-tag">Homebrew</span></div>
+        <div class="card-org">mikefullerton</div>
+      </a>
+      <a href="projects/name-craft.html" class="project-card" id="name-craft" data-search="name craft character name generator children books claude ai flask sound symbolism word builder">
+        <div class="card-top"><h3>Name-Craft</h3></div>
+        <div class="tagline">Children&rsquo;s book character name generator using Claude AI with sound symbolism and genre templates</div>
+        <div class="tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">Flask</span><span class="tech-tag">Claude API</span><span class="tech-tag">SQLite</span></div>
+        <div class="card-org">mikefullerton (local)</div>
+      </a>
+      <a href="projects/official-agent-registry.html" class="project-card" id="official-agent-registry" data-search="official agent registry dns identity platform personas react hono postgresql cloudflare">
+        <div class="card-top"><h3>Official Agent Registry</h3></div>
+        <div class="tagline">&ldquo;DNS for AI agents&rdquo; &mdash; identity platform for registering and discovering AI agents</div>
+        <div class="tech-stack"><span class="tech-tag">React</span><span class="tech-tag">TypeScript</span><span class="tech-tag">Hono</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Cloudflare</span></div>
+        <div class="card-org">agentic-cookbook</div>
+      </a>
+      <a href="projects/roadmaps.html" class="project-card" id="roadmaps" data-search="roadmaps feature planning implementation system flask sqlite dashboard skills">
+        <div class="card-top"><h3>Roadmaps</h3></div>
+        <div class="tagline">Feature planning and implementation system with live dashboards and automated step execution</div>
+        <div class="tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">Flask</span><span class="tech-tag">SQLite</span><span class="tech-tag">Bash</span></div>
+        <div class="card-org">agentic-cookbook</div>
+      </a>
+      <a href="projects/scratching-post.html" class="project-card" id="scratching-post" data-search="scratching post catnip ide document terminal notes file browser ai summarization">
+        <div class="card-top"><h3>Scratching Post</h3></div>
+        <div class="tagline">Catnip IDE &mdash; document-based multi-window IDE with terminal, notes, file browser, AI summarization</div>
+        <div class="tech-stack"><span class="tech-tag">Swift</span><span class="tech-tag">SwiftUI</span><span class="tech-tag">AppKit</span><span class="tech-tag">SQLite</span><span class="tech-tag">SwiftTerm</span></div>
+        <div class="card-org">mikefullerton</div>
       </a>
       <a href="projects/social-media-bot.html" class="project-card" id="social-media-bot" data-search="social media bot ai content pipeline git commits analysis x linkedin bluesky substack 12 bots python">
         <div class="card-top"><h3>Social Media Bot</h3></div>
@@ -462,47 +431,22 @@ main {
         <div class="tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">claude-agent-sdk</span><span class="tech-tag">SQLite</span><span class="tech-tag">click</span></div>
         <div class="card-org">mikefullerton</div>
       </a>
-    </div>
-  </div>
-
-  <!-- Fun & Creative -->
-  <div class="section" data-section="fun">
-    <div class="section-header"><h2>Fun & Creative</h2><span class="count">2</span></div>
-    <div class="project-grid">
-      <a href="projects/name-craft.html" class="project-card" id="name-craft" data-search="name craft character name generator children books claude ai flask sound symbolism word builder">
-        <div class="card-top"><h3>Name-Craft</h3></div>
-        <div class="tagline">Children&rsquo;s book character name generator using Claude AI with sound symbolism and genre templates</div>
-        <div class="tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">Flask</span><span class="tech-tag">Claude API</span><span class="tech-tag">SQLite</span></div>
-        <div class="card-org">mikefullerton (local)</div>
+      <a href="projects/temporal.html" class="project-card" id="temporal" data-search="temporal cross platform ai assistant community forum gamification kotlin multiplatform swift react ktor postgresql">
+        <div class="card-top"><h3>Temporal</h3></div>
+        <div class="tagline">Cross-platform AI assistant with 8-phase community forum, gamification, real-time messaging across 7+ platforms</div>
+        <div class="tech-stack"><span class="tech-tag">Kotlin MP</span><span class="tech-tag">SwiftUI</span><span class="tech-tag">Compose</span><span class="tech-tag">React</span><span class="tech-tag">Ktor</span><span class="tech-tag">PostgreSQL</span></div>
+        <div class="card-org">temporal-company</div>
       </a>
-      <a href="projects/catnip.html" class="project-card" id="catnip" data-search="catnip web dashboard monitoring claude code agent progress react hono websocket github oauth">
-        <div class="card-top"><h3>Catnip</h3></div>
-        <div class="tagline">Web dashboard for monitoring Claude Code agent progress in real-time with WebSocket updates</div>
-        <div class="tech-stack"><span class="tech-tag">React 19</span><span class="tech-tag">Hono</span><span class="tech-tag">WebSocket</span><span class="tech-tag">Railway</span><span class="tech-tag">Cloudflare</span></div>
-        <div class="card-org">mikefullerton</div>
+      <a href="projects/temporal-platform.html" class="project-card" id="temporal-platform" data-search="temporal platform spec driven specification framework conformance tests">
+        <div class="card-top"><h3>Temporal Platform</h3></div>
+        <div class="tagline">Spec-driven application platform &mdash; shares behavioral specifications across platforms for native implementations</div>
+        <div class="tech-stack"><span class="tech-tag">Kotlin</span><span class="tech-tag">Swift</span><span class="tech-tag">TypeScript</span><span class="tech-tag">C#</span></div>
+        <div class="card-org">temporal-company</div>
       </a>
-    </div>
-  </div>
-
-  <!-- Infrastructure -->
-  <div class="section" data-section="infra">
-    <div class="section-header"><h2>Infrastructure & Meta</h2><span class="count">3</span></div>
-    <div class="project-grid">
-      <a href="projects/mysetup.html" class="project-card" id="mysetup" data-search="mysetup development infrastructure automation macos windows wsl bash python homebrew declarative setup">
-        <div class="card-top"><h3>MySetup</h3></div>
-        <div class="tagline">Declarative development environment automation for macOS and Windows (WSL) with 20+ utility scripts</div>
-        <div class="tech-stack"><span class="tech-tag">Bash</span><span class="tech-tag">Python</span><span class="tech-tag">Homebrew</span></div>
-        <div class="card-org">mikefullerton</div>
-      </a>
-      <a href="projects/my-projects.html" class="project-card" id="my-projects" data-search="my projects management dashboard tracking git repos react vite node scanner">
-        <div class="card-top"><h3>My Projects</h3></div>
-        <div class="tagline">Project management dashboard tracking ~35 git repos with git scanning and cross-project metadata</div>
-        <div class="tech-stack"><span class="tech-tag">React 19</span><span class="tech-tag">Vite</span><span class="tech-tag">Node.js</span><span class="tech-tag">Bash</span></div>
-        <div class="card-org">mikefullerton</div>
-      </a>
-      <a href="projects/myagenticworkspace.html" class="project-card" id="myagenticworkspace" data-search="myagenticworkspace empty placeholder">
-        <div class="card-top"><h3>MyAgenticWorkspace</h3></div>
-        <div class="tagline">Empty placeholder repository</div>
+      <a href="projects/tools.html" class="project-card" id="tools" data-search="tools skills rules guidance agentic cookbook bash claude code">
+        <div class="card-top"><h3>Tools</h3></div>
+        <div class="tagline">21 Claude Code skills and 7 guidance rules for the agentic cookbook ecosystem</div>
+        <div class="tech-stack"><span class="tech-tag">Bash</span><span class="tech-tag">Markdown</span><span class="tech-tag">YAML</span></div>
         <div class="card-org">agentic-cookbook</div>
       </a>
     </div>
