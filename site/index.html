@@ -85,24 +85,6 @@ nav a.nav-link {
   border-left: 2px solid transparent;
 }
 nav a.nav-link:hover { color: var(--text); background: var(--surface-hover); text-decoration: none; }
-nav .nav-dot {
-  display: inline-block; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
-}
-nav .nav-dot-green { background: var(--green); }
-nav .nav-dot-blue { background: var(--blue); }
-nav .nav-dot-yellow { background: var(--yellow); }
-nav .nav-dot-dim { background: var(--text-dim); }
-nav .nav-filters {
-  padding: 0 16px; margin-bottom: 16px; display: flex; gap: 6px;
-}
-nav .filter-btn {
-  font-family: var(--mono); font-size: 0.55rem; text-transform: uppercase;
-  letter-spacing: 0.04em; padding: 3px 8px; border-radius: 3px;
-  background: transparent; color: var(--text-dim); border: 1px solid var(--border);
-  cursor: pointer; transition: all 0.2s;
-}
-nav .filter-btn:hover { border-color: var(--text-muted); color: var(--text-muted); }
-nav .filter-btn.active { color: var(--accent); border-color: var(--accent); background: var(--accent-dim); }
 
 main {
   margin-left: 280px; flex: 1; padding: 40px 48px 80px; max-width: 1100px;
@@ -135,9 +117,6 @@ main {
   text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px;
 }
 .stat-card.accent .stat-value { color: var(--accent); }
-.stat-card.green .stat-value { color: var(--green); }
-.stat-card.blue .stat-value { color: var(--blue); }
-.stat-card.yellow .stat-value { color: var(--yellow); }
 
 /* ─── Section Headers ─────────────────────────────────────────────── */
 .section { margin-bottom: 48px; }
@@ -160,14 +139,6 @@ main {
 .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
 .project-card h3 { font-family: var(--sans); font-weight: 600; font-size: 1rem; color: var(--text); }
 
-.status-badge {
-  font-family: var(--mono); font-size: 0.6rem; text-transform: uppercase;
-  letter-spacing: 0.06em; padding: 3px 8px; border-radius: 3px; border: 1px solid;
-}
-.status-badge.active { color: var(--green); border-color: var(--green); background: var(--green-dim); }
-.status-badge.stable { color: var(--blue); border-color: var(--blue); background: var(--blue-dim); }
-.status-badge.planning { color: var(--yellow); border-color: var(--yellow); background: var(--yellow-dim); }
-.status-badge.empty { color: var(--text-dim); border-color: var(--border-accent); background: var(--surface-hover); }
 
 .tagline { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px; }
 .tech-stack { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
@@ -285,51 +256,45 @@ main {
   <div class="nav-title">Projects</div>
   <div class="nav-sub">25 projects &middot; 3 organizations</div>
   <div class="nav-search"><input type="text" id="navSearch" placeholder="Search..." oninput="filterAll()"></div>
-  <div class="nav-filters">
-    <button class="filter-btn active" data-filter="" onclick="setFilter(this)">All</button>
-    <button class="filter-btn" data-filter="active" onclick="setFilter(this)">Active</button>
-    <button class="filter-btn" data-filter="stable" onclick="setFilter(this)">Stable</button>
-    <button class="filter-btn" data-filter="planning" onclick="setFilter(this)">Plan</button>
-  </div>
 
   <div class="nav-section">macOS Native Apps</div>
-  <a class="nav-link" href="#Hairball" data-status="active"><span class="nav-dot nav-dot-green"></span>Hairball</a>
-  <a class="nav-link" href="#scratching-post" data-status="stable"><span class="nav-dot nav-dot-blue"></span>Scratching Post</a>
-  <a class="nav-link" href="#catnip-terminal" data-status="stable"><span class="nav-dot nav-dot-blue"></span>Catnip Terminal</a>
-  <a class="nav-link" href="#Whippet" data-status="active"><span class="nav-dot nav-dot-green"></span>Whippet</a>
+  <a class="nav-link" href="#Hairball">Hairball</a>
+  <a class="nav-link" href="#scratching-post">Scratching Post</a>
+  <a class="nav-link" href="#catnip-terminal">Catnip Terminal</a>
+  <a class="nav-link" href="#Whippet">Whippet</a>
 
   <div class="nav-section">Cross-Platform</div>
-  <a class="nav-link" href="#temporal" data-status="active"><span class="nav-dot nav-dot-green"></span>Temporal</a>
-  <a class="nav-link" href="#temporal-platform" data-status="planning"><span class="nav-dot nav-dot-yellow"></span>Temporal Platform</a>
+  <a class="nav-link" href="#temporal">Temporal</a>
+  <a class="nav-link" href="#temporal-platform">Temporal Platform</a>
 
   <div class="nav-section">Agentic Cookbook</div>
-  <a class="nav-link" href="#cookbook" data-status="active"><span class="nav-dot nav-dot-green"></span>Cookbook</a>
-  <a class="nav-link" href="#cookbook-web" data-status="active"><span class="nav-dot nav-dot-green"></span>Cookbook Web</a>
-  <a class="nav-link" href="#dev-team" data-status="active"><span class="nav-dot nav-dot-green"></span>Dev Team</a>
-  <a class="nav-link" href="#roadmaps" data-status="active"><span class="nav-dot nav-dot-green"></span>Roadmaps</a>
-  <a class="nav-link" href="#tools" data-status="stable"><span class="nav-dot nav-dot-blue"></span>Tools</a>
-  <a class="nav-link" href="#official-agent-registry" data-status="active"><span class="nav-dot nav-dot-green"></span>Agent Registry</a>
-  <a class="nav-link" href="#agentic-auth-service" data-status="stable"><span class="nav-dot nav-dot-blue"></span>Auth Service</a>
-  <a class="nav-link" href="#agentic-kitchen" data-status="empty"><span class="nav-dot nav-dot-dim"></span>Agentic Kitchen</a>
+  <a class="nav-link" href="#cookbook">Cookbook</a>
+  <a class="nav-link" href="#cookbook-web">Cookbook Web</a>
+  <a class="nav-link" href="#dev-team">Dev Team</a>
+  <a class="nav-link" href="#roadmaps">Roadmaps</a>
+  <a class="nav-link" href="#tools">Tools</a>
+  <a class="nav-link" href="#official-agent-registry">Agent Registry</a>
+  <a class="nav-link" href="#agentic-auth-service">Auth Service</a>
+  <a class="nav-link" href="#agentic-kitchen">Agentic Kitchen</a>
 
   <div class="nav-section">Web Apps & SaaS</div>
-  <a class="nav-link" href="#learntruefacts" data-status="planning"><span class="nav-dot nav-dot-yellow"></span>Learn True Facts</a>
-  <a class="nav-link" href="#myagenticprojects" data-status="stable"><span class="nav-dot nav-dot-blue"></span>MyAgenticProjects</a>
-  <a class="nav-link" href="#mikefullerton.com" data-status="stable"><span class="nav-dot nav-dot-blue"></span>mikefullerton.com</a>
+  <a class="nav-link" href="#learntruefacts">Learn True Facts</a>
+  <a class="nav-link" href="#myagenticprojects">MyAgenticProjects</a>
+  <a class="nav-link" href="#mikefullerton.com">mikefullerton.com</a>
 
   <div class="nav-section">Claude Code Tools</div>
-  <a class="nav-link" href="#cat-herding" data-status="active"><span class="nav-dot nav-dot-green"></span>Cat Herding</a>
-  <a class="nav-link" href="#code-review-pipline" data-status="active"><span class="nav-dot nav-dot-green"></span>Code Review Pipeline</a>
-  <a class="nav-link" href="#social-media-bot" data-status="active"><span class="nav-dot nav-dot-green"></span>Social Media Bot</a>
+  <a class="nav-link" href="#cat-herding">Cat Herding</a>
+  <a class="nav-link" href="#code-review-pipline">Code Review Pipeline</a>
+  <a class="nav-link" href="#social-media-bot">Social Media Bot</a>
 
   <div class="nav-section">Fun & Creative</div>
-  <a class="nav-link" href="#name-craft" data-status="planning"><span class="nav-dot nav-dot-yellow"></span>Name-Craft</a>
-  <a class="nav-link" href="#catnip" data-status="stable"><span class="nav-dot nav-dot-blue"></span>Catnip</a>
+  <a class="nav-link" href="#name-craft">Name-Craft</a>
+  <a class="nav-link" href="#catnip">Catnip</a>
 
   <div class="nav-section">Infrastructure</div>
-  <a class="nav-link" href="#mysetup" data-status="stable"><span class="nav-dot nav-dot-blue"></span>MySetup</a>
-  <a class="nav-link" href="#my-projects" data-status="active"><span class="nav-dot nav-dot-green"></span>My Projects</a>
-  <a class="nav-link" href="#myagenticworkspace" data-status="empty"><span class="nav-dot nav-dot-dim"></span>MyAgenticWorkspace</a>
+  <a class="nav-link" href="#mysetup">MySetup</a>
+  <a class="nav-link" href="#my-projects">My Projects</a>
+  <a class="nav-link" href="#myagenticworkspace">MyAgenticWorkspace</a>
 </nav>
 
 <main>
@@ -343,9 +308,6 @@ main {
 
   <div class="stats-bar">
     <div class="stat-card accent"><div class="stat-value">25</div><div class="stat-label">Projects</div></div>
-    <div class="stat-card green"><div class="stat-value">12</div><div class="stat-label">Active</div></div>
-    <div class="stat-card blue"><div class="stat-value">8</div><div class="stat-label">Stable</div></div>
-    <div class="stat-card yellow"><div class="stat-value">3</div><div class="stat-label">Planning</div></div>
     <div class="stat-card"><div class="stat-value">3</div><div class="stat-label">Organizations</div></div>
   </div>
 
@@ -353,26 +315,26 @@ main {
   <div class="section" data-section="macos">
     <div class="section-header"><h2>macOS Native Apps</h2><span class="count">4</span></div>
     <div class="project-grid">
-      <a href="projects/Hairball.html" class="project-card" id="Hairball" data-status="active" data-search="hairball menu bar window task context swift swiftui appkit accessibility">
-        <div class="card-top"><h3>Hairball</h3><span class="status-badge active">Active</span></div>
+      <a href="projects/Hairball.html" class="project-card" id="Hairball" data-search="hairball menu bar window task context swift swiftui appkit accessibility">
+        <div class="card-top"><h3>Hairball</h3></div>
         <div class="tagline">Menu bar app for window-level task context management using Accessibility APIs</div>
         <div class="tech-stack"><span class="tech-tag">Swift</span><span class="tech-tag">SwiftUI</span><span class="tech-tag">AppKit</span><span class="tech-tag">Accessibility API</span></div>
         <div class="card-org">mikefullerton</div>
       </a>
-      <a href="projects/scratching-post.html" class="project-card" id="scratching-post" data-status="stable" data-search="scratching post catnip ide document terminal notes file browser ai summarization">
-        <div class="card-top"><h3>Scratching Post</h3><span class="status-badge stable">Stable</span></div>
+      <a href="projects/scratching-post.html" class="project-card" id="scratching-post" data-search="scratching post catnip ide document terminal notes file browser ai summarization">
+        <div class="card-top"><h3>Scratching Post</h3></div>
         <div class="tagline">Catnip IDE &mdash; document-based multi-window IDE with terminal, notes, file browser, AI summarization</div>
         <div class="tech-stack"><span class="tech-tag">Swift</span><span class="tech-tag">SwiftUI</span><span class="tech-tag">AppKit</span><span class="tech-tag">SQLite</span><span class="tech-tag">SwiftTerm</span></div>
         <div class="card-org">mikefullerton</div>
       </a>
-      <a href="projects/catnip-terminal.html" class="project-card" id="catnip-terminal" data-status="stable" data-search="catnip terminal emulator ai session summarization multi provider">
-        <div class="card-top"><h3>Catnip Terminal</h3><span class="status-badge stable">Stable</span></div>
+      <a href="projects/catnip-terminal.html" class="project-card" id="catnip-terminal" data-search="catnip terminal emulator ai session summarization multi provider">
+        <div class="card-top"><h3>Catnip Terminal</h3></div>
         <div class="tagline">Terminal emulator with AI-powered session summarization (Claude, OpenAI, Gemini)</div>
         <div class="tech-stack"><span class="tech-tag">Swift</span><span class="tech-tag">SwiftUI</span><span class="tech-tag">AppKit</span><span class="tech-tag">SwiftTerm</span></div>
         <div class="card-org">mikefullerton</div>
       </a>
-      <a href="projects/Whippet.html" class="project-card" id="Whippet" data-status="active" data-search="whippet menu bar claude code session monitor events sqlite">
-        <div class="card-top"><h3>Whippet</h3><span class="status-badge active">Active</span></div>
+      <a href="projects/Whippet.html" class="project-card" id="Whippet" data-search="whippet menu bar claude code session monitor events sqlite">
+        <div class="card-top"><h3>Whippet</h3></div>
         <div class="tagline">Menu bar utility monitoring Claude Code sessions via file-based event queue</div>
         <div class="tech-stack"><span class="tech-tag">Swift</span><span class="tech-tag">AppKit</span><span class="tech-tag">SwiftUI</span><span class="tech-tag">SQLite</span></div>
         <div class="card-org">mikefullerton</div>
@@ -384,14 +346,14 @@ main {
   <div class="section" data-section="cross-platform">
     <div class="section-header"><h2>Cross-Platform Apps</h2><span class="count">2</span></div>
     <div class="project-grid">
-      <a href="projects/temporal.html" class="project-card" id="temporal" data-status="active" data-search="temporal cross platform ai assistant community forum gamification kotlin multiplatform swift react ktor postgresql">
-        <div class="card-top"><h3>Temporal</h3><span class="status-badge active">Active</span></div>
+      <a href="projects/temporal.html" class="project-card" id="temporal" data-search="temporal cross platform ai assistant community forum gamification kotlin multiplatform swift react ktor postgresql">
+        <div class="card-top"><h3>Temporal</h3></div>
         <div class="tagline">Cross-platform AI assistant with 8-phase community forum, gamification, real-time messaging across 7+ platforms</div>
         <div class="tech-stack"><span class="tech-tag">Kotlin MP</span><span class="tech-tag">SwiftUI</span><span class="tech-tag">Compose</span><span class="tech-tag">React</span><span class="tech-tag">Ktor</span><span class="tech-tag">PostgreSQL</span></div>
         <div class="card-org">temporal-company</div>
       </a>
-      <a href="projects/temporal-platform.html" class="project-card" id="temporal-platform" data-status="planning" data-search="temporal platform spec driven specification framework conformance tests">
-        <div class="card-top"><h3>Temporal Platform</h3><span class="status-badge planning">Planning</span></div>
+      <a href="projects/temporal-platform.html" class="project-card" id="temporal-platform" data-search="temporal platform spec driven specification framework conformance tests">
+        <div class="card-top"><h3>Temporal Platform</h3></div>
         <div class="tagline">Spec-driven application platform &mdash; shares behavioral specifications across platforms for native implementations</div>
         <div class="tech-stack"><span class="tech-tag">Kotlin</span><span class="tech-tag">Swift</span><span class="tech-tag">TypeScript</span><span class="tech-tag">C#</span></div>
         <div class="card-org">temporal-company</div>
@@ -403,50 +365,50 @@ main {
   <div class="section" data-section="agentic-cookbook">
     <div class="section-header"><h2>Agentic Cookbook Ecosystem</h2><span class="count">8</span></div>
     <div class="project-grid">
-      <a href="projects/cookbook.html" class="project-card" id="cookbook" data-status="active" data-search="cookbook knowledge base principles guidelines ingredients recipes workflows markdown">
-        <div class="card-top"><h3>Cookbook</h3><span class="status-badge active">Active</span></div>
+      <a href="projects/cookbook.html" class="project-card" id="cookbook" data-search="cookbook knowledge base principles guidelines ingredients recipes workflows markdown">
+        <div class="card-top"><h3>Cookbook</h3></div>
         <div class="tagline">Structured library of principles, guidelines, ingredients, recipes for AI-assisted development</div>
         <div class="tech-stack"><span class="tech-tag">Markdown</span><span class="tech-tag">YAML</span><span class="tech-tag">Vitest</span></div>
         <div class="card-org">agentic-cookbook</div>
       </a>
-      <a href="projects/cookbook-web.html" class="project-card" id="cookbook-web" data-status="active" data-search="cookbook web website agentic-cookbook.com react cloudflare workers tailwind">
-        <div class="card-top"><h3>Cookbook Web</h3><span class="status-badge active">Active</span></div>
+      <a href="projects/cookbook-web.html" class="project-card" id="cookbook-web" data-search="cookbook web website agentic-cookbook.com react cloudflare workers tailwind">
+        <div class="card-top"><h3>Cookbook Web</h3></div>
         <div class="tagline">Public website for the Agentic Cookbook at agentic-cookbook.com</div>
         <div class="tech-stack"><span class="tech-tag">React 19</span><span class="tech-tag">TypeScript</span><span class="tech-tag">Tailwind</span><span class="tech-tag">Cloudflare Workers</span></div>
         <div class="card-org">agentic-cookbook</div>
       </a>
-      <a href="projects/dev-team.html" class="project-card" id="dev-team" data-status="active" data-search="dev team multi agent plugin specialists specialty teams interview workflows python">
-        <div class="card-top"><h3>Dev Team</h3><span class="status-badge active">Active</span></div>
+      <a href="projects/dev-team.html" class="project-card" id="dev-team" data-search="dev team multi agent plugin specialists specialty teams interview workflows python">
+        <div class="card-top"><h3>Dev Team</h3></div>
         <div class="tagline">Claude Code plugin &mdash; multi-agent platform with 20 specialists, 232 specialty-teams, 8 workflows</div>
         <div class="tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">Markdown</span><span class="tech-tag">pytest</span><span class="tech-tag">SQLite</span></div>
         <div class="card-org">agentic-cookbook</div>
       </a>
-      <a href="projects/roadmaps.html" class="project-card" id="roadmaps" data-status="active" data-search="roadmaps feature planning implementation system flask sqlite dashboard skills">
-        <div class="card-top"><h3>Roadmaps</h3><span class="status-badge active">Active</span></div>
+      <a href="projects/roadmaps.html" class="project-card" id="roadmaps" data-search="roadmaps feature planning implementation system flask sqlite dashboard skills">
+        <div class="card-top"><h3>Roadmaps</h3></div>
         <div class="tagline">Feature planning and implementation system with live dashboards and automated step execution</div>
         <div class="tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">Flask</span><span class="tech-tag">SQLite</span><span class="tech-tag">Bash</span></div>
         <div class="card-org">agentic-cookbook</div>
       </a>
-      <a href="projects/tools.html" class="project-card" id="tools" data-status="stable" data-search="tools skills rules guidance agentic cookbook bash claude code">
-        <div class="card-top"><h3>Tools</h3><span class="status-badge stable">Stable</span></div>
+      <a href="projects/tools.html" class="project-card" id="tools" data-search="tools skills rules guidance agentic cookbook bash claude code">
+        <div class="card-top"><h3>Tools</h3></div>
         <div class="tagline">21 Claude Code skills and 7 guidance rules for the agentic cookbook ecosystem</div>
         <div class="tech-stack"><span class="tech-tag">Bash</span><span class="tech-tag">Markdown</span><span class="tech-tag">YAML</span></div>
         <div class="card-org">agentic-cookbook</div>
       </a>
-      <a href="projects/official-agent-registry.html" class="project-card" id="official-agent-registry" data-status="active" data-search="official agent registry dns identity platform personas react hono postgresql cloudflare">
-        <div class="card-top"><h3>Official Agent Registry</h3><span class="status-badge active">Active</span></div>
+      <a href="projects/official-agent-registry.html" class="project-card" id="official-agent-registry" data-search="official agent registry dns identity platform personas react hono postgresql cloudflare">
+        <div class="card-top"><h3>Official Agent Registry</h3></div>
         <div class="tagline">&ldquo;DNS for AI agents&rdquo; &mdash; identity platform for registering and discovering AI agents</div>
         <div class="tech-stack"><span class="tech-tag">React</span><span class="tech-tag">TypeScript</span><span class="tech-tag">Hono</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Cloudflare</span></div>
         <div class="card-org">agentic-cookbook</div>
       </a>
-      <a href="projects/agentic-auth-service.html" class="project-card" id="agentic-auth-service" data-status="stable" data-search="agentic auth service jwt authentication rs256 hono node typescript railway drizzle">
-        <div class="card-top"><h3>Agentic Auth Service</h3><span class="status-badge stable">Stable</span></div>
+      <a href="projects/agentic-auth-service.html" class="project-card" id="agentic-auth-service" data-search="agentic auth service jwt authentication rs256 hono node typescript railway drizzle">
+        <div class="card-top"><h3>Agentic Auth Service</h3></div>
         <div class="tagline">Shared RS256 JWT authentication microservice for the agentic ecosystem</div>
         <div class="tech-stack"><span class="tech-tag">Node.js</span><span class="tech-tag">Hono</span><span class="tech-tag">TypeScript</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Railway</span></div>
         <div class="card-org">agentic-cookbook</div>
       </a>
-      <a href="projects/agentic-kitchen.html" class="project-card" id="agentic-kitchen" data-status="empty" data-search="agentic kitchen empty placeholder">
-        <div class="card-top"><h3>Agentic Kitchen</h3><span class="status-badge empty">Empty</span></div>
+      <a href="projects/agentic-kitchen.html" class="project-card" id="agentic-kitchen" data-search="agentic kitchen empty placeholder">
+        <div class="card-top"><h3>Agentic Kitchen</h3></div>
         <div class="tagline">Empty placeholder repository</div>
         <div class="card-org">agentic-cookbook</div>
       </a>
@@ -457,20 +419,20 @@ main {
   <div class="section" data-section="web-apps">
     <div class="section-header"><h2>Web Applications & SaaS</h2><span class="count">3</span></div>
     <div class="project-grid">
-      <a href="projects/learntruefacts.html" class="project-card" id="learntruefacts" data-status="planning" data-search="learntruefacts ai comedian chat persona react hono cloudflare multi llm">
-        <div class="card-top"><h3>Learn True Facts</h3><span class="status-badge planning">Planning</span></div>
+      <a href="projects/learntruefacts.html" class="project-card" id="learntruefacts" data-search="learntruefacts ai comedian chat persona react hono cloudflare multi llm">
+        <div class="card-top"><h3>Learn True Facts</h3></div>
         <div class="tagline">AI improv comedian chat app &mdash; blends real facts with absurd fiction (design complete, pre-implementation)</div>
         <div class="tech-stack"><span class="tech-tag">React 19</span><span class="tech-tag">Hono</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Cloudflare</span><span class="tech-tag">Multi-LLM</span></div>
         <div class="card-org">agentic-cookbook</div>
       </a>
-      <a href="projects/myagenticprojects.html" class="project-card" id="myagenticprojects" data-status="stable" data-search="myagenticprojects saas platform auth feature flags messaging feedback react hono railway cloudflare">
-        <div class="card-top"><h3>MyAgenticProjects</h3><span class="status-badge stable">Stable</span></div>
+      <a href="projects/myagenticprojects.html" class="project-card" id="myagenticprojects" data-search="myagenticprojects saas platform auth feature flags messaging feedback react hono railway cloudflare">
+        <div class="card-top"><h3>MyAgenticProjects</h3></div>
         <div class="tagline">Full-stack SaaS platform with auth, feature flags, messaging, feedback &mdash; scaffolded from site-manager</div>
         <div class="tech-stack"><span class="tech-tag">React 19</span><span class="tech-tag">Hono</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Railway</span><span class="tech-tag">Cloudflare</span></div>
         <div class="card-org">agentic-cookbook</div>
       </a>
-      <a href="projects/mikefullerton.com.html" class="project-card" id="mikefullerton.com" data-status="stable" data-search="mikefullerton.com personal portfolio resume website html css github pages">
-        <div class="card-top"><h3>mikefullerton.com</h3><span class="status-badge stable">Stable</span></div>
+      <a href="projects/mikefullerton.com.html" class="project-card" id="mikefullerton.com" data-search="mikefullerton.com personal portfolio resume website html css github pages">
+        <div class="card-top"><h3>mikefullerton.com</h3></div>
         <div class="tagline">Personal portfolio and resume website</div>
         <div class="tech-stack"><span class="tech-tag">HTML</span><span class="tech-tag">CSS</span><span class="tech-tag">GitHub Pages</span></div>
         <div class="card-org">mikefullerton</div>
@@ -482,20 +444,20 @@ main {
   <div class="section" data-section="claude-tools">
     <div class="section-header"><h2>Claude Code Extensions & Tools</h2><span class="count">3</span></div>
     <div class="project-grid">
-      <a href="projects/cat-herding.html" class="project-card" id="cat-herding" data-status="active" data-search="cat herding plugins skills cli site-manager webinator marketplace python bash">
-        <div class="card-top"><h3>Cat Herding</h3><span class="status-badge active">Active</span></div>
+      <a href="projects/cat-herding.html" class="project-card" id="cat-herding" data-search="cat herding plugins skills cli site-manager webinator marketplace python bash">
+        <div class="card-top"><h3>Cat Herding</h3></div>
         <div class="tagline">6 plugins, 11 skills, 2 CLIs (site-manager, webinator) &mdash; local plugin marketplace for Claude Code</div>
         <div class="tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">Bash</span><span class="tech-tag">JavaScript</span></div>
         <div class="card-org">mikefullerton</div>
       </a>
-      <a href="projects/code-review-pipline.html" class="project-card" id="code-review-pipline" data-status="active" data-search="code review pipeline automated claude code cli daemon github app launchd python sqlite">
-        <div class="card-top"><h3>Code Review Pipeline</h3><span class="status-badge active">Active</span></div>
+      <a href="projects/code-review-pipline.html" class="project-card" id="code-review-pipline" data-search="code review pipeline automated claude code cli daemon github app launchd python sqlite">
+        <div class="card-top"><h3>Code Review Pipeline</h3></div>
         <div class="tagline">Automated code review via Claude Code CLI &mdash; runs as macOS launchd daemon with GitHub App identity</div>
         <div class="tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">SQLite</span><span class="tech-tag">GitHub API</span><span class="tech-tag">Claude CLI</span></div>
         <div class="card-org">agentic-cookbook</div>
       </a>
-      <a href="projects/social-media-bot.html" class="project-card" id="social-media-bot" data-status="active" data-search="social media bot ai content pipeline git commits analysis x linkedin bluesky substack 12 bots python">
-        <div class="card-top"><h3>Social Media Bot</h3><span class="status-badge active">Active</span></div>
+      <a href="projects/social-media-bot.html" class="project-card" id="social-media-bot" data-search="social media bot ai content pipeline git commits analysis x linkedin bluesky substack 12 bots python">
+        <div class="card-top"><h3>Social Media Bot</h3></div>
         <div class="tagline">12-bot AI content pipeline &mdash; analyzes commits, researches topics, drafts posts for X/LinkedIn/Bluesky/Substack</div>
         <div class="tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">claude-agent-sdk</span><span class="tech-tag">SQLite</span><span class="tech-tag">click</span></div>
         <div class="card-org">mikefullerton</div>
@@ -507,14 +469,14 @@ main {
   <div class="section" data-section="fun">
     <div class="section-header"><h2>Fun & Creative</h2><span class="count">2</span></div>
     <div class="project-grid">
-      <a href="projects/name-craft.html" class="project-card" id="name-craft" data-status="planning" data-search="name craft character name generator children books claude ai flask sound symbolism word builder">
-        <div class="card-top"><h3>Name-Craft</h3><span class="status-badge planning">Planning</span></div>
+      <a href="projects/name-craft.html" class="project-card" id="name-craft" data-search="name craft character name generator children books claude ai flask sound symbolism word builder">
+        <div class="card-top"><h3>Name-Craft</h3></div>
         <div class="tagline">Children&rsquo;s book character name generator using Claude AI with sound symbolism and genre templates</div>
         <div class="tech-stack"><span class="tech-tag">Python</span><span class="tech-tag">Flask</span><span class="tech-tag">Claude API</span><span class="tech-tag">SQLite</span></div>
         <div class="card-org">mikefullerton (local)</div>
       </a>
-      <a href="projects/catnip.html" class="project-card" id="catnip" data-status="stable" data-search="catnip web dashboard monitoring claude code agent progress react hono websocket github oauth">
-        <div class="card-top"><h3>Catnip</h3><span class="status-badge stable">Stable</span></div>
+      <a href="projects/catnip.html" class="project-card" id="catnip" data-search="catnip web dashboard monitoring claude code agent progress react hono websocket github oauth">
+        <div class="card-top"><h3>Catnip</h3></div>
         <div class="tagline">Web dashboard for monitoring Claude Code agent progress in real-time with WebSocket updates</div>
         <div class="tech-stack"><span class="tech-tag">React 19</span><span class="tech-tag">Hono</span><span class="tech-tag">WebSocket</span><span class="tech-tag">Railway</span><span class="tech-tag">Cloudflare</span></div>
         <div class="card-org">mikefullerton</div>
@@ -526,20 +488,20 @@ main {
   <div class="section" data-section="infra">
     <div class="section-header"><h2>Infrastructure & Meta</h2><span class="count">3</span></div>
     <div class="project-grid">
-      <a href="projects/mysetup.html" class="project-card" id="mysetup" data-status="stable" data-search="mysetup development infrastructure automation macos windows wsl bash python homebrew declarative setup">
-        <div class="card-top"><h3>MySetup</h3><span class="status-badge stable">Stable</span></div>
+      <a href="projects/mysetup.html" class="project-card" id="mysetup" data-search="mysetup development infrastructure automation macos windows wsl bash python homebrew declarative setup">
+        <div class="card-top"><h3>MySetup</h3></div>
         <div class="tagline">Declarative development environment automation for macOS and Windows (WSL) with 20+ utility scripts</div>
         <div class="tech-stack"><span class="tech-tag">Bash</span><span class="tech-tag">Python</span><span class="tech-tag">Homebrew</span></div>
         <div class="card-org">mikefullerton</div>
       </a>
-      <a href="projects/my-projects.html" class="project-card" id="my-projects" data-status="active" data-search="my projects management dashboard tracking git repos react vite node scanner">
-        <div class="card-top"><h3>My Projects</h3><span class="status-badge active">Active</span></div>
+      <a href="projects/my-projects.html" class="project-card" id="my-projects" data-search="my projects management dashboard tracking git repos react vite node scanner">
+        <div class="card-top"><h3>My Projects</h3></div>
         <div class="tagline">Project management dashboard tracking ~35 git repos with git scanning and cross-project metadata</div>
         <div class="tech-stack"><span class="tech-tag">React 19</span><span class="tech-tag">Vite</span><span class="tech-tag">Node.js</span><span class="tech-tag">Bash</span></div>
         <div class="card-org">mikefullerton</div>
       </a>
-      <a href="projects/myagenticworkspace.html" class="project-card" id="myagenticworkspace" data-status="empty" data-search="myagenticworkspace empty placeholder">
-        <div class="card-top"><h3>MyAgenticWorkspace</h3><span class="status-badge empty">Empty</span></div>
+      <a href="projects/myagenticworkspace.html" class="project-card" id="myagenticworkspace" data-search="myagenticworkspace empty placeholder">
+        <div class="card-top"><h3>MyAgenticWorkspace</h3></div>
         <div class="tagline">Empty placeholder repository</div>
         <div class="card-org">agentic-cookbook</div>
       </a>
@@ -10205,27 +10167,17 @@ tools/
 </div>
 
 <script>
-let activeFilter = '';
 let currentProject = null;
-
-function setFilter(btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  activeFilter = btn.dataset.filter;
-  filterAll();
-}
 
 function filterAll() {
   const search = document.getElementById('navSearch').value.toLowerCase();
   document.querySelectorAll('nav a.nav-link').forEach(link => {
-    const matchStatus = !activeFilter || link.dataset.status === activeFilter;
     const matchSearch = !search || link.textContent.toLowerCase().includes(search);
-    link.style.display = (matchStatus && matchSearch) ? '' : 'none';
+    link.style.display = matchSearch ? '' : 'none';
   });
   document.querySelectorAll('.project-card').forEach(card => {
-    const matchStatus = !activeFilter || card.dataset.status === activeFilter;
     const matchSearch = !search || card.dataset.search.includes(search) || card.querySelector('h3').textContent.toLowerCase().includes(search);
-    card.style.display = (matchStatus && matchSearch) ? '' : 'none';
+    card.style.display = matchSearch ? '' : 'none';
   });
   document.querySelectorAll('.section').forEach(sec => {
     const visible = sec.querySelectorAll('.project-card:not([style*="display: none"])').length;
