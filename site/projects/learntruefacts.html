@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learn True Facts — My Projects Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d1117; --surface: #161b22; --surface-hover: #1c2333;
+  --border: #30363d; --border-accent: #484f58;
+  --text: #e6edf3; --text-muted: #8b949e; --text-dim: #6e7681;
+  --accent: #58a6ff; --accent-dim: rgba(88,166,255,0.12);
+  --green: #3fb950; --green-dim: rgba(63,185,80,0.12);
+  --yellow: #d29922; --red: #f85149;
+  --purple: #bc8cff; --orange: #f0883e;
+  --mono: 'DM Mono', monospace;
+  --serif: 'Instrument Serif', serif;
+  --sans: 'Manrope', -apple-system, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--text); font-family: var(--sans);
+  font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent-dim); color: var(--accent); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.grain {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; opacity: 0.03; z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.header {
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 16px 32px; display: flex; align-items: center; gap: 16px;
+}
+.back { color: var(--text-muted); font-size: 13px; padding: 4px 12px; border: 1px solid var(--border); border-radius: 6px; transition: border-color 0.15s; }
+.back:hover { border-color: var(--text-muted); text-decoration: none; }
+.header-title { font-size: 20px; font-weight: 600; }
+.header-meta { margin-left: auto; font-size: 12px; color: var(--text-muted); font-family: var(--mono); }
+.content { max-width: 900px; margin: 0 auto; padding: 32px; }
+h2 {
+  font-family: var(--serif); font-size: 1.4rem; font-weight: 400;
+  color: var(--accent); margin: 32px 0 12px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+h2:first-child { margin-top: 0; }
+h3 { font-size: 1rem; font-weight: 600; margin: 20px 0 8px; color: var(--text); }
+p { margin: 8px 0; color: var(--text-muted); }
+ul, ol { margin: 8px 0 8px 20px; color: var(--text-muted); }
+li { margin: 4px 0; }
+strong { color: var(--text); font-weight: 600; }
+code {
+  background: rgba(110,118,129,0.15); padding: 2px 6px; border-radius: 4px;
+  font-family: var(--mono); font-size: 0.9em; color: var(--orange);
+}
+pre {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  padding: 16px; overflow-x: auto; margin: 12px 0; font-family: var(--mono);
+  font-size: 13px; line-height: 1.5; color: var(--text-muted);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+th { text-align: left; padding: 8px 12px; border-bottom: 2px solid var(--border); color: var(--text-dim); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+.footer {
+  border-top: 1px solid var(--border); padding: 16px 32px; text-align: center;
+  font-size: 12px; color: var(--text-dim); font-family: var(--mono); margin-top: 48px;
+}
+@media (max-width: 640px) {
+  .header { padding: 12px 16px; }
+  .content { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="header">
+  <a href="../index.html" class="back">&larr; All Projects</a>
+  <span class="header-title">Learn True Facts</span>
+  <span class="header-meta">agentic-cookbook</span>
+</div>
+<div class="content">
+<h2>Project Summary</h2>
+<p>Learn True Facts is a free, public-facing chat application featuring an AI improv comedian persona that blends real historical facts with absurdly plausible fictional details. It's designed as a test bed for a modern tech stack (Cloudflare + Railway) and persona-driven AI applications before scaling to production.</p>
+<h2>Type & Tech Stack</h2>
+<ul>
+<li><strong>Project Type:</strong> Full-stack web application with AI chat interface</li>
+<li><strong>Frontend:</strong> React 19 + Vite + Tailwind CSS 4 + TanStack Router/Query</li>
+<li><strong>Backend API:</strong> Hono framework + Drizzle ORM + PostgreSQL + Zod validation</li>
+<li><strong>Admin Portal:</strong> React 19 + Vite + Tailwind CSS 4</li>
+<li><strong>Dashboard:</strong> React 19 + Vite + Tailwind CSS 4 + D1 SQLite</li>
+<li><strong>Authentication:</strong> RS256 JWT via shared <code>agentic-auth-service</code></li>
+<li><strong>Streaming:</strong> Server-Sent Events (SSE) for real-time responses</li>
+<li><strong>Hosting:</strong> Cloudflare Workers (frontend), Railway (backend/API)</li>
+<li><strong>LLM Strategy:</strong> Multi-provider abstraction supporting Cloudflare Workers AI, Google Gemini, Groq, Claude (premium)</li>
+</ul>
+<h2>GitHub URL</h2>
+<p><code>git@github.com:agentic-cookbook/learntruefacts.git</code></p>
+<h2>Directory Structure</h2>
+<pre><code>learntruefacts/
+├── .git/
+└── docs/
+    ├── design/
+    │   └── initial-idea.md        # Complete product design and architecture
+    └── research/
+        └── llm-chat-widget-research.md  # Cost analysis, LLM options, infrastructure</code></pre>
+<h2>Key Files & Components</h2>
+<h3><code>/docs/design/initial-idea.md</code></h3>
+<p>Comprehensive product design document covering:</p>
+<ul>
+<li>Persona design: improv comedian AI making "true facts"</li>
+<li>Core experience: terminal-style chat with typewriter streaming</li>
+<li>Content safety requirements: prompt-level and application-level guards</li>
+<li>Model strategy: abstraction layer for provider switching (free tier, premium tier)</li>
+<li>Architecture: full stack diagram with component breakdown</li>
+<li>Data model: conversations, messages, users, shared_conversations tables</li>
+<li>Authentication: JWT-based with email/password, GitHub OAuth, Google OAuth</li>
+<li>API endpoints: chat, conversation history, sharing, model selection</li>
+<li>Agent registry integration: persona registration in Official Agent Registry</li>
+<li>Test harness: red team testing for character consistency and safety</li>
+<li>Rollout plan: 4 phases from MVP to premium + registry</li>
+</ul>
+<h3><code>/docs/research/llm-chat-widget-research.md</code></h3>
+<p>Cost analysis and infrastructure research:</p>
+<ul>
+<li><strong>Claude Haiku pricing:</strong> ~$0.013/conversation at ~6K input tokens + ~1.5K output tokens</li>
+<li><strong>At 1M conversations:</strong> $13K (standard) → $7.5K (with prompt caching) → $4-5K (both optimizations)</li>
+<li><strong>Free tier options:</strong> Google Gemini (15 req/min, 1.5K req/day), Groq, OpenRouter, Cloudflare Workers AI</li>
+<li><strong>Recommended MVP:</strong> Cloudflare Workers AI (zero new infrastructure, zero cost)</li>
+<li><strong>Self-hosting:</strong> Ollama for local development, vLLM for production GPU deployments</li>
+</ul>
+<h3>Key Design Decisions</h3>
+<ul>
+<li>Content must be absolutely safe for children (non-negotiable guardrails)</li>
+<li>Persona will have a registered name in the Official Agent Registry</li>
+<li>Model abstraction allows per-user provider selection without UI changes</li>
+<li>Free tier uses Cloudflare Workers AI (Llama 3.1 8B) or Google Gemini</li>
+<li>Premium tier targets Claude models (Haiku/Sonnet/Opus)</li>
+</ul>
+<h2>Claude Configuration</h2>
+<p>No <code>.claude/</code> directory exists yet — project is pre-implementation.</p>
+<h2>Planning & Research Documents</h2>
+<p><strong>Design Phase (Complete):</strong></p>
+<ul>
+<li>Comprehensive specification including persona behavior, safety guardrails, four-phase rollout, test harness, and agent registry integration</li>
+</ul>
+<p><strong>Research Phase (Complete):</strong></p>
+<ul>
+<li>Cost analysis showing prompt caching as key optimization ($0.013 → $0.0009 per conversation)</li>
+<li>Free tier economics via Cloudflare Workers AI or Gemini</li>
+<li>Self-hosting vs. API cost tradeoff ($5-10K/month break-even)</li>
+</ul>
+<p><strong>Open Questions from Design:</strong></p>
+<ul>
+<li>Comedian persona name (required for agent registry)</li>
+<li>Domain availability for <code>learntruefacts.com</code></li>
+<li>Paid tier pricing and gating mechanism</li>
+<li>Apple Sign-In support in auth service</li>
+<li>TTL policy for anonymous conversations</li>
+<li>Rate limits for free anonymous users</li>
+<li>Test harness architecture (separate service vs. admin tooling)</li>
+</ul>
+<h2>Git History & Current State</h2>
+<ul>
+<li><strong>Current Branch:</strong> main</li>
+<li><strong>Commits:</strong> None (fresh repository)</li>
+<li><strong>Untracked files:</strong> docs/</li>
+<li><strong>Remote:</strong> origin → <code>git@github.com:agentic-cookbook/learntruefacts.git</code></li>
+<li><strong>Status:</strong> Ready for initial commit</li>
+</ul>
+<h2>Build & Test Commands</h2>
+<p>Not yet configured — project is in planning phase.</p>
+<p><strong>Planned architecture:</strong></p>
+<ul>
+<li>Frontend: <code>npm run build</code> or <code>wrangler deploy</code> for Cloudflare Workers</li>
+<li>Backend: Hono API server deployment to Railway</li>
+<li>Testing: Red team test harness for adversarial content safety testing</li>
+</ul>
+<h2>Notes</h2>
+<ul>
+<li><strong>Project Stage:</strong> Design & Research Complete, Implementation Pending</li>
+<li>Part of the "agentic-cookbook" organization with shared infrastructure</li>
+<li>Designed to test new tech stack before scaling to production use with Temporal</li>
+<li>First user-facing AI persona application in the portfolio</li>
+<li>Stress-tests: content safety at scale, model abstraction, conversation recording, persona registration</li>
+</ul>
+<p><strong>Integration Points:</strong></p>
+<ul>
+<li>Shared auth service (<code>agentic-auth-service</code>) for JWT auth</li>
+<li>Official Agent Registry for persona registration</li>
+<li>Cloudflare Workers for frontend hosting</li>
+<li>Railway for backend API</li>
+</ul>
+<p><strong>Next Steps:</strong></p>
+<ol>
+<li>Name the comedian persona</li>
+<li>Verify domain availability</li>
+<li>Initial git commit with docs</li>
+<li>Create <code>.claude/</code> configuration</li>
+<li>Begin Phase 1: MVP with Cloudflare Workers AI backend</li>
+</ol>
+</div>
+<div class="footer">Generated 2026-04-07</div>
+</body>
+</html>

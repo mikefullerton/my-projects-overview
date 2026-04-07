@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Whippet Project Overview — My Projects Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d1117; --surface: #161b22; --surface-hover: #1c2333;
+  --border: #30363d; --border-accent: #484f58;
+  --text: #e6edf3; --text-muted: #8b949e; --text-dim: #6e7681;
+  --accent: #58a6ff; --accent-dim: rgba(88,166,255,0.12);
+  --green: #3fb950; --green-dim: rgba(63,185,80,0.12);
+  --yellow: #d29922; --red: #f85149;
+  --purple: #bc8cff; --orange: #f0883e;
+  --mono: 'DM Mono', monospace;
+  --serif: 'Instrument Serif', serif;
+  --sans: 'Manrope', -apple-system, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--text); font-family: var(--sans);
+  font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent-dim); color: var(--accent); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.grain {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; opacity: 0.03; z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.header {
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 16px 32px; display: flex; align-items: center; gap: 16px;
+}
+.back { color: var(--text-muted); font-size: 13px; padding: 4px 12px; border: 1px solid var(--border); border-radius: 6px; transition: border-color 0.15s; }
+.back:hover { border-color: var(--text-muted); text-decoration: none; }
+.header-title { font-size: 20px; font-weight: 600; }
+.header-meta { margin-left: auto; font-size: 12px; color: var(--text-muted); font-family: var(--mono); }
+.content { max-width: 900px; margin: 0 auto; padding: 32px; }
+h2 {
+  font-family: var(--serif); font-size: 1.4rem; font-weight: 400;
+  color: var(--accent); margin: 32px 0 12px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+h2:first-child { margin-top: 0; }
+h3 { font-size: 1rem; font-weight: 600; margin: 20px 0 8px; color: var(--text); }
+p { margin: 8px 0; color: var(--text-muted); }
+ul, ol { margin: 8px 0 8px 20px; color: var(--text-muted); }
+li { margin: 4px 0; }
+strong { color: var(--text); font-weight: 600; }
+code {
+  background: rgba(110,118,129,0.15); padding: 2px 6px; border-radius: 4px;
+  font-family: var(--mono); font-size: 0.9em; color: var(--orange);
+}
+pre {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  padding: 16px; overflow-x: auto; margin: 12px 0; font-family: var(--mono);
+  font-size: 13px; line-height: 1.5; color: var(--text-muted);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+th { text-align: left; padding: 8px 12px; border-bottom: 2px solid var(--border); color: var(--text-dim); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+.footer {
+  border-top: 1px solid var(--border); padding: 16px 32px; text-align: center;
+  font-size: 12px; color: var(--text-dim); font-family: var(--mono); margin-top: 48px;
+}
+@media (max-width: 640px) {
+  .header { padding: 12px 16px; }
+  .content { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="header">
+  <a href="../index.html" class="back">&larr; All Projects</a>
+  <span class="header-title">Whippet Project Overview</span>
+  <span class="header-meta">mikefullerton</span>
+</div>
+<div class="content">
+<h2>Project Summary</h2>
+<p>Whippet is a macOS menu bar application that monitors Claude Code sessions in real time. It consumes session events produced by Claude Code global hooks via a file-based event queue, displays active sessions in a floating window with grouping by project, and supports configurable click actions, AI-powered session summarization, window activation, and notifications.</p>
+<h2>Type & Tech Stack</h2>
+<p><strong>Project Type</strong>: macOS native desktop application (menu bar utility)</p>
+<p><strong>Primary Language</strong>: Swift 5.0</p>
+<p><strong>UI Framework</strong>:</p>
+<ul>
+<li>AppKit (NSStatusItem, NSPanel, NSHostingController)</li>
+<li>SwiftUI (via NSHostingController for hosted content)</li>
+</ul>
+<p><strong>Data Persistence</strong>: SQLite3 (built-in macOS C API)</p>
+<p><strong>Key Technologies</strong>:</p>
+<ul>
+<li>FSEvents / DispatchSource (file system monitoring)</li>
+<li>UNUserNotificationCenter (macOS notifications)</li>
+<li>SMAppService (launch at login)</li>
+<li>Claude Code global hooks (event producers)</li>
+<li>Accessibility API (window activation)</li>
+<li>os.Logger (structured logging with 10+ named categories)</li>
+</ul>
+<p><strong>Architecture Pattern</strong>: Menu bar app (LSUIElement) with floating session monitor window</p>
+<p><strong>Deployment Target</strong>: macOS 14.0+</p>
+<p><strong>Current Version</strong>: 0.1.0</p>
+<h2>GitHub URL</h2>
+<p><code>git@github.com:mikefullerton/Whippet.git</code></p>
+<p>Repository branch: <code>main</code> (up to date with origin/main)</p>
+<h2>Directory Structure</h2>
+<pre><code>Whippet/
+├── .claude/
+│   ├── settings.local.json          # Claude Code local configuration
+│   └── worktrees/                   # Claude Code worktree directory
+├── .git/                            # Git repository
+├── .gitignore                       # Git ignore patterns
+├── CLAUDE.md                        # Project conventions and context
+├── Roadmaps/
+│   ├── CreateApp-Roadmap.md         # 12-step feature implementation plan
+│   └── repair.log
+├── Scripts/                         # Test scripts (untracked)
+│   ├── test_click_activation.swift
+│   └── test_window_activation.swift
+├── Whippet/                         # Xcode project root
+│   ├── Whippet/                     # Source code
+│   │   ├── Actions/
+│   │   │   ├── SessionActionHandler.swift
+│   │   │   ├── SessionClickAction.swift
+│   │   │   └── ActivationTestLog.swift
+│   │   ├── Assets.xcassets/         # App icon and assets
+│   │   ├── Database/
+│   │   │   ├── DatabaseManager.swift
+│   │   │   └── Models.swift
+│   │   ├── Hooks/
+│   │   │   └── HookInstaller.swift
+│   │   ├── Ingestion/
+│   │   │   ├── EventIngestionManager.swift
+│   │   │   ├── EventFile.swift
+│   │   │   ├── SessionSummarizer.swift
+│   │   │   ├── GitMetadataResolver.swift
+│   │   │   └── SessionLivenessMonitor.swift
+│   │   ├── Notifications/
+│   │   │   └── NotificationManager.swift
+│   │   ├── Settings/
+│   │   │   ├── SettingsViewModel.swift
+│   │   │   ├── SettingsView.swift
+│   │   │   ├── SettingsWindowController.swift
+│   │   │   ├── MiniChatView.swift
+│   │   │   ├── MiniChatViewModel.swift
+│   │   │   ├── AIRequestBuilder.swift
+│   │   │   ├── KeychainHelper.swift
+│   │   │   └── LaunchAtLoginManager.swift
+│   │   ├── Window/
+│   │   │   ├── SessionPanelController.swift
+│   │   │   ├── SessionPanel.swift
+│   │   │   ├── SessionListViewModel.swift
+│   │   │   ├── SessionContentView.swift
+│   │   │   ├── WindowDiscoveryView.swift
+│   │   │   ├── WindowDiscoveryViewModel.swift
+│   │   │   └── SummarizerDebugWindowController.swift
+│   │   ├── AppDelegate.swift
+│   │   ├── Log.swift
+│   │   ├── main.swift
+│   │   ├── Info.plist
+│   │   └── Whippet.entitlements
+│   ├── WhippetTests/                # 14 test files, 100+ test cases
+│   │   ├── DatabaseManagerTests.swift
+│   │   ├── EventIngestionManagerTests.swift
+│   │   ├── HookInstallerTests.swift
+│   │   ├── IngestionIntegrationTests.swift
+│   │   ├── LaunchAtLoginManagerTests.swift
+│   │   ├── NotificationManagerTests.swift
+│   │   ├── SessionActionHandlerTests.swift
+│   │   ├── SessionListViewModelTests.swift
+│   │   ├── SessionLivenessMonitorTests.swift
+│   │   ├── SessionPanelControllerTests.swift
+│   │   ├── SessionSummarizerTests.swift
+│   │   ├── SettingsViewModelTests.swift
+│   │   ├── AIRequestBuilderTests.swift
+│   │   └── WhippetTests.swift
+│   └── Whippet.xcodeproj/
+└── Whippet-cookbook/                # Cookbook component documentation
+    ├── app/
+    ├── context/
+    ├── resources/
+    └── cookbook-project.json        # Recipe index and metadata</code></pre>
+<p><strong>Total Swift Files</strong>: 77</p>
+<h2>Key Files & Components</h2>
+<h3>Core Application</h3>
+<p><strong>AppDelegate.swift</strong> (350 lines)</p>
+<ul>
+<li>Entry point and lifecycle manager</li>
+<li>Initializes all subsystems: database, ingestion, notifications, settings, panel</li>
+<li>Sets up menu bar presence with NSStatusItem</li>
+<li>Requests accessibility permissions on launch</li>
+<li>Manages shutdown sequence</li>
+</ul>
+<h3>Data Layer</h3>
+<p><strong>DatabaseManager.swift</strong> (950+ lines)</p>
+<ul>
+<li>SQLite3 C API wrapper with Swift interface</li>
+<li>WAL mode enabled for concurrent read performance</li>
+<li>Schema: <code>sessions</code>, <code>events</code>, <code>settings</code> tables</li>
+<li>CRUD operations for sessions and events</li>
+<li>Upsert semantics for event deduplication</li>
+<li>Migration system for schema versioning</li>
+<li>23 unit tests</li>
+</ul>
+<p><strong>Models.swift</strong></p>
+<ul>
+<li>Session data model (id, session_id, cwd, model, status, timestamps)</li>
+<li>Event data model (type, session_id, timestamp, raw JSON)</li>
+</ul>
+<h3>Event Ingestion Pipeline</h3>
+<p><strong>EventIngestionManager.swift</strong> (500+ lines)</p>
+<ul>
+<li>Watches <code>~/.claude/session-events/</code> via DispatchSource</li>
+<li>Reads JSON event files, parses, inserts into SQLite</li>
+<li>Handles concurrent file writes with minimum age delay (50ms)</li>
+<li>Deletes processed files</li>
+<li>Routes malformed JSON to error directory</li>
+<li>30+ test cases</li>
+</ul>
+<p><strong>HookInstaller.swift</strong> (450+ lines)</p>
+<ul>
+<li>Auto-installs Claude Code hooks into <code>~/.claude/settings.json</code></li>
+<li>Supports 9 hook event types: SessionStart, SessionEnd, UserPromptSubmit, PreToolUse, PostToolUse, Stop, SubagentStart, SubagentStop, Notification</li>
+<li>Detects existing hooks (idempotent)</li>
+<li>Merges with existing settings (no overwrites)</li>
+<li>Uses <code>jq</code> for JSON generation from stdin</li>
+<li>Supports uninstallation</li>
+<li>29 unit tests</li>
+</ul>
+<p><strong>SessionLivenessMonitor.swift</strong> (250+ lines)</p>
+<ul>
+<li>PID-based liveness detection</li>
+<li>Timeout-based stale detection (configurable, default 1 minute)</li>
+<li>Marks sessions as stale/dead when unresponsive</li>
+<li>10+ unit tests</li>
+</ul>
+<p><strong>SessionSummarizer.swift</strong> (400+ lines)</p>
+<ul>
+<li>AI-powered session naming (3-8 words)</li>
+<li>Debounced to avoid excessive API calls</li>
+<li>Multi-provider support (Anthropic, OpenAI, Google, Custom)</li>
+<li>10+ unit tests</li>
+</ul>
+<p><strong>GitMetadataResolver.swift</strong></p>
+<ul>
+<li>Extracts repository name and git metadata from working directory</li>
+<li>Used for session grouping and labeling</li>
+</ul>
+<h3>UI Components</h3>
+<p><strong>SessionPanelController.swift</strong> (270+ lines)</p>
+<ul>
+<li>Manages NSPanel window lifecycle</li>
+<li>Configurable floating/normal window level</li>
+<li>Transparency adjustment (0.3-1.0)</li>
+<li>Position persistence across toggles</li>
+<li>SwiftUI content via NSHostingController</li>
+<li>28 unit tests</li>
+</ul>
+<p><strong>SessionContentView.swift</strong></p>
+<ul>
+<li>SwiftUI session list display</li>
+<li>Groups sessions by repository</li>
+<li>Shows: working directory, model, time started, last activity, last tool, status indicator</li>
+<li>Real-time updates from SQLite</li>
+</ul>
+<p><strong>SessionListViewModel.swift</strong> (550+ lines)</p>
+<ul>
+<li>Manages session display logic</li>
+<li>Grouping and sorting</li>
+<li>Status calculation (active/stale/ended)</li>
+<li>Real-time UI updates</li>
+<li>15+ unit tests</li>
+</ul>
+<p><strong>SettingsWindowController.swift</strong></p>
+<ul>
+<li>Preferences window with sidebar categories:</li>
+<li>General (staleness timeout, always-on-top, transparency)</li>
+<li>Notifications (per-event-type preferences)</li>
+<li>Click Actions (select from 7 available actions)</li>
+<li>AI Settings (multi-provider API key management)</li>
+<li>Launch at Login</li>
+<li>Window Discovery (debug)</li>
+<li>AI Chat (embedded multi-turn conversation)</li>
+</ul>
+<p><strong>SettingsView.swift</strong> (600+ lines)</p>
+<ul>
+<li>SwiftUI settings panel</li>
+<li>Settings form with persistence</li>
+<li>Real-time configuration</li>
+<li>15+ unit tests</li>
+</ul>
+<p><strong>MiniChatView.swift</strong> & <strong>MiniChatViewModel.swift</strong></p>
+<ul>
+<li>Embedded AI chat UI in settings</li>
+<li>Multi-turn conversation support</li>
+<li>Used for session summarization configuration</li>
+</ul>
+<h3>Actions & Interactions</h3>
+<p><strong>SessionActionHandler.swift</strong> (750+ lines)</p>
+<ul>
+<li>Executes 7 configurable click actions:</li>
+</ul>
+<ol>
+<li>Open Terminal (cd to session directory, launch Terminal.app)</li>
+<li>Open Transcript (reveal session transcript file)</li>
+<li>Copy Session ID (clipboard)</li>
+<li>Custom Shell Command (user-configurable)</li>
+<li>Send Notification (user-facing alert)</li>
+<li>Activate Window (Accessibility API with scoring)</li>
+<li>Copy Working Directory (clipboard)</li>
+</ol>
+<ul>
+<li>Thread-safe command execution</li>
+<li>Error handling and logging</li>
+<li>20+ unit tests</li>
+</ul>
+<p><strong>WindowDiscoveryView.swift</strong> & <strong>WindowDiscoveryViewModel.swift</strong></p>
+<ul>
+<li>Debug panel for window activation</li>
+<li>Shows all visible windows with Accessibility attributes</li>
+<li>Scoring logic for window matching</li>
+<li>Used to tune window activation behavior</li>
+</ul>
+<h3>Services & Infrastructure</h3>
+<p><strong>AIRequestBuilder.swift</strong> (300+ lines)</p>
+<ul>
+<li>Multi-provider HTTP request builder</li>
+<li>Providers: Anthropic, OpenAI, Google, Custom</li>
+<li>API key management (Keychain)</li>
+<li>Request serialization/deserialization</li>
+<li>Error handling</li>
+<li>15+ unit tests</li>
+</ul>
+<p><strong>NotificationManager.swift</strong> (300+ lines)</p>
+<ul>
+<li>UNUserNotificationCenter integration</li>
+<li>Per-event-type notification preferences</li>
+<li>Session event notifications (start, end, stale)</li>
+<li>15+ unit tests</li>
+</ul>
+<p><strong>KeychainHelper.swift</strong></p>
+<ul>
+<li>Secure storage/retrieval of API keys</li>
+<li>Used for AI provider credentials</li>
+</ul>
+<p><strong>LaunchAtLoginManager.swift</strong> (150+ lines)</p>
+<ul>
+<li>SMAppService wrapper</li>
+<li>Launch at login registration</li>
+<li>Permission request handling</li>
+<li>10+ unit tests</li>
+</ul>
+<p><strong>Log.swift</strong></p>
+<ul>
+<li>Centralized os.Logger with 10+ named categories:</li>
+<li>app, database, ingestion, hooks, actions, notifications, settings, ui, ai, lifecycle</li>
+</ul>
+<h3>Testing</h3>
+<p><strong>14 test files</strong> with 100+ test cases covering:</p>
+<ul>
+<li>Database CRUD, migrations, schema validation</li>
+<li>Event ingestion, JSON parsing, error handling</li>
+<li>Hook installation, detection, merge logic</li>
+<li>Session list display, grouping, sorting</li>
+<li>Settings persistence and UI updates</li>
+<li>Action execution and window activation</li>
+<li>Notification generation</li>
+<li>AI request building and response handling</li>
+<li>Integration scenarios (file drop → DB ingestion)</li>
+</ul>
+<h2>Claude Configuration</h2>
+<h3>settings.local.json</h3>
+<p>Contains local permissions for automated recipe copying from the agentic-cookbook:</p>
+<pre><code>{
+  &quot;permissions&quot;: {
+    &quot;allow&quot;: [
+      &quot;Bash(cp /Users/mfullerton/projects/active/cookbook/rules/authoring-ground-rules.md /Users/mfullerton/projects/active/Whippet/.claude/rules/)&quot;,
+      &quot;Bash(cp /Users/mfullerton/projects/active/cookbook/rules/cookbook.md /Users/mfullerton/projects/active/Whippet/.claude/rules/)&quot;,
+      &quot;Bash(cp /Users/mfullerton/projects/active/cookbook/rules/auto-lint.md /Users/mfullerton/projects/active/Whippet/.claude/rules/)&quot;
+    ]
+  }
+}</code></pre>
+<h3>CLAUDE.md (Project Conventions)</h3>
+<p><strong>Platform</strong>: macOS 14+ <strong>Language</strong>: Swift <strong>UI</strong>: AppKit (NSPanel, NSStatusItem) + SwiftUI via NSHostingController <strong>Storage</strong>: SQLite <strong>Architecture</strong>: Menu bar app (LSUIElement) with floating session monitor window</p>
+<p><strong>Key Conventions</strong>:</p>
+<ul>
+<li>Use native SwiftUI/AppKit controls before building custom equivalents</li>
+<li>All lengthy tasks must be asynchronous (never block main thread)</li>
+<li>Always use PRs and git worktrees (directory: <code>.claude/worktrees/</code>)</li>
+<li>Commit and push immediately after each batch of changes</li>
+<li>No commits directly to main</li>
+</ul>
+<p><strong>Build Command</strong>:</p>
+<pre><code>xcodebuild -scheme Whippet -configuration Debug build</code></pre>
+<h2>Planning & Research Documents</h2>
+<h3>CreateApp-Roadmap.md</h3>
+<p><strong>Status</strong>: 11 of 12 steps complete</p>
+<p><strong>Feature Definition</strong>: Build Whippet, a standalone macOS menu bar app that monitors all active Claude Code sessions in real time with a floating window showing sessions grouped by project, configurable click actions, notifications, and always-on behavior.</p>
+<p><strong>Architecture Decisions</strong>:</p>
+<table>
+<tr>
+<th>Decision</th>
+<th>Choice</th>
+<th>Rationale</th>
+</tr>
+<tr>
+<td>Event transport</td>
+<td>File-based drop directory</td>
+<td>Hooks are shell commands; files simpler than SQLite from bash</td>
+</tr>
+<tr>
+<td>Data storage</td>
+<td>SQLite</td>
+<td>Structured queries, built into macOS</td>
+</tr>
+<tr>
+<td>Window system</td>
+<td>NSPanel + NSHostingController</td>
+<td>Control over window level/transparency + SwiftUI bridge</td>
+</tr>
+<tr>
+<td>Menu bar</td>
+<td>NSStatusItem</td>
+<td>Full AppKit control</td>
+</tr>
+<tr>
+<td>App lifecycle</td>
+<td>LSUIElement + SMAppService</td>
+<td>No dock icon, proper login item handling</td>
+</tr>
+</table>
+<p><strong>12 Implementation Steps</strong>:</p>
+<ol>
+<li>✅ Project Scaffold & Menu Bar Shell</li>
+<li>✅ SQLite Database Layer</li>
+<li>✅ Drop Directory & Event Ingestion</li>
+<li>✅ Hook Auto-Installation</li>
+<li>✅ Floating Window Shell (NSPanel)</li>
+<li>✅ Session List UI</li>
+<li>✅ Session Liveness Detection</li>
+<li>✅ Settings UI</li>
+<li>✅ Click Actions System</li>
+<li>✅ Launch at Login</li>
+<li>✅ Notifications</li>
+<li>⏳ CreateApp Feature (in progress)</li>
+</ol>
+<p><strong>Verification Strategy</strong>:</p>
+<ul>
+<li>Build: <code>xcodebuild -scheme Whippet -configuration Debug build</code></li>
+<li>Test: <code>xcodebuild -scheme Whippet -configuration Debug test</code></li>
+<li>Manual: Launch app, create Claude Code session, verify session appears, test actions and settings</li>
+</ul>
+<h3>Whippet-cookbook/</h3>
+<p><strong>Type</strong>: Agentic-cookbook project metadata and component documentation</p>
+<p><strong>Purpose</strong>: Structured component library documenting all major features using cookbook recipe patterns</p>
+<p><strong>Contents</strong>:</p>
+<ul>
+<li><code>app/</code> — Recipe documentation for all major components</li>
+<li><code>context/</code> — Research documents: architecture-map.md, scope-report.md, generation-summary.md, lifecycle-reviews.md</li>
+<li><code>cookbook-project.json</code> — Component index with dependency graph</li>
+</ul>
+<p><strong>Key Component Groups</strong>:</p>
+<ul>
+<li><strong>App Lifecycle</strong>: Single-instance guard, subsystem initialization, shutdown</li>
+<li><strong>Menu Bar</strong>: NSStatusItem with SF Symbol icon (dog.fill)</li>
+<li><strong>Session Panel</strong>: NSPanel floating utility window with real-time list</li>
+<li><strong>Settings</strong>: Desktop app preferences with 7 sidebar categories</li>
+<li><strong>Actions</strong>: 7 configurable click actions with executor pattern</li>
+<li><strong>Infrastructure</strong>: 8 components (logging, settings keys, window persistence, event ingestion, hooks, liveness, AI summarizer, notifications, launch-at-login)</li>
+<li><strong>Services</strong>: AI request builder (multi-provider)</li>
+<li><strong>Data</strong>: SQLite persistence with WAL mode</li>
+</ul>
+<h2>Git History & Current State</h2>
+<h3>Recent Activity</h3>
+<p><strong>Latest commits</strong> (last 5):</p>
+<ul>
+<li><code>f0cdd3a</code> (2026-04-06 16:18) chore: standardize worktree directory to <code>.claude/worktrees/</code></li>
+<li><code>eb5f062</code> (2026-03-27 11:12) Update CLAUDE.md: litterbox → agentic-cookbook</li>
+<li><code>caa388c</code> (2026-03-27 08:01) feat: AI session summarization, frontmost window tracking, minimal UI</li>
+<li><code>15a6a1b</code> (2026-03-26 11:10) fix: snapshot app metadata on main thread, enumerate windows on background</li>
+<li><code>e3926b8</code> (2026-03-25 12:46) docs: update CLAUDE.md with litterbox component spec instructions</li>
+</ul>
+<h3>Branch Status</h3>
+<p><strong>Current branch</strong>: <code>main</code> <strong>Remote status</strong>: Up to date with <code>origin/main</code> <strong>Uncommitted changes</strong>: None <strong>Untracked files</strong>:</p>
+<ul>
+<li><code>Roadmaps/repair.log</code></li>
+<li><code>Scripts/</code> (test scripts)</li>
+<li><code>Whippet-build/</code> (build artifacts)</li>
+<li><code>Whippet-cookbook/</code> (documentation subproject)</li>
+</ul>
+<h3>Commit History (30 most recent)</h3>
+<p>The repository shows active development with focused, atomic commits. Major feature areas visible in history:</p>
+<ul>
+<li>AI session summarization (3 commits)</li>
+<li>Window activation and Accessibility API integration (4 commits)</li>
+<li>Settings UI with inspector drawer (6 commits)</li>
+<li>Session liveness detection (3 commits)</li>
+<li>Click actions system (3 commits)</li>
+<li>Notifications (2 commits)</li>
+<li>Settings UI and persistence (2 commits)</li>
+<li>Hook installation (3 commits)</li>
+<li>Initial floating window implementation (2 commits)</li>
+</ul>
+<p><strong>Total commits</strong>: 100+ (feature development very active)</p>
+<h2>Build & Test Commands</h2>
+<h3>Build</h3>
+<pre><code># Debug build
+xcodebuild -scheme Whippet -configuration Debug build
+
+# Release build
+xcodebuild -scheme Whippet -configuration Release build</code></pre>
+<h3>Test</h3>
+<pre><code># All tests
+xcodebuild -scheme Whippet -configuration Debug test
+
+# Specific test class
+xcodebuild -scheme Whippet -configuration Debug test -only-testing WhippetTests/DatabaseManagerTests</code></pre>
+<h3>Run</h3>
+<pre><code># Launch the app (development)
+xcodebuild -scheme Whippet -configuration Debug run</code></pre>
+<h3>Project Settings</h3>
+<ul>
+<li><strong>Xcode Format</strong>: Modern (objectVersion: 56)</li>
+<li><strong>Framework Phases</strong>: Empty (uses system frameworks only)</li>
+<li><strong>Deployment Target</strong>: macOS 14.0</li>
+<li><strong>Swift Version</strong>: 5.0</li>
+<li><strong>Bundle Identifier</strong>: com.mikefullerton.Whippet</li>
+</ul>
+<h2>Notes</h2>
+<h3>Architecture Highlights</h3>
+<ol>
+<li><strong>Event-Driven Architecture</strong>: Claude Code hooks produce events via file drop; Whippet ingests via FSEvents</li>
+<li><strong>Decoupled Subsystems</strong>: AppDelegate initializes independent managers (database, ingestion, notifications, liveness, summarizer)</li>
+<li><strong>Async-First</strong>: All I/O operations on background queues; main thread reserved for UI</li>
+<li><strong>Persistence Layers</strong>: Settings in SQLite (key-value), window frame in UserDefaults, API keys in Keychain</li>
+<li><strong>Multi-Provider AI Support</strong>: Abstracted via AIRequestBuilder (Anthropic, OpenAI, Google, Custom)</li>
+<li><strong>Accessibility Integration</strong>: Uses macOS Accessibility API for window activation with scoring/matching logic</li>
+</ol>
+<h3>Security Considerations</h3>
+<ul>
+<li>API keys stored in Keychain (not plaintext)</li>
+<li>Command injection hardened (uses Process API, not shell expansion)</li>
+<li>SQLite prepared statements (SQL injection prevention)</li>
+<li>Accessibility permissions requested on first launch</li>
+<li>Entitlements defined in Whippet.entitlements</li>
+</ul>
+<h3>Notable Features</h3>
+<ul>
+<li><strong>AI Session Summarization</strong>: Automatically generates 3-8 word session names via Claude API</li>
+<li><strong>Window Activation</strong>: Scores windows by process name, window title, role to activate the correct window</li>
+<li><strong>Staleness Detection</strong>: Combines PID checking + timeout-based marking for dead sessions</li>
+<li><strong>Settings Inspector</strong>: Slide-out drawer UI with real-time updates</li>
+<li><strong>Multi-Turn Chat</strong>: Embedded AI chat in settings for interactive configuration</li>
+<li><strong>Launch at Login</strong>: Proper permission handling via SMAppService</li>
+<li><strong>Debug Panel</strong>: Window discovery panel for troubleshooting activation</li>
+</ul>
+<h3>Dependencies</h3>
+<p><strong>System Frameworks</strong> (macOS built-in):</p>
+<ul>
+<li>AppKit</li>
+<li>SwiftUI</li>
+<li>Foundation</li>
+<li>CoreServices (FSEvents)</li>
+<li>ServiceManagement (SMAppService)</li>
+<li>UserNotifications</li>
+<li>Security (Keychain)</li>
+<li>ApplicationServices (Accessibility)</li>
+</ul>
+<p><strong>External Package Dependencies</strong>: None (self-contained Swift implementation)</p>
+<h3>Known Risks & Unknowns (from roadmap)</h3>
+<ul>
+<li><strong>High event volume</strong>: Busy sessions produce 30-50 tool events/minute; FSEvents + file deletion must keep pace</li>
+<li><strong>Hook installation conflicts</strong>: Must merge with existing hooks in settings.json, not overwrite</li>
+<li><strong>Stale session false positives</strong>: 1-minute timeout might be aggressive if user is reading Claude's output</li>
+<li><strong>Multiple Claude Code versions</strong>: Hook payload format could change between versions</li>
+</ul>
+<h3>Active Development</h3>
+<ul>
+<li>Latest work focuses on AI session summarization and window tracking</li>
+<li>Recent refactoring to use native NSSplitViewController for settings inspector</li>
+<li>Heavy testing coverage (100+ test cases across 14 test files)</li>
+<li>Using agentic-cookbook for component documentation and recipe patterns</li>
+</ul>
+<p>*Last Updated: 2026-04-06* *Analyzed from repository at: /Users/mfullerton/projects/active/Whippet*</p>
+</div>
+<div class="footer">Generated 2026-04-07</div>
+</body>
+</html>

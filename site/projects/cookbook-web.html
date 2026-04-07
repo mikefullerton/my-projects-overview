@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cookbook Web Project Overview — My Projects Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d1117; --surface: #161b22; --surface-hover: #1c2333;
+  --border: #30363d; --border-accent: #484f58;
+  --text: #e6edf3; --text-muted: #8b949e; --text-dim: #6e7681;
+  --accent: #58a6ff; --accent-dim: rgba(88,166,255,0.12);
+  --green: #3fb950; --green-dim: rgba(63,185,80,0.12);
+  --yellow: #d29922; --red: #f85149;
+  --purple: #bc8cff; --orange: #f0883e;
+  --mono: 'DM Mono', monospace;
+  --serif: 'Instrument Serif', serif;
+  --sans: 'Manrope', -apple-system, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--text); font-family: var(--sans);
+  font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent-dim); color: var(--accent); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.grain {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; opacity: 0.03; z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.header {
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 16px 32px; display: flex; align-items: center; gap: 16px;
+}
+.back { color: var(--text-muted); font-size: 13px; padding: 4px 12px; border: 1px solid var(--border); border-radius: 6px; transition: border-color 0.15s; }
+.back:hover { border-color: var(--text-muted); text-decoration: none; }
+.header-title { font-size: 20px; font-weight: 600; }
+.header-meta { margin-left: auto; font-size: 12px; color: var(--text-muted); font-family: var(--mono); }
+.content { max-width: 900px; margin: 0 auto; padding: 32px; }
+h2 {
+  font-family: var(--serif); font-size: 1.4rem; font-weight: 400;
+  color: var(--accent); margin: 32px 0 12px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+h2:first-child { margin-top: 0; }
+h3 { font-size: 1rem; font-weight: 600; margin: 20px 0 8px; color: var(--text); }
+p { margin: 8px 0; color: var(--text-muted); }
+ul, ol { margin: 8px 0 8px 20px; color: var(--text-muted); }
+li { margin: 4px 0; }
+strong { color: var(--text); font-weight: 600; }
+code {
+  background: rgba(110,118,129,0.15); padding: 2px 6px; border-radius: 4px;
+  font-family: var(--mono); font-size: 0.9em; color: var(--orange);
+}
+pre {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  padding: 16px; overflow-x: auto; margin: 12px 0; font-family: var(--mono);
+  font-size: 13px; line-height: 1.5; color: var(--text-muted);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+th { text-align: left; padding: 8px 12px; border-bottom: 2px solid var(--border); color: var(--text-dim); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+.footer {
+  border-top: 1px solid var(--border); padding: 16px 32px; text-align: center;
+  font-size: 12px; color: var(--text-dim); font-family: var(--mono); margin-top: 48px;
+}
+@media (max-width: 640px) {
+  .header { padding: 12px 16px; }
+  .content { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="header">
+  <a href="../index.html" class="back">&larr; All Projects</a>
+  <span class="header-title">Cookbook Web Project Overview</span>
+  <span class="header-meta">agentic-cookbook</span>
+</div>
+<div class="content">
+<h2>Project Summary</h2>
+<p>A Cloudflare Workers web application that serves as the public-facing browsable interface for the Agentic Cookbook — a structured collection of principles, guidelines, recipes, and workflows for AI-assisted multi-platform development. Built with React 19, TypeScript, and Tailwind CSS 4, deployed to <code>agentic-cookbook.com</code>.</p>
+<h2>Type & Tech Stack</h2>
+<p><strong>Project Type:</strong> Web Application / Public Documentation Site</p>
+<p><strong>Core Technologies:</strong></p>
+<ul>
+<li><strong>Runtime:</strong> Cloudflare Workers (serverless edge computing)</li>
+<li><strong>Frontend:</strong> React 19, TypeScript 5.7</li>
+<li><strong>Styling:</strong> Tailwind CSS 4, PostCSS 8</li>
+<li><strong>Routing:</strong> React Router 7</li>
+<li><strong>Build Tools:</strong> Vite 6, Wrangler 4.78</li>
+<li><strong>Markdown Processing:</strong> Remark + Rehype unified ecosystem (remark-parse, remark-gfm, rehype-slug, rehype-autolink-headings)</li>
+<li><strong>Syntax Highlighting:</strong> Shiki 1.0</li>
+<li><strong>Search:</strong> Fuse.js 7.0</li>
+<li><strong>Testing:</strong> Playwright 1.58 (visual regression tests)</li>
+<li><strong>Node.js Target:</strong> ES2022</li>
+</ul>
+<p><strong>Key Dependencies:</strong></p>
+<ul>
+<li><code>react@^19.0.0</code>, <code>react-dom@^19.0.0</code></li>
+<li><code>react-router@^7.0.0</code></li>
+<li><code>@cloudflare/vite-plugin@^1.30.2</code></li>
+<li><code>unified@^11.0.0</code>, <code>remark-*</code> packages</li>
+<li><code>rehype-*</code> packages for HTML transformations</li>
+<li><code>gray-matter@^4.0.3</code> for YAML frontmatter parsing</li>
+<li><code>@tailwindcss/postcss@^4.2.2</code>, <code>@tailwindcss/typography@^0.5.19</code></li>
+<li><code>@playwright/test@^1.58.2</code> for visual testing</li>
+<li><code>.mcp.json</code> configured for Playwright MCP (vision capabilities)</li>
+</ul>
+<h2>GitHub URL</h2>
+<p><a href="https://github.com/agentic-cookbook/cookbook-web">https://github.com/agentic-cookbook/cookbook-web</a></p>
+<h2>Directory Structure</h2>
+<pre><code>cookbook-web/
+├── .claude/                          # Claude Code configuration
+│   └── rules/
+│       ├── cookbook.md              # Cookbook rules (6 core principles)
+│       └── site-design.md           # Comprehensive design system spec (12KB)
+├── .cookbook/                        # Cookbook configuration directory
+├── .playwright-mcp/                  # Playwright MCP integration
+├── .wrangler/                        # Wrangler build artifacts
+├── cookbook/                         # The Agentic Cookbook content
+│   ├── appendix/
+│   │   └── research/                # Research materials and evaluations
+│   ├── compliance/                  # 10+ compliance categories with checks
+│   ├── docs/                        # Documentation
+│   ├── guidelines/                  # ~105 markdown files on UI, testing, security, etc.
+│   ├── ingredients/                 # ~23 atomic component specs
+│   ├── introduction/                # Getting started materials
+│   ├── principles/                  # ~20 engineering principles
+│   ├── recipes/                     # ~24 feature composition files
+│   ├── reference/                   # External best-practices links, schemas
+│   ├── workflows/                   # 6 workflow specifications
+│   ├── index.md                     # Cookbook table of contents
+│   ├── README.md                    # Cookbook overview (159 lines)
+│   ├── LICENSE                      # MIT license
+│   └── .superpowers/                # Untracked superpowers data
+├── dist/                             # Production build output
+│   └── assets/
+├── node_modules/                     # Dependencies (198 packages)
+├── public/                           # Static assets
+├── src/                              # Source code (~2,647 lines TypeScript)
+│   ├── App.tsx                       # Root component with routing
+│   ├── main.tsx                      # React entry point
+│   ├── index.css                     # Global styles
+│   ├── components/
+│   │   ├── content/                 # Content rendering components
+│   │   │   ├── DocPage.tsx          # Main documentation page renderer
+│   │   │   ├── PlatformFilter.tsx   # Platform filtering UI
+│   │   │   ├── SearchDialog.tsx     # Command+K search interface
+│   │   │   └── StatusBadge.tsx      # Status indicators
+│   │   ├── layout/                  # Layout components
+│   │   │   ├── Header.tsx           # Sticky top navigation bar
+│   │   │   ├── Sidebar.tsx          # Desktop + mobile sidebar navigation
+│   │   │   ├── Breadcrumbs.tsx      # Breadcrumb navigation
+│   │   │   └── TableOfContents.tsx  # In-page TOC for doc pages
+│   │   └── sections/                # Page-specific section components
+│   │       ├── HomePage.tsx         # Main overview page
+│   │       ├── SectionIndex.tsx     # Index pages (Principles, Guidelines, etc.)
+│   │       ├── DocPage.tsx          # Individual document pages
+│   │       ├── GettingStartedPage.tsx
+│   │       ├── ProjectsPage.tsx     # Projects showcase
+│   │       └── ToolingPage.tsx      # Tooling information
+│   ├── contexts/
+│   │   ├── ContentContext.tsx       # Loads cookbook data from virtual module
+│   │   └── ThemeContext.tsx         # Dark/light theme management
+│   ├── lib/                         # Utilities
+│   ├── plugins/
+│   │   ├── vite-plugin-cookbook.ts  # Custom Vite plugin that:
+│   │   │   - Scans cookbook directories for .md files
+│   │   │   - Parses YAML frontmatter with gray-matter
+│   │   │   - Converts Markdown to HTML via remark/rehype pipeline
+│   │   │   - Extracts headings and generates table of contents
+│   │   │   - Creates virtual module for build-time injection
+│   │   └── rehype-cross-references.ts # Cross-reference link processing
+│   └── types/
+│       ├── cookbook.ts              # TypeScript types for cookbook entries
+│       └── virtual-modules.d.ts     # Type definitions for virtual modules
+├── tests/
+│   ├── visual.spec.ts               # Playwright visual regression tests
+│   └── visual.spec.ts-snapshots/    # Screenshot baselines
+├── tools-site/                       # Separate Cloudflare Workers project (nested)
+│   ├── src/
+│   ├── dist/
+│   ├── migrations/
+│   └── scripts/
+├── .gitignore                        # Ignores PNG screenshots in root
+├── .mcp.json                        # MCP configuration (Playwright)
+├── CLAUDE.md                         # Claude Code project configuration
+├── index.html                        # Main HTML entry point
+├── bookcover.html                    # Book cover landing page (animated)
+├── package.json                      # Dependencies and scripts
+├── package-lock.json                 # Locked dependency versions
+├── tsconfig.json                     # TypeScript configuration
+├── vite.config.ts                    # Vite build configuration
+├── wrangler.jsonc                    # Cloudflare Wrangler config
+├── playwright.config.ts              # Playwright test configuration
+└── postcss.config.js                 # PostCSS configuration (Tailwind)</code></pre>
+<h2>Key Files & Components</h2>
+<h3>Configuration Files</h3>
+<ul>
+<li><strong><code>wrangler.jsonc</code></strong>: Cloudflare Workers config</li>
+<li>Worker name: <code>agentic-cookbook</code></li>
+<li>Custom domains: <code>agentic-cookbook.com</code>, <code>www.agentic-cookbook.com</code></li>
+<li>SPA routing with single-page-application not-found handling</li>
+<li>Node.js compatibility enabled</li>
+<li>Observability enabled</li>
+<li>Build command: <code>npm run build</code></li>
+</ul>
+<ul>
+<li><strong><code>vite.config.ts</code></strong>: Build configuration</li>
+<li>Custom cookbook plugin that loads markdown from <code>/cookbook</code> directory</li>
+<li>Additional directory support (e.g., <code>/decisions</code>)</li>
+<li>Dual HTML entry points: <code>index.html</code> (main app), <code>bookcover.html</code> (landing)</li>
+<li>Cloudflare integration via <code>@cloudflare/vite-plugin</code></li>
+</ul>
+<ul>
+<li><strong><code>tsconfig.json</code></strong>: </li>
+<li>Target: ES2022</li>
+<li>Strict mode enabled</li>
+<li>JSX: react-jsx</li>
+<li>Module resolution: bundler</li>
+<li>No unused locals/parameters warnings enabled</li>
+</ul>
+<ul>
+<li><strong><code>playwright.config.ts</code></strong>:</li>
+<li>Base URL: <code>http://localhost:5173</code> (dev server)</li>
+<li>Color scheme: dark</li>
+<li>Visual regression: max 1% pixel difference, 20% threshold</li>
+<li>Dev server reuse enabled</li>
+</ul>
+<h3>Core React Components</h3>
+<p><strong>Layout:</strong></p>
+<ul>
+<li><code>Header.tsx</code>: Sticky navigation bar with logo, tabs, search button (Cmd+K), GitHub link, theme toggle</li>
+<li><code>Sidebar.tsx</code>: Desktop (sticky) and mobile (overlay) navigation with collapsible sections</li>
+<li><code>Breadcrumbs.tsx</code>: Hierarchical navigation display</li>
+<li><code>TableOfContents.tsx</code>: Right-side sticky TOC for long doc pages (desktop only)</li>
+</ul>
+<p><strong>Pages:</strong></p>
+<ul>
+<li><code>HomePage.tsx</code>: Overview page with featured sections</li>
+<li><code>SectionIndex.tsx</code>: Grid-based index pages (Principles, Guidelines, Ingredients, Recipes, etc.)</li>
+<li><code>DocPage.tsx</code>: Individual markdown document renderer with metadata, prose styling, raw toggle</li>
+</ul>
+<p><strong>Content Rendering:</strong></p>
+<ul>
+<li><code>SearchDialog.tsx</code>: Full-text search interface using Fuse.js</li>
+<li><code>PlatformFilter.tsx</code>: Filter components by target platform</li>
+<li><code>StatusBadge.tsx</code>: Visual status indicators</li>
+</ul>
+<p><strong>Contexts:</strong></p>
+<ul>
+<li><code>ContentContext.tsx</code>: Provides cookbook data tree to all components</li>
+<li><code>ThemeContext.tsx</code>: Dark/light mode with localStorage persistence</li>
+</ul>
+<h3>Build Pipeline</h3>
+<p><strong>Custom Vite Plugin</strong> (<code>vite-plugin-cookbook.ts</code>):</p>
+<ol>
+<li>Recursively scans cookbook directories for <code>.md</code> files (excluding <code>_template.md</code>)</li>
+<li>Parses YAML frontmatter using <code>gray-matter</code></li>
+<li>Converts Markdown to HTML via unified pipeline:</li>
+</ol>
+<ul>
+<li><code>remark-parse</code>: Parse markdown</li>
+<li><code>remark-gfm</code>: GitHub flavored markdown</li>
+<li><code>remark-rehype</code>: Convert to HTML AST</li>
+<li><code>rehype-slug</code>: Auto ID generation for headings</li>
+<li><code>rehype-autolink-headings</code>: Linkify headings</li>
+<li><code>rehype-cross-references</code>: Custom cross-reference processing</li>
+<li><code>rehype-stringify</code>: Convert AST to HTML string</li>
+</ul>
+<ol>
+<li>Extracts h2/h3 headings for table of contents</li>
+<li>Derives section/subsection from slug</li>
+<li>Generates virtual module (<code>virtual:cookbook-data</code>) injected at build time</li>
+<li>Supports additional directories (e.g., decisions) with section mapping</li>
+</ol>
+<h2>Claude Configuration</h2>
+<h3>CLAUDE.md</h3>
+<ul>
+<li>References the Agentic Cookbook as the project's knowledge base</li>
+<li>Cookbook path: <code>../agentic-cookbook/</code> (sibling directory)</li>
+<li>Rule: <code>cookbook.md</code> (~10 lines, guardrails only)</li>
+<li>Pipeline: <code>/cookbook-start</code> to begin, <code>/cookbook-next</code> to advance</li>
+<li>Available skills: /configure-cookbook, /install-cookbook, /cookbook-start, /cookbook-next, /lint-project-with-cookbook, /plan-cookbook-recipe, /contribute-to-cookbook</li>
+</ul>
+<h3>.claude/rules/</h3>
+<ol>
+<li><strong>cookbook.md</strong> (358 bytes):</li>
+</ol>
+<ul>
+<li>6 core principles for development</li>
+<li>No Phase 2 skipping, no test skipping</li>
+<li>Don't optimize without evidence</li>
+<li>Investigate unfamiliar content before overwriting</li>
+</ul>
+<ol>
+<li><strong>site-design.md</strong> (12.6 KB):</li>
+</ol>
+<ul>
+<li>Comprehensive design system specification</li>
+<li>Defines 4 page types: Overview, Section Index, Doc Page, Static Page</li>
+<li>Sidebar patterns: plain links vs. toggleable sections</li>
+<li>Header and search dialog specifications</li>
+<li>Complete theme token system (dark/light modes)</li>
+<li>Specific Tailwind classes for every component</li>
+<li>Prose styling overrides via Typography plugin</li>
+<li>Screenshot verification requirement before/after changes</li>
+</ul>
+<h2>Planning & Research Documents</h2>
+<h3>Cookbook Content Structure</h3>
+<p>The <code>/cookbook</code> directory contains structured AI-friendly documentation:</p>
+<p><strong>Introduction</strong> (~10 files)</p>
+<ul>
+<li>Getting started, conventions, glossary</li>
+</ul>
+<p><strong>Principles</strong> (~20 files)</p>
+<ul>
+<li>Engineering principles: Simplicity, YAGNI, Fail Fast, Dependency Injection, Immutability, Composition, Separation of Concerns, Design for Deletion, Explicit over Implicit, Small Reversible Decisions, Tight Feedback Loops, Manage Complexity, Least Astonishment, Idempotency, Native Controls, Open Source Preference, Make It Work/Right/Fast, Optimize for Change</li>
+</ul>
+<p><strong>Guidelines</strong> (~105 files)</p>
+<ul>
+<li>Organized by topic: Testing, Security, UI, Accessibility, Internationalization, Concurrency, Logging, Feature Management, Code Quality</li>
+</ul>
+<p><strong>Ingredients</strong> (~23 files)</p>
+<ul>
+<li>Atomic component specs: behavioral requirements, appearance, states, accessibility, configuration, test vectors, platform notes</li>
+</ul>
+<p><strong>Recipes</strong> (~24 files)</p>
+<ul>
+<li>Feature compositions: integration requirements, layout, shared state, test vectors</li>
+</ul>
+<p><strong>Compliance</strong> (10+ categories)</p>
+<ul>
+<li>81+ curated checks: Security, User Safety, Performance, Best Practices, Access Patterns, Accessibility, Privacy & Data, Platform Compliance, Reliability, Internationalization</li>
+</ul>
+<p><strong>Workflows</strong> (6 files)</p>
+<ul>
+<li>Branching, planning, implementation, verification, review</li>
+</ul>
+<p><strong>Reference</strong></p>
+<ul>
+<li>External best-practices links, schemas, examples</li>
+</ul>
+<p><strong>Appendix</strong></p>
+<ul>
+<li>Research materials and evaluations</li>
+</ul>
+<h3>Research Materials</h3>
+<p>Located in <code>/cookbook/appendix/research/</code> — design research and evaluations.</p>
+<h2>Git History & Current State</h2>
+<h3>Branch & Status</h3>
+<ul>
+<li><strong>Current Branch:</strong> <code>main</code></li>
+<li><strong>Ahead of Remote:</strong> Yes, by 1 commit</li>
+<li><strong>Untracked Files:</strong> <code>cookbook/.superpowers/</code> (build artifact)</li>
+<li><strong>Uncommitted Changes:</strong> None (clean working tree)</li>
+</ul>
+<h3>Recent Git Activity (Last 30 commits)</h3>
+<pre><code>6da7c65 (HEAD) chore: gitignore PNG screenshots in project root
+49002c9 Add cookbook project config and meta files
+5b6b454 Update web app for cookbook restructuring
+5c7bf0c Restructure cookbook: migrate recipes to ingredients, add formatting specs
+d4cf696 Sync cookbook content: update guidelines, principles, and introduction
+62c0e6c chore: standardize worktree directory to .claude/worktrees/
+e189b33 Add Open Graph and Twitter meta tags with branded OG image
+6f0455d Add Agentic Cookbook Family box with links to Dev Team and Agent Registry
+7b69c2c Style hero blurb closer in italic serif for emphasis
+848aee1 Style nav titles in gold accent, rename to The Agentic Cookbook, add selection bar
+55c4d4d Fix broken fonts by switching from stale woff2 URLs to Google Fonts link tags
+d97988e Add build command to wrangler config so CI deploys build automatically
+...and 18 more commits</code></pre>
+<h3>Recent Changes (Last 5 commits)</h3>
+<ul>
+<li><strong>2026-04-06 18:41:13 -0700:</strong> gitignore PNG screenshots in project root</li>
+<li><strong>2026-04-06 17:33:46 -0700:</strong> Add cookbook project config and meta files</li>
+<li><strong>2026-04-06 17:33:39 -0700:</strong> Update web app for cookbook restructuring</li>
+<li><strong>2026-04-06 17:33:28 -0700:</strong> Restructure cookbook: migrate recipes to ingredients, add formatting specs</li>
+<li><strong>2026-04-06 17:33:18 -0700:</strong> Sync cookbook content: update guidelines, principles, and introduction</li>
+</ul>
+<h3>Repository Metadata</h3>
+<ul>
+<li><strong>Remote:</strong> <code>git@github.com:agentic-cookbook/cookbook-web.git</code></li>
+<li><strong>Fetch URL:</strong> <code>git@github.com:agentic-cookbook/cookbook-web.git</code></li>
+<li><strong>Push URL:</strong> <code>git@github.com:agentic-cookbook/cookbook-web.git</code></li>
+</ul>
+<h2>Build & Test Commands</h2>
+<h3>Available npm Scripts</h3>
+<pre><code>npm run dev                    # Start Vite dev server (port 5173)
+npm run build                  # Compile TypeScript + build with Vite
+npm run preview                # Build + run with wrangler dev (local preview)
+npm run deploy                 # Build + deploy to Cloudflare Workers
+npm run test:visual            # Run Playwright visual regression tests
+npm run test:visual:update     # Update Playwright snapshot baselines</code></pre>
+<h3>Typical Development Workflow</h3>
+<pre><code>npm run dev              # Start dev server
+# In another terminal:
+npm run test:visual      # Run visual tests
+npm run test:visual:update  # Update baselines after intentional changes</code></pre>
+<h3>Deployment</h3>
+<pre><code>npm run deploy           # Builds and deploys to agentic-cookbook.com</code></pre>
+<h3>Testing Strategy</h3>
+<ul>
+<li>Visual regression tests via Playwright</li>
+<li>Screenshot baselines in <code>/tests/visual.spec.ts-snapshots/</code></li>
+<li>Design rule enforcement (screenshot before/after)</li>
+<li>Max 1% pixel difference tolerance</li>
+<li>Dark theme by default for testing</li>
+</ul>
+<h2>Notes</h2>
+<h3>Special Features</h3>
+<ol>
+<li><strong>Dual Entry Points</strong></li>
+</ol>
+<ul>
+<li><code>index.html</code> → React app at <code>/</code> with full routing</li>
+<li><code>bookcover.html</code> → Animated book cover landing page (particles, gradient background)</li>
+</ul>
+<ol>
+<li><strong>Build-Time Content Processing</strong></li>
+</ol>
+<ul>
+<li>Cookbook markdown is loaded and processed at build time via custom Vite plugin</li>
+<li>No server-side rendering or runtime markdown parsing</li>
+<li>Content is injected as JavaScript object in virtual module</li>
+<li>Enables instant page loads and client-side navigation</li>
+</ul>
+<ol>
+<li><strong>Search Integration</strong></li>
+</ol>
+<ul>
+<li>Full-text search across all cookbook content</li>
+<li>Powered by Fuse.js (fuzzy search)</li>
+<li>Searchable fields: title, section, description, content</li>
+<li>Triggered via Cmd+K or header search button</li>
+</ul>
+<ol>
+<li><strong>Design System</strong></li>
+</ol>
+<ul>
+<li>12.6 KB site-design.md rule with exact Tailwind specifications</li>
+<li>Theme tokens for dark/light modes (gold accent #c4a35a)</li>
+<li>Custom fonts: Instrument Serif (display), DM Mono (monospace), Manrope (sans)</li>
+<li>Responsive design: mobile (overlay sidebar), tablet, desktop (sticky sidebar)</li>
+<li>Screenshot verification workflow to prevent design drift</li>
+</ul>
+<ol>
+<li><strong>Related Projects</strong></li>
+</ol>
+<ul>
+<li><strong>dev-team</strong>: Multi-agent development orchestration plugin</li>
+<li><strong>cookbook</strong>: Main cookbook repository (content source)</li>
+<li><strong>tools-site</strong>: Nested Cloudflare Workers project (separate deployment)</li>
+</ul>
+<ol>
+<li><strong>Accessibility & Polish</strong></li>
+</ol>
+<ul>
+<li>Breadcrumb navigation with proper ARIA labels</li>
+<li>Semantic HTML throughout</li>
+<li>Tailwind Typography for prose styling</li>
+<li>Dark mode respects system preferences with localStorage override</li>
+<li>Sticky header with smooth scrolling behavior</li>
+<li>TOC auto-generates with anchor links</li>
+</ul>
+<ol>
+<li><strong>MCP Integration</strong></li>
+</ol>
+<ul>
+<li><code>.mcp.json</code> configures Playwright MCP with vision capabilities</li>
+<li>Enables AI-assisted visual testing and screenshot comparison</li>
+</ul>
+<h3>Deployment Platform</h3>
+<ul>
+<li><strong>Host:</strong> Cloudflare Workers (serverless edge computing)</li>
+<li><strong>Domains:</strong> agentic-cookbook.com, www.agentic-cookbook.com</li>
+<li><strong>Observability:</strong> Enabled via Wrangler</li>
+<li><strong>SPA Routing:</strong> Fallback to index.html for all unknown routes</li>
+</ul>
+<h3>Code Statistics</h3>
+<ul>
+<li><strong>TypeScript/React:</strong> ~2,647 lines of source code</li>
+<li><strong>Cookbook Content:</strong> 172+ markdown files across 8+ categories</li>
+<li><strong>Package Size:</strong> 198 npm dependencies</li>
+<li><strong>Build Output:</strong> Production bundle in <code>/dist</code></li>
+</ul>
+<h3>Known Untracked Files</h3>
+<ul>
+<li><code>cookbook/.superpowers/</code> — superpowers framework data (build artifact, should be in .gitignore or generated)</li>
+</ul>
+<h3>Design Philosophy</h3>
+<p>The site strictly adheres to a documented design system with 4 page types, mandatory screenshot verification, and exact Tailwind specifications for every component. Design drift is prevented through visual regression testing and the site-design.md rule.</p>
+</div>
+<div class="footer">Generated 2026-04-07</div>
+</body>
+</html>

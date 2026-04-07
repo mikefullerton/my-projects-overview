@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cat Herding — My Projects Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d1117; --surface: #161b22; --surface-hover: #1c2333;
+  --border: #30363d; --border-accent: #484f58;
+  --text: #e6edf3; --text-muted: #8b949e; --text-dim: #6e7681;
+  --accent: #58a6ff; --accent-dim: rgba(88,166,255,0.12);
+  --green: #3fb950; --green-dim: rgba(63,185,80,0.12);
+  --yellow: #d29922; --red: #f85149;
+  --purple: #bc8cff; --orange: #f0883e;
+  --mono: 'DM Mono', monospace;
+  --serif: 'Instrument Serif', serif;
+  --sans: 'Manrope', -apple-system, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--text); font-family: var(--sans);
+  font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent-dim); color: var(--accent); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.grain {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; opacity: 0.03; z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.header {
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 16px 32px; display: flex; align-items: center; gap: 16px;
+}
+.back { color: var(--text-muted); font-size: 13px; padding: 4px 12px; border: 1px solid var(--border); border-radius: 6px; transition: border-color 0.15s; }
+.back:hover { border-color: var(--text-muted); text-decoration: none; }
+.header-title { font-size: 20px; font-weight: 600; }
+.header-meta { margin-left: auto; font-size: 12px; color: var(--text-muted); font-family: var(--mono); }
+.content { max-width: 900px; margin: 0 auto; padding: 32px; }
+h2 {
+  font-family: var(--serif); font-size: 1.4rem; font-weight: 400;
+  color: var(--accent); margin: 32px 0 12px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+h2:first-child { margin-top: 0; }
+h3 { font-size: 1rem; font-weight: 600; margin: 20px 0 8px; color: var(--text); }
+p { margin: 8px 0; color: var(--text-muted); }
+ul, ol { margin: 8px 0 8px 20px; color: var(--text-muted); }
+li { margin: 4px 0; }
+strong { color: var(--text); font-weight: 600; }
+code {
+  background: rgba(110,118,129,0.15); padding: 2px 6px; border-radius: 4px;
+  font-family: var(--mono); font-size: 0.9em; color: var(--orange);
+}
+pre {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  padding: 16px; overflow-x: auto; margin: 12px 0; font-family: var(--mono);
+  font-size: 13px; line-height: 1.5; color: var(--text-muted);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+th { text-align: left; padding: 8px 12px; border-bottom: 2px solid var(--border); color: var(--text-dim); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+.footer {
+  border-top: 1px solid var(--border); padding: 16px 32px; text-align: center;
+  font-size: 12px; color: var(--text-dim); font-family: var(--mono); margin-top: 48px;
+}
+@media (max-width: 640px) {
+  .header { padding: 12px 16px; }
+  .content { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="header">
+  <a href="../index.html" class="back">&larr; All Projects</a>
+  <span class="header-title">Cat Herding</span>
+  <span class="header-meta">mikefullerton</span>
+</div>
+<div class="content">
+<h2>Project Summary</h2>
+<p>Cat Herding is a personal collection of Claude Code extensions, plugins, skills, and CLI tools designed to augment development workflows. It contains 6 installable plugins, 10 local skills, 2 Python CLIs (site-manager and webinator), research documents, and configuration rules.</p>
+<h2>Type & Tech Stack</h2>
+<ul>
+<li><strong>Project Type:</strong> Development tool ecosystem for Claude Code</li>
+<li><strong>Python 3.11+</strong> — site-manager and webinator CLIs (zero external dependencies, stdlib only)</li>
+<li><strong>JavaScript/Node.js</strong> — Test harness (Vitest)</li>
+<li><strong>Bash</strong> — Shell scripts for plugins and status line integration</li>
+<li><strong>YAML</strong> — Skill/plugin manifests</li>
+<li><strong>Key tools:</strong> <code>uv</code> (Python tool installer), <code>pytest</code>, <code>vitest</code></li>
+</ul>
+<h2>GitHub URL</h2>
+<p><code>git@github.com:mikefullerton/cat-herding.git</code></p>
+<h2>Directory Structure</h2>
+<pre><code>cat-herding/
+├── .claude/
+│   ├── skills/                        # 10 local skills (lint-skill, lint-rule, lint-agent, optimize-rules, etc.)
+│   ├── rules/                         # cli-versioning.md, plugin-development.md
+│   └── settings.local.json
+├── cli/
+│   ├── site-manager/                  # v0.3.0 - Multi-site web deployment manager (8 commands)
+│   │   ├── pyproject.toml
+│   │   ├── src/site_manager/          # cli.py, deploy.py, status.py, manifest.py, verify.py, test.py, claude.py
+│   │   └── tests/
+│   └── webinator/                     # v0.1.0 - Web infrastructure manager (11+ commands)
+│       ├── pyproject.toml
+│       ├── src/webinator/             # cli.py, api.py, config.py, domains.py, dns.py, deploy.py, status.py, claude.py
+│       └── tests/
+├── plugins/                           # 6 Claude Code plugins
+│   ├── yolo/                          # v5.0.0 - Per-session auto-approve mode
+│   ├── custom-status-line/            # v2.0.0+ - Composable status line pipeline
+│   ├── repo-tools/                    # v3.0.0 - Repository cleanup &amp; diagnostics
+│   ├── show-project-setup/            # Project dashboard (HTML)
+│   ├── site-manager/                  # v1.3.0 - Plugin for site deployment skill
+│   └── webinitor/                     # v2.3.0+ - Plugin for infrastructure skill
+├── tests/harness/                     # Vitest test infrastructure
+├── docs/
+│   ├── research/                      # claude-code-plugins.md, cli-packaging.md
+│   └── superpowers/
+│       ├── plans/                     # 6 implementation plans
+│       └── specs/                     # 3 specification docs
+├── .claude-plugin/marketplace.json    # Local plugin marketplace manifest
+├── CLAUDE.md
+└── README.md</code></pre>
+<h2>Key Files & Components</h2>
+<h3>CLIs</h3>
+<p><strong>site-manager (v0.3.0)</strong> — Scaffold and manage multi-site web projects. Architecture per project: Backend (Hono + Drizzle + PostgreSQL on Railway), Main/Admin/Dashboard (React 19 + Vite + Tailwind 4 on Cloudflare Workers). Install: <code>uv tool install -e ./cli/site-manager</code></p>
+<p><strong>webinator (v0.1.0)</strong> — Web infrastructure management (domains, DNS, deployments) for Cloudflare, Railway, GoDaddy. Install: <code>uv tool install -e ./cli/webinator</code></p>
+<p>Both CLIs: Zero external dependencies (stdlib only), shell out to <code>gh</code>, <code>railway</code>, <code>wrangler</code>, <code>curl</code>, <code>docker</code>.</p>
+<h3>Plugins (6 total)</h3>
+<ol>
+<li><strong>yolo</strong> (v5.0.0) — Per-session auto-approve for tool calls</li>
+<li><strong>custom-status-line</strong> (v2.0.0+) — Composable status line with project info, git stats</li>
+<li><strong>repo-tools</strong> (v3.0.0) — Recursive repo cleanup, interactive conflict resolution</li>
+<li><strong>show-project-setup</strong> — HTML dashboard of rules, skills, plugins, tools</li>
+<li><strong>site-manager</strong> (v1.3.0) — Skill plugin for /site-manager command</li>
+<li><strong>webinitor</strong> (v2.3.0+) — Skill plugin for /webinitor command</li>
+</ol>
+<h3>Local Skills (10 total)</h3>
+<p>lint-skill, lint-rule, lint-agent, optimize-rules, install-worktree-rule, port-swiftui-to-appkit, install-recommended-tools, install-status-enhancements, uninstall-status-enhancements, show-project-setup</p>
+<h2>Claude Configuration</h2>
+<ul>
+<li><strong>Rules:</strong> cli-versioning (bump versions on CLI edits), plugin-development (structure, marketplace, workflow)</li>
+<li><strong>settings.local.json:</strong> Extensive permission allowlist for git, file ops, tool installation, status line scripts</li>
+</ul>
+<h2>Planning & Research Documents</h2>
+<ul>
+<li><strong>claude-code-plugins.md</strong> — Plugin architecture, SKILL.md frontmatter, marketplace registration</li>
+<li><strong>cli-packaging.md</strong> — Evaluation of CLI packaging approaches; decision: <code>uv tool install -e</code> (editable installs)</li>
+<li><strong>plans/</strong> — 6 implementation plans (site-manager v1, webinitor v2, smoke tests)</li>
+<li><strong>specs/</strong> — 3 design specifications</li>
+</ul>
+<h2>Git History & Current State</h2>
+<ul>
+<li><strong>Branch:</strong> main (up to date with origin/main)</li>
+<li><strong>Recent activity (2026-04-06):</strong> CLAUDE.md updates, status-line alignment, egg-info cleanup, plan/spec docs, site-manager features</li>
+<li><strong>Uncommitted changes:</strong> 3 modified files in plugins/custom-status-line and plugins/repo-tools</li>
+</ul>
+<h2>Build & Test Commands</h2>
+<pre><code># Install CLIs
+uv tool install -e ./cli/site-manager
+uv tool install -e ./cli/webinator
+
+# Test CLIs
+cd cli/site-manager &amp;&amp; python3 -m pytest tests/
+cd cli/webinator &amp;&amp; python3 -m pytest tests/
+
+# JS test harness
+cd tests/harness &amp;&amp; npm test
+
+# Load plugins locally
+claude --plugin-dir ./plugins/yolo --plugin-dir ./plugins/custom-status-line</code></pre>
+<h2>Notes</h2>
+<ul>
+<li>Owner edits go direct to main; Claude Code sessions use worktree + PR workflow</li>
+<li>Marketplace enables <code>claude plugin install &lt;name&gt;@cat-herding</code></li>
+<li>Python + <code>uv</code> chosen over Swift/Go/Rust for CLI simplicity</li>
+<li>Editable installs mean source edits are live (no rebuild)</li>
+</ul>
+</div>
+<div class="footer">Generated 2026-04-07</div>
+</body>
+</html>

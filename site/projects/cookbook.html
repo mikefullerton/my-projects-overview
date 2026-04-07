@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agentic Cookbook - Project Overview — My Projects Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d1117; --surface: #161b22; --surface-hover: #1c2333;
+  --border: #30363d; --border-accent: #484f58;
+  --text: #e6edf3; --text-muted: #8b949e; --text-dim: #6e7681;
+  --accent: #58a6ff; --accent-dim: rgba(88,166,255,0.12);
+  --green: #3fb950; --green-dim: rgba(63,185,80,0.12);
+  --yellow: #d29922; --red: #f85149;
+  --purple: #bc8cff; --orange: #f0883e;
+  --mono: 'DM Mono', monospace;
+  --serif: 'Instrument Serif', serif;
+  --sans: 'Manrope', -apple-system, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--text); font-family: var(--sans);
+  font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent-dim); color: var(--accent); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.grain {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; opacity: 0.03; z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.header {
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 16px 32px; display: flex; align-items: center; gap: 16px;
+}
+.back { color: var(--text-muted); font-size: 13px; padding: 4px 12px; border: 1px solid var(--border); border-radius: 6px; transition: border-color 0.15s; }
+.back:hover { border-color: var(--text-muted); text-decoration: none; }
+.header-title { font-size: 20px; font-weight: 600; }
+.header-meta { margin-left: auto; font-size: 12px; color: var(--text-muted); font-family: var(--mono); }
+.content { max-width: 900px; margin: 0 auto; padding: 32px; }
+h2 {
+  font-family: var(--serif); font-size: 1.4rem; font-weight: 400;
+  color: var(--accent); margin: 32px 0 12px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+h2:first-child { margin-top: 0; }
+h3 { font-size: 1rem; font-weight: 600; margin: 20px 0 8px; color: var(--text); }
+p { margin: 8px 0; color: var(--text-muted); }
+ul, ol { margin: 8px 0 8px 20px; color: var(--text-muted); }
+li { margin: 4px 0; }
+strong { color: var(--text); font-weight: 600; }
+code {
+  background: rgba(110,118,129,0.15); padding: 2px 6px; border-radius: 4px;
+  font-family: var(--mono); font-size: 0.9em; color: var(--orange);
+}
+pre {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  padding: 16px; overflow-x: auto; margin: 12px 0; font-family: var(--mono);
+  font-size: 13px; line-height: 1.5; color: var(--text-muted);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+th { text-align: left; padding: 8px 12px; border-bottom: 2px solid var(--border); color: var(--text-dim); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+.footer {
+  border-top: 1px solid var(--border); padding: 16px 32px; text-align: center;
+  font-size: 12px; color: var(--text-dim); font-family: var(--mono); margin-top: 48px;
+}
+@media (max-width: 640px) {
+  .header { padding: 12px 16px; }
+  .content { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="header">
+  <a href="../index.html" class="back">&larr; All Projects</a>
+  <span class="header-title">Agentic Cookbook - Project Overview</span>
+  <span class="header-meta">agentic-cookbook</span>
+</div>
+<div class="content">
+<h2>Project Summary</h2>
+<p>The <strong>Agentic Cookbook</strong> is a comprehensive, open-source structured library of principles, guidelines, ingredients, recipes, and workflows designed for AI-assisted multi-platform software development. Written entirely in markdown with YAML frontmatter, it serves as the knowledge base consumed directly by AI agents (particularly Claude Code) to build complete, tested, accessible, secure applications across multiple platforms.</p>
+<p><strong>Core Value Proposition</strong>: Code built with the cookbook is "trusted" — complete, precise, consistent, verified, secure by default, accessible, tested, predictable, maintainable, native to each platform, incremental, documented, observable, and performant.</p>
+<h2>Type & Tech Stack</h2>
+<p><strong>Project Type</strong>: Knowledge base / Development framework / AI-agent resource library (no code generation; provides specifications for code generation tools)</p>
+<p><strong>Tech Stack</strong>:</p>
+<ul>
+<li><strong>Content Format</strong>: Markdown with YAML frontmatter (no compiled languages)</li>
+<li><strong>Validation</strong>: TypeScript + Vitest (test harness for skills in <code>.claude/tests/</code>)</li>
+<li><strong>Skills</strong>: 7 custom Claude Code skills for managing, linting, approving, and syncing artifacts</li>
+<li><strong>Platform</strong>: Git-based, GitHub-hosted, consumed by Claude Code via <code>.claude/</code> configuration</li>
+<li><strong>Dependencies</strong>: Vitest 3.2.1 (for skill testing only)</li>
+</ul>
+<p><strong>File Format Standards</strong>:</p>
+<ul>
+<li>All content is <code>.md</code> files with YAML frontmatter (frontmatter required, no exceptions)</li>
+<li>Each artifact has: <code>id</code> (UUID), <code>title</code>, <code>domain</code> (agentic-cookbook://...<code>), </code>type<code>, </code>version<code>, </code>status<code>, </code>created<code>, </code>modified<code>, </code>author<code>, </code>summary<code>, </code>platforms<code>, </code>tags<code>, </code>depends-on<code>, </code>related<code>, </code>references`</li>
+<li>Change history table required for all artifacts</li>
+<li>Named requirements using RFC 2119 keywords (MUST, SHOULD, MAY) with kebab-case names</li>
+</ul>
+<h2>GitHub URL</h2>
+<p><strong>Repository</strong>: https://github.com/agentic-cookbook/cookbook</p>
+<p><strong>Organization</strong>: agentic-cookbook (collaborative, open-source)</p>
+<p><strong>Remote</strong>: <code>git@github.com:agentic-cookbook/cookbook.git</code></p>
+<h2>Directory Structure</h2>
+<pre><code>cookbook/
+├── .claude/                          # Claude Code integration
+│   ├── CLAUDE.md                     # Agent context file (copy of README with config notes)
+│   ├── settings.json                 # Permissions for skills/tools
+│   ├── settings.local.json           # Local overrides
+│   ├── rules/                        # 3 git &amp; artifact workflow rules
+│   │   ├── always-use-worktrees-and-prs.md
+│   │   ├── after-adding-an-artifact.md
+│   │   └── artifact-formatting.md
+│   ├── skills/                       # 7 custom skills
+│   │   ├── add-artifact/
+│   │   ├── approve-artifact/
+│   │   ├── create-artifact/
+│   │   ├── lint-artifact/
+│   │   ├── repair-cookbook/
+│   │   ├── update-website/
+│   │   └── install-cookbook-global/
+│   ├── tests/                        # Vitest harness
+│   │   ├── package.json
+│   │   ├── tsconfig.json
+│   │   ├── vitest.config.ts
+│   │   ├── specs/                    # Test suites for each skill
+│   │   ├── lib/                      # Test helpers
+│   │   └── fixtures/                 # Sample artifacts for testing
+│   └── worktrees/                    # Temporary git worktrees for PR workflows
+│
+├── introduction/                     # Getting started (3 files)
+│   ├── getting-started.md
+│   ├── conventions.md                # File format, naming, cross-referencing rules
+│   ├── glossary.md                   # Term definitions
+│   └── INDEX.md
+│
+├── principles/                       # 18 engineering principles
+│   ├── simplicity.md
+│   ├── yagni.md
+│   ├── fail-fast.md
+│   ├── dependency-injection.md
+│   ├── immutability-by-default.md
+│   ├── composition-over-inheritance.md
+│   ├── separation-of-concerns.md
+│   ├── design-for-deletion.md
+│   ├── explicit-over-implicit.md
+│   ├── small-reversible-decisions.md
+│   ├── tight-feedback-loops.md
+│   ├── manage-complexity-through-boundaries.md
+│   ├── principle-of-least-astonishment.md
+│   ├── idempotency.md
+│   ├── native-controls.md
+│   ├── open-source-preference.md
+│   ├── support-automation.md
+│   ├── make-it-work-make-it-right-make-it-fast.md
+│   ├── meta-principle-optimize-for-change.md
+│   └── INDEX.md
+│
+├── guidelines/                       # 88 topic-organized guidelines
+│   ├── testing/                      # Test pyramid, patterns, doubles, mutation testing
+│   ├── security/                     # Auth, tokens, CORS, privacy, secure storage
+│   ├── ui/                           # Typography, spacing, color, layout, accessibility
+│   ├── networking/                   # API design, caching, retries, timeouts
+│   ├── accessibility/                # Screen readers, keyboard nav, Dynamic Type
+│   ├── internationalization/         # Localization, RTL support
+│   ├── concurrency/                  # Background work, main thread safety
+│   ├── logging/                      # Structured logging, analytics
+│   ├── feature-management/           # Feature flags, A/B testing, debug mode
+│   ├── code-quality/                 # Linting, atomic commits
+│   ├── language/                     # Language-specific guidance (Swift, Kotlin, C#, Python)
+│   ├── platform/                     # Deep linking, search, widgets, notifications
+│   ├── database-design/              # SQLite best practices (22 artifacts added Apr 6)
+│   ├── skills-and-agents/            # Authoring skills, rules, agents
+│   └── INDEX.md (master index)
+│
+├── ingredients/                      # 18 atomic component specs (building blocks)
+│   ├── ui/
+│   │   ├── components/               # Leaf UI controls
+│   │   │   ├── ai-chat-control.md
+│   │   │   ├── color-profile.md
+│   │   │   ├── empty-state.md
+│   │   │   ├── git-status-indicator.md
+│   │   │   ├── metadata-line.md
+│   │   │   ├── status-bar.md
+│   │   │   ├── collapsible-pane-header.md
+│   │   │   └── INDEX.md
+│   │   └── panels/                   # Content panes
+│   │       ├── ai-settings-panel.md
+│   │       ├── code-editor-pane.md
+│   │       ├── debug-panel.md
+│   │       ├── file-tree-browser.md
+│   │       ├── inspector-panel.md
+│   │       ├── terminal-pane.md
+│   │       └── INDEX.md
+│   ├── infrastructure/               # Non-visual patterns
+│   │   ├── logging.md
+│   │   ├── settings-keys.md
+│   │   ├── window-frame-persistence.md
+│   │   └── INDEX.md
+│   ├── developer-tools/
+│   │   ├── yolo-mode.md
+│   │   └── INDEX.md
+│   ├── web/
+│   │   ├── appearance-mode-toggle.md
+│   │   └── INDEX.md
+│   └── INDEX.md (master)
+│
+├── recipes/                          # 11 compositions of ingredients into features
+│   ├── ui/
+│   │   ├── components/               # Composed controls
+│   │   │   └── INDEX.md
+│   │   ├── panels/                   # Composed panes
+│   │   │   └── INDEX.md
+│   │   ├── windows/                  # Full windows
+│   │   │   ├── settings-window.md
+│   │   │   ├── standalone-terminal-window.md
+│   │   │   └── INDEX.md
+│   │   └── INDEX.md
+│   ├── app/                          # App-level recipes
+│   │   └── INDEX.md
+│   ├── developer-tools/
+│   │   └── INDEX.md
+│   ├── autonomous-dev-bots/
+│   │   └── INDEX.md
+│   ├── infrastructure/
+│   │   └── INDEX.md
+│   ├── web/
+│   │   └── INDEX.md
+│   └── INDEX.md (master)
+│
+├── compliance/                       # 10 categories, 81 checks (verification checklists)
+│   ├── security.md                   # ~10 checks
+│   ├── user-safety.md                # ~7 checks
+│   ├── performance.md                # ~7 checks
+│   ├── best-practices.md             # ~9 checks
+│   ├── access-patterns.md            # ~8 checks
+│   ├── accessibility.md              # ~9 checks
+│   ├── privacy-and-data.md           # ~9 checks
+│   ├── platform-compliance.md        # ~7 checks
+│   ├── reliability.md                # ~10 checks
+│   ├── internationalization.md       # ~8 checks
+│   ├── artifact-formatting/          # Formatting specs for each artifact type
+│   │   ├── principle-formatting.md   # 7 structural checks
+│   │   ├── guideline-formatting.md   # 8 structural checks
+│   │   ├── ingredient-formatting.md  # 16 structural checks
+│   │   ├── recipe-formatting.md      # 14 structural checks
+│   │   ├── cookbook-formatting.md    # 10 structural checks (formerly concoction)
+│   │   └── INDEX.md
+│   └── INDEX.md (master)
+│
+├── workflows/                        # 6 workflow specifications
+│   ├── branching-strategy.md         # Git branch patterns, worktree flow
+│   ├── code-planning.md              # Design, spec, review cycles
+│   ├── code-implementation.md        # Commit, test, lint patterns
+│   ├── code-verification.md          # Testing, linting, accessibility, logging
+│   ├── code-review.md                # Review checklist, approval process
+│   ├── guideline-checklist.md        # Checklist of all 88 guidelines for verification
+│   ├── _template.md                  # Template for new workflows
+│   └── INDEX.md
+│
+├── reference/                        # External resources, schemas, examples
+│   ├── cookbook.schema.json          # JSON Schema for cookbook.json manifests
+│   ├── best-practices/               # Links to external best-practice resources
+│   ├── examples/                     # Example project cookbooks
+│   │   ├── my-document-editor-cookbook/
+│   │   │   ├── cookbook.json         # Complete manifest example
+│   │   │   ├── app/
+│   │   │   ├── resources/
+│   │   │   └── context/
+│   │   └── INDEX.md
+│   └── INDEX.md
+│
+├── appendix/                         # Research and supporting materials
+│   ├── contributing/                 # Contribution guidelines
+│   ├── decisions/                    # Architectural decision records
+│   │   ├── ingredient-recipe-cookbook-hierarchy.md
+│   │   └── other decisions...
+│   ├── research/                     # Design research, evaluations
+│   └── INDEX.md
+│
+├── docs/                             # Working documents and plans (not published)
+│   └── superpowers/
+│       ├── plans/                    # Implementation plans
+│       │   └── 2026-04-04-skill-test-harness.md
+│       └── specs/                    # Design specifications
+│           ├── 2026-04-06-rename-concoction-to-cookbook-design.md
+│           └── 2026-04-04-skill-test-harness-design.md
+│
+├── .superpowers/                     # Claude Code superpowers integration
+│   └── brainstorm/
+│
+├── index.md                          # Master table of contents (3.2.0)
+├── README.md                         # Human-facing documentation
+├── LICENSE                           # MIT license
+└── .gitignore</code></pre>
+<h2>Key Files & Components</h2>
+<h3>Content Artifacts (196 markdown files)</h3>
+<ul>
+<li><strong>Principles</strong> (18 files): Foundational engineering concepts that guide decisions</li>
+<li><strong>Guidelines</strong> (88 files): Topic-organized rules for planning and implementation</li>
+<li><strong>Ingredients</strong> (18 files): Atomic, reusable component specifications (UI controls, panels, infrastructure)</li>
+<li><strong>Recipes</strong> (11 files): Composed features combining multiple ingredients</li>
+</ul>
+<p>Each artifact follows a strict format:</p>
+<ul>
+<li>YAML frontmatter with metadata</li>
+<li>Semantic sections (Overview, Behavioral Requirements, Appearance, States, Accessibility, Conformance Test Vectors, Edge Cases, Change History)</li>
+<li>Named requirements using RFC 2119 keywords</li>
+<li>Kebab-case requirement identifiers</li>
+<li>Cross-references using <code>agentic-cookbook://</code> domain URLs</li>
+</ul>
+<h3>Compliance (81 verification checks in 10 categories)</h3>
+<ul>
+<li>Security, User Safety, Performance, Best Practices, Access Patterns, Accessibility, Privacy & Data, Platform Compliance, Reliability, Internationalization</li>
+<li>Plus artifact-formatting specs for each artifact type (principle, guideline, ingredient, recipe, cookbook)</li>
+</ul>
+<h3>Workflows (6 process specifications)</h3>
+<ul>
+<li>Branching strategy (worktree-based PR flow)</li>
+<li>Planning, implementation, verification, review, guideline checklists</li>
+</ul>
+<h3>Claude Code Integration (.claude/)</h3>
+<h3>Rules (3 files)</h3>
+<ol>
+<li><strong>always-use-worktrees-and-prs.md</strong>: Enforces worktree-based git workflow; all changes through branches + PRs, no direct main commits</li>
+<li><strong>after-adding-an-artifact.md</strong>: Post-change checklist: lint, update indexes, sync to cookbook-web</li>
+<li><strong>artifact-formatting.md</strong>: Structural requirements for each artifact type</li>
+</ol>
+<h3>Skills (7 custom tools)</h3>
+<ol>
+<li><strong>lint-artifact</strong>: Validates artifact against type-specific formatting spec</li>
+<li><strong>approve-artifact</strong>: Runs lint + stamps frontmatter with approval metadata</li>
+<li><strong>add-artifact</strong>: Interactive tool to create new artifacts</li>
+<li><strong>create-artifact</strong>: Create artifact with scaffolding</li>
+<li><strong>repair-cookbook</strong>: Fix referential integrity, broken cross-references, orphaned files</li>
+<li><strong>update-website</strong>: Rsync cookbook content to cookbook-web repo</li>
+<li><strong>install-cookbook-global</strong>: Onboarding skill (in this repo; also available via dev-team plugin)</li>
+</ol>
+<h3>Tests (Vitest harness in .claude/tests/)</h3>
+<ul>
+<li><code>package.json</code>: npm scripts for test:lint, test:approve, test:add, test:create, test:website, test:repair, test:install, test:smoke</li>
+<li><code>vitest.config.ts</code> + <code>vitest.e2e.config.ts</code>: Test configuration</li>
+<li><code>specs/</code>: 7 test files, one per skill</li>
+<li><code>fixtures/</code>: Sample artifacts (valid principle, guideline, recipe, cookbook; bad frontmatter, structure)</li>
+<li><code>lib/</code>: Helper functions for test setup, sandbox directory management, CLI invocation</li>
+</ul>
+<h3>Permissions (settings.json)</h3>
+<p>Allows: Read, Glob, Grep, Edit, Write, Bash (git, gh, ls, find, wc, diff, mkdir, cp, rm, mv, cat, head, tail, grep, python3, claude)</p>
+<h2>Claude Configuration</h2>
+<p><strong>Integration Points</strong>:</p>
+<ul>
+<li><code>.claude/CLAUDE.md</code>: Context document listing all 196 artifacts, sibling projects, conventions, git workflow</li>
+<li><code>.claude/rules/</code>: 3 mandatory rules controlling git workflow, artifact lifecycle, formatting compliance</li>
+<li><code>.claude/skills/</code>: 7 reusable skills for cookbook management (lint, approve, add, create, repair, update-website, install)</li>
+<li><code>.claude/settings.json</code>: Permissions allowing powerful file manipulation for workflow automation</li>
+</ul>
+<p><strong>Git Workflow</strong> (via rules):</p>
+<ol>
+<li>All changes through git worktrees (<code>git worktree add .claude/worktrees/&lt;branch-name&gt;</code>)</li>
+<li>Branch patterns: <code>feature/&lt;description&gt;</code>, <code>revise/&lt;description&gt;</code>, <code>fix/&lt;description&gt;</code></li>
+<li>Draft PR created immediately before any code is written</li>
+<li>Small atomic commits with clear messages, push after each commit</li>
+<li>PR marked ready when all work is done</li>
+<li>CI checks must pass before merge</li>
+<li>Squash merge via <code>gh pr merge --squash</code></li>
+<li>Worktree cleaned up immediately after merge</li>
+</ol>
+<p><strong>Artifact Lifecycle</strong> (via rules):</p>
+<ol>
+<li>Create artifact from type-specific template</li>
+<li>Run <code>/approve-artifact</code> (must pass all lint checks)</li>
+<li>Update <code>index.md</code> and relevant section indexes</li>
+<li>Update cross-references in other artifacts</li>
+<li>Update artifact counts in README.md and CLAUDE.md</li>
+<li>Run <code>/update-website</code> to sync to cookbook-web</li>
+</ol>
+<h2>Planning & Research Documents</h2>
+<p><strong>Recent Work</strong> (in <code>docs/superpowers/</code>):</p>
+<h3>1. Rename Concoction to Project Cookbook (Apr 6, 2026)</h3>
+<p><strong>Status</strong>: Completed, merged as commit <code>319cba9</code> <strong>Summary</strong>: Renamed the "concoction" concept to "project cookbook" to better fit the cooking metaphor (ingredients → recipes → cookbook). Introduced clear distinction:</p>
+<ul>
+<li><strong>Top-level cookbook</strong>: This repo (source of principles, guidelines, ingredients, recipes)</li>
+<li><strong>Project cookbook</strong>: An assembly of recipes + ingredients into a complete app (defined by <code>cookbook.json</code> manifest)</li>
+</ul>
+<p><strong>Changes</strong>:</p>
+<ul>
+<li>4 file/dir renames (concoction → cookbook)</li>
+<li>13 content updates across README, CLAUDE.md, conventions, glossary, schema, etc.</li>
+<li>Domain identifiers updated in cross-references</li>
+</ul>
+<h3>2. Skill Test Harness Implementation (Apr 4, 2026)</h3>
+<p><strong>Status</strong>: Completed, merged as commit <code>c8b1f6b</code> <strong>Summary</strong>: Built a Vitest-based test harness in <code>.claude/tests/</code> to test all 7 cookbook skills by invoking them via <code>claude -p</code> against sandboxed temp directories in <code>/tmp/</code>.</p>
+<p><strong>Architecture</strong>:</p>
+<ul>
+<li>Runner reads SKILL.md, substitutes variables, invokes Claude CLI</li>
+<li>Fixtures create minimal cookbook copies in temp directories</li>
+<li>Assertions check filesystem outcomes and CLI output</li>
+<li>All execution sandboxed — real repo never modified</li>
+</ul>
+<p><strong>Tech Stack</strong>: Vitest 3.x, TypeScript, Node.js child_process, Claude CLI</p>
+<p><strong>Test scripts</strong>:</p>
+<ul>
+<li><code>npm test</code> — all tests</li>
+<li><code>npm run test:lint</code> — lint-artifact skill</li>
+<li><code>npm run test:approve</code> — approve-artifact skill</li>
+<li><code>npm run test:smoke</code> — quick smoke test (lint + approve)</li>
+</ul>
+<h2>Git History & Current State</h2>
+<p><strong>Branch</strong>: <code>main</code></p>
+<p><strong>Remote Status</strong>: Ahead of <code>origin/main</code> by 1 commit (local work not yet pushed)</p>
+<p><strong>Working Tree</strong>: Clean (no uncommitted changes)</p>
+<p><strong>Recent Commits</strong> (30 most recent):</p>
+<ol>
+<li><code>319cba9</code> (2026-04-06 18:40:53) — docs: add rename concoction-to-cookbook design spec</li>
+<li><code>fe12a56</code> (2026-04-06 17:41:34) — Add 22 database-design cookbook artifacts for platform-database specialist</li>
+<li><code>db65074</code> (2026-04-06 16:33:39) — Rename concoction to project cookbook (#44)</li>
+<li><code>f83631e</code> (2026-04-06 16:05:13) — Document worktree directory path in CLAUDE.md git workflow section</li>
+<li><code>0face55</code> (2026-04-05 13:14:37) — Reclassify recipes into ingredients and update sibling projects (#43)</li>
+<li><code>90e5f7a</code> — Add ingredient/recipe/concoction artifact hierarchy (#42)</li>
+<li><code>c8b1f6b</code> — Add skill test harness with Vitest + Claude CLI (#41)</li>
+<li><code>af90c86</code> — Lint and approve all 149 cookbook artifacts (#40)</li>
+<li><code>f52c333</code> — Add artifact skills, rules, and compliance formatting (#39)</li>
+<li><code>2f3678a</code> — Add .claude/worktrees/ to .gitignore</li>
+</ol>
+<p><strong>Key Milestones</strong> (last 30 commits):</p>
+<ul>
+<li>Massive artifact approval run (149 artifacts linted & approved in one commit)</li>
+<li>Reorganized repo as a "book" with clear structure (commit <code>10bb1d1</code>)</li>
+<li>Moved skills, rules, scripts to dev-team plugin</li>
+<li>Fixed referential integrity and broken links across codebase</li>
+<li>Added orphan detection and repair tools</li>
+<li>Updated GitHub org to agentic-cookbook/cookbook</li>
+</ul>
+<h2>Build & Test Commands</h2>
+<p><strong>No build step</strong> (markdown-based knowledge base, no compilation)</p>
+<p><strong>Test Commands</strong> (in <code>.claude/tests/</code>):</p>
+<pre><code># All tests
+npm test
+
+# End-to-end tests (slower, tests artifact creation)
+npm run test:e2e
+
+# Individual skill tests
+npm run test:lint        # lint-artifact skill
+npm run test:approve     # approve-artifact skill
+npm run test:add         # add-artifact skill
+npm run test:create      # create-artifact skill (e2e)
+npm run test:website     # update-website skill
+npm run test:repair      # repair-cookbook skill
+npm run test:install     # install-cookbook-global skill
+
+# Quick smoke test
+npm run test:smoke       # lint + approve tests</code></pre>
+<p><strong>Setup</strong> (if running tests locally):</p>
+<pre><code>cd .claude/tests
+npm install
+npm test</code></pre>
+<p><strong>Linting & Validation</strong> (via skills, not CI):</p>
+<ul>
+<li><code>/lint-artifact &lt;path&gt;</code> — Check formatting against type spec</li>
+<li><code>/approve-artifact &lt;path&gt;</code> — Lint + stamp frontmatter</li>
+<li><code>/repair-cookbook</code> — Fix broken references, orphaned files</li>
+<li><code>/validate-cookbook</code> — (via dev-team plugin) Full integrity check</li>
+</ul>
+<h2>Notes</h2>
+<h3>Project Purpose & Philosophy</h3>
+<p>The Agentic Cookbook is a <strong>knowledge base for AI agents</strong>, not a code library. It defines what "trusted" code means: complete, tested, accessible, secure, maintainable, and native to each platform. It's consumed by AI assistants (Claude Code) to generate high-quality code that follows these principles.</p>
+<h3>Artifact Format Innovation</h3>
+<p>Every artifact is a markdown file with strict structure:</p>
+<ul>
+<li>YAML frontmatter (metadata, versioning, approval tracking)</li>
+<li>Named requirements with RFC 2119 keywords</li>
+<li>Test vectors and edge cases</li>
+<li>Change history table</li>
+<li>Cross-referencing via domain URLs (<code>agentic-cookbook://principles/simplicity</code>)</li>
+</ul>
+<p>This format is designed to be both human-readable (for manual review) and machine-parseable (for automated validation).</p>
+<h3>Sibling Projects</h3>
+<ol>
+<li><strong>dev-team</strong> (GitHub: agentic-cookbook/dev-team): Multi-agent orchestration system. Provides user-facing cookbook skills (install, configure, plan-recipe, contribute, validate, lint, help). Also contains the same skills as local copies (.claude/skills/).</li>
+</ol>
+<ol>
+<li><strong>cookbook-web</strong> (GitHub: agentic-cookbook/cookbook-web): Cloudflare Workers web app for browsing the cookbook. React 19, TypeScript, Tailwind 4. Serves as public-facing website. Synced via <code>/update-website</code> skill.</li>
+</ol>
+<h3>Recent Major Changes</h3>
+<ul>
+<li><strong>Database Design Guidelines</strong> (Apr 6): Added 22 new artifacts covering SQLite best practices, schema design, performance, device-to-server sync, production operations.</li>
+<li><strong>Rename Concoction → Project Cookbook</strong> (Apr 6): Introduced clearer terminology to distinguish source cookbook (this repo) from project cookbooks (app-specific assemblies).</li>
+<li><strong>Artifact Approval at Scale</strong> (Apr 4): Linted and approved all 149 cookbook artifacts in a single coordinated run.</li>
+<li><strong>Test Harness</strong> (Apr 4): Added Vitest-based testing for all 7 skills with sandboxed execution.</li>
+</ul>
+<h3>Current State Highlights</h3>
+<ul>
+<li><strong>196 markdown artifact files</strong>: 18 principles, 88 guidelines, 18 ingredients, 11 recipes, plus 61 other reference/compliance/workflow files</li>
+<li><strong>7 custom skills</strong> for management (lint, approve, add, create, repair, update-website, install)</li>
+<li><strong>Vitest harness</strong> with 7 test suites covering all skills</li>
+<li><strong>3 mandatory rules</strong> controlling git workflow, artifact lifecycle, formatting</li>
+<li><strong>10 compliance categories</strong> with 81 verification checks</li>
+<li><strong>6 workflow specifications</strong> for planning, implementation, verification, review</li>
+<li><strong>1 commit ahead of origin</strong> (awaiting push)</li>
+</ul>
+<h3>Contribution Workflow</h3>
+<p>External contributors use fork-based PRs. The <code>/contribute-to-cookbook</code> skill (in dev-team) detects this automatically and adjusts the workflow (fork as origin, PR to upstream). Owners use local worktrees + direct PRs to the main repo.</p>
+<h3>Knowledge Consumption Model</h3>
+<p>AI agents consume this knowledge in multiple ways:</p>
+<ol>
+<li><strong>Direct read</strong>: <code>.claude/CLAUDE.md</code> provides full context at session start</li>
+<li><strong>Skill invocation</strong>: <code>/lint-artifact</code>, <code>/approve-artifact</code>, <code>/repair-cookbook</code> perform specific tasks</li>
+<li><strong>Index navigation</strong>: <code>index.md</code> and section indexes (INDEX.md in each directory) guide agents through the catalog</li>
+<li><strong>Cross-references</strong>: Domain URLs (<code>agentic-cookbook://...</code>) link artifacts together, allowing agents to traverse relationships</li>
+<li><strong>Rule enforcement</strong>: <code>.claude/rules/</code> defines mandatory workflows that Claude Code agents follow</li>
+</ol>
+<p><strong>Last Updated</strong>: 2026-04-07 (This overview created after commits through 2026-04-06 18:40:53)</p>
+<p><strong>Status</strong>: Active development. Most recent work on database design guidelines and concoction → project cookbook rename.</p>
+</div>
+<div class="footer">Generated 2026-04-07</div>
+</body>
+</html>

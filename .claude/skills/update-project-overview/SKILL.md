@@ -126,15 +126,37 @@ Write `index.md` with:
 - Category tables (Project | Summary | Tech)
 - Quick Reference section: by organization, by status
 
+### Step 5b: Regenerate HTML Site
+
+After index.md is written, regenerate the HTML site under `site/`. This MUST happen atomically with the overview/index updates (see rule: atomic-site-updates).
+
+**site/index.html** — Regenerate the dashboard page:
+- Stats bar with project counts by status
+- Filter controls (org, status, search)
+- Category sections with project cards linking to detail pages
+- Each card shows: name, status badge, one-line summary, tech tags
+- Use the existing styling (dark theme, dev-team inspired, grain texture, Instrument Serif / Manrope / DM Mono fonts)
+
+**site/projects/<name>.html** — For each project, convert its `overview.md` to an HTML detail page:
+- Header with back link to `../index.html`, project name, and GitHub org
+- Markdown converted to HTML: `##` → `<h2>`, `###` → `<h3>`, paragraphs → `<p>`, lists → `<ul>/<li>`, code blocks → `<pre><code>`, tables → `<table>`, inline code → `<code>`, bold → `<strong>`
+- Skip the `# H1` title (already in header)
+- Same dark theme styling as index.html
+- Footer with generation date
+
+**Removed projects**: Delete their `site/projects/<name>.html` file.
+
+Use an Agent to generate all HTML pages in parallel for efficiency.
+
 ### Step 6: Commit & Report
 
-After all files are written, report a summary:
+After all files are written (overviews, index.md, and site HTML), report a summary:
 ```
 Update complete:
 - Updated: <N> projects
 - Added: <list or "none">
 - Removed: <list or "none">
-- Index regenerated
+- Index + site regenerated
 ```
 
 Do NOT automatically commit — let the user decide when to commit.
@@ -143,7 +165,8 @@ Do NOT automatically commit — let the user decide when to commit.
 
 When `$ARGUMENTS` contains a project name:
 - Only analyze and update that one project's `overview.md`
-- Regenerate `index.md` (since the project summary may have changed)
+- Regenerate that project's `site/projects/<name>.html`
+- Regenerate `index.md` and `site/index.html` (since the project summary may have changed)
 - Skip steps 2-3 (discovery/removal)
 - Report what changed
 

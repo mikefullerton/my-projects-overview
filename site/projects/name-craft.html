@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Name-Craft — My Projects Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d1117; --surface: #161b22; --surface-hover: #1c2333;
+  --border: #30363d; --border-accent: #484f58;
+  --text: #e6edf3; --text-muted: #8b949e; --text-dim: #6e7681;
+  --accent: #58a6ff; --accent-dim: rgba(88,166,255,0.12);
+  --green: #3fb950; --green-dim: rgba(63,185,80,0.12);
+  --yellow: #d29922; --red: #f85149;
+  --purple: #bc8cff; --orange: #f0883e;
+  --mono: 'DM Mono', monospace;
+  --serif: 'Instrument Serif', serif;
+  --sans: 'Manrope', -apple-system, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--text); font-family: var(--sans);
+  font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent-dim); color: var(--accent); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.grain {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; opacity: 0.03; z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.header {
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 16px 32px; display: flex; align-items: center; gap: 16px;
+}
+.back { color: var(--text-muted); font-size: 13px; padding: 4px 12px; border: 1px solid var(--border); border-radius: 6px; transition: border-color 0.15s; }
+.back:hover { border-color: var(--text-muted); text-decoration: none; }
+.header-title { font-size: 20px; font-weight: 600; }
+.header-meta { margin-left: auto; font-size: 12px; color: var(--text-muted); font-family: var(--mono); }
+.content { max-width: 900px; margin: 0 auto; padding: 32px; }
+h2 {
+  font-family: var(--serif); font-size: 1.4rem; font-weight: 400;
+  color: var(--accent); margin: 32px 0 12px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+h2:first-child { margin-top: 0; }
+h3 { font-size: 1rem; font-weight: 600; margin: 20px 0 8px; color: var(--text); }
+p { margin: 8px 0; color: var(--text-muted); }
+ul, ol { margin: 8px 0 8px 20px; color: var(--text-muted); }
+li { margin: 4px 0; }
+strong { color: var(--text); font-weight: 600; }
+code {
+  background: rgba(110,118,129,0.15); padding: 2px 6px; border-radius: 4px;
+  font-family: var(--mono); font-size: 0.9em; color: var(--orange);
+}
+pre {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  padding: 16px; overflow-x: auto; margin: 12px 0; font-family: var(--mono);
+  font-size: 13px; line-height: 1.5; color: var(--text-muted);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+th { text-align: left; padding: 8px 12px; border-bottom: 2px solid var(--border); color: var(--text-dim); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+.footer {
+  border-top: 1px solid var(--border); padding: 16px 32px; text-align: center;
+  font-size: 12px; color: var(--text-dim); font-family: var(--mono); margin-top: 48px;
+}
+@media (max-width: 640px) {
+  .header { padding: 12px 16px; }
+  .content { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="header">
+  <a href="../index.html" class="back">&larr; All Projects</a>
+  <span class="header-title">Name-Craft</span>
+  <span class="header-meta">local</span>
+</div>
+<div class="content">
+<h2>Project Summary</h2>
+<p>Name-Craft is a whimsical web-based character name generator for children's books that creates silly, genre-specific names through an interactive 9-question questionnaire. Uses Claude AI (with mock mode fallback) to generate names based on sound symbolism, alliteration, and genre templates, combined with a deterministic word-builder system.</p>
+<h2>Type & Tech Stack</h2>
+<ul>
+<li><strong>Project Type:</strong> Full-stack web application with Claude AI integration</li>
+<li><strong>Backend:</strong> Python 3, Flask</li>
+<li><strong>Frontend:</strong> HTML/CSS/JavaScript (static, served via Flask)</li>
+<li><strong>AI:</strong> Anthropic Claude API (claude-sonnet-4-20250514)</li>
+<li><strong>Database:</strong> SQLite3 with WAL mode (word persistence)</li>
+<li><strong>Streaming:</strong> Server-Sent Events (SSE) for real-time name generation</li>
+<li><strong>Dependencies:</strong> flask>=3.0, anthropic>=0.40</li>
+</ul>
+<h2>GitHub URL</h2>
+<p>Not a git repository — local development project only.</p>
+<h2>Directory Structure</h2>
+<pre><code>name-craft/
+├── .claude/
+│   ├── settings.json                  # superpowers plugin enabled
+│   ├── settings.local.json
+│   └── skills/name-craft/
+│       ├── SKILL.md                   # Name-Craft skill definition
+│       └── references/
+│           └── name-components.md     # Genre templates, sound symbolism, word pools
+├── CLAUDE.md
+├── index.html                         # Single-page app with full UI
+├── requirements.txt                   # flask, anthropic
+├── docs/
+│   ├── tolkien-style-dwarf-names.md   # Khuzdul naming reference
+│   └── superpowers/specs/
+│       └── 2026-04-03-word-builder-scaffolding-design.md
+├── services/server/
+│   ├── __main__.py                    # Entry point (port 8765)
+│   ├── app.py                         # Flask app factory
+│   ├── api.py                         # /api/generate, /api/events/stream, /api/health
+│   ├── claude_client.py               # Claude API + mock mode
+│   └── sse.py                         # SSE broadcast system
+└── scripts/word_builder/
+    ├── __main__.py                    # CLI: python -m scripts.word_builder
+    ├── seed_db.py                     # Markdown → SQLite parser
+    ├── schema.sql                     # words, word_attributes tables
+    └── words.db                       # 269+ words (~119KB)</code></pre>
+<h2>Key Components</h2>
+<p><strong>Questionnaire:</strong> 9 questions (genre, creature type, traits, situational, smell) → Claude generates names</p>
+<p><strong>11 Genre Templates:</strong> Fantasy (5 sub-types), Sci-Fi (5), Pirate, Superhero, Fairy Tale, Western, Steampunk, Gothic, Mythology (5), Spy, Ninja</p>
+<p><strong>Sound Symbolism:</strong> Bouba-kiki effect, personality trait sound mappings for evil/intelligence/silliness/sociability axes</p>
+<p><strong>Word Builder:</strong> Markdown → SQLite pipeline. 269+ words with prefix/root/suffix categorization. Designed for multiple future name generators.</p>
+<p><strong>Mock Mode:</strong> Works without API key using canned responses for testing/demo.</p>
+<h2>Claude Configuration</h2>
+<ul>
+<li>superpowers plugin enabled</li>
+<li><code>/name-craft</code> custom skill for interactive use</li>
+<li>Skill loads system prompt from SKILL.md + name-components.md reference data</li>
+</ul>
+<h2>Planning & Research Documents</h2>
+<ul>
+<li><strong>word-builder-scaffolding-design.md</strong> — SQLite-backed word pool architecture for extensibility</li>
+<li><strong>tolkien-style-dwarf-names.md</strong> — Khuzdul naming rules reference (not yet integrated)</li>
+</ul>
+<h2>Git History & Current State</h2>
+<ul>
+<li><strong>Not a git repo</strong> — no version control</li>
+<li><strong>Most recent files:</strong> April 2-5, 2026</li>
+<li><strong>Status:</strong> Active development (word builder scaffolding phase)</li>
+</ul>
+<h2>Build & Test Commands</h2>
+<pre><code>python -m services.server              # Start Flask on :8765
+python -m scripts.word_builder         # Show word pool stats
+python scripts/word_builder/seed_db.py # Rebuild words.db from markdown
+pip install -r requirements.txt</code></pre>
+<p><strong>Environment:</strong> <code>ANTHROPIC_API_KEY</code> (required for real generation), <code>NAME_CRAFT_PORT</code> (default 8765)</p>
+<h2>Notes</h2>
+<ul>
+<li>Streaming generation via SSE with client isolation per unique ID</li>
+<li>Flask + explicit threading for async generation tasks</li>
+<li>Markdown + SQLite duality: markdown for Claude readability, SQLite for programmatic access</li>
+<li>No database for persisting generated names (ephemeral per session)</li>
+</ul>
+</div>
+<div class="footer">Generated 2026-04-07</div>
+</body>
+</html>

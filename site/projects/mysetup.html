@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mysetup Project Overview — My Projects Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d1117; --surface: #161b22; --surface-hover: #1c2333;
+  --border: #30363d; --border-accent: #484f58;
+  --text: #e6edf3; --text-muted: #8b949e; --text-dim: #6e7681;
+  --accent: #58a6ff; --accent-dim: rgba(88,166,255,0.12);
+  --green: #3fb950; --green-dim: rgba(63,185,80,0.12);
+  --yellow: #d29922; --red: #f85149;
+  --purple: #bc8cff; --orange: #f0883e;
+  --mono: 'DM Mono', monospace;
+  --serif: 'Instrument Serif', serif;
+  --sans: 'Manrope', -apple-system, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--text); font-family: var(--sans);
+  font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent-dim); color: var(--accent); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.grain {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; opacity: 0.03; z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.header {
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 16px 32px; display: flex; align-items: center; gap: 16px;
+}
+.back { color: var(--text-muted); font-size: 13px; padding: 4px 12px; border: 1px solid var(--border); border-radius: 6px; transition: border-color 0.15s; }
+.back:hover { border-color: var(--text-muted); text-decoration: none; }
+.header-title { font-size: 20px; font-weight: 600; }
+.header-meta { margin-left: auto; font-size: 12px; color: var(--text-muted); font-family: var(--mono); }
+.content { max-width: 900px; margin: 0 auto; padding: 32px; }
+h2 {
+  font-family: var(--serif); font-size: 1.4rem; font-weight: 400;
+  color: var(--accent); margin: 32px 0 12px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+h2:first-child { margin-top: 0; }
+h3 { font-size: 1rem; font-weight: 600; margin: 20px 0 8px; color: var(--text); }
+p { margin: 8px 0; color: var(--text-muted); }
+ul, ol { margin: 8px 0 8px 20px; color: var(--text-muted); }
+li { margin: 4px 0; }
+strong { color: var(--text); font-weight: 600; }
+code {
+  background: rgba(110,118,129,0.15); padding: 2px 6px; border-radius: 4px;
+  font-family: var(--mono); font-size: 0.9em; color: var(--orange);
+}
+pre {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  padding: 16px; overflow-x: auto; margin: 12px 0; font-family: var(--mono);
+  font-size: 13px; line-height: 1.5; color: var(--text-muted);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+th { text-align: left; padding: 8px 12px; border-bottom: 2px solid var(--border); color: var(--text-dim); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+.footer {
+  border-top: 1px solid var(--border); padding: 16px 32px; text-align: center;
+  font-size: 12px; color: var(--text-dim); font-family: var(--mono); margin-top: 48px;
+}
+@media (max-width: 640px) {
+  .header { padding: 12px 16px; }
+  .content { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="header">
+  <a href="../index.html" class="back">&larr; All Projects</a>
+  <span class="header-title">mysetup Project Overview</span>
+  <span class="header-meta">mikefullerton</span>
+</div>
+<div class="content">
+<h2>Project Summary</h2>
+<p><strong>mysetup</strong> is a comprehensive macOS and Windows 11 (WSL) development environment setup automation project. It provides declarative machine configuration (via <code>setup.md</code>), 20+ utility scripts, shell configuration, and Claude Code plugin orchestration to streamline developer workflows.</p>
+<p><strong>Type</strong>: Development Infrastructure / Automation Tool Suite <strong>Status</strong>: Active (last update: April 6, 2026)</p>
+<h2>Type & Tech Stack</h2>
+<h3>Project Type</h3>
+<ul>
+<li><strong>Infrastructure Automation</strong>: Shell scripts, Python utilities, and declarative configuration management</li>
+<li><strong>macOS/WSL Installer</strong>: Cross-platform setup with platform detection</li>
+<li><strong>CLI Utility Collection</strong>: 20+ executable scripts for git, file operations, development tasks</li>
+<li><strong>Claude Code Integration</strong>: Setup skill for configuring Claude Code plugins</li>
+</ul>
+<h3>Technology Stack</h3>
+<ul>
+<li><strong>Shell</strong>: Bash, Zsh (oh-my-zsh configuration)</li>
+<li><strong>Languages</strong>: Bash/Shell scripting, Python 3</li>
+<li><strong>Build/Config</strong>: Homebrew (taps, packages, casks), npm, pip, git, gh (GitHub CLI)</li>
+<li><strong>Key Dependencies</strong>:</li>
+<li>Node.js (installed via Homebrew)</li>
+<li>Python 3 + uv (package manager)</li>
+<li>Java (openjdk@17, openjdk@21)</li>
+<li>Gradle</li>
+<li>GitHub CLI (<code>gh</code>)</li>
+<li>VS Code</li>
+<li>Docker/Android Studio (via Homebrew casks)</li>
+<li>Xcode/xcodegen (macOS)</li>
+</ul>
+<h3>Project Types Handled</h3>
+<p>The setup script manages three categories of projects:</p>
+<ol>
+<li><strong>Active Projects</strong>: Regular repos in <code>~/projects/</code> (mikefullerton.com, mikeisdrumming, code-review-pipeline-test, workflows)</li>
+<li><strong>Worktree Projects</strong>: Bare repos with worktree directories (QualityTime, temporal)</li>
+<li><strong>Config Repos</strong>: Repos that have their own <code>install.sh</code> (dotfiles)</li>
+</ol>
+<h2>GitHub URL</h2>
+<pre><code>https://github.com/mikefullerton/mysetup
+SSH: git@github.com:mikefullerton/mysetup.git</code></pre>
+<h2>Directory Structure</h2>
+<pre><code>mysetup/
+├── .claude/                           # Claude Code configuration
+│   ├── CLAUDE.md                      # Project rules (branches, worktrees, PRs)
+│   ├── settings.local.json            # Permissions (git, chmod, gh pr commands)
+│   ├── Features/                      # Feature tracking directories (empty)
+│   │   ├── Active-Roadmaps/
+│   │   ├── Completed-Features/
+│   │   ├── Completed-Roadmaps/
+│   │   └── FeatureDefinitions/
+│   └── worktrees/                     # Git worktrees for feature branches
+├── .vscode/                           # VS Code workspace configuration
+│   └── templates/
+├── bin/                               # 20+ executable utility scripts
+│   ├── lib/                           # Python library modules (11 files)
+│   │   ├── check_installed_software.py
+│   │   ├── git_branch.py, git_branch_manager.py
+│   │   ├── git_commands.py, git_checkout_history.py
+│   │   ├── shell_command.py
+│   │   ├── menu.py, logger.py, text_color.py
+│   │   ├── files.py, script_manager.py, prefs.py
+│   │   └── script_collection.py
+│   ├── utils/                         # Shell utility functions
+│   │   ├── colors.sh
+│   │   ├── dispatcher.sh
+│   │   ├── cd-wrapper.sh
+│   │   └── set-prompt.sh
+│   ├── catherine                      # Complex script (referenced in permissions)
+│   ├── git-branches                   # List branches by commit date
+│   ├── git-mypush, git-mypull         # Custom git push/pull wrappers
+│   ├── git-myfpush                    # Safe force-push wrapper
+│   ├── git-force-update               # Interactive rebase helper
+│   ├── git-import-directory-from-another-repo
+│   ├── git-set-to-github-repo         # Git config for GitHub repos
+│   ├── split-out-links                # HTML/webloc link extraction (with Playwright)
+│   ├── split-out-links-python-only    # Link extraction (Python only)
+│   ├── open_workspace                 # Opens .xcworkspace/.xcodeproj/.code-workspace
+│   ├── change-type                    # Batch file extension rename
+│   ├── copy-folder                    # Rsync wrapper with exclusions
+│   ├── delete-orig-files              # Recursive .orig file removal
+│   ├── list-to-json                   # Convert text list to JSON
+│   ├── mytop                          # Top processes by CPU (5s refresh)
+│   ├── st                             # Open in SourceTree
+│   ├── mysetup                        # List all available scripts
+│   ├── snag.py                        # iOS app image cache exporter
+│   └── clone_impal.py                 # Copy impal from mounted volumes
+├── setup_files/                       # Config files &amp; resources
+│   ├── mikefullerton.zsh-theme        # Custom oh-my-zsh theme
+│   ├── tab-title-hook.zsh             # Shell tab title configuration
+│   ├── silence.aiff                   # Audio file
+│   ├── teddy.png                      # Image resource
+│   ├── License files                  # Kaleidoscope, Sublime Text, Alfred
+│   └── Other config files
+├── manifests/                         # Declarative state files
+│   ├── Brewfile                       # Homebrew dependencies
+│   ├── npm-globals.txt                # npm global packages
+│   ├── pip-globals.txt                # pip global packages
+│   ├── vscode-extensions.txt          # VS Code extension list
+│   └── software.md                    # Inventory of installed software
+├── skills/                            # Claude Code skills
+│   └── setup/                         # Main setup skill
+│       ├── SKILL.md                   # Setup skill definition
+│       └── references/                # Reference implementations
+├── deprecated/                        # 100+ archived scripts/utilities
+│   ├── bin/                           # Old script directory
+│   ├── commapps/                      # Legacy application scripts
+│   ├── bats_bin/                      # Old build system
+│   └── Various legacy tools
+├── install.sh                         # Main setup script (1243 lines, v29)
+├── uninstall.sh                       # Removes shell config without uninstalling software
+├── setup.md                           # Declarative manifest (version 28)
+├── README.md                          # User-facing documentation
+├── mysetup.code-workspace             # VS Code workspace file
+├── .gitignore                         # Excludes .worktrees/, .DS_Store
+├── .gitattributes                     # Git attributes
+├── .DS_Store                          # macOS folder metadata (ignored)
+└── .git/                              # Git repository metadata</code></pre>
+<h2>Key Files & Components</h2>
+<h3>Core Scripts</h3>
+<table>
+<tr>
+<th>File</th>
+<th>Description</th>
+<th>Lines</th>
+<th>Language</th>
+</tr>
+<tr>
+<td><strong>install.sh</strong></td>
+<td>Main setup automation</td>
+<td>1243</td>
+<td>Bash</td>
+</tr>
+<tr>
+<td><strong>uninstall.sh</strong></td>
+<td>Remove shell config</td>
+<td>3938</td>
+<td>Bash</td>
+</tr>
+<tr>
+<td><strong>setup.md</strong></td>
+<td>Declarative manifest (version 28)</td>
+<td>130</td>
+<td>YAML/Markdown</td>
+</tr>
+<tr>
+<td><strong>README.md</strong></td>
+<td>User documentation</td>
+<td>150</td>
+<td>Markdown</td>
+</tr>
+</table>
+<h3>Git-Related Scripts</h3>
+<ul>
+<li><code>git-branches</code>: List branches by commit date with metadata</li>
+<li><code>git-mypush</code> / <code>git-mypull</code> / <code>git-myfpush</code>: Custom wrappers with branch safety</li>
+<li><code>git-force-update</code>: Blocks force-push to <code>main</code>; allows to other branches after rebase</li>
+<li><code>git-import-directory-from-another-repo</code>: Preserve subdirectory history across repos</li>
+<li><code>git-set-to-github-repo</code>: Configure git email and disable GPG signing</li>
+</ul>
+<h3>Python Libraries (bin/lib/)</h3>
+<ul>
+<li><code>shell_command.py</code> (20KB): Wrapper for running bash commands from Python</li>
+<li><code>git_branch.py</code> (11KB): Git branch inspection utilities</li>
+<li><code>git_branch_manager.py</code> (10KB): Branch creation, switching, deletion</li>
+<li><code>git_commands.py</code> (8KB): High-level git operations</li>
+<li><code>check_installed_software.py</code>: Verify tool installation</li>
+<li><code>menu.py</code>, <code>logger.py</code>, <code>text_color.py</code>: UI/logging utilities</li>
+<li><code>files.py</code>, <code>script_manager.py</code>, <code>prefs.py</code>: File and script management</li>
+</ul>
+<h3>Setup Skill (Claude Code Integration)</h3>
+<ul>
+<li><strong>File</strong>: <code>skills/setup/SKILL.md</code> (100+ lines)</li>
+<li><strong>Invocation</strong>: <code>/setup</code>, <code>/setup --check</code>, <code>/setup --section &lt;name&gt;</code></li>
+<li><strong>Features</strong>:</li>
+<li>Declarative state management from <code>setup.md</code></li>
+<li>Dry-run mode with <code>--check</code></li>
+<li>Section-specific execution</li>
+<li>Platform detection (macOS/WSL/Linux)</li>
+<li>Multi-phase processing: Shell → Homebrew → npm/pip → Extensions → Git → Repos → Project Scripts</li>
+</ul>
+<h3>Manifests</h3>
+<ul>
+<li><strong>Brewfile</strong>: Taps (koekeishiya, steipete, felixkratz, asmvik, antoniorodr), packages, casks</li>
+<li><strong>npm-globals.txt</strong>: openclaw, wrangler</li>
+<li><strong>pip-globals.txt</strong>: pillow, Pygments, fonttools, fpdf2, pytest</li>
+<li><strong>vscode-extensions.txt</strong>: GitHub Actions, Python, Pylance, envs</li>
+<li><strong>software.md</strong>: Inventory of 50+ tools (developer + personal categories)</li>
+</ul>
+<h2>Claude Configuration</h2>
+<h3>CLAUDE.md (Project Rules)</h3>
+<pre><code>- Always use branches and PRs (no direct main commits)
+- Always use worktrees for feature/fix branches
+- Worktree directory: .claude/worktrees/
+- Use: git worktree add .claude/worktrees/&lt;name&gt; to isolate work</code></pre>
+<h3>settings.local.json (Permissions)</h3>
+<p>Allowed operations for Claude agents:</p>
+<ul>
+<li><code>Bash(git add:*)</code> — Stage changes</li>
+<li><code>Bash(git commit:*)</code> — Create commits</li>
+<li><code>Bash(git push)</code> — Push to remote</li>
+<li><code>Bash(git checkout:*)</code> — Switch branches</li>
+<li><code>Bash(git push:*)</code> — Force push (with safeguards)</li>
+<li><code>Bash(chmod:*)</code> — Change file permissions</li>
+<li><code>Bash(/Volumes/Data/myscripts/bin/catherine:*)</code> — Run catherine script</li>
+<li><code>Bash(gh pr:*)</code> — GitHub PR operations</li>
+</ul>
+<h3>Features Directory</h3>
+<ul>
+<li><strong>Active-Roadmaps/</strong>: Currently planned work (empty)</li>
+<li><strong>Completed-Features/</strong>: Finished work history (empty)</li>
+<li><strong>Completed-Roadmaps/</strong>: Finished roadmaps (empty)</li>
+<li><strong>FeatureDefinitions/</strong>: Feature spec templates (empty)</li>
+</ul>
+<h2>Planning & Research Documents</h2>
+<h3>setup.md (Version 28, Declarative Manifest)</h3>
+<p><strong>Key Sections:</strong></p>
+<ol>
+<li><strong>Shell Configuration</strong></li>
+</ol>
+<ul>
+<li>Default: zsh with oh-my-zsh</li>
+<li>Theme: Custom <code>mikefullerton.zsh-theme</code></li>
+<li>PATH entries: <code>~/projects/active/mysetup/bin</code>, <code>~/.local/bin</code></li>
+<li>Aliases: git shortcuts (ga, gc, gs, gl, gpush, gpull, gfpush, co, gnb, gcb), claude-yolo/cy</li>
+<li>Tab title hook from <code>setup_files/tab-title-hook.zsh</code></li>
+<li>Environment variables checked: CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID</li>
+</ul>
+<ol>
+<li><strong>Homebrew Configuration</strong></li>
+</ol>
+<ul>
+<li>Taps: antoniorodr/memo, asmvik/formulae (yabai), felixkratz/formulae (sketchybar), koekeishiya/formulae (skhd), steipete/tap</li>
+<li>Core packages: node, gh, gradle, jq, openjdk@{17,21}, railway, socat, terminal-notifier, uv, xcodegen</li>
+<li>Casks: Android Studio, visual-studio-code, Tailscale, darktable, digikam, Font packages</li>
+<li>Tap packages: yabai, sketchybar, skhd, remindctl, memo</li>
+</ul>
+<ol>
+<li><strong>Development Tools</strong></li>
+</ol>
+<ul>
+<li>npm globals: openclaw, wrangler</li>
+<li>pip globals: pillow, Pygments, fonttools, fpdf2, pytest</li>
+<li>Node.js, Java (17/21), Gradle</li>
+</ul>
+<ol>
+<li><strong>Projects</strong></li>
+</ol>
+<ul>
+<li><strong>Active Projects</strong>: mikefullerton.com, mikeisdrumming, code-review-pipeline-test, workflows</li>
+<li><strong>Worktree Projects</strong>: QualityTime, temporal</li>
+<li><strong>Config Repos</strong>: dotfiles (with install.sh)</li>
+</ul>
+<ol>
+<li><strong>Repos Section</strong> (from install.sh)</li>
+</ol>
+<ul>
+<li>Active projects clone to <code>~/projects/</code> as regular repos</li>
+<li>Worktree projects clone as bare repos with sibling <code>-wt/</code> directory</li>
+<li>Bare repo usage: <code>git worktree add ../&lt;name&gt;-wt/&lt;branch&gt; -b &lt;branch&gt;</code></li>
+</ul>
+<ol>
+<li><strong>Claude Code Plugins</strong> (from setup.md + README.md)</li>
+</ol>
+<ul>
+<li>Core: playwright, figma, frontend-design, context7, semgrep</li>
+<li>Workflow: superpowers, code-review, pr-review-toolkit, playground</li>
+<li>Authoring: plugin-dev, agent-sdk-dev, hookify</li>
+<li>Installation scope: user (via <code>claude plugin install &lt;name&gt; --scope user</code>)</li>
+</ul>
+<h3>install.sh (v29, 1243 lines)</h3>
+<p><strong>Platform Detection:</strong></p>
+<ul>
+<li>Detects macOS, WSL, or Linux via <code>uname -s</code> and <code>/proc/version</code></li>
+<li>Filters installation by platform markers (macOS), (WSL), (linux)</li>
+</ul>
+<p><strong>Key Functions:</strong></p>
+<ul>
+<li><code>detect_platform()</code>: Returns "macos", "wsl", or "linux"</li>
+<li><code>is_macos()</code>, <code>is_wsl()</code>, <code>is_linux()</code>: Platform checks</li>
+<li>Batch tool scanning and installation with dependency ordering</li>
+<li>Deprecated tool cleanup (removes old tools)</li>
+<li>Project setup scripts execution (runs <code>install.sh</code> in cloned projects if present)</li>
+</ul>
+<p><strong>Project Configuration:</strong></p>
+<pre><code>ACTIVE_PROJECTS=(
+    &quot;mikefullerton.com|git@github.com:mikefullerton/mikefullerton.com.git&quot;
+    &quot;mikeisdrumming|git@github.com:mikefullerton/mikeisdrumming.git&quot;
+    &quot;code-review-pipeline-test|git@github.com:Shared-Project-Helpers/code-review-pipeline-test.git&quot;
+    &quot;workflows|git@github.com:Shared-Project-Helpers/workflows.git&quot;
+)
+
+WORKTREE_PROJECTS=(
+    &quot;QualityTime|git@github.com:QualityTimeStudios/QualityTime.git&quot;
+    &quot;temporal|git@github.com:temporal-company/temporal.git&quot;
+)</code></pre>
+<h3>Skills/Setup Skill (SKILL.md)</h3>
+<p><strong>Invocation:</strong></p>
+<ul>
+<li><code>/setup</code> — Run all sections</li>
+<li><code>/setup --check</code> — Dry-run, report what's installed vs. missing</li>
+<li><code>/setup --section &quot;Homebrew Packages&quot;</code> — Run specific section</li>
+</ul>
+<p><strong>Processing Order:</strong></p>
+<ol>
+<li>Shell (zsh, oh-my-zsh, theme, PATH, aliases, env vars)</li>
+<li>Homebrew Taps</li>
+<li>Homebrew Packages</li>
+<li>Homebrew Tap Packages</li>
+<li>Homebrew Casks</li>
+<li>Winget Packages (WSL only)</li>
+<li>npm Global Packages</li>
+<li>pip Global Packages</li>
+<li>VS Code Extensions</li>
+<li>Claude Code Plugins</li>
+<li>Git Config</li>
+<li>Repos (Active → Worktree → Config)</li>
+<li>Project Setup Scripts</li>
+</ol>
+<p><strong>Status Reporting:</strong> OK, INSTALL, SKIP, FAIL, WARN prefixes with summary at end.</p>
+<h2>Git History & Current State</h2>
+<h3>Recent Activity (Last 5 Commits)</h3>
+<pre><code>2026-04-06 17:19:17 -0700  chore: update project paths to ~/projects/active/mysetup
+2026-04-06 16:18:11 -0700  chore: standardize worktree directory to .claude/worktrees/
+2026-03-31 10:53:23 -0700  remove extra stuff for now
+2026-03-31 10:45:33 -0700  Merge pull request #24 from mikefullerton/remove-config-repos
+2026-03-31 10:45:00 -0700  chore: remove claude-config and agentic-roadmaps from setup</code></pre>
+<h3>Historical Context (Last 30 Commits)</h3>
+<ul>
+<li><strong>Recent refactorings</strong>: Moving Claude Code install to claude-config, worktree directory standardization, removing deprecated plugins</li>
+<li><strong>Feature work</strong>: Declarative setup.md manifest, /setup skill implementation (Phase 1), plugin prerequisites detection, enhanced plugin setup</li>
+<li><strong>Cleanup</strong>: Removed custom hooks, removed Claude plugins installation from setup, standardized project paths</li>
+</ul>
+<h3>Current State</h3>
+<ul>
+<li><strong>Branch</strong>: main</li>
+<li><strong>Status</strong>: Clean (nothing to commit, working tree clean)</li>
+<li><strong>Remote</strong>: Up to date with origin/main</li>
+<li><strong>Other branches</strong>: remove-deprecated (appears to be cleaning up old code)</li>
+</ul>
+<h3>Branch Structure</h3>
+<ul>
+<li><strong>main</strong>: Primary development branch (fully synced with remote)</li>
+<li><strong>remove-deprecated</strong>: Cleanup branch (removing old scripts from <code>deprecated/</code> directory)</li>
+<li><strong>Remote</strong>: origin/main, origin/remove-deprecated</li>
+</ul>
+<h2>Build & Test Commands</h2>
+<h3>Installation</h3>
+<pre><code># Full setup (all sections)
+./install.sh
+
+# Check mode (dry-run, report missing)
+/setup --check
+
+# Specific section
+/setup --section &quot;Homebrew Packages&quot;
+
+# Uninstall (removes shell config without uninstalling software)
+./uninstall.sh</code></pre>
+<h3>Available Scripts</h3>
+<pre><code># List all scripts
+./bin/mysetup
+
+# Git operations
+git-branches              # List branches by commit date
+git-mypush               # Push current branch
+git-mypull               # Pull with rebase
+git-myfpush              # Force push (non-main only)
+git-force-update         # Interactive rebase helper
+
+# File operations
+change-type              # Batch rename by extension
+copy-folder              # rsync with progress
+delete-orig-files        # Remove .orig files
+list-to-json             # Convert text to JSON
+
+# Link extraction
+split-out-links          # Extract from HTML/webloc (with Playwright)
+split-out-links-python-only  # Extract (Python only)
+
+# Utilities
+open_workspace           # Open .xcworkspace / .code-workspace
+mytop                    # Top processes (5s refresh)
+st                       # Open in SourceTree
+catherine                # Complex utility script
+snag.py                  # Export iOS app image caches
+clone_impal.py           # Copy impal from volumes</code></pre>
+<h3>No Traditional Build</h3>
+<p>This is not a compiled project. Installation is shell-script driven via <code>install.sh</code> and <code>setup.md</code> manifest processing.</p>
+<h3>Testing</h3>
+<ul>
+<li><strong>No test framework</strong> visible (no test/ or specs/ directory)</li>
+<li>Manual testing via <code>./install.sh</code> or <code>/setup --check</code></li>
+<li>Feature branches use worktrees to avoid main pollution</li>
+</ul>
+<h2>Notes</h2>
+<h3>Architecture & Design Patterns</h3>
+<p><strong>Declarative Configuration:</strong></p>
+<ul>
+<li><code>setup.md</code> is the source of truth (version 28)</li>
+<li><code>/setup</code> skill converges machine state toward declared manifest</li>
+<li>Supports dry-run (<code>--check</code>) and section-specific execution</li>
+<li>Platform detection enables cross-platform automation (macOS/WSL/Linux)</li>
+</ul>
+<p><strong>Modular Script Collection:</strong></p>
+<ul>
+<li>20+ focused scripts in <code>bin/</code>, each with single responsibility</li>
+<li>Python library in <code>bin/lib/</code> provides reusable utilities (git, menus, logging, shell commands)</li>
+<li>Shell utilities in <code>bin/utils/</code> for colors, dispatcher, prompt configuration</li>
+</ul>
+<p><strong>Project Management:</strong></p>
+<ul>
+<li><strong>Active Projects</strong>: Regular clones in <code>~/projects/</code></li>
+<li><strong>Worktree Projects</strong>: Bare repos with sibling <code>-wt/</code> worktree directory (keeps main clean)</li>
+<li><strong>Config Repos</strong>: Repos with their own <code>install.sh</code> (dotfiles example)</li>
+<li>Automatic repo fetching and worktree updates on each run</li>
+</ul>
+<p><strong>Claude Code Integration:</strong></p>
+<ul>
+<li>Setup skill provides declarative <code>/setup</code> command</li>
+<li>Permissions in <code>settings.local.json</code> allow git, chmod, gh operations</li>
+<li>Project rules enforce branches + PRs + worktrees (never main commits)</li>
+<li>Feature tracking via <code>.claude/Features/</code> directories</li>
+</ul>
+<h3>Known Issues & Cleanup</h3>
+<ul>
+<li><strong>deprecated/</strong> directory contains 100+ old scripts (remove-deprecated branch planned cleanup)</li>
+<li>Feature/roadmap directories in <code>.claude/Features/</code> are empty (infrastructure ready, not populated)</li>
+<li><code>.DS_Store</code> tracked (macOS metadata) but rules should ignore</li>
+</ul>
+<h3>Interesting Characteristics</h3>
+<ul>
+<li><strong>Cross-platform installer</strong>: Single <code>install.sh</code> handles macOS, WSL, and Linux with platform detection</li>
+<li><strong>Worktree strategy</strong>: Bare repos prevent main branch pollution; worktree per feature branch</li>
+<li><strong>Declarative manifest</strong>: <code>setup.md</code> decouples desired state from implementation; skill reads and converges</li>
+<li><strong>Rich git utilities</strong>: Multiple custom git wrappers simplify branch management, force push safety, and rebase workflows</li>
+<li><strong>Software inventory</strong>: Dual lists (Developer vs. Personal) track 50+ installed tools</li>
+<li><strong>Homebrew ecosystem</strong>: Manages 5 custom taps (yabai, sketchybar, skhd, remindctl, memo) for specialized macOS tooling</li>
+</ul>
+<h3>Project Goals (Inferred)</h3>
+<ol>
+<li><strong>Reproducible setup</strong>: Run <code>./install.sh</code> on new Mac/WSL to get full environment</li>
+<li><strong>Developer ergonomics</strong>: Custom aliases, scripts, and utilities for daily workflows</li>
+<li><strong>Clean branching model</strong>: Worktrees + PRs prevent main pollution</li>
+<li><strong>AI-assisted development</strong>: Claude Code plugins (superpowers, code-review, etc.) integrated into workflow</li>
+<li><strong>Modular, maintainable tooling</strong>: Each script focused; library for shared logic</li>
+</ol>
+<h3>Version History</h3>
+<ul>
+<li><strong>setup.md</strong>: v28 (as of Apr 6, 2026)</li>
+<li><strong>install.sh</strong>: v29 (29 in SETUP_VERSION constant)</li>
+<li><strong>Skills</strong>: v1 (setup skill)</li>
+<li><strong>Project</strong>: 85 commits, active main branch</li>
+</ul>
+<h2>Contact & License</h2>
+<p><strong>Author</strong>: Mike Fullerton <strong>Email</strong>: mike@mikefullerton.com <strong>Git User</strong>: Mike Fullerton (configured in setup.md)</p>
+<p><strong>Document Generated</strong>: 2026-04-07 <strong>Project Last Updated</strong>: 2026-04-06 <strong>Git Commit</strong>: 2d68011 (chore: update project paths)</p>
+</div>
+<div class="footer">Generated 2026-04-07</div>
+</body>
+</html>

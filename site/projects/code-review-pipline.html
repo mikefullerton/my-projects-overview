@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Code Review Pipeline - Project Overview — My Projects Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d1117; --surface: #161b22; --surface-hover: #1c2333;
+  --border: #30363d; --border-accent: #484f58;
+  --text: #e6edf3; --text-muted: #8b949e; --text-dim: #6e7681;
+  --accent: #58a6ff; --accent-dim: rgba(88,166,255,0.12);
+  --green: #3fb950; --green-dim: rgba(63,185,80,0.12);
+  --yellow: #d29922; --red: #f85149;
+  --purple: #bc8cff; --orange: #f0883e;
+  --mono: 'DM Mono', monospace;
+  --serif: 'Instrument Serif', serif;
+  --sans: 'Manrope', -apple-system, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--text); font-family: var(--sans);
+  font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent-dim); color: var(--accent); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.grain {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; opacity: 0.03; z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.header {
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 16px 32px; display: flex; align-items: center; gap: 16px;
+}
+.back { color: var(--text-muted); font-size: 13px; padding: 4px 12px; border: 1px solid var(--border); border-radius: 6px; transition: border-color 0.15s; }
+.back:hover { border-color: var(--text-muted); text-decoration: none; }
+.header-title { font-size: 20px; font-weight: 600; }
+.header-meta { margin-left: auto; font-size: 12px; color: var(--text-muted); font-family: var(--mono); }
+.content { max-width: 900px; margin: 0 auto; padding: 32px; }
+h2 {
+  font-family: var(--serif); font-size: 1.4rem; font-weight: 400;
+  color: var(--accent); margin: 32px 0 12px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+h2:first-child { margin-top: 0; }
+h3 { font-size: 1rem; font-weight: 600; margin: 20px 0 8px; color: var(--text); }
+p { margin: 8px 0; color: var(--text-muted); }
+ul, ol { margin: 8px 0 8px 20px; color: var(--text-muted); }
+li { margin: 4px 0; }
+strong { color: var(--text); font-weight: 600; }
+code {
+  background: rgba(110,118,129,0.15); padding: 2px 6px; border-radius: 4px;
+  font-family: var(--mono); font-size: 0.9em; color: var(--orange);
+}
+pre {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  padding: 16px; overflow-x: auto; margin: 12px 0; font-family: var(--mono);
+  font-size: 13px; line-height: 1.5; color: var(--text-muted);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+th { text-align: left; padding: 8px 12px; border-bottom: 2px solid var(--border); color: var(--text-dim); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+.footer {
+  border-top: 1px solid var(--border); padding: 16px 32px; text-align: center;
+  font-size: 12px; color: var(--text-dim); font-family: var(--mono); margin-top: 48px;
+}
+@media (max-width: 640px) {
+  .header { padding: 12px 16px; }
+  .content { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="header">
+  <a href="../index.html" class="back">&larr; All Projects</a>
+  <span class="header-title">Code Review Pipeline - Project Overview</span>
+  <span class="header-meta">agentic-cookbook</span>
+</div>
+<div class="content">
+<h2>Project Summary</h2>
+<p>An automated code review pipeline that runs as a macOS launchd daemon, polls configured GitHub repositories for open pull requests, reviews them using the Claude Code CLI with agentic cookbook guidelines, and posts reviews back via a GitHub App bot identity. The system tracks review state in SQLite and provides both continuous polling and on-demand review modes.</p>
+<h2>Type & Tech Stack</h2>
+<p><strong>Project Type:</strong> Python CLI tool + automated daemon service</p>
+<p><strong>Languages & Frameworks:</strong></p>
+<ul>
+<li><strong>Python 3.11+</strong> (primary language)</li>
+<li><strong>Claude Code CLI</strong> (external code review engine via subprocess)</li>
+<li><strong>GitHub API</strong> (via <code>gh</code> CLI and direct REST API)</li>
+<li><strong>SQLite</strong> (state management with WAL mode)</li>
+</ul>
+<p><strong>Key Dependencies:</strong></p>
+<ul>
+<li><code>pyyaml&gt;=6.0</code> (config parsing)</li>
+<li><code>PyJWT&gt;=2.8</code> (GitHub App JWT generation)</li>
+<li><code>cryptography&gt;=41.0</code> (RSA key handling for GitHub App authentication)</li>
+</ul>
+<p><strong>Testing:</strong></p>
+<ul>
+<li><code>pytest</code> (unit testing framework)</li>
+<li>Fixtures for temporary configs and SQLite databases</li>
+</ul>
+<h2>GitHub URL</h2>
+<p><code>git@github.com:agentic-cookbook/code-review-pipline.git</code> (or <code>https://github.com/agentic-cookbook/code-review-pipline.git</code>)</p>
+<h2>Directory Structure</h2>
+<pre><code>code-review-pipline/
+├── src/                          # All source modules
+│   ├── __init__.py
+│   ├── main.py                   # Entry point: daemon, once, status, review-now commands
+│   ├── config.py                 # Configuration loading &amp; validation
+│   ├── poller.py                 # GitHub PR polling via `gh` CLI
+│   ├── reviewer.py               # Claude Code subprocess orchestration
+│   ├── poster.py                 # GitHub API review posting
+│   ├── workspace.py              # Git clone &amp; PR checkout management
+│   ├── state.py                  # SQLite review state tracking
+│   ├── github_auth.py            # GitHub App JWT &amp; installation token handling
+│   ├── prompts.py                # System &amp; user prompt construction (6-phase review)
+│   └── log.py                    # Logging setup (JSON file + console)
+├── tests/                        # pytest unit tests
+│   ├── __init__.py
+│   ├── conftest.py               # pytest fixtures (tmp_config, tmp_db_path)
+│   ├── test_config.py            # Config loading &amp; validation
+│   ├── test_poller.py            # PR fetching &amp; filtering
+│   ├── test_reviewer.py          # Claude output parsing &amp; decision extraction
+│   ├── test_poster.py            # Review posting
+│   ├── test_github_auth.py       # JWT &amp; token generation
+│   ├── test_state.py             # SQLite state management
+│   └── test_workspace.py         # Git operations
+├── .claude/                      # Claude Code harness configuration
+│   └── settings.local.json       # Permissions (allows Bash(gh browse:*))
+├── .git/                         # Git repository
+├── .gitignore                    # Ignores state/ and logs/ dirs
+├── CLAUDE.md                     # Project documentation (this file)
+├── config.yaml                   # Pipeline configuration (repos, GitHub App, review settings)
+├── requirements.txt              # Python dependencies
+├── state/                        # Runtime directory (gitignored)
+│   └── reviews.db               # SQLite database with review history
+└── logs/                         # Runtime directory (gitignored)
+    └── review-pipeline.log      # Rotating JSON log file</code></pre>
+<h2>Key Files & Components</h2>
+<h3><strong>src/main.py</strong> — Entry Point & Command Dispatcher</h3>
+<ul>
+<li><strong>Commands:</strong></li>
+<li><code>daemon</code> — Run continuous poll loop with SIGTERM/SIGINT handling</li>
+<li><code>once</code> — Single poll cycle, then exit</li>
+<li><code>status</code> — Print JSON summary of review history (last 24h)</li>
+<li><code>review-now owner/repo#N</code> — Immediately review a specific PR</li>
+<li><strong>State Management:</strong> Creates <code>ReviewState</code> and <code>GitHubAppAuth</code> instances</li>
+<li><strong>Cycle Logic:</strong> Polls repos, filters PRs, reviews needed PRs, writes heartbeat</li>
+</ul>
+<h3><strong>src/config.py</strong> — Configuration & Validation</h3>
+<ul>
+<li><strong>Dataclasses:</strong></li>
+<li><code>PipelineConfig</code> — Top-level configuration</li>
+<li><code>RepoConfig</code> — Per-repository settings (owner, name, platform, guidelines, filters)</li>
+<li><code>GitHubAppConfig</code> — GitHub App credentials (app_id, private_key_path, installation_id)</li>
+<li><code>ReviewConfig</code> — Claude model & max turns</li>
+<li><code>RepoFilters</code> — PR filtering rules (skip_drafts, skip_labels, require_labels)</li>
+<li><strong>Validation:</strong> Enforces required keys, validates platform names (swift, kotlin, csharp)</li>
+<li><strong>Path Resolution:</strong> Uses <code>Path.expanduser().resolve()</code> for all paths</li>
+</ul>
+<h3><strong>src/poller.py</strong> — GitHub PR Discovery</h3>
+<ul>
+<li><strong>PRInfo Dataclass:</strong> number, title, author, head_ref, head_sha, base_ref, is_draft, labels</li>
+<li><strong>Functions:</strong></li>
+<li><code>get_open_prs(repo)</code> — Queries GitHub for open PRs using <code>gh pr list</code></li>
+<li><code>_apply_filters()</code> — Filters by draft status, labels, base branch</li>
+<li><strong>Integration:</strong> Uses <code>gh</code> CLI (read-only, no API costs)</li>
+</ul>
+<h3><strong>src/reviewer.py</strong> — Claude Code Orchestration</h3>
+<ul>
+<li><strong>ReviewResult:</strong> decision (APPROVE/REQUEST_CHANGES/COMMENT), body (full review text)</li>
+<li><strong>Functions:</strong></li>
+<li><code>review()</code> — Runs Claude via <code>claude --print --model X --system-prompt ... user_prompt</code></li>
+<li><code>_parse_decision()</code> — Extracts decision from Claude output</li>
+<li><code>_extract_review_body()</code> — Formats review markdown</li>
+<li><code>_parse_claude_output()</code> — Handles JSON or plain text responses</li>
+<li><strong>Execution:</strong> Allows Read, Grep, Glob, Bash(git diff/log/gh pr view) tools only</li>
+<li><strong>Timeout:</strong> 300 seconds (5 minutes) per review</li>
+</ul>
+<h3><strong>src/state.py</strong> — SQLite Review Tracking</h3>
+<ul>
+<li><strong>Schema:</strong></li>
+</ul>
+<pre><code>  CREATE TABLE reviews (
+    id INTEGER PRIMARY KEY,
+    repo_owner, repo_name, pr_number, head_sha,
+    review_status (in_progress/completed/failed),
+    review_decision (APPROVE/REQUEST_CHANGES/COMMENT),
+    retry_count, started_at, completed_at, error_message
+  );</code></pre>
+<ul>
+<li><strong>Key Methods:</strong></li>
+<li><code>needs_review()</code> — Check if PR at commit SHA needs review</li>
+<li><code>mark_in_progress()</code>, <code>mark_completed()</code>, <code>mark_failed()</code> — State transitions</li>
+<li><code>get_retry_count()</code> — Enforce max_retries limit</li>
+<li><code>get_status_summary()</code> — Last 24h summary for <code>/status</code> command</li>
+<li><strong>Features:</strong> WAL mode for concurrent access, ISO8601 timestamps</li>
+</ul>
+<h3><strong>src/prompts.py</strong> — Review Prompt Construction</h3>
+<ul>
+<li><strong>build_system_prompt()</strong> — Constructs system context with 6-phase review structure:</li>
+</ul>
+<ol>
+<li>Diff Review (debug code, credentials, conflicts)</li>
+<li>Code Quality (complexity, YAGNI, naming, readability)</li>
+<li>Security (OWASP Top 10, input validation, TLS)</li>
+<li>Testing (coverage, unit/integration tests)</li>
+<li>Performance (optimizations, caching, unnecessary allocations)</li>
+<li>Final Decision (structured decision output)</li>
+</ol>
+<ul>
+<li><strong>build_user_prompt()</strong> — Includes PR metadata, diff, and project-specific guidelines</li>
+<li><strong>Platform Names:</strong> Maps swift/kotlin/csharp to human-readable descriptions</li>
+</ul>
+<h3><strong>src/github_auth.py</strong> — GitHub App Authentication</h3>
+<ul>
+<li><strong>GitHubAppAuth Class:</strong></li>
+<li>Generates JWT from app_id and private key</li>
+<li>Requests installation token (valid ~58 min)</li>
+<li>Caches token with expiry buffer</li>
+<li>Makes authenticated API requests</li>
+<li><strong>Methods:</strong></li>
+<li><code>_generate_jwt()</code> — RS256 JWT with 10 min expiry</li>
+<li><code>_request_installation_token()</code> — GitHub API call for installation token</li>
+<li><code>get_token()</code> — Cached token with refresh logic</li>
+<li><code>api_request()</code> — Authenticated POST/GET/etc. to GitHub API</li>
+</ul>
+<h3><strong>src/workspace.py</strong> — Git Repository Management</h3>
+<ul>
+<li><strong>Functions:</strong></li>
+<li><code>ensure_clone()</code> — Clone repo if needed, fetch latest</li>
+<li><code>checkout_pr()</code> — Uses <code>gh pr checkout</code> to fetch PR and create branch</li>
+<li><code>get_diff()</code> — Runs <code>git diff origin/base_branch...HEAD</code></li>
+<li><strong>Integration:</strong> Subprocess wrappers around <code>git</code> and <code>gh</code> CLI commands</li>
+</ul>
+<h3><strong>src/poster.py</strong> — GitHub Review Posting</h3>
+<ul>
+<li><strong>post_review()</strong> — Posts review result to GitHub API</li>
+<li>Maps decision (APPROVE/REQUEST_CHANGES/COMMENT) to GitHub event</li>
+<li>Includes full review body</li>
+<li>Returns posted review ID</li>
+<li><strong>Integration:</strong> Uses <code>GitHubAppAuth</code> for authentication</li>
+</ul>
+<h3><strong>src/log.py</strong> — Structured Logging</h3>
+<ul>
+<li><strong>JSONFormatter:</strong> Outputs ISO 8601 timestamps, log level, logger name, message, exceptions as JSON</li>
+<li><strong>setup_logging():</strong></li>
+<li>RotatingFileHandler (10 MB, 5 backups) to <code>logs/review-pipeline.log</code></li>
+<li>StreamHandler (stderr) with human-readable format</li>
+<li>Root logger initialized to INFO level</li>
+</ul>
+<h2>Claude Configuration</h2>
+<h3><strong>.claude/settings.local.json</strong></h3>
+<pre><code>{
+  &quot;permissions&quot;: {
+    &quot;allow&quot;: [&quot;Bash(gh browse:*)&quot;]
+  }
+}</code></pre>
+<ul>
+<li>Restricts Bash tool to only <code>gh browse:*</code> commands (safety constraint)</li>
+<li>Other Bash commands (git, python, etc.) would need explicit permission</li>
+</ul>
+<h2>Configuration (config.yaml)</h2>
+<p><strong>Top-level Keys:</strong></p>
+<ul>
+<li><code>poll_interval_seconds</code> — Poll frequency (e.g., 300 = 5 min)</li>
+<li><code>clone_base_dir</code> — Where to clone repos (e.g., <code>/tmp/review-clones</code>)</li>
+<li><code>state_db_path</code> — SQLite database path (e.g., <code>./state/reviews.db</code>)</li>
+<li><code>log_dir</code> — Log directory (e.g., <code>./logs</code>)</li>
+<li><code>max_retries</code> — Max retry attempts per PR</li>
+</ul>
+<p><strong>github_app Section:</strong></p>
+<ul>
+<li><code>app_id</code> — GitHub App ID (create at github.com/settings/apps)</li>
+<li><code>private_key_path</code> — Path to app private key PEM file</li>
+<li><code>installation_id</code> — GitHub App installation ID</li>
+</ul>
+<p><strong>review Section:</strong></p>
+<ul>
+<li><code>model</code> — Claude model (e.g., <code>claude-opus-4-6</code>)</li>
+<li><code>max_turns</code> — Max agentic turns per review</li>
+</ul>
+<p><strong>global_guidelines:</strong></p>
+<ul>
+<li>List of markdown files with general code review guidelines</li>
+<li>Paths can use <code>~</code> (expanded to home dir)</li>
+<li>Current: empty in example, but typically includes:</li>
+<li><code>~/.claude/guidelines/general.md</code></li>
+<li><code>~/.claude/guidelines/engineering-principles.md</code></li>
+<li><code>~/.claude/guidelines/testing.md</code></li>
+<li><code>~/.claude/guidelines/security.md</code></li>
+</ul>
+<p><strong>repos Array:</strong></p>
+<ul>
+<li><strong>owner</strong> — GitHub org/user</li>
+<li><strong>name</strong> — Repository name</li>
+<li><strong>platform</strong> — <code>swift</code>, <code>kotlin</code>, or <code>csharp</code></li>
+<li><strong>guidelines</strong> — Platform-specific markdown guidelines</li>
+<li><strong>extra_review_instructions</strong> — Project-specific notes</li>
+<li><strong>branches.base</strong> — Base branch name (default: <code>main</code>)</li>
+<li><strong>filters.skip_drafts</strong> — Skip draft PRs (default: true)</li>
+<li><strong>filters.skip_labels</strong> — Skip PRs with these labels</li>
+<li><strong>filters.require_labels</strong> — Only review PRs with these labels</li>
+</ul>
+<h2>Planning & Research Documents</h2>
+<p>No dedicated planning or research directories found. Architecture and design decisions are documented in:</p>
+<ul>
+<li><strong>CLAUDE.md</strong> — This file (architecture, layout, conventions)</li>
+<li><strong>src/prompts.py</strong> — 6-phase review methodology (referenced from <code>~/projects/active/cookbook/workflows/code-review.md</code>)</li>
+<li>Code comments in Python modules</li>
+</ul>
+<h2>Git History & Current State</h2>
+<p><strong>Current Branch:</strong> <code>main</code> <strong>Remote Origin:</strong> <code>git@github.com:agentic-cookbook/code-review-pipline.git</code> <strong>Remote Status:</strong> Upstream is gone (detached from remote tracking)</p>
+<p><strong>Recent Commits:</strong></p>
+<pre><code>59fc63c (2026-04-06 18:43:42 -0700) chore: add .gitignore</code></pre>
+<p><strong>Uncommitted Changes:</strong> All files (CLAUDE.md, config.yaml, requirements.txt, src/, tests/) are currently untracked:</p>
+<pre><code>Untracked files:
+  CLAUDE.md
+  config.yaml
+  requirements.txt
+  src/
+  tests/</code></pre>
+<p>This indicates the repository may be in an initial setup state after cloning, or files were recently staged/committed but the working tree state hasn't been synchronized.</p>
+<h2>Build & Test Commands</h2>
+<p><strong>Install Dependencies:</strong></p>
+<pre><code>pip install -r requirements.txt</code></pre>
+<p><strong>Run Tests:</strong></p>
+<pre><code>pytest tests/
+pytest tests/test_config.py -v              # Test config parsing
+pytest tests/test_poller.py -v              # Test PR fetching
+pytest tests/test_reviewer.py -v            # Test Claude integration
+pytest tests/test_state.py -v               # Test SQLite state
+pytest tests/test_github_auth.py -v         # Test GitHub App auth</code></pre>
+<p><strong>Run Pipeline:</strong></p>
+<pre><code># Continuous daemon (polls every N seconds)
+python3 src/main.py --daemon
+
+# Single poll cycle
+python3 src/main.py --once
+
+# Check current state
+python3 src/main.py --status
+
+# Immediate review of specific PR
+python3 src/main.py --review-now owner/repo#123
+
+# Custom config file
+python3 src/main.py --config /path/to/config.yaml --daemon</code></pre>
+<p><strong>Example Systemd/Launchd Integration:</strong> Create <code>/Library/LaunchDaemons/com.example.review-pipeline.plist</code> to run as daemon:</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;
+&lt;plist version=&quot;1.0&quot;&gt;
+&lt;dict&gt;
+  &lt;key&gt;Label&lt;/key&gt;
+  &lt;string&gt;com.example.review-pipeline&lt;/string&gt;
+  &lt;key&gt;ProgramArguments&lt;/key&gt;
+  &lt;array&gt;
+    &lt;string&gt;/usr/bin/python3&lt;/string&gt;
+    &lt;string&gt;/path/to/src/main.py&lt;/string&gt;
+    &lt;string&gt;--config&lt;/string&gt;
+    &lt;string&gt;/path/to/config.yaml&lt;/string&gt;
+    &lt;string&gt;daemon&lt;/string&gt;
+  &lt;/array&gt;
+  &lt;key&gt;RunAtLoad&lt;/key&gt;
+  &lt;true/&gt;
+&lt;/dict&gt;
+&lt;/plist&gt;</code></pre>
+<h2>Conventions & Best Practices</h2>
+<p><strong>Python:</strong></p>
+<ul>
+<li>Python 3.11+ with <code>from __future__ import annotations</code> for forward compatibility</li>
+<li><code>pathlib.Path</code> for all file path operations</li>
+<li><code>logging</code> module with module-level loggers per file</li>
+<li>No external ORMs — direct SQL for SQLite queries</li>
+</ul>
+<p><strong>Database:</strong></p>
+<ul>
+<li>SQLite with WAL (Write-Ahead Logging) mode</li>
+<li>ISO 8601 timestamps (<code>datetime.datetime.isoformat()</code>)</li>
+<li>Unique constraints on (repo_owner, repo_name, pr_number, head_sha)</li>
+<li>Explicit SQL transactions</li>
+</ul>
+<p><strong>Testing:</strong></p>
+<ul>
+<li><code>pytest</code> with fixtures for temporary configs/databases</li>
+<li>Mocking of external subprocess calls (git, gh, Claude CLI)</li>
+<li>Isolation: each test has independent tmp_path, tmp_db_path</li>
+</ul>
+<p><strong>Logging:</strong></p>
+<ul>
+<li>Structured JSON logging to file (machine-readable)</li>
+<li>Human-readable console logging (development-friendly)</li>
+<li>Log rotation: 10 MB per file, 5 backups</li>
+<li>Module-level loggers for context</li>
+</ul>
+<h2>Notes & Key Design Decisions</h2>
+<ol>
+<li><strong>Claude Code CLI (not API):</strong> Uses <code>claude --print --output-format json</code> subprocess instead of Anthropic API, avoiding API costs and enabling read-only review mode.</li>
+</ol>
+<ol>
+<li><strong>6-Phase Review Structure:</strong> Follows structured methodology from agentic cookbook:</li>
+</ol>
+<ul>
+<li>Diff review, code quality, security, testing, performance, decision</li>
+<li>Severity levels: CRITICAL, WARNING, INFO</li>
+<li>Extensible via YAML-based guidelines</li>
+</ul>
+<ol>
+<li><strong>GitHub App Isolation:</strong> Reviews posted under bot identity, not personal account. Enables audit trail and permission control.</li>
+</ol>
+<ol>
+<li><strong>SQLite + WAL:</strong> Enables multiple processes (daemon + CLI commands) without file locks. State DB is primary source of truth.</li>
+</ol>
+<ol>
+<li><strong>Configurable Filtering:</strong> Label-based, draft status, base branch checks prevent reviewing unintended PRs.</li>
+</ol>
+<ol>
+<li><strong>Retry Logic:</strong> Tracks retry_count per PR commit SHA; fails gracefully after max_retries (default 3).</li>
+</ol>
+<ol>
+<li><strong>Heartbeat File:</strong> <code>state/heartbeat.json</code> tracks last poll time, repos checked, reviews pending — useful for monitoring/alerting.</li>
+</ol>
+<ol>
+<li><strong>Path Resolution:</strong> All paths use <code>Path.expanduser()</code> to support <code>~</code> in config, enabling portable configuration across machines.</li>
+</ol>
+<ol>
+<li><strong>Subprocess Safety:</strong> All external commands (claude, git, gh) run with explicit timeout and error handling; output captured for parsing.</li>
+</ol>
+<ol>
+<li><strong>Architectural Separation:</strong></li>
+</ol>
+<ul>
+<li><strong>Poller</strong> — discovers PRs (reads GitHub API via <code>gh</code>)</li>
+<li><strong>Reviewer</strong> — analyzes code (runs Claude via subprocess)</li>
+<li><strong>Poster</strong> — submits review (writes GitHub API)</li>
+<li><strong>State</strong> — tracks progress (SQLite, persistent)</li>
+<li>Each module independently testable</li>
+</ul>
+<h2>Setup Checklist</h2>
+<ul>
+<li>[ ] Create GitHub App (github.com/settings/apps/new)</li>
+<li>[ ] Install app on target repositories</li>
+<li>[ ] Download private key, place at <code>~/.config/review-pipeline/app-private-key.pem</code></li>
+<li>[ ] Update config.yaml with app_id, installation_id</li>
+<li>[ ] Configure repos list with owner, name, platform, guidelines</li>
+<li>[ ] Install dependencies: <code>pip install -r requirements.txt</code></li>
+<li>[ ] Create <code>~/.claude/guidelines/</code> directory with review guidelines</li>
+<li>[ ] Test with: <code>python3 src/main.py --once</code></li>
+<li>[ ] Review state: <code>python3 src/main.py --status</code></li>
+<li>[ ] Set up launchd daemon for continuous polling</li>
+<li>[ ] Monitor logs: <code>tail -f logs/review-pipeline.log</code></li>
+</ul>
+</div>
+<div class="footer">Generated 2026-04-07</div>
+</body>
+</html>
