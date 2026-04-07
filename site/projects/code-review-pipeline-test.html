@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>code-review-pipeline-test — My Projects Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d1117; --surface: #161b22; --surface-hover: #1c2333;
+  --border: #30363d; --border-accent: #484f58;
+  --text: #e6edf3; --text-muted: #8b949e; --text-dim: #6e7681;
+  --accent: #58a6ff; --accent-dim: rgba(88,166,255,0.12);
+  --green: #3fb950; --green-dim: rgba(63,185,80,0.12);
+  --yellow: #d29922; --red: #f85149;
+  --purple: #bc8cff; --orange: #f0883e;
+  --mono: 'DM Mono', monospace;
+  --serif: 'Instrument Serif', serif;
+  --sans: 'Manrope', -apple-system, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--text); font-family: var(--sans);
+  font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent-dim); color: var(--accent); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.grain {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; opacity: 0.03; z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.header {
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 16px 32px; display: flex; align-items: center; gap: 16px;
+}
+.back { color: var(--text-muted); font-size: 13px; padding: 4px 12px; border: 1px solid var(--border); border-radius: 6px; transition: border-color 0.15s; }
+.back:hover { border-color: var(--text-muted); text-decoration: none; }
+.header-title { font-size: 20px; font-weight: 600; }
+.header-meta { margin-left: auto; font-size: 12px; color: var(--text-muted); font-family: var(--mono); }
+.content { max-width: 900px; margin: 0 auto; padding: 32px; }
+h2 {
+  font-family: var(--serif); font-size: 1.4rem; font-weight: 400;
+  color: var(--accent); margin: 32px 0 12px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+h2:first-child { margin-top: 0; }
+h3 { font-size: 1rem; font-weight: 600; margin: 20px 0 8px; color: var(--text); }
+p { margin: 8px 0; color: var(--text-muted); }
+ul, ol { margin: 8px 0 8px 20px; color: var(--text-muted); }
+li { margin: 4px 0; }
+strong { color: var(--text); font-weight: 600; }
+code {
+  background: rgba(110,118,129,0.15); padding: 2px 6px; border-radius: 4px;
+  font-family: var(--mono); font-size: 0.9em; color: var(--orange);
+}
+pre {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  padding: 16px; overflow-x: auto; margin: 12px 0; font-family: var(--mono);
+  font-size: 13px; line-height: 1.5; color: var(--text-muted);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+th { text-align: left; padding: 8px 12px; border-bottom: 2px solid var(--border); color: var(--text-dim); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+.footer {
+  border-top: 1px solid var(--border); padding: 16px 32px; text-align: center;
+  font-size: 12px; color: var(--text-dim); font-family: var(--mono); margin-top: 48px;
+}
+@media (max-width: 640px) {
+  .header { padding: 12px 16px; }
+  .content { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="header">
+  <a href="../index.html" class="back">&larr; All Projects</a>
+  <span class="header-title">code-review-pipeline-test</span>
+  <span class="header-meta">Shared-Project-Helpers</span>
+</div>
+<div class="content">
+<h2>Project Summary</h2>
+<p>A test project for exercising the AI-powered code review pipeline defined in the <code>workflows</code> repo (Shared-Project-Helpers/workflows). Uses eight Claude-based agents to automate PR review, fixing, test generation, and merge gating via GitHub Actions. The project itself is a Kotlin Multiplatform (KMP) application scaffolded across all target platforms (Apple/SwiftUI, Android/Jetpack Compose, Windows/Compose Multiplatform, Web/Kotlin JS) to provide realistic code for the review pipeline to analyze.</p>
+<h2>Type & Tech Stack</h2>
+<ul>
+<li><strong>Type</strong>: Test project / CI/CD pipeline validation</li>
+<li><strong>Shared core</strong>: Kotlin Multiplatform (KMP)</li>
+<li><strong>Build</strong>: Gradle (Kotlin DSL)</li>
+<li><strong>Clients</strong>: Android (Jetpack Compose), Apple (SwiftUI via XcodeGen), Windows (Compose Multiplatform), Web (Kotlin/JS)</li>
+<li><strong>CI/CD</strong>: GitHub Actions with 8 Claude-powered agent workflows</li>
+<li><strong>Frameworks</strong>: Compose Multiplatform, Ktor, kotlinx.serialization</li>
+</ul>
+<h2>GitHub URL</h2>
+<p><code>git@github.com:Shared-Project-Helpers/code-review-pipeline-test.git</code></p>
+<h2>Directory Structure</h2>
+<pre><code>
+code-review-pipeline-test/
+├── .github/
+│   └── workflows/
+│       ├── anthropic-review.yml            # Anthropic code review
+│       ├── claude-combined-review.yml      # Combined perf/safety/test
+│       ├── claude-fix.yml                  # Fix agent
+│       ├── claude-issue-fix.yml            # Issue fix agent
+│       ├── claude-merge-check.yml          # Merge readiness check
+│       ├── claude-review.yml               # General code review
+│       └── claude-test-runner.yml          # Test runner
+├── clients/
+│   ├── android/                            # Android client
+│   ├── apple/                              # SwiftUI client (all Apple platforms)
+│   ├── web/                                # Kotlin/JS web client
+│   └── windows/                            # Compose Multiplatform desktop
+├── shared/                                 # KMP shared module
+├── kotlin-js-store/                        # Kotlin JS artifacts
+├── gradle/                                 # Gradle wrapper
+├── build.gradle.kts                        # Root build config
+├── CLAUDE.md                               # Project documentation
+├── README.md                               # Pipeline docs and agent roster
+├── settings.gradle.kts                     # Module includes
+├── gradlew / gradlew.bat                   # Gradle wrapper scripts
+└── .gitignore
+</code></pre>
+<h2>Key Files & Components</h2>
+<ul>
+<li><code>CLAUDE.md</code> -- Comprehensive documentation: purpose (pipeline test project), project structure, pipeline architecture with 8 agents, pipeline flow diagram, related repos, current status</li>
+<li><code>README.md</code> -- Agent pipeline documentation: reviewer agents (General, Performance, Safety, Test), fixer agents (Fix, Issue Fix), merge gate (Merge Checker), test runner (Test Runner), consumer setup guide</li>
+<li><code>build.gradle.kts</code> -- Root Gradle build for KMP project</li>
+<li><code>settings.gradle.kts</code> -- Module includes for shared and client subprojects</li>
+<li><code>.github/workflows/</code> -- 7 workflow files wiring up the review pipeline from Shared-Project-Helpers/workflows</li>
+<li><code>clients/</code> -- 4 platform clients providing realistic code for review pipeline testing</li>
+</ul>
+<h2>Claude Configuration</h2>
+<ul>
+<li><code>CLAUDE.md</code> -- Documents purpose, structure, 8-agent pipeline (General Reviewer, Performance Reviewer, Safety Reviewer, Test Reviewer, Fix Agent, Issue Fix Agent, Merge Checker, Test Runner), pipeline flow, related repos, current status</li>
+<li>No <code>.claude/</code> settings directory</li>
+</ul>
+<h2>Planning & Research Documents</h2>
+<ul>
+<li><code>CLAUDE.md</code> -- Includes current status section: "Pipeline wired up -- all platform clients and shared module are scaffolded. Next step: create intentionally imperfect PRs to test review/fix/merge cycle"</li>
+<li><code>README.md</code> -- Comprehensive agent pipeline reference</li>
+</ul>
+<h2>Git History & Current State</h2>
+<ul>
+<li><strong>Branch</strong>: feature/cost-optimization</li>
+<li><strong>Last commit</strong>: 2026-04-07 -- "Update dotfiles path reference to deprecated/dotfiles"</li>
+<li><strong>Working tree</strong>: Clean</li>
+<li><strong>Total commits</strong>: 15+ (viewed)</li>
+<li><strong>Recent activity</strong>: Cost optimization (Mar 2026) -- combined reviews, on-demand-only reviews, Anthropic reviewer addition, worktree standardization (Apr 2026)</li>
+<li><strong>Key evolution</strong>: Initial KMP scaffold, workflow wiring, switched to agent wrappers (#62), claude-code-action (#68), Anthropic reviewer (#70), cost optimization (#71)</li>
+</ul>
+<h2>Build & Test Commands</h2>
+<pre><code>
+# Build shared module
+./gradlew :shared:build
+
+# Build specific clients
+./gradlew :clients:android:assembleDebug
+./gradlew :clients:windows:run
+
+# Apple client
+cd clients/apple &amp;&amp; xcodegen generate
+open clients/apple/*.xcodeproj
+</code></pre>
+<h2>Notes</h2>
+<ul>
+<li>Owned by "Shared-Project-Helpers" GitHub org (same as the workflows repo)</li>
+<li>Currently on <code>feature/cost-optimization</code> branch (not main)</li>
+<li>Mirrors QualityTime's project structure (KMP multiplatform) to provide realistic test scenarios</li>
+<li>The pipeline is wired up but intentionally imperfect PRs for testing haven't been created yet</li>
+<li>Related repos: workflows (reusable workflows), QualityTime (similar structure), deprecated/dotfiles (pipeline architecture docs)</li>
+<li>Required secret: <code>ANTHROPIC_API_KEY</code> in repository settings</li>
+</ul>
+</div>
+<div class="footer">Generated 2026-04-07</div>
+</body>
+</html>

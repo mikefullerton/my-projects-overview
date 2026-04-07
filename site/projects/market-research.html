@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>market-research — My Projects Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d1117; --surface: #161b22; --surface-hover: #1c2333;
+  --border: #30363d; --border-accent: #484f58;
+  --text: #e6edf3; --text-muted: #8b949e; --text-dim: #6e7681;
+  --accent: #58a6ff; --accent-dim: rgba(88,166,255,0.12);
+  --green: #3fb950; --green-dim: rgba(63,185,80,0.12);
+  --yellow: #d29922; --red: #f85149;
+  --purple: #bc8cff; --orange: #f0883e;
+  --mono: 'DM Mono', monospace;
+  --serif: 'Instrument Serif', serif;
+  --sans: 'Manrope', -apple-system, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--text); font-family: var(--sans);
+  font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent-dim); color: var(--accent); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.grain {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; opacity: 0.03; z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.header {
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 16px 32px; display: flex; align-items: center; gap: 16px;
+}
+.back { color: var(--text-muted); font-size: 13px; padding: 4px 12px; border: 1px solid var(--border); border-radius: 6px; transition: border-color 0.15s; }
+.back:hover { border-color: var(--text-muted); text-decoration: none; }
+.header-title { font-size: 20px; font-weight: 600; }
+.header-meta { margin-left: auto; font-size: 12px; color: var(--text-muted); font-family: var(--mono); }
+.content { max-width: 900px; margin: 0 auto; padding: 32px; }
+h2 {
+  font-family: var(--serif); font-size: 1.4rem; font-weight: 400;
+  color: var(--accent); margin: 32px 0 12px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+h2:first-child { margin-top: 0; }
+h3 { font-size: 1rem; font-weight: 600; margin: 20px 0 8px; color: var(--text); }
+p { margin: 8px 0; color: var(--text-muted); }
+ul, ol { margin: 8px 0 8px 20px; color: var(--text-muted); }
+li { margin: 4px 0; }
+strong { color: var(--text); font-weight: 600; }
+code {
+  background: rgba(110,118,129,0.15); padding: 2px 6px; border-radius: 4px;
+  font-family: var(--mono); font-size: 0.9em; color: var(--orange);
+}
+pre {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  padding: 16px; overflow-x: auto; margin: 12px 0; font-family: var(--mono);
+  font-size: 13px; line-height: 1.5; color: var(--text-muted);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+th { text-align: left; padding: 8px 12px; border-bottom: 2px solid var(--border); color: var(--text-dim); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+.footer {
+  border-top: 1px solid var(--border); padding: 16px 32px; text-align: center;
+  font-size: 12px; color: var(--text-dim); font-family: var(--mono); margin-top: 48px;
+}
+@media (max-width: 640px) {
+  .header { padding: 12px 16px; }
+  .content { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="header">
+  <a href="../index.html" class="back">&larr; All Projects</a>
+  <span class="header-title">market-research</span>
+  <span class="header-meta">mikefullerton</span>
+</div>
+<div class="content">
+<h2>Project Summary</h2>
+<p>An AI-powered market research tool for evaluating indie software project ideas. Runs 5 sequential analysis agents per project (Market, Competition, Revenue, Feasibility, Progress), then a Synthesizer agent compares all projects with weighted scoring to produce a clear recommendation on which project to pursue first for the fastest path to revenue. Designed for solo indie developers with multiple project ideas who need objective, data-driven prioritization.</p>
+<h2>Type & Tech Stack</h2>
+<ul>
+<li><strong>Type</strong>: CLI tool / AI agent system</li>
+<li><strong>Language</strong>: Python 3.9+</li>
+<li><strong>AI</strong>: Anthropic SDK (Claude) with structured output via tool_use + Pydantic</li>
+<li><strong>Search</strong>: Tavily API (web search with file-based daily cache)</li>
+<li><strong>Validation</strong>: Pydantic v2 (schema validation for all inputs/outputs)</li>
+<li><strong>CLI</strong>: Rich (progress indicators and tables)</li>
+<li><strong>Config</strong>: python-dotenv, PyYAML</li>
+<li><strong>Build</strong>: setuptools (pyproject.toml)</li>
+<li><strong>Package</strong>: <code>market-research</code> CLI entry point</li>
+</ul>
+<h2>GitHub URL</h2>
+<p><code>git@github.com:mikefullerton/market-research.git</code></p>
+<h2>Directory Structure</h2>
+<pre><code>
+market-research/
+├── .claude/
+│   └── settings.local.json          # Permission allowlists (git operations)
+├── .env.example                      # API key template
+├── docs/
+│   ├── ARCHITECTURE.md              # System architecture
+│   ├── DESIGN_RATIONALE.md          # Design decisions
+│   ├── IMPLEMENTATION_LOG.md        # Implementation history
+│   └── ORIGINAL_SPEC.md            # Original specification
+├── projects/
+│   ├── _template.yaml              # Project definition template
+│   └── todo-app.yaml               # Example project definition
+├── reports/                         # Generated analysis reports (empty)
+├── src/
+│   └── market_research/            # Python package source
+├── pyproject.toml                   # Build config + dependencies
+└── README.md                        # Usage docs
+</code></pre>
+<h2>Key Files & Components</h2>
+<ul>
+<li><code>pyproject.toml</code> -- Dependencies: anthropic>=0.79.0, tavily-python>=0.7.21, pydantic>=2.0, pyyaml, rich, python-dotenv</li>
+<li><code>src/market_research/</code> -- Main package with CLI entry point (<code>cli:main</code>), 6 analysis agents</li>
+<li><code>projects/_template.yaml</code> -- YAML schema for defining project ideas to evaluate</li>
+<li><code>projects/todo-app.yaml</code> -- Example project definition</li>
+<li><code>docs/ARCHITECTURE.md</code> -- System architecture documentation</li>
+<li><code>docs/DESIGN_RATIONALE.md</code> -- Design decisions and rationale</li>
+<li><code>docs/ORIGINAL_SPEC.md</code> -- Original specification</li>
+</ul>
+<h2>Claude Configuration</h2>
+<ul>
+<li><code>.claude/settings.local.json</code> -- Permission allowlists for git init, checkout, remote, fetch, add, commit, push</li>
+<li>No CLAUDE.md or project-level rules</li>
+</ul>
+<h2>Planning & Research Documents</h2>
+<ul>
+<li><code>docs/ARCHITECTURE.md</code> -- System architecture</li>
+<li><code>docs/DESIGN_RATIONALE.md</code> -- Design decisions</li>
+<li><code>docs/IMPLEMENTATION_LOG.md</code> -- Implementation history</li>
+<li><code>docs/ORIGINAL_SPEC.md</code> -- Original project specification</li>
+</ul>
+<h2>Git History & Current State</h2>
+<ul>
+<li><strong>Branch</strong>: main</li>
+<li><strong>Last commit</strong>: 2026-04-06 -- "chore: standardize worktree directory to .claude/worktrees/"</li>
+<li><strong>Working tree</strong>: Clean</li>
+<li><strong>Total commits</strong>: 4</li>
+<li><strong>Recent activity</strong>: Initial build (Feb 2026), documentation added, worktree standardization (Apr 2026)</li>
+<li><strong>Key commits</strong>: Initial commit, market research agent system (#1), project documentation (#2)</li>
+</ul>
+<h2>Build & Test Commands</h2>
+<pre><code>
+# Setup
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -e .
+cp .env.example .env
+# Edit .env with ANTHROPIC_API_KEY and TAVILY_API_KEY
+
+# Usage
+market-research list                        # List defined projects
+market-research analyze                     # Analyze all projects
+market-research analyze --project todo-app  # Analyze single project
+market-research analyze --skip-cache        # Force fresh web searches
+</code></pre>
+<h2>Notes</h2>
+<ul>
+<li>Scoring weights: Feasibility (0.25), Revenue (0.20), Progress (0.20), Market (0.20), Competition (0.15)</li>
+<li>Cost: ~$0.12 per full 4-project run with Claude Sonnet; ~60 Tavily searches per run</li>
+<li>Tavily search cache prevents duplicate API calls on same-day re-runs</li>
+<li>Reports output to <code>reports/&lt;date&gt;/</code> with per-project, ranking, and executive summary reports</li>
+<li>Project is paused -- functional but not actively developed</li>
+</ul>
+</div>
+<div class="footer">Generated 2026-04-07</div>
+</body>
+</html>

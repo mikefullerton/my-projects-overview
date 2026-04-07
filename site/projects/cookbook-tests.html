@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cookbook-tests — My Projects Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d1117; --surface: #161b22; --surface-hover: #1c2333;
+  --border: #30363d; --border-accent: #484f58;
+  --text: #e6edf3; --text-muted: #8b949e; --text-dim: #6e7681;
+  --accent: #58a6ff; --accent-dim: rgba(88,166,255,0.12);
+  --green: #3fb950; --green-dim: rgba(63,185,80,0.12);
+  --yellow: #d29922; --red: #f85149;
+  --purple: #bc8cff; --orange: #f0883e;
+  --mono: 'DM Mono', monospace;
+  --serif: 'Instrument Serif', serif;
+  --sans: 'Manrope', -apple-system, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--text); font-family: var(--sans);
+  font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent-dim); color: var(--accent); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.grain {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; opacity: 0.03; z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.header {
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 16px 32px; display: flex; align-items: center; gap: 16px;
+}
+.back { color: var(--text-muted); font-size: 13px; padding: 4px 12px; border: 1px solid var(--border); border-radius: 6px; transition: border-color 0.15s; }
+.back:hover { border-color: var(--text-muted); text-decoration: none; }
+.header-title { font-size: 20px; font-weight: 600; }
+.header-meta { margin-left: auto; font-size: 12px; color: var(--text-muted); font-family: var(--mono); }
+.content { max-width: 900px; margin: 0 auto; padding: 32px; }
+h2 {
+  font-family: var(--serif); font-size: 1.4rem; font-weight: 400;
+  color: var(--accent); margin: 32px 0 12px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+h2:first-child { margin-top: 0; }
+h3 { font-size: 1rem; font-weight: 600; margin: 20px 0 8px; color: var(--text); }
+p { margin: 8px 0; color: var(--text-muted); }
+ul, ol { margin: 8px 0 8px 20px; color: var(--text-muted); }
+li { margin: 4px 0; }
+strong { color: var(--text); font-weight: 600; }
+code {
+  background: rgba(110,118,129,0.15); padding: 2px 6px; border-radius: 4px;
+  font-family: var(--mono); font-size: 0.9em; color: var(--orange);
+}
+pre {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+  padding: 16px; overflow-x: auto; margin: 12px 0; font-family: var(--mono);
+  font-size: 13px; line-height: 1.5; color: var(--text-muted);
+}
+pre code { background: none; padding: 0; color: inherit; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+th { text-align: left; padding: 8px 12px; border-bottom: 2px solid var(--border); color: var(--text-dim); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+.footer {
+  border-top: 1px solid var(--border); padding: 16px 32px; text-align: center;
+  font-size: 12px; color: var(--text-dim); font-family: var(--mono); margin-top: 48px;
+}
+@media (max-width: 640px) {
+  .header { padding: 12px 16px; }
+  .content { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="header">
+  <a href="../index.html" class="back">&larr; All Projects</a>
+  <span class="header-title">cookbook-tests</span>
+  <span class="header-meta">agentic-cookbook</span>
+</div>
+<div class="content">
+<h2>Project Summary</h2>
+<p>An external test harness for the Agentic Cookbook, using Vitest and TypeScript. Contains test specs for cookbook features (lint rules, optimization rules), test fixtures, a shared test runner/assertion library, and research findings (cc-plugin-eval evaluation). Separated from the cookbook repo to keep tests independent. Also includes research on the cc-plugin-eval framework and why it doesn't fit the cookbook's skill testing needs.</p>
+<h2>Type & Tech Stack</h2>
+<ul>
+<li><strong>Type</strong>: Test harness (external, for agentic-cookbook/cookbook)</li>
+<li><strong>Language</strong>: TypeScript (ES modules)</li>
+<li><strong>Test framework</strong>: Vitest 3.2.1</li>
+<li><strong>Runtime</strong>: Node.js</li>
+<li><strong>Build</strong>: npm (package.json, private)</li>
+</ul>
+<h2>GitHub URL</h2>
+<p><code>git@github.com:agentic-cookbook/cookbook-tests.git</code></p>
+<h2>Directory Structure</h2>
+<pre><code>
+cookbook-tests/
+├── fixtures/
+│   ├── lint-rule/                   # Lint rule test fixtures
+│   └── optimize-rules/             # Optimization rule fixtures
+├── lib/
+│   ├── assertions.ts               # Shared test assertions
+│   ├── fixtures.ts                 # Fixture loading utilities
+│   └── runner.ts                   # Test runner helpers
+├── research/
+│   └── cc-plugin-eval-findings.md  # cc-plugin-eval evaluation
+├── specs/
+│   ├── lint-rule.test.ts           # Lint rule tests
+│   └── optimize-rules.test.ts     # Optimization rule tests
+├── node_modules/                    # Dependencies (untracked)
+├── package.json                     # Project config (vitest dependency)
+├── package-lock.json               # Lock file (untracked)
+├── tsconfig.json                   # TypeScript config
+├── vitest.config.ts                # Vitest configuration
+└── .gitignore
+</code></pre>
+<h2>Key Files & Components</h2>
+<ul>
+<li><code>package.json</code> -- Name: "agentic-cookbook-test-harness", private, ES modules, Vitest 3.2.1, scripts: test, test:watch</li>
+<li><code>specs/lint-rule.test.ts</code> -- Tests for cookbook lint rule functionality</li>
+<li><code>specs/optimize-rules.test.ts</code> -- Tests for cookbook optimization rules</li>
+<li><code>lib/runner.ts</code> -- Shared test runner for executing cookbook skills</li>
+<li><code>lib/assertions.ts</code> -- Custom assertions for cookbook test validation</li>
+<li><code>lib/fixtures.ts</code> -- Fixture loading and management utilities</li>
+<li><code>fixtures/</code> -- Test fixture directories (lint-rule, optimize-rules)</li>
+<li><code>research/cc-plugin-eval-findings.md</code> -- Evaluation of cc-plugin-eval framework for cookbook testing</li>
+</ul>
+<h2>Claude Configuration</h2>
+<ul>
+<li>No CLAUDE.md or <code>.claude/</code> directory</li>
+<li>No project-level Claude configuration</li>
+</ul>
+<h2>Planning & Research Documents</h2>
+<ul>
+<li><code>research/cc-plugin-eval-findings.md</code> -- Evaluates the cc-plugin-eval framework (sjnims/cc-plugin-eval): a 4-stage evaluation framework for Claude Code marketplace plugins. Concludes it doesn't fit the cookbook's needs because it requires <code>.claude-plugin/plugin.json</code> manifest (cookbook uses project-local <code>.claude/skills/</code> instead) and only tests trigger activation, not functional correctness.</li>
+</ul>
+<h2>Git History & Current State</h2>
+<ul>
+<li><strong>Branch</strong>: main</li>
+<li><strong>Last commit</strong>: 2026-04-06 -- "chore: add .gitignore"</li>
+<li><strong>Working tree</strong>: 8 untracked items (fixtures/, lib/, node_modules/, package-lock.json, package.json, specs/, tsconfig.json, vitest.config.ts)</li>
+<li><strong>Total commits</strong>: 2</li>
+<li><strong>Recent activity</strong>: Initial research findings (Mar 2026), gitignore added (Apr 2026)</li>
+<li><strong>Note</strong>: Most source files are untracked -- only research and gitignore are committed</li>
+</ul>
+<h2>Build & Test Commands</h2>
+<pre><code>
+# Install dependencies
+npm install
+
+# Run tests
+npm test              # vitest run
+npm run test:watch    # vitest (watch mode)
+</code></pre>
+<h2>Notes</h2>
+<ul>
+<li>Owned by "agentic-cookbook" GitHub org</li>
+<li>Most source code is still untracked (only 2 commits: research findings and gitignore)</li>
+<li>The test harness is designed to run cookbook skills externally via a runner.ts wrapper</li>
+<li>cc-plugin-eval was evaluated and rejected because cookbook skills are project-local, not marketplace plugins</li>
+<li>Very early stage -- the test infrastructure exists locally but hasn't been fully committed</li>
+</ul>
+</div>
+<div class="footer">Generated 2026-04-07</div>
+</body>
+</html>
