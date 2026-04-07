@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dev Team — My Projects Overview</title>
+<title>Dev Team - Project Overview — My Projects Overview</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -79,98 +79,222 @@ td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--tex
 <div class="grain"></div>
 <div class="header">
   <a href="../index.html" class="back">&larr; All Projects</a>
-  <span class="header-title">Dev Team</span>
+  <span class="header-title">Dev Team - Project Overview</span>
   <span class="header-meta">agentic-cookbook</span>
 </div>
 <div class="content">
 <h2>Project Summary</h2>
-<p>dev-team is a Claude Code plugin providing a multi-agent platform for product discovery, analysis, and project building. Distributed via the agentic-cookbook marketplace, it combines structured specialist expertise with flexible interview workflows to help users scope, plan, and build software through distributed AI team collaboration.</p>
+<p>The Agentic Cookbook Dev Team is a Claude Code plugin providing a multi-agent platform for product discovery, analysis, and project building. Distributed via the agentic-cookbook marketplace, it combines structured specialist expertise with flexible interview workflows to help users scope, plan, and build software through distributed AI team collaboration. Not yet ready for general use.</p>
 <h2>Type & Tech Stack</h2>
 <ul>
 <li><strong>Project Type:</strong> Claude Code Plugin (multi-agent system orchestration)</li>
-<li><strong>Python 3.10+</strong> — Core logic: arbitrator, project-storage, scripts, tests</li>
-<li><strong>Markdown</strong> — Agent definitions, specialist manifests, specialty-teams, workflows</li>
-<li><strong>HTML/JavaScript</strong> — Web dashboard service</li>
-<li><strong>SQLite 3</strong> — Shared database backend (v2 in progress)</li>
-<li><strong>Testing:</strong> pytest</li>
+<li><strong>Python 3.10+</strong> -- Core logic: arbitrator, project-storage, scripts, observers, tests</li>
+<li><strong>Markdown</strong> -- Agent definitions, specialist manifests, specialty-teams, workflows, skills</li>
+<li><strong>HTML/JavaScript</strong> -- Web dashboard service, GitHub Pages site</li>
+<li><strong>SQLite 3</strong> -- Shared database backend (v2 storage-provider unification in progress)</li>
+<li><strong>Testing:</strong> pytest (122+ contract tests, deterministic test runner)</li>
 </ul>
 <h2>GitHub URL</h2>
 <p><code>git@github.com:agentic-cookbook/dev-team.git</code></p>
+<p>https://github.com/agentic-cookbook/dev-team</p>
 <h2>Directory Structure</h2>
-<pre><code>dev-team/
+<pre><code>
+dev-team/
 ├── .claude/
 │   ├── CLAUDE.md                      # Local workspace guide
-│   ├── rules/                         # 5 rules: always-commit-and-push, bump-versions, db-schema-design, optimize-subagent-dispatch, use-project-directories
 │   ├── settings.json                  # SubagentStop hook (observer dispatch)
+│   ├── rules/                         # 5 rules
+│   │   ├── always-commit-and-push.md  # Non-negotiable: commit+push after every change
+│   │   ├── bump-versions.md           # Increment version on skill/agent modification
+│   │   ├── db-schema-design.md        # No blobs, no computed values, meaningful names
+│   │   ├── optimize-subagent-dispatch.md  # Model selection, parallelism, progressive disclosure
+│   │   └── use-project-directories.md # Plugin in plugins/dev-team/, dev tooling at root
 │   └── skills/                        # create-specialist, lint-specialist
-├── plugins/dev-team/                  # Main plugin (self-contained)
-│   ├── .claude-plugin/plugin.json     # v0.4.0
+├── plugins/dev-team/                  # Self-contained plugin
 │   ├── agents/                        # 20 agent definitions
+│   │   ├── artifact-reviewer.md, build-runner.md, code-comparator.md
+│   │   ├── code-generator.md, codebase-scanner.md, project-assembler.md
+│   │   ├── project-scaffolder.md, recipe-reviewer.md, recipe-writer.md
+│   │   ├── scope-matcher.md, smoke-tester.md, specialist-aligner.md
+│   │   ├── specialist-analyst.md, specialist-code-pass.md
+│   │   ├── specialist-interviewer.md, transcript-analyzer.md
+│   │   ├── consulting-team-worker.md, consulting-team-verifier.md
+│   │   ├── specialty-team-worker.md, specialty-team-verifier.md
+│   │   └── _example.md
 │   ├── specialists/                   # 20 specialists (13 domain + 6 platform + 1 PM)
-│   ├── specialty-teams/               # 232 specialty-team files across 20 categories
+│   │   ├── (domain) accessibility, claude-code, code-quality, data-persistence,
+│   │   │   development-process, devops-observability, localization-i18n,
+│   │   │   networking-api, reliability, security, software-architecture,
+│   │   │   testing-qa, ui-ux-design
+│   │   ├── (platform) platform-android, platform-database, platform-ios-apple,
+│   │   │   platform-web-backend, platform-web-frontend, platform-windows
+│   │   └── project-manager
+│   ├── specialty-teams/               # 21 categories of specialty-team files
+│   │   ├── accessibility/, claude-code/, code-quality/, data-persistence/
+│   │   ├── development-process/, devops-observability/, localization-i18n/
+│   │   ├── networking-api/, platform-android/, platform-database/
+│   │   ├── platform-ios-apple/, platform-web-backend/, platform-web-frontend/
+│   │   ├── platform-windows/, project-management/, reliability/
+│   │   ├── security/, software-architecture/, testing-qa/, ui-ux-design/
+│   │   └── _example/
 │   ├── consulting-teams/              # Cross-cutting verification teams
+│   │   ├── _example/
+│   │   └── platform-database/
 │   ├── skills/dev-team/
-│   │   ├── SKILL.md                   # v0.7.0 — Main skill router
-│   │   └── workflows/                 # 8 workflows: interview, create-recipe-from-code, generate, create-code-from-recipe, lint, align-specialists, compare-code, view-recipe
+│   │   ├── SKILL.md                   # v0.7.0 -- Main skill router
+│   │   └── workflows/                 # 8 workflows
 │   ├── scripts/
 │   │   ├── arbitrator.py              # Communication conduit (backend-swappable)
-│   │   ├── arbitrator/                # 13 resource scripts (markdown backend)
+│   │   ├── arbitrator/                # Markdown backend resource scripts
 │   │   ├── project_storage.py         # Project management storage
-│   │   ├── project-storage/markdown/  # 8 project resource scripts
+│   │   ├── project-storage/markdown/  # Project resource scripts
+│   │   ├── storage-provider/markdown/ # Unified storage provider
 │   │   ├── db/                        # SQLite database API
 │   │   └── observers/                 # dispatch.py, stenographer.py, oslog.py
 │   ├── services/dashboard/            # Web dashboard
-│   ├── docs/                          # specialist-spec.md, specialist-guide.md, research/
+│   ├── docs/                          # specialist-spec.md, specialist-guide.md
 │   └── tests/
 ├── docs/
-│   ├── architecture.md                # CRITICAL — Single source of truth for system design
-│   ├── planning/                      # 17 design/implementation docs
-│   └── research/                      # Agent patterns, database research (8 docs)
-├── tests/                             # 10 test areas, 122+ contract tests
+│   ├── architecture.md                # Single source of truth for system design
+│   ├── planning/                      # 17+ design/implementation docs
+│   │   ├── design-spec.md, todo.md, cookbook-requests.md
+│   │   ├── 2026-04-02-shared-database-design.md
+│   │   ├── 2026-04-03-system-architecture-v2.md
+│   │   ├── 2026-04-04-specialty-team-extraction-plan.md
+│   │   ├── unified-test-strategy-design.md, unified-test-strategy-plan.md
+│   │   └── (12 more planning docs)
+│   └── research/                      # 4+ research docs
+│       ├── agent-patterns.md, conversational-patterns.md
+│       ├── persona-design.md, database/
+├── tests/
 │   ├── run_tests.py                   # Deterministic test runner
+│   ├── pyproject.toml                 # pytest config
 │   ├── arbitrator/                    # 58 contract tests
 │   ├── project-storage/               # 64 contract tests
-│   └── harness/                       # Test utilities &amp; fixtures
-├── planning/                          # todo.md, cookbook-requests.md
-└── pyproject.toml</code></pre>
-<h2>Key Components</h2>
-<p><strong>Multi-agent Pipeline:</strong> Team-lead orchestrates specialists → specialty-teams (worker-verifier loops, max 3 retries) → consulting-teams (cross-cutting review) → specialist-persona (voice translation)</p>
-<p><strong>20 Specialists:</strong> accessibility, claude-code, code-quality, data-persistence, development-process, devops-observability, localization-i18n, networking-api, platform-android, platform-database, platform-ios-apple, platform-web-backend, platform-web-frontend, platform-windows, project-manager, reliability, security, software-architecture, testing-qa, ui-ux-design</p>
-<p><strong>Pluggable Backends:</strong> Arbitrator and project-storage APIs with swappable backends (currently markdown, database in progress)</p>
-<p><strong>Observer System:</strong> SubagentStop hook auto-discovers observer modules for session logging</p>
-<h2>Claude Configuration</h2>
+│   ├── agents/, specialists/, specialty-teams/, consulting-teams/
+│   ├── skills/, session/, dashboard/, observers/
+│   ├── harness/, fixtures/, personas/
+│   └── test-design.md, simulated-user.md
+├── site/                              # GitHub Pages website assets
+│   └── og.png
+├── index.html                         # GitHub Pages main page (at root for GH Pages)
+├── CNAME                              # Custom domain for GitHub Pages
+├── README.md
+└── .gitignore
+</code></pre>
+<h2>Key Files & Components</h2>
+<h3>Multi-Agent Pipeline</h3>
+<pre><code>
+User invokes /dev-team &lt;command&gt;
+  -&gt; Skill router (SKILL.md) loads config, inits DB, routes to workflow
+    -&gt; Team-lead runs the workflow, talks to user
+      -&gt; Team-lead dispatches specialists via arbitrator
+        -&gt; Specialty-teams run (worker-verifier loop, max 3 retries)
+        -&gt; Consulting-teams review (cross-cutting concerns)
+        [Observer hook fires on each subagent completion]
+        -&gt; Specialist-persona writes interpretations
+      -&gt; Specialist returns result via arbitrator
+    -&gt; Team-lead aggregates results, presents report
+</code></pre>
+<h3>Key Terminology</h3>
 <ul>
-<li><strong>Rules:</strong> Always commit-and-push (non-negotiable), bump versions, DB schema design principles, optimize subagent dispatch, use project directories</li>
-<li><strong>Hook:</strong> SubagentStop → <code>python3 observers/dispatch.py</code> (stenographer + oslog)</li>
-<li><strong>Skills:</strong> create-specialist, lint-specialist</li>
+<li><strong>Team-Lead</strong>: Runs a workflow, has a persona, talks to the user (5 types: interview, analysis, review, build, audit)</li>
+<li><strong>Specialist</strong>: Self-enclosed domain expert with cookbook sources and specialty-team manifest (20 total)</li>
+<li><strong>Specialty-Team</strong>: Worker-verifier pair focused on one cookbook artifact</li>
+<li><strong>Consulting-Team</strong>: Worker-verifier pair for cross-cutting concern review</li>
+<li><strong>Observer</strong>: Shell hook + Python script capturing subagent activity via SubagentStop</li>
+<li><strong>Session</strong>: A playbook being executed with tracked state</li>
+</ul>
+<h3>20 Specialists</h3>
+<p><strong>Domain (13):</strong> accessibility, claude-code, code-quality, data-persistence, development-process, devops-observability, localization-i18n, networking-api, reliability, security, software-architecture, testing-qa, ui-ux-design</p>
+<p><strong>Platform (6):</strong> platform-android, platform-database, platform-ios-apple, platform-web-backend, platform-web-frontend, platform-windows</p>
+<p><strong>Management (1):</strong> project-manager</p>
+<h3>8 Skill Workflows</h3>
+<p>interview, create-recipe-from-code, generate, create-code-from-recipe, lint, align-specialists, compare-code, view-recipe</p>
+<h3>Pluggable Storage Backends</h3>
+<p>Arbitrator and project-storage APIs with swappable backends. Currently markdown-based. Storage-provider unification spec added (Apr 7) to consolidate arbitrator + project-storage into a single provider interface.</p>
+<h2>Claude Configuration</h2>
+<h3>Rules (5)</h3>
+<ol>
+<li><strong>always-commit-and-push.md</strong>: Non-negotiable. Commit + push after every change. No batching. No asking.</li>
+<li><strong>bump-versions.md</strong>: Increment version on skill/agent modification (patch/minor/major).</li>
+<li><strong>db-schema-design.md</strong>: No blobs, no computed values, no unstructured lists. Columns must be indexable. Use project vocabulary.</li>
+<li><strong>optimize-subagent-dispatch.md</strong>: Mechanical tasks use fast model. Judgment tasks use full model. Parallelize independent tasks.</li>
+<li><strong>use-project-directories.md</strong>: Plugin in <code>plugins/dev-team/</code>, dev tooling at repo root.</li>
+</ol>
+<h3>Hook (settings.json)</h3>
+<p><code>SubagentStop</code> -> <code>python3 plugins/dev-team/scripts/observers/dispatch.py</code> (auto-discovers observer modules: stenographer, oslog)</p>
+<h3>Skills (2 dev skills)</h3>
+<ul>
+<li><strong>create-specialist</strong>: Scaffold new specialist definitions</li>
+<li><strong>lint-specialist</strong>: Validate specialist files against spec</li>
 </ul>
 <h2>Planning & Research Documents</h2>
+<h3>docs/architecture.md</h3>
+<p>Single source of truth for system design. Read first. Covers terminology, pipeline flow, components, file map, configuration.</p>
+<h3>docs/planning/ (17+ docs)</h3>
 <ul>
-<li><strong>architecture.md</strong> — Single source of truth. Read first.</li>
-<li><strong>17 planning docs</strong> covering: compare-code, lint migration, performance optimization, shared database, single router, specialty-team extraction, unified test strategy, Ralph Loop analysis</li>
-<li><strong>Database research:</strong> 8 docs on schema design, sync strategies, performance, operations</li>
-<li><strong>Blocked:</strong> DB schema finalization, specialist script design, database arbitrator backend</li>
+<li><strong>design-spec.md</strong>: Core system design</li>
+<li><strong>todo.md</strong>: Current task tracking</li>
+<li><strong>2026-04-07 storage-provider unification</strong>: Consolidate arbitrator + project-storage into single backend</li>
+<li><strong>2026-04-03 system-architecture-v2</strong>: Next-gen architecture design</li>
+<li><strong>2026-04-02 shared-database-design/plan</strong>: SQLite backend for sessions</li>
+<li><strong>2026-04-04 specialty-team-extraction-plan</strong>: Refactoring specialty-teams</li>
+<li><strong>unified-test-strategy</strong>: Design + implementation plan for test coverage</li>
+<li><strong>build-history.md</strong>: Record of build changes</li>
+</ul>
+<h3>docs/research/</h3>
+<ul>
+<li>agent-patterns.md, conversational-patterns.md, persona-design.md, database/ research</li>
 </ul>
 <h2>Git History & Current State</h2>
+<p><strong>Branch:</strong> <code>main</code></p>
+<p><strong>Working Tree:</strong> 2 deleted files (rules/.DS_Store, rules/.gitkeep)</p>
+<p><strong>Recent Commits (all 2026-04-07):</strong></p>
+<pre><code>
+e04a6dc Add storage-provider unification and data model spec
+f8d88f7 Move pyproject.toml into tests/ to keep repo root clean
+6455e18 Move website assets to /site, keep CNAME and index.html at root for GH Pages
+e19f7e9 Move planning docs into docs/planning, remove /planning
+4fe827c Remove tracked .DS_Store file
+</code></pre>
+<p><strong>Key Recent Changes:</strong></p>
 <ul>
-<li><strong>Branch:</strong> main (up to date with origin)</li>
-<li><strong>Working tree:</strong> Clean (3 untracked test directories)</li>
-<li><strong>Recent (2026-04-06):</strong> Deterministic test runner, pytest migration, test coverage for all areas</li>
-<li><strong>Skill version:</strong> 0.7.0, Plugin version: 0.4.0</li>
+<li>Storage-provider unification spec added (Apr 7)</li>
+<li>pyproject.toml moved into tests/ (Apr 7)</li>
+<li>Website assets moved to /site (Apr 7)</li>
+<li>Planning docs consolidated into docs/planning/ (Apr 7)</li>
+<li>Deterministic test runner added, all tests migrated from Vitest to pytest (Apr 6)</li>
+<li>Skill version: 0.7.0, Plugin version: 0.4.0</li>
 </ul>
 <h2>Build & Test Commands</h2>
-<pre><code>python3 tests/run_tests.py           # Run all tests (deterministic order)
+<pre><code>
+python3 tests/run_tests.py           # Run all tests (deterministic order)
 pytest tests/ -q                     # Run all pytest tests
-pytest tests/arbitrator/ -q          # Specific test area
-/dev-team interview                  # Launch interview workflow</code></pre>
-<p>No build step — plugin distributed as-is via marketplace.</p>
+pytest tests/arbitrator/ -q          # Specific test area (58 contract tests)
+pytest tests/project-storage/ -q     # Storage tests (64 contract tests)
+/dev-team interview                  # Launch interview workflow
+</code></pre>
+<p>No build step -- plugin distributed as-is via marketplace.</p>
 <h2>Notes</h2>
-<ul>
-<li>Three-repo model: agentic-cookbook (principles), dev-team (plugin), workspace (user data)</li>
-<li>232 specialty-teams across 20 categories + consulting-teams for cross-cutting concerns</li>
-<li>Commit discipline: must commit and push immediately after every change (rule-enforced)</li>
-<li>Active development, not yet ready for general use</li>
-</ul>
+<ol>
+<li><strong>Three-repo model</strong>: agentic-cookbook (principles/guidelines), dev-team (plugin), workspace repo (per-user data: profiles, transcripts, analyses).</li>
+</ol>
+<ol>
+<li><strong>Specialty-teams</strong>: 21 categories across 20 specialists + consulting-teams for cross-cutting concerns. Worker-verifier loop with max 3 retries before escalation.</li>
+</ol>
+<ol>
+<li><strong>Observer system</strong>: SubagentStop hook auto-discovers observer modules (stenographer writes JSONL session log, oslog writes to macOS system log).</li>
+</ol>
+<ol>
+<li><strong>Active development</strong>: Storage-provider unification in progress. Tests migrated to pytest. Not ready for general use.</li>
+</ol>
+<ol>
+<li><strong>GitHub Pages</strong>: Website served from root <code>index.html</code> + <code>site/</code> directory with CNAME for custom domain.</li>
+</ol>
+<ol>
+<li><strong>Commit discipline</strong>: Must commit and push immediately after every change. Rule-enforced, non-negotiable.</li>
+</ol>
 </div>
 <div class="footer">Generated 2026-04-07</div>
 </body>

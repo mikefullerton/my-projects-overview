@@ -219,24 +219,20 @@ Project uses **allow-list permissions** in settings.json:
 
 ## Git History & Current State
 
-### Recent Activity (Last 30 Commits)
+### Recent Activity (Last 15 Commits)
 
 Latest commits show continuous feature development on roadmap planning and implementation systems:
+- `bf7eac0` (2026-04-07) fix: confine test harness to ~/projects/tests/ directory
 - `a9f9c8f` (2026-04-06) docs: update CLAUDE.md, README, and docs index
 - `2b98be2` (2026-04-06) chore: standardize worktree directory to .claude/worktrees/
 - `4e19c1e` (2026-03-30) chore: install agentic cookbook (rule, manifest, preferences)
 - `946ae74` (2026-03-30) Merge pull request #51 from mikefullerton/feature/progress-format
 - `c712498` (2026-03-30) feat(implement-roadmap): standardize progress output format
-- `dc658d7` (2026-03-30) chore: init progress format branch
-- `0fb3e31` (2026-03-27) Merge pull request #49 from mikefullerton/feature/idempotent-resume
+- `ff5a96b` (2026-03-30) feat(template): add optional conformance test vectors section
 - `c5325d0` (2026-03-25) feat(coordinator): add resume command for interrupted implementations
-- `4ccdf40` (2026-03-23) Merge pull request #48 from mikefullerton/feature/guideline-compliance-review
 - `d86b428` (2026-03-23) feat(implement-step-agent): add guideline compliance check to final review
-- `cd437c0` (2026-03-23) Merge pull request #47 from mikefullerton/feature/design-decisions
 - `e0f9fd3` (2026-03-21) feat(implement-step-agent): add design decision audit trail
-- `b5784c7` (2026-03-18) Merge pull request #46 from mikefullerton/feature/verification-summary
 - `b29552e` (2026-03-18) feat(implement-step-agent): add verification summary PR comment
-- `ffd11bc` (2026-03-17) Merge pull request #45 from mikefullerton/feature/plan-deviation
 - `e606755` (2026-03-17) feat(implement-step-agent): add plan deviation handling
 
 **Pattern:** Feature development follows consistent branching strategy (`feature/*` naming), with PRs merged to main on completion.
@@ -245,21 +241,9 @@ Latest commits show continuous feature development on roadmap planning and imple
 
 **Branch:** main
 
-**Status:** 1 commit ahead of origin/main (unpushed)
+**Status:** Clean working tree, up to date with origin/main
 
-**Working Directory:** Clean staged state with uncommitted changes in test files and migration scripts:
-- `scripts/migrate-roadmaps.py` — modified (data migration script)
-- `tests/integration/conftest.py` — modified (test configuration)
-- `tests/integration/cleanup/test_definition.py` — modified
-- `tests/integration/error_conditions/test_definition.py` — modified
-- `tests/integration/git_workflow/test_definition.py` — modified
-- `tests/integration/happy_path/test_definition.py` — modified
-- `tests/integration/planning/conftest.py` — modified
-- `tests/integration/planning/test_definition.py` — modified
-- `tests/integration/step_ordering/test_definition.py` — modified
-- `tests/integration/helpers.py` — modified
-
-**Untracked:** `misc test files?/` directory (likely test artifacts)
+**Working Directory:** No uncommitted changes
 
 ## Build & Test Commands
 

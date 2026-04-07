@@ -1,302 +1,234 @@
-# Hairball — Project Overview
+# Hairball - Project Overview
 
 ## Project Summary
 
-Hairball is a native macOS menu bar application that manages window-level task contexts. It allows developers to group arbitrary windows (not apps) into named task contexts representing parallel workstreams (e.g., "iOS app" = specific Xcode project + terminal + browser), switch between contexts instantly, and persist window arrangements across app and system restarts using only public macOS Accessibility APIs.
+Hairball is a native macOS menu bar application that manages window-level task contexts. It allows developers to group arbitrary windows (not apps) into named task contexts representing parallel workstreams (e.g., "iOS app" = specific Xcode project + terminal + browser), switch between contexts instantly via off-screen parking, and persist window arrangements across app and system restarts using only public macOS Accessibility APIs. No SIP changes required.
 
 ## Type & Tech Stack
 
-**Project Type:** macOS Desktop Application (Menu Bar App)  
-**Target OS:** macOS 14+ (Sonoma and later)  
+**Project Type:** macOS Desktop Application (Menu Bar App)
+**Target OS:** macOS 14+ (Sonoma and later)
 **Architecture:** Apple Silicon native (arm64)
 
 **Technology Stack:**
 - **Language:** Swift 5.9+
-- **UI Framework:** SwiftUI (MenuBarExtra, Settings scenes)
+- **UI Framework:** SwiftUI (MenuBarExtra, Settings scenes, Window scenes)
 - **Window Management:** AXUIElement & Accessibility APIs, CGWindowListCopyWindowInfo
 - **App Lifecycle:** NSWorkspace notifications
-- **Global Hotkeys:** KeyboardShortcuts library (Sindre Sorhus 2.4.0)
-- **Build System:** Swift Package Manager + Xcode 16.0
-- **State Persistence:** JSON files + Codable
-- **Code Signing:** Automatic, Development Team K2NA732JAX
+- **Global Hotkeys:** KeyboardShortcuts library (Sindre Sorhus 2.x)
+- **Build System:** Swift Package Manager + Xcode (xcodegen for project config)
+- **State Persistence:** JSON files + Codable in `~/.config/hairball/`
+- **Logging:** os.log (macOS unified logging)
 
 **Key Dependencies:**
-- `KeyboardShortcuts` (https://github.com/sindresorhus/KeyboardShortcuts @ 2.4.0) — user-configurable global keyboard shortcuts
+- `KeyboardShortcuts` (https://github.com/sindresorhus/KeyboardShortcuts from: 2.0.0) -- user-configurable global keyboard shortcuts
 
 ## GitHub URL
 
-`git@github.com:mikefullerton/Hairball.git`  
+`git@github.com:mikefullerton/Hairball.git`
 https://github.com/mikefullerton/Hairball
 
 ## Directory Structure
 
 ```
 Hairball/
-├── .build/                                    # Swift build artifacts
-├── .git/                                      # Git repository
-├── .gitignore                                 # Ignores .claude/worktrees/, .build/, etc.
-├── .swiftpm/                                  # Swift Package Manager config
-├── Hairball.xcodeproj/                        # Xcode project (generated via xcodegen)
-├── Sources/
-│   └── Hairball/
-│       ├── App/                               # Application entry point & UI scenes
-│       │   ├── HairballApp.swift              # @main app struct with MenuBarExtra
-│       │   ├── AppDelegate.swift              # Accessibility permission check
-│       │   ├── AppState.swift                 # Shared application state container
-│       │   ├── MenuBarView.swift              # Dropdown menu bar UI
-│       │   ├── SettingsView.swift             # Settings window (tabbed)
-│       │   ├── ReconcileView.swift            # Post-reboot window re-matching UI
-│       │   ├── ContextVisualizationView.swift # Visual overview of contexts
-│       │   ├── ContextPickerView.swift        # Floating context picker panel
-│       │   ├── WindowExplorerView.swift       # View all windows across contexts
-│       │   ├── WorkGroupsView.swift           # Manage work groups (new feature)
-│       │   ├── DiscoveryView.swift            # Discovery/tutorial window
-│       │   ├── HelpView.swift                 # Help/documentation window
-│       │   └── HeuristicsSettingsTab.swift    # Custom heuristic rules UI
-│       ├── Core/
-│       │   ├── ContextManager.swift           # Brain: manages contexts, switching, parking
-│       │   ├── ContextManagerError.swift      # Error types for context operations
-│       │   └── Log.swift                      # Centralized logging (os.log)
-│       ├── Models/
-│       │   ├── TaskContext.swift              # Context model: name, color, windows, lastFocused
-│       │   ├── WindowSnapshot.swift           # Persisted window state & fingerprint
-│       │   ├── WindowFingerprint.swift        # Window identity: app, title pattern, display
-│       │   ├── MatchStrategy.swift            # Enum: how to match windows (exact, substring, etc.)
-│       │   └── GlobalState.swift              # Global persistent state model
-│       ├── Window/
-│       │   ├── WindowManager.swift            # Enumerate, move, resize, focus windows
-│       │   ├── WindowInfo.swift               # Current window struct (app, title, frame, id)
-│       │   ├── WindowObserver.swift           # Observe AX notifications & NSWorkspace events
-│       │   ├── AXWindowHelper.swift           # AXUIElement utility functions
-│       │   ├── WindowManipulating.swift       # Protocol for window manipulation
-│       │   └── WindowManipulationError.swift  # Error types for window operations
-│       ├── Fingerprint/
-│       │   ├── WindowMatcher.swift            # Score windows against fingerprints
-│       │   ├── AppHeuristic.swift             # Protocol for per-app matching heuristics
-│       │   ├── HeuristicRegistry.swift        # Registry of built-in heuristics
-│       │   ├── XcodeHeuristic.swift           # Extract project name from Xcode titles
-│       │   ├── WarpHeuristic.swift            # Extract directory/branch from Warp
-│       │   ├── BraveHeuristic.swift           # Extract page title from Brave
-│       │   ├── VSCodeHeuristic.swift          # Extract workspace from VS Code
-│       │   ├── TerminalHeuristic.swift        # Extract directory from Terminal
-│       │   ├── CustomHeuristic.swift          # User-defined heuristic model
-│       │   ├── CustomHeuristicRule.swift      # Rule structure for custom heuristics
-│       │   └── CustomHeuristicStore.swift     # Persist/load custom heuristic rules
-│       ├── Shortcuts/
-│       │   ├── ShortcutManager.swift          # Manages global keyboard shortcuts
-│       │   └── ShortcutNames.swift            # Shortcut identifier constants
-│       └── Persistence/
-│           └── StateStore.swift               # Read/write JSON to ~/.config/hairball/
-├── Tests/
-│   └── HairballTests/                         # Unit tests (Swift Testing framework)
+├── Sources/Hairball/
+│   ├── App/                          # Application entry point & all UI views
+│   │   ├── HairballApp.swift         # @main app struct with MenuBarExtra
+│   │   ├── AppDelegate.swift         # Accessibility permission check
+│   │   ├── AppState.swift            # Centralized application state (ObservableObject)
+│   │   ├── MenuBarView.swift         # Dropdown menu bar UI
+│   │   ├── SettingsView.swift        # Settings window (tabbed: Contexts, Shortcuts, General)
+│   │   ├── ReconcileView.swift       # Post-reboot window re-matching UI
+│   │   ├── ContextVisualizationView.swift  # Visual grid of contexts and window layouts
+│   │   ├── ContextPickerView.swift   # Floating search popup (ctrl+opt+Space)
+│   │   ├── WindowExplorerView.swift  # View all windows across contexts
+│   │   ├── WorkGroupsView.swift      # Work groups management (new feature)
+│   │   ├── DiscoveryView.swift       # Discovery/tutorial window
+│   │   ├── HelpView.swift            # Help/documentation window
+│   │   └── HeuristicsSettingsTab.swift  # Custom heuristic rules UI
+│   ├── Core/
+│   │   ├── ContextManager.swift      # Brain: context CRUD, switching, parking/restore
+│   │   ├── ContextManagerError.swift # Error types
+│   │   └── Log.swift                 # Centralized os.log logging
+│   ├── Models/
+│   │   ├── TaskContext.swift          # Context: name, color, windows, lastFocused
+│   │   ├── WindowSnapshot.swift       # Persisted window state & fingerprint
+│   │   ├── WindowFingerprint.swift    # Window identity: app, titlePattern, display
+│   │   ├── MatchStrategy.swift        # Enum: appAndTitleExact, appAndTitleSubstring, appOnly
+│   │   └── GlobalState.swift          # Global persistent state model
+│   ├── Window/
+│   │   ├── WindowManager.swift        # AXUIElement wrapper: enumerate, move, resize, focus
+│   │   ├── WindowInfo.swift           # Current window struct
+│   │   ├── WindowObserver.swift       # AX notifications & NSWorkspace events
+│   │   ├── AXWindowHelper.swift       # AXUIElement utilities
+│   │   ├── WindowManipulating.swift   # Protocol for testability
+│   │   └── WindowManipulationError.swift
+│   ├── Fingerprint/
+│   │   ├── WindowMatcher.swift        # Score windows against fingerprints
+│   │   ├── AppHeuristic.swift         # Protocol for per-app matching
+│   │   ├── HeuristicRegistry.swift    # Registry of built-in + custom heuristics
+│   │   ├── XcodeHeuristic.swift       # Extract project name from Xcode titles
+│   │   ├── WarpHeuristic.swift        # Extract directory/branch from Warp
+│   │   ├── BraveHeuristic.swift       # Extract page title from Brave
+│   │   ├── VSCodeHeuristic.swift      # Extract workspace from VS Code
+│   │   ├── TerminalHeuristic.swift    # Extract directory from Terminal
+│   │   ├── CustomHeuristic.swift      # User-defined heuristic model
+│   │   ├── CustomHeuristicRule.swift  # Rule structure (substring/regex)
+│   │   └── CustomHeuristicStore.swift # Persist/load custom rules
+│   ├── Shortcuts/
+│   │   ├── ShortcutManager.swift      # Global keyboard shortcut registration
+│   │   └── ShortcutNames.swift        # Shortcut identifier constants
+│   └── Persistence/
+│       └── StateStore.swift           # JSON read/write to ~/.config/hairball/
+├── Tests/HairballTests/               # 16 unit test files
+│   ├── ContextManagerTests.swift, ContextPickerTests.swift
+│   ├── CustomHeuristicsTests.swift, DataModelTests.swift
+│   ├── HairballTests.swift, KeyboardShortcutTests.swift
+│   ├── MenuBarUITests.swift, ReconcileUITests.swift
+│   ├── SettingsTests.swift, StateStoreTests.swift
+│   ├── WindowFingerprintTests.swift, WindowInfoTests.swift
+│   ├── WindowManagerTests.swift, WindowManipulationTests.swift
+│   ├── WindowObservationTests.swift, WindowReMatchingTests.swift
 ├── Roadmaps/
-│   └── HairballV1-Roadmap.md                  # Feature roadmap with acceptance criteria
-├── Package.swift                              # Swift package manifest
-├── Package.resolved                           # Locked dependency versions
-├── project.yml                                # Xcodegen project config
-├── Info.plist                                 # Bundle configuration
-├── CLAUDE.md                                  # Development notes & architecture
-├── PLAN.md                                    # Detailed implementation design document
-└── GITIGNORE                                  # Excludes .build/, xcuserdata/, .claude/worktrees/
+│   └── HairballV1-Roadmap.md          # 15-step roadmap, all steps complete
+├── Hairball.xcodeproj/                # Xcode project
+├── Package.swift                      # Swift Package Manager manifest
+├── Package.resolved                   # Locked dependency versions
+├── project.yml                        # Xcodegen project config
+├── Info.plist                         # Bundle config (LSUIElement=true for menu bar app)
+├── CLAUDE.md                          # Development notes & architecture
+└── PLAN.md                            # Comprehensive design document
 ```
 
 ## Key Files & Components
 
-**Entry Point:**
-- `Sources/Hairball/App/HairballApp.swift` — Main app struct, initializes shared state, sets up menu bar UI
+### Core Mechanism: Off-Screen Window Parking
+The only public-API method for per-window hiding on macOS:
+1. **Deactivate context:** Save each window's position, move to x:-30000 via `AXUIElement.setPosition()`
+2. **Activate context:** Restore each window to saved position, focus last-focused window
+3. ~5ms per window, ~50ms for 10 windows. Imperceptible. Proven by FlashSpace.
 
-**Core Logic:**
-- `Sources/Hairball/Core/ContextManager.swift` — Orchestrates context switching, window parking/restoration, state persistence
-- `Sources/Hairball/Window/WindowManager.swift` — Wrapper around Accessibility APIs and CGWindow for window enumeration and manipulation
-- `Sources/Hairball/Fingerprint/WindowMatcher.swift` — Scores live windows against fingerprints to find matches after reboot
+### ContextManager.swift -- The Brain
+Orchestrates context switching, window parking/restore, state persistence. Methods: createContext, deleteContext, addWindow, removeWindow, switchContext. Persists state after every mutation.
 
-**Data Models:**
-- `Sources/Hairball/Models/TaskContext.swift` — Represents a named context with windows and settings
-- `Sources/Hairball/Models/WindowSnapshot.swift` — Persisted window state (fingerprint, saved position, windowID)
-- `Sources/Hairball/Models/WindowFingerprint.swift` — Window identity (app name, title pattern, display)
+### WindowMatcher.swift -- Re-Matching Engine
+Scores running windows against context fingerprints after reboot. Scoring: app match (required) + title pattern match (80 pts exact, 60 pts substring) + display match (+10). Greedy one-to-one assignment. Auto-assigns at score >= 80. Ambiguous matches surface in Reconcile UI.
 
-**Persistence:**
-- `Sources/Hairball/Persistence/StateStore.swift` — Saves/loads JSON to `~/.config/hairball/` (contexts, windows, settings, heuristics)
+### Per-App Heuristics (5 built-in + custom)
+| App | Extracts | Example |
+|-----|----------|---------|
+| Xcode | Project name | "QualityTime -- ContentView.swift" -> "QualityTime" |
+| Warp | Directory/branch | "Claude - QualityTime (main) *" -> "QualityTime" |
+| Brave | Page title | "Roadmap Dashboard - Brave" -> "Roadmap Dashboard" |
+| VS Code | Workspace | "temporal -- api.go" -> "temporal" |
+| Terminal | Working dir | "~/projects/temporal" -> "temporal" |
 
-**UI:**
-- `Sources/Hairball/App/MenuBarView.swift` — Dropdown menu showing contexts, active indicator, quick actions
-- `Sources/Hairball/App/SettingsView.swift` — Multi-tab settings (Contexts, Windows, Heuristics, General)
-- `Sources/Hairball/App/ReconcileView.swift` — Post-reboot: assigns unmatched windows to contexts
-- `Sources/Hairball/App/ContextVisualizationView.swift` — Visual grid showing contexts and their window arrangements
+### Keyboard Shortcuts (all user-configurable)
+- ctrl+opt+1-9: Switch to context by index
+- ctrl+opt+A: Add focused window to active context
+- ctrl+opt+X: Remove focused window from context
+- ctrl+opt+N/P: Next/previous context
+- ctrl+opt+Space: Context picker popup (search + select)
 
-**Window Matching Heuristics:**
-- `Sources/Hairball/Fingerprint/AppHeuristic.swift` — Protocol for per-app matching logic
-- `Sources/Hairball/Fingerprint/HeuristicRegistry.swift` — Registry of all heuristics
-- Built-in heuristics for Xcode, Warp, Brave, VS Code, Terminal (extract meaningful identifiers from window titles)
-- `Sources/Hairball/Fingerprint/CustomHeuristic.swift` — User-defined rules for matching
+### State Persistence
+Location: `~/.config/hairball/` (state.json, contexts/*.json, heuristics.json). JSON with Codable. Survives app restarts and system reboots.
 
-**Testing:**
-- `Tests/HairballTests/` — Unit tests (framework TBD)
+### Window Observation
+Subscribes to AX notifications (window created/destroyed/title changed) and NSWorkspace events (app launched/terminated). Auto-tracks new windows, marks closed windows as dormant, re-matches on app relaunch.
 
 ## Claude Configuration
 
-**No `.claude/` directory found.** The project has a `.gitignore` that excludes `.claude/worktrees/`, but no CLAUDE.md settings, rules, or plugins are configured in a `.claude/` directory at this time.
+**CLAUDE.md** (root): Brief tech notes referencing PLAN.md for full architecture.
 
-**CLAUDE.md exists** (at root) with brief technical notes:
-- Mentions architecture is in PLAN.md
-- Notes tech stack and build commands
-- References core mechanism: off-screen window parking via AXUIElement
+No `.claude/` directory with settings, rules, or skills. `.gitignore` excludes `.claude/worktrees/`.
 
 ## Planning & Research Documents
 
-**PLAN.md** (1,900+ lines)
-- **Purpose:** Comprehensive implementation design document
-- **Contents:**
-  - Context: problem statement (macOS Spaces/Stage Manager operate at app level, not window level)
-  - Full architecture design with tech stack rationale
-  - Core mechanism: off-screen parking via `AXUIElement.setPosition(x: -30000)` — proven by FlashSpace
-  - Detailed component breakdown with data structures
-  - Context switching algorithm (save frames, park, restore)
-  - Window identity & matching strategy (fingerprints, heuristics, scoring)
-  - State persistence structure (`~/.config/hairball/`)
-  - UI specifications (menu bar dropdown, settings tabs, reconcile sheet, visualization grid)
-  - Keyboard shortcuts specification (⌃⌥1-9 for switch, ⌃⌥A to add, etc.)
-  - Window observation via AX notifications and NSWorkspace
-  - Permissions required: Accessibility only
-  - **5-phase implementation plan** (Foundation, Menu Bar UI, Shortcuts, Matching & Persistence, Settings & Polish)
-  - Post-plan cleanup checklist (disable yabai, re-enable SIP, etc.)
-  - Verification checklist
+### PLAN.md (200+ lines)
+Comprehensive implementation design document covering:
+- Problem statement (macOS Spaces/Stage Manager are app-level, not window-level)
+- Architecture with tech stack rationale
+- Core mechanism design (off-screen parking)
+- Component breakdown with data structures
+- Context switching algorithm, window identity/matching strategy
+- State persistence structure, UI specs, keyboard shortcuts
+- Window observation via AX notifications
+- 5-phase implementation plan
+- Verification checklist
 
-**Roadmaps/HairballV1-Roadmap.md** (1,200+ lines)
-- **Format:** Flat markdown roadmap file with metadata header
-- **Created:** 2026-03-24, last modified 2026-03-24
-- **Status:** All 15 implementation steps marked complete (as of 2026-04-06)
-- **Contents:**
-  - Feature definition: goal, platform, technologies, resources
-  - Extended description with workflow examples
-  - **Acceptance criteria** (all implementation features)
-  - Dependencies & prerequisites (macOS 14+, Accessibility permission)
-  - Risks & mitigations (off-screen parking edge cases, re-matching false positives, title changes)
-  - Architecture decisions (why off-screen parking, why no SIP, why standalone vs yabai)
-  - 15 implementation steps (foundation, window management, menu bar UI, shortcuts, matching, settings, polish, etc.)
-  - Each step marks current progress/completion
+### Roadmaps/HairballV1-Roadmap.md
+15-step feature roadmap. All 15 steps complete. Covers:
+1. Project scaffold
+2. Window enumeration
+3. AXUIElement manipulation
+4. Data models
+5. State persistence
+6. Context switching
+7. Menu bar UI
+8. Keyboard shortcuts
+9. Window fingerprinting
+10. Re-matching engine
+11. Reconcile UI
+12. Window observation
+13. Settings window
+14. Context visualization & picker
+15. User-configurable heuristics
 
-**Notes from CLAUDE.md:**
-```
-# Hairball
-
-Native macOS menu bar app for window-level task context management.
-
-## Tech Stack
-- Swift 5.9+ / SwiftUI, macOS 14+
-- Public Accessibility APIs only (no SIP required)
-- KeyboardShortcuts library (Sindre Sorhus) for global hotkeys
-
-## Build
-```
-swift build
-open Hairball.xcodeproj  # or use xcodegen if needed
-```
-
-## Architecture
-See PLAN.md for full design. Core mechanism: off-screen window parking via AXUIElement.
-```
+Extensive unit test coverage at each step (47 context manager tests, 48 fingerprint tests, 33 observation tests, 52 custom heuristic tests, etc.).
 
 ## Git History & Current State
 
-**Recent Commits (Last 5):**
+**Branch:** `main`
+**Working Tree:** Clean (no uncommitted changes)
+
+**Recent Commits:**
 ```
-2026-04-06 18:39:36 -0700  feat: add AppState, WindowExplorer, WorkGroups views and refactor app structure
-2026-04-06 16:18:01 -0700  chore: standardize worktree directory to .claude/worktrees/
-2026-03-27 11:12:21 -0700  Update CLAUDE.md: litterbox → agentic-cookbook
-2026-03-25 12:41:21 -0700  feat: add Help window, Discovery window, oslog logging, rename contexts to Hairballs
-2026-03-25 12:22:27 -0700  refactor: migrate 1 roadmaps to flat file format
+814e3a3 (2026-04-06) feat: add AppState, WindowExplorer, WorkGroups views and refactor app structure
+4273eec (2026-04-06) chore: standardize worktree directory to .claude/worktrees/
+b8857de (2026-03-27) Update CLAUDE.md: litterbox -> agentic-cookbook
+5ef2245 (2026-03-25) refactor: migrate 1 roadmaps to flat file format
+fc0de7b (2026-03-25) Merge pull request #16 from feature/HairballV1
 ```
 
-**30-Commit Log Summary:**
-- Phase 1-4 implementation (foundation, window management, menu bar UI, shortcuts, matching, persistence)
-- Step-by-step PR-based development with numbered steps
-- Recent additions: AppState refactor, WindowExplorer view, WorkGroups, Help/Discovery windows, oslog logging
-- Renamed "contexts" terminology to "Hairballs" internally
-- All 15 roadmap steps marked complete (merged into main)
-
-**Current State:**
-- **Branch:** main
-- **Status:** 1 commit ahead of origin/main (not yet pushed)
-- **Working Tree:** Clean (no uncommitted changes)
-- **Bundle Version:** 1.0 (Info.plist)
-
-**Git Remote:**
-- origin: `git@github.com:mikefullerton/Hairball.git`
+**Development History:** Feature branches with numbered PRs (#1-#16). All 15 roadmap steps implemented through PR-based workflow. Most recent work: AppState refactor, WindowExplorer view, WorkGroups view.
 
 ## Build & Test Commands
 
-**Build:**
 ```bash
+# Build
 swift build
 xcodebuild -scheme Hairball build
-```
 
-**Open Xcode:**
-```bash
+# Open in Xcode
 open Hairball.xcodeproj
-# or regenerate via xcodegen:
+# or regenerate project:
 xcodegen generate -s project.yml
+
+# Run tests
+swift test
+
+# Build settings
+# Scheme: Hairball
+# Platform: macOS (arm64 + x86_64)
+# Deployment Target: macOS 14.0
+# Bundle ID: com.mikefullerton.Hairball
+# Code Signing: Automatic
 ```
 
-**Build Settings Available:**
-- Scheme: Hairball
-- Target Platform: macOS (arm64 and x86_64)
-- Code Signing: Automatic
-- Development Team: K2NA732JAX
-- Bundle Identifier: com.mikefullerton.Hairball
-- Deployment Target: macOS 14.0
+## Notes
 
-**Testing:**
-- Unit test target: HairballTests (path: Tests/HairballTests)
-- Framework: Standard Swift testing (specific framework not yet configured in codebase review)
+1. **Permissions:** Only Accessibility permission required (System Settings > Privacy & Security > Accessibility). Prompted on first launch via `AXIsProcessTrustedWithOptions`. No SIP changes needed. LSUIElement=true (no dock icon).
 
-## Notes & Context
+2. **Recent Refactoring (Apr 6):** Introduced AppState for centralized state management. Added WindowExplorer (view all windows across contexts) and WorkGroups views. Added os.log logging throughout.
 
-**Architecture Highlights:**
+3. **Status:** Feature complete for v1.0. All 15 roadmap acceptance criteria implemented. Current focus: refinement -- AppState refactoring, WindowExplorer, WorkGroups exploration.
 
-1. **Off-Screen Window Parking:** The core technique for hiding windows uses only public APIs:
-   - Save window position when deactivating context
-   - Move to x: -30,000 via `AXUIElement.setPosition()`
-   - Restore to saved position when re-activating
-   - Imperceptible to users (~5ms per window, ~50ms for 10 windows)
-   - Proven technique used by FlashSpace for PiP workaround
+4. **Architecture Decisions:**
+   - Off-screen parking via AXUIElement (only public-API option, proven by FlashSpace)
+   - No SIP/yabai dependency (fragile, overkill)
+   - JSON state files (human-readable, git-friendly)
+   - KeyboardShortcuts library (well-maintained, SwiftUI-native)
+   - MockWindowManager protocol for testable window manipulation
 
-2. **Window Matching via Heuristics:** After app/system restart:
-   - Each window gets a fingerprint: app name + title pattern + display
-   - Per-app heuristics extract meaningful identifiers (Xcode: project name, Warp: directory/branch, Brave: page title, etc.)
-   - Scoring algorithm matches running windows to dormant fingerprints
-   - High-confidence matches (≥80 score) auto-assign; ambiguous matches surface in Reconcile UI
-
-3. **State Persistence:**
-   - Location: `~/.config/hairball/`
-   - Format: JSON with Codable
-   - Survives app restarts, system reboots, app updates
-   - Includes contexts, window snapshots with saved positions, global settings, custom heuristic rules
-
-4. **Keyboard Shortcuts:**
-   - ⌃⌥1-9: Switch to context by index
-   - ⌃⌥A: Add focused window to active context
-   - ⌃⌥X: Remove focused window from context
-   - ⌃⌥N/P: Next/previous context
-   - ⌃⌥Space: Context picker popup
-   - All configurable via Settings UI
-
-5. **Recent Refactoring (2026-04-06):**
-   - Introduced AppState for centralized state management
-   - New WindowExplorer view to see all windows across contexts
-   - New WorkGroups view (feature still being developed)
-   - Standardized worktree directory to `.claude/worktrees/`
-   - Added oslog logging throughout for debugging
-   - Renamed "contexts" terminology to "Hairballs" in some UI areas
-
-6. **Permissions:** Accessibility only (no SIP changes required)
-   - Prompt on first launch via `AXIsProcessTrustedWithOptions`
-
-7. **Development Workflow:**
-   - Feature branches with numbered PRs (e.g., #16, #15, etc.)
-   - Git worktrees supported (per .gitignore comment)
-   - Xcodegen used to manage project configuration
-   - Ready for production v1.0
-
-**Status:** Feature complete for v1.0. All roadmap acceptance criteria implemented. Current focus: refinement (help UI, discovery window, appstate refactoring, workgroups exploration).
+5. **Test Coverage:** 16 test files with hundreds of unit tests covering all major components: context management, window fingerprinting, re-matching, reconciliation, observation, custom heuristics, settings, keyboard shortcuts, data models.

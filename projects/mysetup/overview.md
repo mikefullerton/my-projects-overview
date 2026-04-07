@@ -452,4 +452,4 @@ This is not a compiled project. Installation is shell-script driven via `install
 
 **Document Generated**: 2026-04-07  
 **Project Last Updated**: 2026-04-06  
-**Git Commit**: 2d68011 (chore: update project paths)
+**Git Commit**: 2d68011 (chore: update project paths to ~/projects/active/mysetup)
