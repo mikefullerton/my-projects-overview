@@ -37,7 +37,7 @@ my-projects/
 │   └── scan-modified.py
 ├── server/
 │   ├── server.js                      # HTTP server with /api/refresh endpoint
-│   └── start.sh
+│   └── start.py
 └── site/                              # React + Vite frontend
     ├── vite.config.js                 # React plugin + API proxy to :3456
     ├── package.json                   # project-hub v1.0.0
@@ -108,7 +108,7 @@ cd site && npm run dev     # Vite dev (:5173, proxies /api to :3456)
 cd site && npm run build   # Production build
 
 # Backend
-cd server && ./start.sh    # Start on port 3456
+cd server && python3 start.py    # Start on port 3456
 
 # Scanner
 ./scanner/scan-projects.sh
