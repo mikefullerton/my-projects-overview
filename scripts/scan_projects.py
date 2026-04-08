@@ -462,6 +462,7 @@ def scan_project(name: str, project_dir: Path) -> dict[str, Any]:
         "planning_docs": planning_docs,
         "claude_config": claude_config,
         "template_md": template,
+        "has_description": (project_dir / "docs" / "project" / "description.md").exists(),
     }
 
 
