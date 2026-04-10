@@ -47,7 +47,7 @@ A comprehensive reference for all active projects in `~/projects/active/`. Each 
 
 | Project | Summary | Tech |
 |---------|---------|------|
-| [Cat Herding](projects/cat-herding/overview.md) | Collection of 6 plugins, 10 skills, 2 CLIs (site-manager, webinator) for Claude Code | Python, Bash, JavaScript |
+| [Cat Herding](projects/cat-herding/overview.md) | Personal Claude Code workflow extensions — yolo, custom-status-line, linting skills | Python, YAML |
 | [Code Review Pipeline](projects/code-review-pipline/overview.md) | Automated code review using Claude Code CLI as macOS daemon | Python, SQLite, GitHub API |
 | [Social Media Bot](projects/social-media-bot/overview.md) | AI content pipeline — analyzes git commits, researches topics, drafts posts for X/LinkedIn/Bluesky/Substack | Python, claude-agent-sdk, click, SQLite |
 
