@@ -2,116 +2,147 @@
 
 ## Project Summary
 
-Learn True Facts is a free, public-facing chat application featuring an AI improv comedian persona that blends real historical facts with absurdly plausible fictional details. It's designed as a test bed for a modern tech stack (Cloudflare + Railway) and persona-driven AI applications before scaling to production use with Temporal.
+Learn True Facts is a public-facing AI improv comedian chat application that blends real historical facts with absurdly plausible fictional details. Currently in the design and research phase, the project serves as a test bed for a modern tech stack (Cloudflare Workers + Railway + Hono + React) and persona-driven AI applications before scaling to production use with Temporal. Features include AI chat interface with improv comedian persona, multi-provider LLM abstraction, server-sent events for streaming, admin portal, analytics dashboard, and RS256 JWT authentication via a shared agentic-auth-service.
 
 ## Type & Tech Stack
 
-- **Project Type:** Full-stack web application with AI chat interface
-- **Status:** Pre-development (design and research phase, no commits)
-- **Frontend (planned):** React 19 + Vite + Tailwind CSS 4 + TanStack Router/Query
-- **Backend API (planned):** Hono framework + Drizzle ORM + PostgreSQL + Zod validation
-- **Admin Portal (planned):** React 19 + Vite + Tailwind CSS 4
-- **Dashboard (planned):** React 19 + Vite + Tailwind CSS 4 + D1 SQLite
-- **Authentication:** RS256 JWT via shared `agentic-auth-service`
-- **Streaming:** Server-Sent Events (SSE) for real-time responses
-- **Hosting:** Cloudflare Workers (frontend), Railway (backend/API)
-- **LLM Strategy:** Multi-provider abstraction supporting Cloudflare Workers AI, Google Gemini, Groq, Claude (premium)
-- **Planned Domain:** learntruefacts.com
+**Type:** Full-Stack Web Application (SaaS - Chat Platform)
+
+**Tech Stack:**
+- **Frontend:** React 19, Vite, Tailwind CSS 4, TanStack Router/Query
+- **Backend:** Hono (web framework), Drizzle ORM, PostgreSQL, Zod (schema validation)
+- **Infrastructure:** Cloudflare Workers (frontend), Railway (backend/database)
+- **Authentication:** RS256 JWT via shared agentic-auth-service
+- **Real-time:** Server-Sent Events for streaming responses
+- **Build:** npm workspaces (monorepo structure)
+- **Node.js Version:** 20+ (for Hono + async runtime support)
 
 ## GitHub URL
 
-`git@github.com:agentic-cookbook/learntruefacts.git`
+https://github.com/agentic-cookbook/learntruefacts.git
 
 ## Directory Structure
 
 ```
 learntruefacts/
-├── .git/
-└── docs/
-    ├── design/
-    │   └── initial-idea.md        # Complete product design and architecture
-    └── research/
-        └── llm-chat-widget-research.md  # Cost analysis, LLM options, infrastructure
+├── package.json            # Monorepo root with workspaces
+├── docker-compose.yml      # Local development database setup
+├── Dockerfile              # Multi-stage Docker build for backend
+├── railway.toml            # Railway.app deployment config
+├── .env.example            # Environment variables template
+├── .github/workflows/       # GitHub Actions CI/CD
+├── shared/                 # Shared utilities & types (workspace)
+│   ├── src/
+│   └── package.json
+├── backend/                # Hono backend API (workspace)
+│   ├── src/
+│   │   ├── app.ts          # Hono app setup
+│   │   ├── index.ts        # Server entry point
+│   │   ├── db/             # Drizzle ORM schemas & migrations
+│   │   ├── routes/         # API route handlers
+│   │   ├── services/       # Business logic services
+│   │   ├── middleware/     # Auth, error handling, CORS
+│   │   ├── auth/           # JWT validation
+│   │   └── config/         # Environment & app config
+│   ├── package.json
+│   └── tsconfig.json
+├── auth-service/           # Shared JWT auth service (workspace)
+│   ├── src/
+│   └── package.json
+├── sites/                  # Frontend applications
+│   ├── main/               # Main chat application (Vite + React)
+│   │   ├── src/
+│   │   ├── package.json
+│   │   └── vite.config.ts
+│   ├── admin/              # Admin dashboard (Vite + React)
+│   │   ├── src/
+│   │   └── package.json
+│   └── dashboard/          # Analytics dashboard (Vite + React)
+│       ├── src/
+│       └── package.json
+├── docs/
+│   ├── project/description.md
+│   ├── design/
+│   ├── research/
+│   └── ...
+└── node_modules/           # Shared dependencies
 ```
 
 ## Key Files & Components
 
-### `docs/design/initial-idea.md`
-Comprehensive product design document covering:
-- Persona design: improv comedian AI making "true facts"
-- Core experience: terminal-style chat with typewriter streaming
-- Content safety requirements: prompt-level and application-level guards (child-safe, non-negotiable)
-- Model strategy: abstraction layer for provider switching (free tier, premium tier)
-- Architecture: full stack diagram with component breakdown
-- Data model: conversations, messages, users, shared_conversations tables
-- Authentication: JWT-based with email/password, GitHub OAuth, Google OAuth
-- API endpoints: chat, conversation history, sharing, model selection
-- Agent registry integration: persona registration in Official Agent Registry
-- Test harness: red team testing for character consistency and safety
-- Rollout plan: 4 phases from MVP to premium + registry
-
-### `docs/research/llm-chat-widget-research.md`
-Cost analysis and infrastructure research:
-- **Claude Haiku 4.5 pricing:** ~$0.013/conversation at ~6K input tokens + ~1.5K output tokens
-- **At 1M conversations:** $13K (standard), $7.5K (with prompt caching), $4-5K (both optimizations)
-- **Free tier options:** Google Gemini (15 req/min, 1.5K req/day), Groq, OpenRouter, Cloudflare Workers AI
-- **Recommended MVP:** Cloudflare Workers AI (zero new infrastructure, zero cost)
-- **Self-hosting:** Ollama for local development, vLLM for production GPU deployments
-- **Model comparison:** Quality tradeoffs across free, Haiku, Sonnet, and Opus tiers
-
-### Key Design Decisions
-- Content must be absolutely safe for children (non-negotiable guardrails)
-- Persona will have a registered name in the Official Agent Registry
-- Model abstraction allows per-user provider selection without UI changes
-- Free tier uses Cloudflare Workers AI (Llama 3.1 8B) or Google Gemini
-- Premium tier targets Claude models (Haiku/Sonnet/Opus)
+- **package.json** (root) - Monorepo configuration with npm workspaces; defines workspace structure (shared, backend, auth-service, sites/*) and root-level build/deploy scripts
+- **docs/project/description.md** - Complete project description with purpose, key features, tech stack, status, and related projects
+- **docs/design/initial-idea.md** - Initial design and concept documents
+- **docs/research/llm-chat-widget-research.md** - Research on LLM chat widget implementations
+- **backend/package.json** - Hono server configuration with Drizzle ORM, jose JWT, bcrypt, zod validation
+- **backend/src/app.ts** - Hono application initialization
+- **backend/src/db/** - Drizzle schema definitions and migrations
+- **backend/src/routes/** - API endpoint handlers (chat, auth, admin, analytics)
+- **backend/src/auth/** - RS256 JWT validation and authorization middleware
+- **sites/main/package.json** - Main chat frontend (React 19 + Vite)
+- **sites/admin/package.json** - Admin portal (React 19 + Vite)
+- **.env.example** - Environment template for API keys, database URLs, JWT secrets
 
 ## Claude Configuration
 
-No `.claude/` directory or `CLAUDE.md` exists yet -- project is pre-implementation.
+No `.claude/` directory present; configuration managed at workspace or individual project level via package.json scripts.
 
 ## Planning & Research Documents
 
-**Design Phase (Complete):**
-- Comprehensive specification including persona behavior, safety guardrails, four-phase rollout, test harness, and agent registry integration
-
-**Research Phase (Complete):**
-- Cost analysis showing prompt caching as key optimization lever
-- Free tier economics via Cloudflare Workers AI or Gemini
-- Self-hosting vs. API cost tradeoff ($5-10K/month break-even)
-- Model pricing reference table (April 2026)
-
-**Open Questions from Design:**
-- Comedian persona name (required for agent registry)
-- Domain availability for `learntruefacts.com`
-- Paid tier pricing and gating mechanism
-- Apple Sign-In support in auth service
-- TTL policy for anonymous conversations
-- Rate limits for free anonymous users
-- Test harness architecture (separate service vs. admin tooling)
+- **docs/project/description.md** - Project purpose, key features (planned), tech stack, status (planning/pre-implementation)
+- **docs/design/initial-idea.md** - Initial design and concept research
+- **docs/research/llm-chat-widget-research.md** - Research on LLM chat widget implementations and best practices
 
 ## Git History & Current State
 
+- **Remote:** git@github.com:agentic-cookbook/learntruefacts.git
 - **Current Branch:** main
-- **Commits:** None (empty repository, no initial commit)
-- **Untracked files:** `.DS_Store`, `docs/`
-- **Remote:** origin -> `git@github.com:agentic-cookbook/learntruefacts.git`
-- **Status:** Ready for initial commit
+- **Status:** Clean working tree (no uncommitted changes)
+- **Recent Activity:**
+  - Latest: chore: update manifest with deployment URLs (a388c6c)
+  - fix: skip auth-service migration on startup temporarily (92ec62c)
+  - fix: auth-service migration path and healthcheck timeout (6ae9f84)
+  - fix: add AppEnv types to auth-service for Hono context (fa9f306)
+  - fix: strip template conditionals, update wrangler configs (84458ae)
+  - Deployed infrastructure fixes and config updates in recent commits
 
 ## Build & Test Commands
 
-Not yet configured -- project is in planning phase.
+```bash
+# Root monorepo commands
+npm run dev                 # Start all workspaces in dev mode (backend, main, admin, dashboard)
+npm run build:all          # Build all workspaces
+npm run build:shared       # Build shared utilities
+npm run build:backend      # Build backend API
+npm run build:main         # Build main chat frontend
+npm run build:admin        # Build admin dashboard
+npm run build:dashboard    # Build analytics dashboard
+npm run deploy:all         # Deploy all sites to Cloudflare
+npm run deploy:main        # Deploy main site
+npm run deploy:admin       # Deploy admin site
+npm run deploy:dashboard   # Deploy dashboard site
 
-**Planned architecture:**
-- Frontend: `npm run build` or `wrangler deploy` for Cloudflare Workers
-- Backend: Hono API server deployment to Railway
-- Testing: Red team test harness for adversarial content safety testing
+# Backend commands (run in backend/ workspace)
+npm run dev                # Start Hono dev server
+npm run build              # TypeScript compilation
+npm run start:prod         # Start with DB migrations
+npm run db:generate        # Generate Drizzle ORM types
+npm run db:migrate         # Run database migrations
+npm run db:seed            # Seed database with initial data
+npm run test               # Run Vitest unit tests
+
+# Frontend commands (run in sites/main/, sites/admin/, sites/dashboard/)
+npm run dev                # Start Vite dev server
+npm run build              # Build for production
+npm run preview            # Preview production build
+```
 
 ## Notes
 
-- **Project Stage:** Design & Research Complete, Implementation Pending
-- Part of the "agentic-cookbook" organization with shared infrastructure
-- Designed to test new tech stack before scaling to production use with Temporal
-- First user-facing AI persona application in the portfolio
-- Stress-tests: content safety at scale, model abstraction, conversation recording, persona registration
-- Architecture follows site-manager conventions used across the agentic-cookbook organization
+- **Status:** Design and research phase — no application code fully committed yet, infrastructure scaffolding in progress
+- **Architecture:** Monorepo with shared workspace pattern; backend uses Hono + Drizzle ORM for type-safe database access; frontend uses React 19 + Vite for fast builds
+- **Deployment:** Cloudflare Workers (frontend), Railway (backend + PostgreSQL database)
+- **Authentication:** Centralized RS256 JWT via agentic-auth-service shared workspace
+- **Domain:** learntruefacts.com
+- **Related Projects:** MyAgenticProjects (similar Hono + React + Railway + Cloudflare stack), Agentic Auth Service (shared auth infrastructure)
+- **Development:** Docker Compose for local PostgreSQL; environment variables from .env.example

@@ -2,74 +2,175 @@
 
 ## Project Summary
 
-Cat Herding is a personal collection of Claude Code skills, plugins, hooks, and workflow extensions. It provides 2 distributable skills (yolo, custom-status-line), internal linting/authoring skills, and configuration rules.
+Personal collection of Claude Code skills, plugins, hooks, and workflow extensions. Cat Herding provides personal workflow extensions for Claude Code: YOLO mode for auto-approving tool calls, a composable status line pipeline for terminal progress tracking, internal linting and authoring skills, and configuration rules for development workflows.
 
 ## Type & Tech Stack
 
-- **Project Type:** Personal Claude Code workflow extensions
-- **Python 3.11+** — scripts and hooks
-- **YAML** — Skill manifests
-- **Key tools:** Claude Code CLI
+**Type:** Claude Code Skills & Extensions / Workflow Tools
+
+**Tech Stack:**
+- **Language:** Python 3.11+, Bash/Shell
+- **Runtime:** Claude Code (skills invoked via slash commands)
+- **Testing:** pytest
+- **Plugins:** Claude Code plugins for custom functionality
 
 ## GitHub URL
 
-`git@github.com:mikefullerton/cat-herding.git`
+https://github.com/mikefullerton/cat-herding
 
 ## Directory Structure
 
 ```
-cat-herding/
-├── .claude/
+.
+├── .claude/              # Claude Code configuration
 │   ├── CLAUDE.md
-│   ├── skills/                        # Internal skills
-│   │   ├── lint-skill/                # Lint skills against best practices
-│   │   ├── lint-rule/                 # Lint rules against best practices
-│   │   ├── lint-agent/                # Lint agents against best practices
-│   │   ├── optimize-rules/            # Consolidate rule files
-│   │   ├── install-worktree-rule/     # Install worktree/PR git workflow
-│   │   └── ...
-│   └── rules/
-│       ├── cli-versioning.md
-│       ├── plugin-development.md
-│       └── worktree-branch-cleanup.md
-├── skills/
-│   ├── yolo/                          # Per-session auto-approve mode
-│   └── custom-status-line/            # Composable status line pipeline
+│   ├── settings.local.json
+│   ├── rules/            # Configuration rules
+│   │   ├── (rule files)
+│   │   └── (workflow specifications)
+│   ├── skills/           # Internal skills
+│   │   ├── lint-skill/
+│   │   ├── lint-rule/
+│   │   ├── lint-agent/
+│   │   ├── optimize-rules/
+│   │   ├── install-worktree-rule/
+│   │   └── (more skills)
+│   └── worktrees/        # Git worktree management
+├── .claude-plugin/       # Claude Code plugin definition
+│   └── marketplace.json
+├── .pytest_cache/        # pytest cache
+├── .wrangler/            # Wrangler configuration (Cloudflare Workers)
+├── .superpowers/         # Superpowers plugin configuration
 ├── docs/
-│   └── research/                      # Claude Code research docs
-├── install.sh
-├── uninstall.sh
-└── README.md
+│   ├── research/
+│   │   └── claude-code-usage-limits.md
+│   ├── project/
+│   │   └── description.md
+│   └── superpowers/
+│       ├── plans/        # Implementation plans
+│       │   └── 2026-04-07-status-line-python-conversion.md
+│       └── specs/        # Design specifications
+│           └── 2026-04-07-status-line-python-conversion-design.md
+├── skills/               # 2 distributable skills
+│   ├── yolo/             # Toggle YOLO mode (auto-approve tool calls)
+│   │   └── SKILL.md
+│   └── custom-status-line/  # Composable status line pipeline
+│       ├── SKILL.md
+│       └── (supporting files)
+├── install.sh            # Installation script
+├── uninstall.sh          # Uninstallation script
+├── README.md
+└── .gitignore
 ```
 
-## Key Components
+## Key Files & Components
 
-### Distributable Skills (2)
+**Distributable Skills:**
+- `skills/yolo/SKILL.md` — Toggle YOLO mode for auto-approving tool calls
+- `skills/custom-status-line/SKILL.md` — Composable status line pipeline for terminal progress
 
-1. **yolo** — Per-session auto-approve for tool calls
-2. **custom-status-line** — Composable shell status line (git stats, YOLO, progress)
+**Internal Skills (in .claude/skills/):**
+- `lint-skill/` — Linting for skill definitions
+- `lint-rule/` — Linting for rule definitions
+- `lint-agent/` — Agent linting utilities
+- `optimize-rules/` — Rule optimization helpers
+- `install-worktree-rule/` — Worktree management
 
-### Internal Skills
+**Rules (in .claude/rules/):**
+- CLI versioning rules
+- Plugin development rules
+- Worktree branch cleanup rules
+- Workflow standards
 
-lint-skill, lint-rule, lint-agent, optimize-rules, install-worktree-rule, and others.
+**Configuration:**
+- `.claude/CLAUDE.md` — Project overview and git workflow documentation
+- `.claude/settings.local.json` — Local Claude Code settings with permissions
+- `.claude-plugin/marketplace.json` — Plugin marketplace definition
 
-### Rules
-
-- `cli-versioning.md` — Auto-bump CLI versions on source changes
-- `plugin-development.md` — Plugin dev workflow guide
-- `worktree-branch-cleanup.md` — Worktree cleanup after merge
+**Documentation:**
+- `docs/research/claude-code-usage-limits.md` — Research on Claude Code constraints
+- `docs/superpowers/plans/` — Implementation plans for features
+- `docs/superpowers/specs/` — Design specifications
 
 ## Claude Configuration
 
-- **CLAUDE.md** — Skills table, git workflow instructions
-- **Rules:** cli-versioning, plugin-development, worktree-branch-cleanup
+**Location:** `.claude/CLAUDE.md` and `.claude/settings.local.json`
 
-## Related Projects
+**CLAUDE.md:**
+- Project overview as personal Claude Code extensions collection
+- Repository structure breakdown (skills, .claude/skills/, rules)
+- Skill definitions and purposes
+- Git workflow documentation (must use worktrees for all branches)
 
-- [dev-tools](../../tools/dev-tools/) — configurator, webinitor, new-project, quick-ref, show-project-setup, repo-cleaner (moved from this repo 2026-04-10)
-- [devtools-web-server](../../tools/devtools-web-server/) — local Caddy web server (moved from this repo 2026-04-10)
+**settings.local.json:**
+- Extensive permissions configuration
+- Allows: git operations (add, commit, push), cp, mkdir, status line updates
+- Permissions for integrating with ~/.claude-status-line/ progress tracking
+
+## Planning & Research Documents
+
+**Research:**
+- `docs/research/claude-code-usage-limits.md` — Research on Claude Code usage constraints and optimization
+
+**Planning & Design (Superpowers):**
+- `docs/superpowers/plans/2026-04-07-status-line-python-conversion.md` — Plan for status line conversion to Python
+- `docs/superpowers/specs/2026-04-07-status-line-python-conversion-design.md` — Design spec for conversion
+
+**Project Documentation:**
+- `docs/project/description.md` — Project purpose and features
+
+## Git History & Current State
+
+**Current Branch:** main
+
+**Remote:** git@github.com:mikefullerton/cat-herding.git
+
+**Recent Commits:**
+- `bd20fa8` — fix(status-line): add col0 prefix to session line for column alignment (#31)
+- `03c0ace` — Merge pull request #30 from mikefullerton/worktree-more-status-line
+- `18ab356` — fix(status-line): always show session name column on model line
+- `e4aa071` — refactor(status-line): centralize column reformatting for all line types
+- `4b2ba4c` — fix(status-line): version upgrade line uses plain separators and aligned columns
+- `5c516e2` — Move claude-skills-tester-cli and plugins research to dev-tools
+- `3473770` — Move 6 skills and related docs to dev-tools repo
+- `9b571ef` — rename: tests/ to claude-skills-tester-cli/
+- `c76b813` — chore: move CLAUDE.md into .claude/
+- `00e06f5` — chore: move research/ contents into docs/research/
+- (20+ more commits showing active development)
+
+**Status:** Active development. Recent work on status line improvements and repo organization.
+
+## Build & Test Commands
+
+```bash
+# Installation
+./install.sh             # Install skills and extensions
+
+# Uninstallation
+./uninstall.sh           # Remove skills and extensions
+
+# Testing
+pytest                   # Run pytest suite for internal components
+pytest -v                # Verbose test output
+
+# Skills invocation (in Claude Code)
+/yolo                           # Toggle YOLO mode
+/custom-status-line install    # Install status line pipeline
+/custom-status-line uninstall  # Remove status line pipeline
+```
 
 ## Notes
 
-- Owner edits go direct to main; Claude Code sessions use worktree + PR workflow
-- Significantly slimmed down on 2026-04-10: dev-tools skills, CLIs, and web server moved to their own repos
+- Personal project for Claude Code workflow optimization and skill development
+- All work done in worktree branches, merged via PR to main (see Git Workflow in CLAUDE.md)
+- Uses pytest for testing internal Python components
+- Status line is a composable pipeline for terminal progress tracking
+- YOLO mode auto-approves tool calls when enabled (toggle per session)
+- Includes research on Claude Code usage limits and optimization strategies
+- Recent focus on status line improvements (column alignment, formatting)
+- Skills are designed to be personal extensions but some are marked as distributable
+- Rules enforce workflow standards (CLI versioning, plugin development, worktree cleanup)
+- Wrangler configuration suggests potential Cloudflare Workers integration
+- Superpowers plugin provides additional development workflows
+- Several skills and tools previously developed here were moved to dev-tools repo
+- This repo centralizes personal Claude Code customizations and extensions

@@ -1,22 +1,22 @@
 # Whippet
 
+A macOS menu bar app that monitors Claude Code sessions in real time.
+
 ## Project Summary
 
-A macOS menu bar application that monitors Claude Code sessions in real time. Consumes session events produced by Claude Code global hooks via a file-based event queue (JSON files in `~/.claude/session-events/`), ingests them into a local SQLite database, and displays active sessions in a floating NSPanel window grouped by project. Features include configurable click actions (open terminal, open transcript, copy session ID, custom shell command, notification), AI-powered session summarization, Accessibility API-based window activation, staleness detection, macOS notifications, and launch-at-login support. 11 of 12 roadmap implementation steps are complete (only manual integration testing remains).
+Whippet is a lightweight macOS menu bar application that provides real-time visibility into all active Claude Code sessions running on a machine. It consumes session events produced by Claude Code global hooks via a file-based event queue (`~/.claude/session-events/`), stores them in a local SQLite database, and displays active sessions in a floating NSPanel grouped by project. The app supports configurable click actions (open terminal, open transcript, copy session ID, custom shell commands, notifications), AI-powered session summarization (with multi-provider support: Anthropic, OpenAI, Google, custom), accessibility-based window activation, and staleness detection for idle sessions.
 
 ## Type & Tech Stack
 
 - **Type**: macOS menu bar application (LSUIElement)
 - **Language**: Swift
-- **Platform**: macOS 14+
-- **UI**: AppKit (NSPanel, NSStatusItem, NSHostingController) + SwiftUI via NSHostingController
+- **UI Frameworks**: AppKit (NSPanel, NSStatusItem, NSHostingController) + SwiftUI (hosted via NSHostingController)
 - **Storage**: SQLite3 (C API with Swift wrapper, WAL mode)
-- **Event monitoring**: DispatchSource (file system watching)
-- **Notifications**: UNUserNotificationCenter
-- **Login**: SMAppService (launch at login)
-- **AI**: Multi-provider AI request builder (Anthropic, OpenAI, Google, Custom) for session summarization
-- **Build**: Xcode project (Whippet.xcodeproj)
-- **Testing**: XCTest (14 test files)
+- **File System Monitoring**: DispatchSource (FSEvents for watching event queue directory)
+- **Notifications**: UNUserNotificationCenter (macOS notifications)
+- **Launch Integration**: SMAppService (launch-at-login support)
+- **Build System**: Xcode (Whippet.xcodeproj)
+- **Testing**: XCTest (44 Swift files, 14+ test files)
 
 ## GitHub URL
 
@@ -27,134 +27,151 @@ A macOS menu bar application that monitors Claude Code sessions in real time. Co
 ```
 Whippet/
 ├── .claude/
-│   └── settings.local.json            # Permission allowlists
+│   └── settings.local.json       # Claude Code local settings
+├── .git/                         # Git repository
+├── docs/
+│   └── project/
+│       └── description.md        # Project documentation
 ├── Roadmaps/
-│   ├── CreateApp-Roadmap.md           # Feature roadmap (12 steps, 11 complete)
-│   └── repair.log                     # Repair log (untracked)
-├── Scripts/
-│   ├── test_click_activation.swift    # Click activation test script
-│   └── test_window_activation.swift   # Window activation test script
-├── Whippet/                           # Xcode project source
-│   ├── Whippet/                       # App source code
-│   │   ├── Actions/
-│   │   │   ├── SessionActionHandler.swift     # Click action executor (30K)
-│   │   │   ├── SessionClickAction.swift       # Action enum definition
-│   │   │   └── ActivationTestLog.swift        # Activation testing
-│   │   ├── Database/
-│   │   │   ├── DatabaseManager.swift          # SQLite wrapper (30K)
-│   │   │   └── Models.swift                   # Data models
-│   │   ├── Hooks/
-│   │   │   └── HookInstaller.swift            # Claude hook auto-installation (14K)
-│   │   ├── Ingestion/
-│   │   │   ├── EventIngestionManager.swift    # File watcher + DB ingestion (16K)
-│   │   │   ├── SessionSummarizer.swift        # AI session summarization (13K)
-│   │   │   ├── SessionLivenessMonitor.swift   # Staleness detection (6K)
-│   │   │   ├── GitMetadataResolver.swift      # Git repo metadata
-│   │   │   └── EventFile.swift                # Event file model
-│   │   ├── Notifications/
-│   │   │   └── NotificationManager.swift      # macOS notifications (10K)
-│   │   ├── Settings/
-│   │   │   ├── SettingsView.swift             # SwiftUI settings form (19K)
-│   │   │   ├── SettingsViewModel.swift        # Settings state (22K)
-│   │   │   ├── SettingsWindowController.swift # Window management
-│   │   │   ├── AIRequestBuilder.swift         # Multi-provider AI HTTP client (8K)
-│   │   │   ├── MiniChatView.swift             # Embedded AI chat UI
-│   │   │   ├── MiniChatViewModel.swift        # Chat state
-│   │   │   ├── KeychainHelper.swift           # Keychain storage
-│   │   │   └── LaunchAtLoginManager.swift     # SMAppService wrapper
-│   │   ├── Window/
-│   │   │   ├── SessionContentView.swift       # SwiftUI session list
-│   │   │   ├── SessionListViewModel.swift     # Session list state (17K)
-│   │   │   ├── SessionPanel.swift             # NSPanel subclass
-│   │   │   ├── SessionPanelController.swift   # Panel management (7K)
-│   │   │   ├── WindowDiscoveryView.swift      # Window discovery UI
-│   │   │   ├── WindowDiscoveryViewModel.swift # Window discovery state
-│   │   │   └── SummarizerDebugWindowController.swift
-│   │   ├── AppDelegate.swift                  # App entry point (10K)
-│   │   ├── Log.swift                          # Centralized logging
-│   │   ├── main.swift                         # App bootstrap
-│   │   ├── Info.plist
-│   │   └── Whippet.entitlements
-│   ├── Whippet.xcodeproj/            # Xcode project file
-│   └── WhippetTests/                  # 14 test files
-│       ├── DatabaseManagerTests.swift
-│       ├── EventIngestionManagerTests.swift
-│       ├── HookInstallerTests.swift
-│       ├── NotificationManagerTests.swift
-│       ├── SessionActionHandlerTests.swift
-│       ├── SessionListViewModelTests.swift
-│       ├── SessionLivenessMonitorTests.swift
-│       ├── SessionPanelControllerTests.swift
-│       ├── SessionSummarizerTests.swift
-│       ├── SettingsViewModelTests.swift
-│       ├── LaunchAtLoginManagerTests.swift
-│       ├── AIRequestBuilderTests.swift
-│       ├── IngestionIntegrationTests.swift
-│       └── WhippetTests.swift
-├── Whippet-build/                     # Build artifacts (untracked)
-├── Whippet-cookbook/                   # Cookbook project definition
-│   ├── cookbook-project.json           # Component manifest (28 components)
-│   ├── app/                           # Component recipes
-│   ├── context/                       # Research context
-│   └── resources/                     # Additional resources
-├── CLAUDE.md                          # Project instructions
-└── .gitignore
+│   └── CreateApp-Roadmap.md     # Feature roadmap and implementation plan
+├── Scripts/                      # Utility scripts
+├── CLAUDE.md                     # Claude Code project guide
+├── .gitignore
+└── Whippet/                      # Xcode project root
+    ├── Whippet/                  # Main source code (44 Swift files)
+    │   ├── AppDelegate.swift     # App entry point and lifecycle
+    │   ├── main.swift
+    │   ├── Log.swift
+    │   ├── Info.plist
+    │   ├── Whippet.entitlements
+    │   ├── Assets.xcassets
+    │   ├── Actions/              # Session action handling
+    │   │   ├── SessionActionHandler.swift
+    │   │   ├── SessionClickAction.swift
+    │   │   └── ActivationTestLog.swift
+    │   ├── Database/             # SQLite data layer
+    │   │   ├── DatabaseManager.swift
+    │   │   └── Models.swift
+    │   ├── Hooks/                # Claude Code hook installation
+    │   │   └── HookInstaller.swift
+    │   ├── Ingestion/            # Event consumption and processing
+    │   │   ├── EventIngestionManager.swift
+    │   │   ├── EventFile.swift
+    │   │   ├── GitMetadataResolver.swift
+    │   │   ├── SessionLivenessMonitor.swift
+    │   │   └── SessionSummarizer.swift
+    │   ├── Notifications/        # macOS notification system
+    │   │   └── NotificationManager.swift
+    │   ├── Settings/             # Settings UI and AI integration
+    │   │   ├── SettingsView.swift
+    │   │   ├── SettingsViewModel.swift
+    │   │   ├── SettingsWindowController.swift
+    │   │   ├── AIRequestBuilder.swift
+    │   │   ├── MiniChatView.swift
+    │   │   ├── MiniChatViewModel.swift
+    │   │   ├── LaunchAtLoginManager.swift
+    │   │   └── KeychainHelper.swift
+    │   └── Window/               # UI for floating session panel
+    │       ├── SessionPanel.swift
+    │       ├── SessionPanelController.swift
+    │       ├── SessionListViewModel.swift
+    │       ├── SessionContentView.swift
+    │       ├── WindowDiscoveryView.swift
+    │       ├── WindowDiscoveryViewModel.swift
+    │       └── SummarizerDebugWindowController.swift
+    ├── Whippet.xcodeproj/        # Xcode project configuration
+    └── WhippetTests/             # Test suite (14+ test files)
 ```
 
 ## Key Files & Components
 
-- `CLAUDE.md` -- Project overview: macOS 14+, Swift, AppKit+SwiftUI, SQLite, menu bar app architecture, build command, conventions (native controls, async-first, PRs+worktrees, commit frequently)
-- `Whippet/Whippet/AppDelegate.swift` -- App entry point: NSStatusItem setup, subsystem initialization, menu bar dropdown
-- `Whippet/Whippet/Database/DatabaseManager.swift` -- SQLite3 C API wrapper with WAL mode, schema migrations, CRUD for sessions/events/settings tables
-- `Whippet/Whippet/Ingestion/EventIngestionManager.swift` -- DispatchSource file watcher consuming JSON event files from `~/.claude/session-events/`
-- `Whippet/Whippet/Hooks/HookInstaller.swift` -- Auto-installs Claude Code hooks into `~/.claude/settings.json` (merge, not overwrite)
-- `Whippet/Whippet/Actions/SessionActionHandler.swift` -- 5+ configurable click actions with iTerm2/Terminal fallback
-- `Whippet/Whippet/Ingestion/SessionSummarizer.swift` -- AI-powered session name generation (debounced, 3-8 words)
-- `Whippet/Whippet/Settings/AIRequestBuilder.swift` -- Multi-provider AI HTTP client (Anthropic, OpenAI, Google, Custom)
-- `Whippet-cookbook/cookbook-project.json` -- Detailed component manifest with 28 components, recipe references, and dependency graph
-- `Roadmaps/CreateApp-Roadmap.md` -- 12-step implementation roadmap (11 complete)
+### Core Architecture Files
+- **AppDelegate.swift** — Main app entry point, lifecycle management, menu bar setup
+- **DatabaseManager.swift** — SQLite database connection, schema creation, session CRUD operations
+- **EventIngestionManager.swift** — Watches event queue directory, consumes JSON files, inserts into database
+
+### Session Management
+- **SessionActionHandler.swift** — Processes click actions on sessions (terminal, transcript, copy ID, custom commands)
+- **SessionLivenessMonitor.swift** — Detects and marks idle/stale sessions
+- **SessionSummarizer.swift** — Generates AI-powered session summaries via configurable providers
+
+### UI Components
+- **SessionPanel.swift** / **SessionPanelController.swift** — Floating NSPanel window configuration
+- **SessionListViewModel.swift** / **SessionContentView.swift** — SwiftUI-based session list display
+- **SettingsView.swift** / **SettingsViewModel.swift** — Settings UI and state management
+- **WindowDiscoveryView.swift** — Panel for discovering and activating windows via Accessibility API
+
+### Integration & Configuration
+- **HookInstaller.swift** — Installs Claude Code hooks on first launch
+- **AIRequestBuilder.swift** — Builds API requests for session summarization (Anthropic, OpenAI, Google, custom)
+- **KeychainHelper.swift** — Stores API keys securely in macOS Keychain
+- **GitMetadataResolver.swift** — Extracts git metadata (remote URL, branch) from session events
+- **NotificationManager.swift** — Manages macOS notifications
+- **LaunchAtLoginManager.swift** — Handles launch-at-login functionality via SMAppService
+
+### Configuration
+- **CLAUDE.md** — Claude Code project guide with conventions and build commands
+- **CreateApp-Roadmap.md** — Comprehensive feature roadmap with implementation details
+- **Info.plist** — macOS app configuration
+- **Whippet.entitlements** — App entitlements for Accessibility and other APIs
 
 ## Claude Configuration
 
-- `CLAUDE.md` -- Conventions: native SwiftUI/AppKit controls first, async-first, PRs+worktrees (`.claude/worktrees/`), commit frequently
-- **Settings (local)**: Permission allowlists for copying cookbook rules to `.claude/rules/`
-- No project-level settings.json
+- **Claude Code Settings**: `.claude/settings.local.json` (with copy permissions for cookbook rules)
+- **Worktree Directory**: `.claude/worktrees/` (as specified in CLAUDE.md)
+- **Conventions**:
+  - Use native SwiftUI/AppKit controls before building custom equivalents
+  - All lengthy tasks must be done asynchronously; never block the main thread
+  - Always use PRs and git worktrees; never commit directly to main
+  - Commit and push immediately after each batch of changes
 
 ## Planning & Research Documents
 
-- `Roadmaps/CreateApp-Roadmap.md` -- Comprehensive 12-step feature roadmap with acceptance criteria, verification strategies, and implementation notes. 11/12 steps complete. Each step documents GitHub issue number, complexity, dependencies, and test coverage.
-- `Whippet-cookbook/context/` -- Research context for cookbook integration
-- `Whippet-cookbook/cookbook-project.json` -- Component architecture manifest listing all 28 components with recipes, dependencies, and source references
+- **docs/project/description.md** — Comprehensive project overview with purpose, features, tech stack, and architecture
+- **Roadmaps/CreateApp-Roadmap.md** — Detailed roadmap with 12 implementation steps, task breakdown, and progress tracking
 
 ## Git History & Current State
 
-- **Branch**: main
-- **Last commit**: 2026-04-06 -- "chore: standardize worktree directory to .claude/worktrees/"
-- **Working tree**: 4 untracked items (Roadmaps/repair.log, Scripts/, Whippet-build/, Whippet-cookbook/)
-- **Recent activity**: Active development through late March 2026, maintenance commits in April
-- **Key recent changes**: AI session summarization + frontmost window tracking, snapshot app metadata threading fix, CLAUDE.md updates, roadmap migration, settings inspector layout refactoring (NavigationSplitView then NSSplitViewController), CreateApp feature completion
+- **Current Branch**: `main`
+- **Remote**: `git@github.com:mikefullerton/Whippet.git`
+- **Recent Commits** (last 15):
+  - `0517e2a` — docs: add standardized project description
+  - `4173947` — cleanup
+  - `f0cdd3a` — chore: standardize worktree directory to .claude/worktrees/
+  - `eb5f062` — Update CLAUDE.md: litterbox → agentic-cookbook
+  - `caa388c` — feat: AI session summarization, frontmost window tracking, minimal UI
+  - `15a6a1b` — fix: snapshot app metadata on main thread, enumerate windows on background
+  - `1624c2d` — docs: update CLAUDE.md with litterbox component spec instructions
+  - `e3926b8` — refactor: migrate 1 roadmaps to flat file format
+  - `65e5b3e` — fix: lock window width when settings inspector is collapsed
+  - `cac9324` — fix: enable horizontal resize and restore window position on inspector close
+  - `0ce5b58` — refactor: use NavigationSplitView for settings inspector layout
+  - `8fcfc09` — refactor: use native NSSplitViewController inspector for settings drawer
+  - `72b4d0f` — feat: replace settings window with slide-out drawer on session panel
+  - `205fd2e` — fix: accessibility re-prompting, window titles, and add window discovery panel
+  - `7b6c9c5` — feat: complete CreateApp feature — actions, settings, logging, git metadata, and security fixes
+- **Status**: Active development; 11 of 12 roadmap steps complete (manual integration testing remains)
 
 ## Build & Test Commands
 
 ```bash
-# Build
+# Build debug configuration
 xcodebuild -scheme Whippet -configuration Debug build
 
-# Test
+# Run tests
 xcodebuild -scheme Whippet -configuration Debug test
 
-# Open in Xcode
-open Whippet/Whippet.xcodeproj
+# Build release configuration
+xcodebuild -scheme Whippet -configuration Release build
 ```
 
 ## Notes
 
-- Menu bar app with no dock icon (LSUIElement = YES), using SF Symbol `dog.fill` for the menu bar icon
-- Event pipeline: Claude Code hooks write JSON files to `~/.claude/session-events/` -> DispatchSource watches directory -> files parsed and inserted into SQLite -> files deleted after ingestion
-- Hook auto-installation uses `# whippet-hook` marker comments to identify its hooks, supports merge with existing hooks and clean uninstallation
-- Sessions grouped by repository/project, with visual status indicators (green=active, orange=stale, hollow=ended)
-- Staleness detection via configurable timeout (default 60s) with DispatchSourceTimer on utility QoS queue
-- AI session summarization is debounced and supports 4 providers (Anthropic, OpenAI, Google, Custom) with Keychain-stored API keys
-- The Whippet-cookbook directory contains an agentic-cookbook project definition with 28 components mapped to recipes
-- 14 test files covering all major subsystems (200+ tests total across DatabaseManager, EventIngestion, HookInstaller, Notifications, Actions, SessionList, Liveness, Panel, Summarizer, Settings, LaunchAtLogin, AIRequestBuilder)
-- Part of a broader tool ecosystem referenced alongside "Catnip IDE" (scratching-post) project
+- **Session Event Format**: JSON files in `~/.claude/session-events/` produced by Claude Code hooks
+- **Database**: SQLite with WAL mode for efficient concurrent access
+- **Accessibility API**: Used for window discovery and activation (requires accessibility permissions)
+- **Multi-provider AI Summarization**: Supports Anthropic, OpenAI, Google, and custom API providers
+- **Related Project**: [Hairball](https://github.com/mikefullerton/Hairball) — another menu bar app for managing window task contexts
+- **macOS Requirements**: macOS 14+
+- **App Type**: LSUIElement (no Dock presence, menu bar only)
+- **Status**: Actively maintained with regular commits and feature refinements

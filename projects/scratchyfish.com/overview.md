@@ -1,94 +1,184 @@
-# scratchyfish.com
+# Scratchyfish.com
 
 ## Project Summary
 
-A Jekyll-based static website for Scratchy Fish, a progressive jazz rock band from San Jose, California. The site features band member bios with photo toggle (dog/person), music pages, video gallery, photo gallery, show listings, news posts (including auto-generated posts for YouTube videos), and a contact page. Hosted on GitHub Pages with a custom domain (scratchyfish.com). Content is data-driven via JSON files in `_data/` and Jekyll templating.
+A static website for Scratchy Fish, a progressive jazz rock band from San Jose, California. Built with Jekyll and hosted as a static site with music, photos, news, shows, and biography content. Features a responsive design for band promotion and fan engagement with news feed, video gallery, and band member information.
 
 ## Type & Tech Stack
 
-- **Type**: Static website (band/music)
-- **Framework**: Jekyll (GitHub Pages)
-- **Languages**: HTML, CSS, Liquid templates
-- **Content**: JSON data files (`_data/`), Markdown posts (`_posts/`)
-- **Hosting**: GitHub Pages with custom domain
-- **Domain**: scratchyfish.com (CNAME configured)
-- **Dependencies**: Gemfile (kramdown markdown processor)
+**Project Type:** Static website (Jekyll-based)
+
+**Core Technologies:**
+- **Jekyll** — Static site generator with Liquid templates
+- **HTML/CSS/Sass** — Frontend markup and styling
+- **YAML** — Data files and Jekyll configuration
+- **Markdown** — Content authoring
+- **Git Pages** — Deployment and hosting
+
+**Architecture:**
+- Jekyll template system with reusable layouts
+- Data-driven content via YAML front matter
+- Asset pipeline for images, CSS, JavaScript
+- Static site with no backend requirements
 
 ## GitHub URL
 
 `git@github.com:mikefullerton/scratchyfish.com.git`
 
+https://github.com/mikefullerton/scratchyfish.com
+
 ## Directory Structure
 
 ```
 scratchyfish.com/
-├── .claude/
-│   └── settings.local.json          # Permission allowlists
-├── _config.yml                       # Jekyll configuration
-├── _data/                            # JSON data files (band members, shows, etc.)
-├── _includes/                        # Partial templates
-├── _layouts/                         # Page layouts
-├── _posts/                           # News/blog posts (14+ posts)
-├── assets/                           # Images, CSS, static assets
-├── bio/                              # Band member bio subpages
-├── bio.html                          # Band bio page
-├── CNAME                             # Custom domain (scratchyfish.com)
-├── contact.html                      # Contact page
-├── friends.html                      # Friends/links page
-├── Gemfile                           # Ruby dependencies
-├── index.html                        # Homepage
-├── music.html                        # Music page
-├── news.html                         # News listing
-├── photos.html                       # Photo gallery
-├── robots.txt                        # Search engine directives
-├── shows.html                        # Show listings
-├── sitemap.xml                       # XML sitemap
-└── video.html                        # Video gallery
+├── _config.yml                      # Jekyll configuration
+├── _data/                           # Data files (YAML)
+│   └── [band members, posts, etc.]
+├── _includes/                       # Reusable template components
+├── _layouts/                        # Page layout templates
+├── _posts/                          # Blog posts (16+ markdown files)
+├── assets/                          # Images, CSS, JavaScript
+│   ├── [band photos]
+│   ├── [album artwork]
+│   └── [styles]
+├── bio/                             # Band member biographies
+├── bio.html                         # Generated biography page
+├── contact.html                     # Contact form/information
+├── friends.html                     # Related artists/friends
+├── index.html                       # Homepage
+├── music.html                       # Music/albums page
+├── news.html                        # News feed
+├── photos.html                      # Photo gallery
+├── shows.html                       # Upcoming shows
+├── video.html                       # Video gallery
+├── Gemfile                          # Ruby dependencies
+├── CNAME                            # Domain configuration
+├── robots.txt                       # SEO configuration
+├── sitemap.xml                      # Sitemap for indexing
+├── .claude/                         # Claude Code configuration
+├── .gitignore
+└── README.md
 ```
 
 ## Key Files & Components
 
-- `_config.yml` -- Jekyll config: title "Scratchy Fish", kramdown markdown, GitHub Pages theme disabled, custom domain URL
-- `_data/` -- JSON data files driving band member bios, shows, posts, videos
-- `bio.html` -- Band bio page with dog/person photo toggle feature
-- `friends.html` -- Links to friends and associated acts
-- `music.html` -- Music player/links page
-- `video.html` -- Video gallery (YouTube embeds, full-width entries)
-- `_posts/` -- 14+ news posts including auto-generated entries for YouTube videos
-- `index.html` -- Homepage with latest news and featured content
+**Configuration:**
+- `_config.yml` — Jekyll site configuration (title, URL, markdown, permalinks)
+
+**Content Pages:**
+- `index.html` — Homepage with band info and featured content
+- `music.html` — Music/albums section
+- `shows.html` — Upcoming shows and tour dates
+- `photos.html` — Photo gallery
+- `video.html` — Video gallery
+- `news.html` — News feed
+- `bio.html` — Generated band member biographies
+- `contact.html` — Contact information
+- `friends.html` — Related artists and collaborators
+
+**Content Management:**
+- `_data/` — YAML data files for band members, posts, and structured content
+- `_posts/` — Blog posts with metadata (16+ news articles)
+
+**Templates:**
+- `_layouts/` — Reusable page layouts (default, post, etc.)
+- `_includes/` — Reusable template components (navigation, headers, footers)
+
+**Assets:**
+- `assets/` — Images, stylesheets, JavaScript
+- Downloaded local images (band photos, album artwork, video thumbnails)
+
+**SEO & Metadata:**
+- `sitemap.xml` — XML sitemap for search engines
+- `robots.txt` — Robot exclusion rules
+- `CNAME` — Domain configuration for scratchyfish.com
 
 ## Claude Configuration
 
-- `.claude/settings.local.json` -- Permission allowlists for git operations, web fetching (scratchyfish.com, youtube.com, unsplash.com, idiotfish.net, linktr.ee), image processing (sips, curl, yt-dlp), GitHub CLI, and web search
-- No CLAUDE.md or project-level rules
+**Configuration Files:**
+- `.claude/` — Claude Code configuration for site development
 
 ## Planning & Research Documents
 
-None found.
+No dedicated planning/research directories found. Content management handled through Jekyll data files and front matter.
 
 ## Git History & Current State
 
-- **Branch**: main
-- **Last commit**: 2026-04-05 -- "git ignore change"
-- **Working tree**: Clean
-- **Total commits**: 15+ (viewed)
-- **Recent activity**: Photo toggle features (Jan 2026), video gallery improvements, external image localization, gitignore updates (Apr 2026)
-- **Key recent changes**: Phil Bernosky bio/photo additions, external image URL fixes, video gallery full-width layout, news posts for YouTube videos
+**Recent Activity:**
+- `9137754` git ignore change
+- `af35af2` chore: update claude local settings
+- `760cd0b` Add Phil Bernosky serious bio text
+- `2a846aa` Add Phil Bernosky person photo with dog/person toggle
+- `72b323f` Fix remaining external image URLs in posts.json
+- `5021168` Add Mike Fullerton dog photo locally
+- `7e26568` Download all external images to local assets (static hosting)
+- `9d27b20` Restore original dog photo URL for Mike Fullerton
+- `9cce459` Fix Mike Fullerton dog photo URL
+- `1fd8c7c` Sync photo toggle and translate link
+- `404a6ee` Make video gallery entries full width
+- `229f5da` Ensure post and video cards are full width
+- `12f9785` Make video entries full width
+- `3167067` Add news posts for all YouTube videos
+- `aad7836` Add Art Boutiki video to videos section
+
+**Pattern:** Steady content updates with image optimization and gallery refinement.
+
+**Current State:**
+- **Branch:** main
+- **Status:** Clean working tree
 
 ## Build & Test Commands
 
+**Build Site:**
 ```bash
-# Local development (requires Jekyll/Ruby)
-bundle install
-bundle exec jekyll serve
+bundle exec jekyll build        # Generate static site
+bundle exec jekyll serve       # Local development server (port 4000)
+```
 
-# Deploy: Push to main branch (GitHub Pages auto-deploys)
-git push origin main
+**Install Dependencies:**
+```bash
+bundle install                 # Install Ruby gems
+```
+
+**Preview:**
+```bash
+open _site/index.html         # View generated site
 ```
 
 ## Notes
 
-- All external images have been downloaded to local assets to avoid broken links
-- Band member bios feature a dog/person photo toggle (each member has both a regular photo and a dog photo)
-- The site uses a null remote theme (custom HTML/CSS, no Jekyll theme gem)
-- CNAME file configures the custom domain scratchyfish.com
+**Architecture Highlights:**
+
+1. **Static Site Generation** — Jekyll compiles all content to static HTML at build time
+2. **Data-Driven Content** — Band members, posts, and structured content via YAML data files
+3. **Image Optimization** — Recent migration to local asset hosting (no external dependencies)
+4. **Responsive Design** — Mobile-friendly layout for desktop and mobile viewing
+5. **SEO Optimized** — Sitemap, robots.txt, and proper metadata for search engines
+
+**Content Areas:**
+
+- **Music** — Albums and music releases
+- **Shows** — Tour dates and upcoming performances
+- **News** — Blog posts with news and updates
+- **Photos** — Band and performance photography
+- **Videos** — YouTube video gallery
+- **Bio** — Band member biographies with photos
+- **Connect** — Contact and social links
+
+**Recent Improvements:**
+
+- Migration of external images to local assets (improved load time, no external dependencies)
+- Photo toggle functionality for band member profiles
+- Video gallery entries made full-width for better presentation
+- Consistent video thumbnail sizing
+
+**Deployment:**
+
+Hosted as static site on GitHub Pages at scratchyfish.com via CNAME configuration. Pure static deployment with no backend requirements, ensuring fast load times and high reliability.
+
+**Development Notes:**
+
+- Uses Jekyll's data files for easy content management
+- Liquid templating for dynamic site generation
+- Git-based workflow for content updates
+- All content is version-controlled

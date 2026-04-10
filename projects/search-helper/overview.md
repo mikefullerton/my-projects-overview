@@ -1,107 +1,188 @@
-# search-helper
+# Search Helper
 
 ## Project Summary
 
-A macOS application suite for browsing assistance, originally named SearchHelper and later renamed to BrowsingPal. Features include a search builder with autocomplete and history, a links tracker for saving and browsing URLs, a global hotkey for quick access, browser switch settings, and a Finder extension (SearchHelperFinder). Built with SwiftUI/AppKit for macOS 14+, using SQLite (via GRDB) for persistence and KeyboardShortcuts for global hotkeys. Includes a deep linking URL scheme (`browsingpal://`).
+A native macOS application for managing and automating web searches with customizable search terms, database persistence, and Finder integration. Provides a desktop client (BrowsingPal) with global hotkey shortcuts for quick searches, browser-specific routing, and a Finder Sync extension for right-click access. Designed to streamline research workflows and URL management.
 
 ## Type & Tech Stack
 
-- **Type**: macOS application (menu bar / utility)
-- **Language**: Swift
-- **Platform**: macOS 14.0+
-- **UI**: SwiftUI + AppKit
-- **Storage**: SQLite via GRDB.swift
-- **Hotkeys**: KeyboardShortcuts (sindresorhus)
-- **Build**: XcodeGen (project.yml) + Xcode
-- **Code signing**: Automatic (Team K2NA732JAX)
-- **CI/CD**: GitHub Actions workflows
+**Project Type:** Native macOS application suite (main app + Finder extension)
+
+**Core Technologies:**
+- **Swift** — Native application code
+- **SwiftUI** — Modern UI framework
+- **Xcode** — Project generation via xcodegen
+- **project.yml** — XcodeGen configuration for project structure
+- **SQLite/GRDB** — Persistent database for search terms
+- **KeyboardShortcuts** — Global hotkey management
+- **Finder Sync Framework** — Right-click context menu integration
+- **AppKit** — Native macOS features
+
+**Architecture:**
+- Main BrowsingPal application for search management
+- Finder Sync extension for context menu integration
+- SearchTermsApp for configuration UI
+- SQLite backend for search term and URL tracking
+- Global hotkey support for quick access
 
 ## GitHub URL
 
 `git@github.com:mikefullerton/search-helper.git`
 
+https://github.com/mikefullerton/search-helper
+
 ## Directory Structure
 
 ```
 search-helper/
-├── .github/
-│   └── workflows/                    # CI/CD workflows
-├── docs/
-│   ├── architecture.md              # Architecture documentation
-│   ├── decisions.md                 # Decision records
-│   └── testing.md                   # Testing guide
-├── SearchHelper/
-│   ├── SearchHelper.entitlements    # App entitlements (sandbox disabled)
-│   └── (source files)              # Main app target
-├── SearchHelperFinder/              # Finder extension target
-├── SearchTermsApp/
-│   ├── AppDelegate.swift            # App entry point
-│   ├── BrowserActivator.swift       # Browser switching logic
-│   ├── DatabaseManager.swift        # GRDB SQLite manager
-│   ├── HotkeyNames.swift           # Global hotkey definitions
-│   ├── Link.swift                   # Link model
-│   ├── LinkPreviewFetcher.swift     # URL preview fetching
-│   ├── LinksView.swift             # Links tracker UI
-│   ├── Models.swift                 # Data models
-│   ├── SearchBuilderView.swift      # Search builder UI
-│   ├── SearchTermsApp.swift         # App lifecycle
-│   ├── SearchTermsApp.entitlements  # Entitlements
-│   ├── SearchTokenizer.swift        # Search term tokenization
-│   └── SettingsView.swift           # Settings UI
-├── SearchHelper.xcodeproj/          # Generated Xcode project
-├── project.yml                      # XcodeGen project definition
-└── .gitignore
+├── .github/                             # GitHub Actions CI/CD workflows
+├── docs/                                # Documentation
+├── SearchHelper/                        # Finder extension source
+│   └── [FinderSync implementation]
+├── SearchHelper.xcodeproj/              # Generated Xcode project
+├── SearchHelperFinder/                  # Finder extension bundle
+│   └── [FinderSync extension]
+├── SearchTermsApp/                      # Main BrowsingPal application
+│   ├── main.swift                       # Entry point
+│   ├── [UI views and models]
+│   ├── SearchTermsApp.entitlements      # App sandboxing/permissions
+│   └── Info.plist                       # App manifest
+├── project.yml                          # XcodeGen project definition
+├── .gitignore
+└── README.md
 ```
 
 ## Key Files & Components
 
-- `project.yml` -- XcodeGen project definition: macOS 14.0 deployment target, GRDB and KeyboardShortcuts dependencies, automatic code signing
-- `SearchTermsApp/DatabaseManager.swift` -- GRDB-based SQLite database for search terms and links
-- `SearchTermsApp/SearchBuilderView.swift` -- Search builder with autocomplete and history
-- `SearchTermsApp/LinksView.swift` -- Links tracker window for saving and browsing URLs
-- `SearchTermsApp/BrowserActivator.swift` -- Browser switching and activation logic
-- `SearchTermsApp/SettingsView.swift` -- Settings with search terms in tabs
-- `docs/architecture.md` -- Architecture documentation
-- `docs/decisions.md` -- Architectural decision records
-- `docs/testing.md` -- Testing guide
+**Project Configuration:**
+- `project.yml` — XcodeGen configuration defining all targets, settings, and dependencies
+
+**Main Application (BrowsingPal):**
+- `SearchTermsApp/` — Main application source code
+- Global hotkey for quick search access
+- Search term entry and editing UI
+- Links tracker window for URL management
+- Browser selection and routing
+- Deep linking support via `browsingpal://` URL scheme
+
+**Finder Extension:**
+- `SearchHelper/` — FinderSync extension implementation
+- Right-click context menu in Finder
+- Integrated search workflow
+
+**Database:**
+- SQLite backend via GRDB for:
+  - Search term storage
+  - Hotkey/browser mapping
+  - URL history and tracking
+
+**Configuration:**
+- `SearchTermsApp.entitlements` — Sandbox permissions for hotkeys and file access
+- Settings tabs for behavior customization
+- Browser selection configuration
 
 ## Claude Configuration
 
-- No CLAUDE.md or `.claude/` settings found in the repository
-- GitHub Actions workflows present in `.github/workflows/`
+**CI/CD:**
+- `.github/` — GitHub Actions workflows for code review and testing
+- Automated code signing configuration
 
 ## Planning & Research Documents
 
-- `docs/architecture.md` -- Architecture documentation
-- `docs/decisions.md` -- Decision records
-- `docs/testing.md` -- Testing documentation
+**Documentation:**
+- `docs/` — Design documentation and usage guides
+
+**Feature Development:**
+- No dedicated planning directory found
+- Features tracked via GitHub issues
 
 ## Git History & Current State
 
-- **Branch**: main
-- **Last commit**: 2026-04-06 -- "chore: standardize worktree directory to .claude/worktrees/"
-- **Working tree**: Clean
-- **Total commits**: 15+ (viewed)
-- **Recent activity**: Deep linking URL scheme (Feb 2026), links tracker, search term UX improvements, worktree standardization (Apr 2026)
-- **Key features added**: SQLite via GRDB (#7), search builder (#7), global hotkey (#4), browser switch (#10), links tracker (#11), deep linking (#13), BrowsingPal rename (#6)
+**Recent Activity:**
+- `084634a` chore: standardize worktree directory to .claude/worktrees/
+- `c99e7a2` Add deep linking URL scheme (browsingpal://)
+- `3331cc9` Add Links Tracker window for saving/browsing URLs
+- `c88fb95` Move search terms into Settings tabs
+- `da1ea57` Add browser switch setting, autocomplete, history editing
+- `955f6b5` Improve Search Builder UX: hotkey, autocomplete, history
+- `f7509a4` Add explicit code signing settings
+- `56e693c` Add SQLite database via GRDB
+- `47b85df` Rename app to BrowsingPal, pin input, remember window
+- `da8756f` Disable app sandbox to allow global hotkey
+- `d71429d` Enable automatic code signing
+- `d1ac95f` Track generated Xcode project in version control
+- `93bbef6` Add global hotkey, search/filter, sorting, space-prepend
+- `dc842dc` Add code review pipeline workflows
+- `64c9f62` Add term entry and edit/delete to SearchTermsApp
+
+**Pattern:** Active development with features for search management, browser integration, and Finder extension.
+
+**Current State:**
+- **Branch:** main
+- **Status:** Clean working tree
 
 ## Build & Test Commands
 
+**Generate Xcode Project:**
 ```bash
-# Generate Xcode project
 xcodegen generate
+```
 
-# Open in Xcode
+**Build:**
+```bash
+xcodebuild -project SearchHelper.xcodeproj -scheme SearchTermsApp build
+```
+
+**Open in Xcode:**
+```bash
 open SearchHelper.xcodeproj
+```
 
-# Build (via Xcode or xcodebuild)
-xcodebuild -scheme SearchHelper -configuration Debug build
+**Run:**
+```bash
+xcodebuild -project SearchHelper.xcodeproj -scheme SearchTermsApp run
 ```
 
 ## Notes
 
-- App was renamed from SearchHelper to BrowsingPal (PR #6) but the repo/project is still named search-helper
-- App sandbox is disabled to allow global hotkey monitoring
-- The SearchHelperFinder target is a Finder extension (separate from the main app)
-- Deep linking via `browsingpal://` URL scheme
-- Project is paused but feature-rich with 13+ PRs of development
+**Architecture Highlights:**
+
+1. **XcodeGen Project Generation** — project.yml defines all targets and configuration
+2. **Multi-Target Structure** — Main app, Finder extension, and search terms app
+3. **SQLite Persistence** — GRDB backend for search terms, hotkeys, and history
+4. **Global Hotkey Integration** — KeyboardShortcuts framework for system-wide shortcuts
+5. **Finder Integration** — FinderSync extension for right-click workflows
+6. **Deep Linking** — Custom browsingpal:// URL scheme for automation
+
+**Key Features:**
+
+- **Global Hotkey** — Quick access from anywhere on system
+- **Search Term Management** — Entry, editing, deletion with persistence
+- **Browser Routing** — Configure preferred browsers for searches
+- **Links Tracker** — Save and manage research URLs
+- **Finder Context Menu** — Right-click access in Finder
+- **URL Autocomplete** — Smart suggestions from history
+- **Settings Tabs** — Organized configuration UI
+- **Keyboard Shortcuts** — Customizable hotkey binding
+
+**Permissions Model:**
+
+- Code signing via automatic certificate management
+- Sandbox entitlements for macOS security
+- Global hotkey monitoring (requires accessibility permission)
+
+**Development Workflow:**
+
+- XcodeGen-based project management for maintainability
+- Automatic code signing in GitHub Actions
+- Code review pipeline configured via GitHub Actions
+- Feature branches for development
+
+**User Experience:**
+
+The application streamlines research and URL management through:
+- Quick hotkey access for searches
+- Browser-specific search routing
+- Native Finder integration
+- Persistent URL/search history
+- Keyboard-driven workflow

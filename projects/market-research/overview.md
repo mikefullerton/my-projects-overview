@@ -1,77 +1,106 @@
-# market-research
+# Market Research
 
 ## Project Summary
 
-An AI-powered market research tool for evaluating indie software project ideas. Runs 5 sequential analysis agents per project (Market, Competition, Revenue, Feasibility, Progress), then a Synthesizer agent compares all projects with weighted scoring to produce a clear recommendation on which project to pursue first for the fastest path to revenue. Designed for solo indie developers with multiple project ideas who need objective, data-driven prioritization.
+Market Research is an AI-powered market analysis tool that evaluates indie software project ideas by running 5 specialized analysis agents per project, then synthesizing a cross-project ranking with a clear recommendation on which project to pursue first for the fastest path to revenue. Designed for solo indie developers with multiple project ideas who need objective, data-driven decision-making. Each project is analyzed across five dimensions (Market, Competition, Revenue, Feasibility, Progress) using the Anthropic SDK and Tavily web search, generating detailed per-project reports, comparative rankings, and executive summaries.
 
 ## Type & Tech Stack
 
-- **Type**: CLI tool / AI agent system
-- **Language**: Python 3.9+
-- **AI**: Anthropic SDK (Claude) with structured output via tool_use + Pydantic
-- **Search**: Tavily API (web search with file-based daily cache)
-- **Validation**: Pydantic v2 (schema validation for all inputs/outputs)
-- **CLI**: Rich (progress indicators and tables)
-- **Config**: python-dotenv, PyYAML
-- **Build**: setuptools (pyproject.toml)
-- **Package**: `market-research` CLI entry point
+**Type:** AI-Powered CLI Tool / Market Analysis System
+
+**Tech Stack:**
+- **Language:** Python 3.9+
+- **AI/LLM:** Anthropic Claude API (Sonnet 4.5 by default, configurable to Opus)
+- **Web Search:** Tavily Python SDK
+- **Schema Validation:** Pydantic v2
+- **CLI:** Rich (progress bars, tables, colored output), argparse
+- **Configuration:** python-dotenv for environment variables
+- **Package Manager:** pip / setuptools
+- **Build System:** setuptools + wheel
 
 ## GitHub URL
 
-`git@github.com:mikefullerton/market-research.git`
+https://github.com/mikefullerton/market-research.git
 
 ## Directory Structure
 
 ```
 market-research/
-├── .claude/
-│   └── settings.local.json          # Permission allowlists (git operations)
-├── .env.example                      # API key template
+├── pyproject.toml          # Project metadata, dependencies, entry point
+├── .env.example            # Environment template (ANTHROPIC_API_KEY, TAVILY_API_KEY)
+├── README.md               # Project overview, usage, setup
+├── src/market_research/    # Main package
+│   ├── __init__.py
+│   ├── cli.py              # Entry point, orchestration, CLI commands
+│   ├── config.py           # Load .env, create API clients
+│   ├── schema.py           # Pydantic models (input/output schemas)
+│   ├── loader.py           # Load & validate YAML project files
+│   ├── search.py           # Tavily wrapper with file-based daily cache
+│   ├── report.py           # Markdown report generation
+│   └── agents/
+│       ├── __init__.py
+│       ├── base.py         # Shared Anthropic SDK wrapper, structured output
+│       ├── market.py       # Market size, demand signals (uses Tavily)
+│       ├── competition.py  # Competitor mapping, saturation (uses Tavily)
+│       ├── revenue.py      # Revenue models, pricing, time-to-money (uses Tavily)
+│       ├── feasibility.py  # Solo-founder viability, MVP time
+│       ├── progress.py     # Leverage existing work, adjust time-to-revenue
+│       └── synthesizer.py  # Cross-project ranking, recommendation
+├── projects/               # User-authored project YAML files
+│   └── _template.yaml      # Template for adding new projects
 ├── docs/
-│   ├── ARCHITECTURE.md              # System architecture
-│   ├── DESIGN_RATIONALE.md          # Design decisions
-│   ├── IMPLEMENTATION_LOG.md        # Implementation history
-│   └── ORIGINAL_SPEC.md            # Original specification
-├── projects/
-│   ├── _template.yaml              # Project definition template
-│   └── todo-app.yaml               # Example project definition
-├── reports/                         # Generated analysis reports (empty)
-├── src/
-│   └── market_research/            # Python package source
-├── pyproject.toml                   # Build config + dependencies
-└── README.md                        # Usage docs
+│   ├── ORIGINAL_SPEC.md    # Initial specification & design
+│   ├── ARCHITECTURE.md     # Implementation architecture
+│   ├── DESIGN_RATIONALE.md # Key design decisions
+│   └── IMPLEMENTATION_LOG.md # Development log
+├── .claude/                # Claude Code configuration
+│   └── settings.local.json # Local Claude settings
+├── reports/                # Generated reports (gitignored)
+├── .venv/                  # Virtual environment
+└── .gitignore
 ```
 
 ## Key Files & Components
 
-- `pyproject.toml` -- Dependencies: anthropic>=0.79.0, tavily-python>=0.7.21, pydantic>=2.0, pyyaml, rich, python-dotenv
-- `src/market_research/` -- Main package with CLI entry point (`cli:main`), 6 analysis agents
-- `projects/_template.yaml` -- YAML schema for defining project ideas to evaluate
-- `projects/todo-app.yaml` -- Example project definition
-- `docs/ARCHITECTURE.md` -- System architecture documentation
-- `docs/DESIGN_RATIONALE.md` -- Design decisions and rationale
-- `docs/ORIGINAL_SPEC.md` -- Original specification
+- **pyproject.toml** - Project metadata, setuptools configuration, entry point (`market-research = "market_research.cli:main"`), dependencies (anthropic, tavily-python, pydantic, pyyaml, rich, python-dotenv)
+- **README.md** - Complete usage guide, setup instructions, CLI syntax, output format, cost breakdown, tech stack overview
+- **src/market_research/cli.py** - Main orchestration: parses CLI args (analyze, list, --project, --skip-cache), runs agent pipeline, generates reports
+- **src/market_research/schema.py** - Pydantic models for ProjectInput (YAML schema), agent outputs (scores 1-10), CompositeScore (weighted ranking), ProjectReport
+- **src/market_research/agents/base.py** - Shared Anthropic SDK wrapper using tool_use + Pydantic structured output
+- **src/market_research/agents/market.py** - Market Agent: TAM/SAM/SOM analysis, growth trends, demand signals via Tavily
+- **src/market_research/agents/competition.py** - Competition Agent: competitor mapping, saturation, differentiation gaps
+- **src/market_research/agents/revenue.py** - Revenue Agent: revenue model recommendations, pricing, time-to-first-dollar
+- **src/market_research/agents/feasibility.py** - Feasibility Agent: solo-founder viability, MVP timeline, maintenance burden
+- **src/market_research/agents/progress.py** - Progress Agent: existing work leverage, adjusted time-to-revenue
+- **src/market_research/agents/synthesizer.py** - Synthesizer: cross-project comparison, weighted ranking, recommendation
+- **src/market_research/search.py** - Tavily wrapper with file-based daily cache (no repeated API calls same day)
+- **src/market_research/report.py** - Markdown report generation (per-project, ranking, executive summary)
+- **docs/ORIGINAL_SPEC.md** - Original design specification with scoring methodology, architecture overview, analysis pipeline, implementation order
+- **docs/ARCHITECTURE.md** - Implementation architecture details
+- **projects/_template.yaml** - Template for defining new projects (name, description, target_audience, problem_solved, existing_progress, platforms, revenue_ideas, competitors_known, keywords, constraints)
 
 ## Claude Configuration
 
-- `.claude/settings.local.json` -- Permission allowlists for git init, checkout, remote, fetch, add, commit, push
-- No CLAUDE.md or project-level rules
+Stored in **.claude/settings.local.json** - Contains local Claude Code settings for project-specific configuration.
 
 ## Planning & Research Documents
 
-- `docs/ARCHITECTURE.md` -- System architecture
-- `docs/DESIGN_RATIONALE.md` -- Design decisions
-- `docs/IMPLEMENTATION_LOG.md` -- Implementation history
-- `docs/ORIGINAL_SPEC.md` -- Original project specification
+- **docs/ORIGINAL_SPEC.md** - Comprehensive original specification (80+ lines) covering architecture, project input schema, analysis pipeline (5 agents + synthesizer), scoring methodology (5 weighted dimensions), output format, CLI usage, dependencies, implementation order, and verification steps
+- **docs/ARCHITECTURE.md** - Implementation architecture
+- **docs/DESIGN_RATIONALE.md** - Key design decisions (YAML for project input, Pydantic for schema validation, Anthropic SDK directly, Tavily for search, file-based cache, Claude Sonnet 4.5, Markdown reports)
+- **docs/IMPLEMENTATION_LOG.md** - Development log of implementation progress
 
 ## Git History & Current State
 
-- **Branch**: main
-- **Last commit**: 2026-04-06 -- "chore: standardize worktree directory to .claude/worktrees/"
-- **Working tree**: Clean
-- **Total commits**: 4
-- **Recent activity**: Initial build (Feb 2026), documentation added, worktree standardization (Apr 2026)
-- **Key commits**: Initial commit, market research agent system (#1), project documentation (#2)
+- **Remote:** git@github.com:mikefullerton/market-research.git
+- **Current Branch:** main
+- **Status:** Clean working tree (no uncommitted changes)
+- **Recent Activity:**
+  - Latest: Merge remote-tracking branch 'origin/docs/project-history' (806c6e9)
+  - chore: standardize worktree directory to .claude/worktrees/ (67b2bcf, 9ba46f4)
+  - Add project documentation (#2) (55a318e, fdacaa3)
+  - Add market research agent system (#1) (e48a0a7)
+  - Initial commit with .gitignore (8163769)
 
 ## Build & Test Commands
 
@@ -79,21 +108,28 @@ market-research/
 # Setup
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -e .
+pip install -e .                         # Editable install (development mode)
 cp .env.example .env
 # Edit .env with ANTHROPIC_API_KEY and TAVILY_API_KEY
 
 # Usage
-market-research list                        # List defined projects
-market-research analyze                     # Analyze all projects
-market-research analyze --project todo-app  # Analyze single project
-market-research analyze --skip-cache        # Force fresh web searches
+market-research list                     # List defined projects
+market-research analyze                  # Analyze all projects
+market-research analyze --project NAME   # Analyze specific project
+market-research analyze --skip-cache     # Force fresh web searches
+
+# Running Python directly
+python -m market_research.cli analyze
+python -m market_research.cli list
 ```
 
 ## Notes
 
-- Scoring weights: Feasibility (0.25), Revenue (0.20), Progress (0.20), Market (0.20), Competition (0.15)
-- Cost: ~$0.12 per full 4-project run with Claude Sonnet; ~60 Tavily searches per run
-- Tavily search cache prevents duplicate API calls on same-day re-runs
-- Reports output to `reports/<date>/` with per-project, ranking, and executive summary reports
-- Project is paused -- functional but not actively developed
+- **Status:** Active development for project evaluation
+- **Scoring Dimensions:** Feasibility (0.25 weight - solo dev time constraint), Revenue (0.20 - monetization viability), Progress (0.20 - existing work leverage), Market (0.20 - demand existence), Competition (0.15 - addressable via differentiation)
+- **Cost Estimate:** ~$0.12 per full 4-project run using Claude Sonnet 4.5; ~60 Tavily searches per run (~6% of 1,000 free monthly credits)
+- **Search Cache:** File-based daily cache prevents re-burning API credits on same-day re-runs
+- **Agent Pipeline:** Sequential execution where each agent feeds results to next (Market → Competition → Revenue → Feasibility → Progress → Synthesizer for cross-project ranking)
+- **Output Format:** Markdown reports (per-project analysis, comparative ranking table with narrative, executive summary with bottom-line recommendation and timeline)
+- **Extensibility:** Easy to add new projects via YAML files; configurable to use Claude Opus instead of Sonnet via ANTHROPIC_MODEL env var
+- **Tavily Integration:** Web search with structured results for market research, competitor analysis, revenue model discovery

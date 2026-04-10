@@ -2,105 +2,181 @@
 
 ## Project Summary
 
-Scratching Post is a macOS application hosting the Catnip IDE — a document-based, multi-window IDE for managing projects and workspaces with integrated terminal sessions, notes, file browsing, and AI-powered session summarization.
+A native macOS IDE enhancement application that provides AI-powered development assistance with session management, real-time file monitoring, intelligent project discovery, and Claude AI integration. Designed as a productivity tool that sits alongside native development environments, offering features like session summarization, layout persistence, and AI-powered notes.
 
 ## Type & Tech Stack
 
-- **Project Type:** Native macOS SwiftUI/AppKit Application
-- **Language:** Swift 5+
-- **UI:** SwiftUI with AppKit interop
-- **Database:** SQLite3 (custom SQLiteHelpers wrapper)
-- **Terminal:** SwiftTerm
-- **Code Editing:** CodeEditSourceEditor, CodeEditLanguages
-- **File Monitoring:** FSEvents (FileSystemWatcher)
-- **Document Types:** `.catnip-proj`, `.catnip-workspace`
+**Project Type:** Native macOS desktop application
+
+**Core Technologies:**
+- **Swift & SwiftUI** — Modern native macOS UI framework
+- **Xcode Project (.xcodeproj)** — Swift Package Manager integration
+- **Core Data/SQLite** — Session state and layout persistence
+- **FileSystemWatcher/DirectoryWatcher** — Real-time file monitoring
+- **Claude AI SDK** — Integrated AI provider for session summarization and insights
+- **AppKit** — Native macOS integration (menu bar, window management)
+- **Darwin APIs** — IDE detection, process monitoring
+
+**Architecture Approach:**
+- Single window-based IDE as Swift application
+- Real-time file system monitoring for project changes
+- SQLite persistence for sessions and layout state
+- AI-powered session summarization and dynamic pane layouts
 
 ## GitHub URL
 
 `git@github.com:mikefullerton/scratching-post.git`
 
+https://github.com/mikefullerton/scratching-post
+
 ## Directory Structure
 
 ```
 scratching-post/
-├── .claude/
-│   ├── settings.local.json           # Permissions: xcodebuild, git, gh
-│   └── worktrees/
-├── Catnip/                            # 60 Swift source files
-│   ├── App: CatnipApp.swift, AppDelegate.swift, ContentView.swift
-│   ├── Documents: ProjectDocument.swift, WorkspaceDocument.swift, CatnipProject.swift, CatnipWorkspace.swift
-│   ├── UI - Projects: ProjectWindowView.swift (4-pane layout), ProjectSessionListView, ProjectTerminalPaneView, ProjectSettingsView, ProjectInspectorView
-│   ├── UI - Workspaces: WorkspaceWindowView, WorkspaceSidebarView, WorkspaceEntryRow, WorkspaceWelcomeView
-│   ├── UI - File Browser: FileTreeView, FileTreeNode, FileTreeManager, FileTreeCache, FileEditorView
-│   ├── UI - Terminal: TerminalViewRepresentable, TerminalSession
-│   ├── UI - Notes: NotesWindowView, NotesSettingsView, QuickNotePanel (floating NSPanel)
-│   ├── UI - Settings: SettingsView (5 tabs: General, Profiles, AI, Notes, File Types)
-│   ├── Data: SQLiteProjectStore, SQLiteWorkspaceStore, SQLiteNotesStore, SQLiteHelpers, SessionLayoutState
-│   ├── File System: FileSystemWatcher, DirectoryWatchCoordinator, GitStatusProvider, LanguageDetection
-│   ├── IDE: IDEDetector (Xcode, VS Code, IntelliJ, SPM)
-│   ├── Notes: Note.swift, NotesManager.swift
-│   ├── AI: AIProvider (multi-provider), AIRequestBuilder, SessionSummarizer, SummarizationCoordinator, KeychainHelper
-│   ├── Menu Bar: MenuBarManager (NSStatusItem), QuickNotePanel
-│   └── Core: SessionManager, Logging, SettingsKeys, WindowAccessor, UTType+Catnip
-├── Catnip.xcodeproj/
-├── Roadmaps/
-│   ├── CatnipIDEEnhancements-Roadmap.md  # Complete (16/16 steps)
-│   ├── ProjectFiles-Roadmap.md
-│   ├── SessionMetadata-Roadmap.md
-│   ├── SettingsWindow-Roadmap.md
-│   └── TerminalSessionHost-Roadmap.md
-├── CLAUDE.md
-└── .gitignore
+├── .claude/                              # Claude Code configuration
+├── Catnip/                               # Main Swift source code (66 files)
+│   ├── AIProvider.swift                  # Claude AI integration
+│   ├── AIRequestBuilder.swift            # LLM request building
+│   ├── AISettingsView.swift              # AI configuration UI
+│   ├── CatnipApp.swift                   # Main app entry point
+│   ├── CatnipProject.swift               # Project model and management
+│   ├── CatnipWorkspace.swift             # Workspace management
+│   ├── ContentView.swift                 # Main content view
+│   ├── FileEditorView.swift              # File editing interface
+│   ├── FileTreeManager.swift             # Project tree state
+│   ├── FileSystemWatcher.swift           # Real-time file monitoring
+│   ├── DirectoryWatchCoordinator.swift   # Directory watching coordination
+│   ├── [40+ additional Swift files]      # Various UI/business logic components
+│   └── Assets.xcassets                   # App icons and images
+├── Catnip.xcodeproj/                     # Xcode project configuration
+├── Roadmaps/                             # Feature development roadmaps
+├── docs/                                 # Documentation
+├── CLAUDE.md                             # Project rules
+├── .gitignore
+└── README.md
 ```
 
-## Key Components
+## Key Files & Components
 
-**Document-based Architecture:** ProjectDocument (`.catnip-proj`) and WorkspaceDocument (`.catnip-workspace`) with separate window controllers
+**Application Core:**
+- `Catnip/CatnipApp.swift` — Main application entry point and initialization
+- `Catnip/ContentView.swift` — Root content view container
 
-**4-Pane Project Window:** Sessions sidebar, terminal, file tree, inspector
+**AI Integration:**
+- `Catnip/AIProvider.swift` — Claude AI integration and provider management
+- `Catnip/AIRequestBuilder.swift` — Building and formatting AI requests
+- `Catnip/AISettingsView.swift` — AI configuration user interface
 
-**File Browser:** FSEvents monitoring, git status overlay, IDE detection (Xcode/VS Code/IntelliJ), file tree caching
+**Session Management:**
+- `Catnip/CatnipProject.swift` — Project model, session management
+- `Catnip/CatnipWorkspace.swift` — Workspace state and persistence
 
-**Notes System:** Full CRUD, pinning, markdown editing, search, dedicated SQLiteNotesStore
+**File System & Monitoring:**
+- `Catnip/FileSystemWatcher.swift` — Real-time file system change detection
+- `Catnip/DirectoryWatchCoordinator.swift` — Coordinates directory watching
+- `Catnip/FileTreeManager.swift` — Project tree structure caching
+- `Catnip/FileTreeCache.swift` — Efficient tree caching
 
-**Menu Bar:** NSStatusItem with project/workspace listing, Quick Note floating panel
+**UI Components:**
+- `Catnip/FileEditorView.swift` — File editing interface
+- `Catnip/ContentViewerView.swift` — Content viewing/previewing
+- `Catnip/AppDelegate.swift` — Application delegate for lifecycle events
 
-**AI Summarization:** Multi-provider (Claude/OpenAI/Google), triggered on topic change, debounced
-
-**Persistence:** Per-concern SQLite stores (Project, Workspace, Notes), layout state in DB
+**Project Discovery:**
+- Project discovery via IDEs (Xcode, VSCode detection)
+- Automatic project structure analysis
+- IDE-based project sub-item display
 
 ## Claude Configuration
 
-- Permissions: xcodebuild, git operations, gh CLI
-- Worktrees for feature branches
+**Configuration Files:**
+- `.claude/` — Project settings and Claude Code configuration
+
+**Project Conventions:**
+- Modern SwiftUI patterns with `@Observable` and `@MainActor`
+- Sendable conformance for concurrency safety
+- Proper main-thread isolation for UI updates
 
 ## Planning & Research Documents
 
-**CatnipIDEEnhancements Roadmap (Complete, 16/16 steps):**
-Window title fix, file browser toggle, resize-to-fit, IDE detection/caching, IDE inspector, open-in-IDE, notes window, SQLiteNotesStore, notes settings, file types settings, quick note panel, menu bar, AI summarization, dynamic pane layout, IDE sub-items, settings redesign
+**Feature Roadmaps:**
+- `Roadmaps/` — Contains feature development specifications and progress tracking
+- Active feature: CatnipIDEEnhancements (window title fix, file browser improvements, IDE detection, notes feature, menu bar status, settings redesign)
 
-**4 additional roadmaps:** ProjectFiles, SessionMetadata, SettingsWindow, TerminalSessionHost
+**Documentation:**
+- `docs/` — Project documentation and design notes
 
 ## Git History & Current State
 
-- **Branch:** main (up to date with origin)
-- **Working tree:** Clean
-- **Recent (2026-04-06):** Standardize worktree directory
-- **Key milestones:** Full CatnipIDEEnhancements feature set (PR #98), AI summarization, AppKit interop
+**Recent Activity:**
+- `32526dd` docs: add standardized project description
+- `763cc12` chore: standardize worktree directory to .claude/worktrees/
+- `d48543a` Update CLAUDE.md: litterbox → agentic-cookbook
+- `07237d3` fix: only update session summary on topic change
+- `431572a` feat: AI-powered session summarization with multi-provider support
+- `df6ad28` feat: dynamic pane layout with arrangement picker
+- `1243837` feat: show IDE projects as sub-items in session list
+- `876baa7` feat: double-click file in browser opens in default app
+- `f9ef103` fix: inspector and panel toggles update SwiftUI state properly
+- `fbeaca0` feat: add Project menu with Add Terminal and Open IDE actions
+- `70d5d6f` feat: per-session layout state with SQLite persistence
+- `b303e62` feat: add New Session and Panels toolbar buttons
+- `465ec39` refactor: slim menu bar to Quick Note + Quit
+- `f7559cb` refactor: replace custom Settings window with native Settings scene
+- `6912c7c` fix: resolve build warnings (deprecated onChange, Sendable, main-actor)
+
+**Pattern:** Active development with features for IDE enhancements, session management, AI integration, and UI improvements.
+
+**Current State:**
+- **Branch:** main
+- **Status:** Clean working tree
 
 ## Build & Test Commands
 
+**Build:**
 ```bash
-xcodebuild -project Catnip.xcodeproj -scheme Catnip -destination 'platform=macOS' build
+xcodebuild -project Catnip.xcodeproj -scheme Catnip build
+```
+
+**Run:**
+```bash
+xcodebuild -project Catnip.xcodeproj -scheme Catnip run
+```
+
+**Open in Xcode:**
+```bash
 open Catnip.xcodeproj
 ```
 
-No XCTest suite — manual integration testing. 60 Swift files total.
-
 ## Notes
 
-- Modular persistence through per-concern SQLite stores
-- AppKit integration: NSStatusItem, NSPanel, NSWindow title manipulation
-- FSEvents + DirectoryWatchCoordinator for real-time file tree updates
-- IDE detection scans for .xcodeproj, .vscode, .idea, Package.swift
-- MVVM pattern with @ObservedObject/@StateObject, async/await for background tasks
+**Architecture Highlights:**
+
+1. **Native SwiftUI Application** — Built entirely in Swift with SwiftUI framework
+2. **Real-time File Monitoring** — DirectoryWatchCoordinator monitors project changes in real-time
+3. **AI-Powered Summaries** — Session summarization via Claude AI for context retention
+4. **Persistent Layout** — SQLite-backed session layout state and preferences
+5. **IDE Detection** — Automatic discovery of Xcode/VSCode projects with sub-item display
+6. **Dynamic Pane Layouts** — Flexible pane arrangement with arrangement picker
+
+**Key Features:**
+
+- Multi-pane IDE interface with collapsible panels
+- AI-powered session summarization on topic changes
+- IDE project discovery with hierarchical display
+- File browser with keyboard shortcuts and double-click actions
+- Per-session layout persistence across launches
+- Menu bar integration (Quick Note + Quit)
+- Native Settings scene with AI configuration
+- Proper concurrency and main-thread safety
+
+**Development Workflow:**
+
+The project follows feature branch development with roadmaps documenting enhancements. Currently active: CatnipIDEEnhancements feature branch implementing window title fix, improved file browser, IDE detection, notes feature, menu bar status item, and settings redesign.
+
+**Technology Notes:**
+
+- Uses modern SwiftUI patterns (@Observable, @MainActor)
+- Proper Sendable conformance for Swift concurrency
+- Native FileSystemWatcher for efficient change detection
+- SQLite backend for performant state persistence

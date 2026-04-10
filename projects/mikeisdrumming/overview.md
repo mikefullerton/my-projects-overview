@@ -2,67 +2,85 @@
 
 ## Project Summary
 
-A GitHub Pages landing page for "Mike Is Drumming," a personal music/drumming project. Currently a minimal "Coming Soon" placeholder page with a custom domain (mikeisdrumming.com, via CNAME). Includes research on music service APIs (Spotify, Tidal, Beatport, SoundCloud, Deezer, and others) for potential DJ-focused features.
+mikeisdrumming is a simple GitHub Pages landing page with custom domain setup (CNAME) for Mike Fullerton's music/drumming brand. The project serves as a minimal portfolio/landing page for music services and includes research documents on music service APIs (Spotify, Tidal, Beatport, SoundCloud, Deezer, Pandora, Amazon Music, MusicBrainz, Genius, Discogs). Represents early-stage exploration of music-related project ideas with foundational web presence.
 
 ## Type & Tech Stack
 
-- **Type**: Static website (landing page / coming soon)
-- **Languages**: HTML, CSS
-- **Hosting**: GitHub Pages with custom domain
-- **Domain**: mikeisdrumming.com (CNAME configured)
+**Type:** GitHub Pages Static Website / Landing Page
+
+**Tech Stack:**
+- **Languages:** HTML5, CSS3
+- **Hosting:** GitHub Pages
+- **Domain:** Custom domain via CNAME file
+- **Deployment:** Git push (automatic via GitHub Pages)
+- **Frameworks:** None (vanilla HTML/CSS)
 
 ## GitHub URL
 
-`git@github.com:mikefullerton/mikeisdrumming.git`
+https://github.com/mikefullerton/mikeisdrumming
 
 ## Directory Structure
 
 ```
 mikeisdrumming/
-├── .claude/
-│   └── settings.json                # Permission allowlists
-├── CNAME                             # Custom domain (mikeisdrumming.com)
-├── index.html                        # Landing page ("Coming Soon")
-├── README.md                         # Minimal readme
-└── Research/
-    └── music-service-apis.md        # Music streaming API research
+├── CNAME                   # Custom domain configuration
+├── index.html              # Landing page (HTML)
+├── README.md               # Minimal project description
+├── .gitignore              # Standard gitignore
+├── Research/
+│   └── music-service-api-research.md
+└── .claude/
+    └── settings.local.json # Claude Code settings
 ```
 
 ## Key Files & Components
 
-- `index.html` -- Minimal dark-themed landing page with "Mike Is Drumming" title and "Coming Soon" text
-- `CNAME` -- Custom domain configuration
-- `Research/music-service-apis.md` -- Comprehensive research on music streaming and data APIs (Spotify, Tidal, Beatport, SoundCloud, Deezer, Pandora, Amazon Music, MusicBrainz, Genius, Discogs), aggregator services, DJ-specific comparisons, DJ software compatibility matrix, community libraries, and recommendations
+- **index.html** - Simple landing page HTML (1086 bytes)
+- **CNAME** - Custom domain configuration for GitHub Pages
+- **Research/music-service-api-research.md** - API research document covering:
+  - Primary platforms: Spotify, Tidal, Beatport
+  - Secondary platforms: SoundCloud, Deezer, Pandora, Amazon Music
+  - Music data APIs: MusicBrainz, Genius, Discogs
+  - Platform comparisons and aggregator solutions
+  - DJ-specific platform comparisons
+- **.claude/settings.local.json** - Claude Code configuration for local development settings
 
 ## Claude Configuration
 
-- `.claude/settings.json` -- Permission allowlists for GitHub auth, git operations (init, remote, add, commit, push), web search, and brew install
-- No CLAUDE.md or project-level rules
+Stored in **.claude/settings.local.json** - Local Claude Code settings. Configured for git operations, GitHub authentication, and Bash environment setup.
 
 ## Planning & Research Documents
 
-- `Research/music-service-apis.md` -- Detailed API research covering major streaming platforms, music data APIs, aggregator services, DJ software compatibility, community tools, and recommendations for DJ-focused applications
+- **Research/music-service-api-research.md** - Comprehensive research on music streaming platform APIs (Spotify, Tidal, Beatport, SoundCloud, Deezer, Pandora, Amazon Music), music data APIs (MusicBrainz, Genius, Discogs), and DJ-specific platform options
 
 ## Git History & Current State
 
-- **Branch**: main
-- **Last commit**: 2026-04-06 -- "chore: add .gitignore"
-- **Working tree**: Clean
-- **Total commits**: 4
-- **Recent activity**: GitHub Pages setup with custom domain (Feb 2026), music API research (Jan 2026), gitignore added (Apr 2026)
-- **Key commits**: Initial commit, music service API research, GitHub Pages landing page (#1)
+- **Remote:** git@github.com:mikefullerton/mikeisdrumming.git
+- **Current Branch:** main
+- **Status:** Clean working tree (no uncommitted changes)
+- **Recent Activity:**
+  - Latest: chore: add .gitignore (2528232)
+  - feat: add GitHub Pages landing page and custom domain (#1) (01dbdb0)
+  - Add music service API research document (c4441aa)
+  - Initial commit (35dbee6)
 
 ## Build & Test Commands
 
 ```bash
-# No build step -- static HTML
-# Deploy: Push to main branch (GitHub Pages auto-deploys)
-git push origin main
+# No build needed for static site
+# Development: edit index.html and CSS, preview in browser
+# Deployment: git push origin main (automatic GitHub Pages deployment)
 ```
 
 ## Notes
 
-- Very early stage -- only a "Coming Soon" placeholder page
-- The music-service-apis.md research document is substantial and covers potential integration paths
-- Project is paused -- the research exists but no features have been built yet
-- Custom domain configured via CNAME file
+- **Status:** Paused / early-stage exploration
+- **Purpose:** Landing page and brand presence for Mike Fullerton's music/drumming side projects
+- **Architecture:** Simple static HTML page hosted on GitHub Pages with custom domain
+- **Research Focus:** Music service APIs (streaming platforms, data APIs, DJ tools) for potential future projects or integrations
+- **Development:** Minimal complexity; ideal for GitHub Pages + custom domain showcase
+- **Related Platforms Researched:**
+  - Streaming: Spotify, Tidal, Beatport, SoundCloud, Deezer, Pandora, Amazon Music
+  - Data: MusicBrainz, Genius, Discogs
+  - DJ Tools: Beatport, Serato, Rekordbox integrations
+- **Next Steps:** Expand landing page content, integrate music API research into future projects

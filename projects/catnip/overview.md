@@ -2,169 +2,210 @@
 
 ## Project Summary
 
-Catnip is a hosted, multi-user web service that monitors autonomous Claude Code agent progress in real-time. It replaces a local-only Python progress dashboard with a production-grade full-stack application featuring GitHub OAuth authentication, REST + WebSocket APIs, and a React-based dashboard.
+A hosted web service that monitors autonomous Claude Code agent progress in real-time with a React dashboard and WebSocket push. When running multiple Claude Code agents autonomously, it's difficult to track their progress. Catnip provides a production-grade full-stack web service with a real-time dashboard showing what each agent is doing, replacing an earlier local-only Python progress tool. Features GitHub OAuth authentication, REST + WebSocket APIs, and a CLI for reporting agent status.
 
 ## Type & Tech Stack
 
-- **Project Type:** Full-stack web service (API + Frontend Dashboard + CLI)
-- **Backend:** TypeScript, Hono, Drizzle ORM, PostgreSQL, WebSocket (`@hono/node-ws`)
-- **Frontend:** TypeScript, React 19, Vite 6, TailwindCSS 4, React Router 7, TanStack Query
+**Type:** Full-Stack Web Service (Agent Monitoring/Dashboard)
+
+**Tech Stack:**
+- **Backend:** TypeScript, Node.js, Hono, Drizzle ORM, PostgreSQL, WebSocket (@hono/node-ws)
+- **Frontend:** TypeScript, React 19, Vite 6, Tailwind CSS 4, React Router 7, TanStack Query
 - **CLI:** TypeScript (tsx)
-- **Auth:** GitHub OAuth, JWT bearer tokens
-- **Real-time:** WebSocket push from server to dashboard
+- **Testing:** Vitest (backend + frontend), Testing Library + jsdom
 - **Hosting:** Railway (backend + PostgreSQL), Cloudflare Pages (frontend)
-- **Testing:** Vitest (backend + frontend), Testing Library + jsdom (frontend)
+- **Authentication:** GitHub OAuth with JWT bearer tokens
 
 ## GitHub URL
 
-`git@github.com:mikefullerton/catnip.git`
+https://github.com/mikefullerton/catnip
 
 ## Directory Structure
 
 ```
-catnip/
-├── .claude/
-│   ├── settings.local.json          # Permissions: git add/commit/push, gh issue
-│   └── worktrees/                   # Git worktrees for feature development
-├── Roadmaps/
-│   └── CatnipWebService-Roadmap.md  # Feature roadmap (Status: Complete)
-├── backend/
+.
+├── .claude/              # Claude Code configuration
+│   ├── settings.local.json
+│   └── worktrees/
+├── docs/
+│   └── project/
+│       └── description.md
+├── backend/              # Node.js + Hono API server
 │   ├── src/
-│   │   ├── index.ts                 # Server entry, route mounting
-│   │   ├── types.ts                 # Shared types
-│   │   ├── db/
-│   │   │   ├── schema.ts            # users, api_tokens, roadmaps, roadmap_steps, roadmap_events
-│   │   │   ├── index.ts             # DB client
-│   │   │   ├── migrate.ts           # Migration runner
-│   │   │   └── migrations/          # SQL migrations
-│   │   ├── routes/
-│   │   │   ├── auth.ts              # GitHub OAuth auth
-│   │   │   ├── health.ts            # Health check
-│   │   │   ├── roadmaps.ts          # Roadmap CRUD
-│   │   │   ├── roadmaps.test.ts
-│   │   │   ├── tokens.ts            # API token management
-│   │   │   └── tokens.test.ts
-│   │   ├── middleware/
-│   │   │   ├── auth.ts              # Bearer token auth
-│   │   │   ├── auth.test.ts
-│   │   │   ├── cors.ts
-│   │   │   └── cors.test.ts
-│   │   └── ws/
-│   │       ├── handler.ts           # WebSocket connection handler
-│   │       ├── handler.test.ts
-│   │       ├── broadcast.ts         # WebSocket event broadcasting
-│   │       └── broadcast.test.ts
-│   ├── scripts/demo-roadmap.ts      # Demo script for testing
+│   │   ├── index.ts      # Server entry point
+│   │   ├── db/           # Database schema, migrations, client
+│   │   ├── routes/       # API endpoints (REST + WebSocket)
+│   │   ├── auth/         # GitHub OAuth, JWT handling
+│   │   ├── models/       # TypeScript types and interfaces
+│   │   └── (other modules)
+│   ├── scripts/
+│   │   └── demo-roadmap.ts   # Demo script
+│   ├── package.json
+│   ├── tsconfig.json
 │   ├── drizzle.config.ts
+│   └── vitest.config.ts
+├── frontend/             # React + Vite dashboard
+│   ├── src/
+│   │   ├── main.tsx      # React entry point
+│   │   ├── App.tsx       # Root component
+│   │   ├── pages/        # Page components
+│   │   ├── components/   # Reusable components
+│   │   ├── hooks/        # Custom React hooks
+│   │   ├── styles/       # Tailwind CSS configuration
+│   │   └── (other modules)
+│   ├── package.json
+│   ├── tsconfig.json
+│   ├── vite.config.ts
+│   ├── tailwind.config.ts
+│   └── vitest.config.ts
+├── cli/                  # Node.js CLI for agent reporting
+│   ├── src/
+│   │   └── (CLI implementation)
 │   ├── package.json
 │   └── tsconfig.json
-├── frontend/
-│   ├── src/
-│   │   ├── App.tsx                  # Router & layout
-│   │   ├── main.tsx
-│   │   ├── index.css
-│   │   ├── components/              # NavBar, StepList, StepIcon, StepItem,
-│   │   │                            # ProgressBar, StatusBadge, EventLog,
-│   │   │                            # ControlButtons, ConnectionStatus,
-│   │   │                            # IssuePanel, PRPanel, ProtectedRoute
-│   │   ├── hooks/
-│   │   │   └── useRoadmaps.ts       # API data fetching hook
-│   │   └── utils/
-│   │       ├── time.ts              # Time formatting
-│   │       └── time.test.ts
-│   ├── vite.config.ts
-│   └── package.json
-├── cli/
-│   ├── src/
-│   │   ├── index.ts                 # CLI entry point
-│   │   ├── client.ts                # API client
-│   │   ├── config.ts                # CLI config
-│   │   └── commands/
-│   │       ├── login.ts             # Auth command
-│   │       ├── list.ts              # List roadmaps
-│   │       ├── show.ts              # Show roadmap detail
-│   │       └── control.ts           # Control commands (pause/resume/stop)
-│   └── package.json
-└── .gitignore
+├── Roadmaps/             # Feature planning (File Record structure)
+│   └── (roadmap files)
+├── package.json          # Root workspace configuration (if any)
+├── .gitignore
+└── README.md
 ```
 
 ## Key Files & Components
 
-**Database Schema:** users (GitHub auth), api_tokens (personal access), roadmaps (agent runs with state/status/repo/branch), roadmap_steps (progress), roadmap_events (audit log)
+**Backend (src/):**
+- `index.ts` — Server entry point with middleware and route setup
+- `db/` — Drizzle ORM schema, migrations, client initialization
+- `routes/` — API endpoints and WebSocket handlers
+- `auth/` — GitHub OAuth flow and JWT token generation/validation
+- `models/` — TypeScript interfaces for agents, runs, events
 
-**Auth Flow:** GitHub OAuth --> JWT token --> Bearer auth for API. Agents use separate API tokens.
+**Frontend (src/):**
+- `main.tsx` — React application bootstrap
+- `App.tsx` — Root component with routing
+- `pages/` — Page components (dashboard, run details, etc.)
+- `components/` — Reusable UI components
+- `hooks/` — Custom hooks (WebSocket integration, API queries)
+- TanStack Query for data fetching and caching
+- React Router 7 for client-side routing
 
-**Real-time:** WebSocket push from server to dashboard subscribers on step/event updates.
+**CLI (src/):**
+- Agent CLI tool for reporting progress to Catnip server
+- Used by Claude Code agents to push updates
 
-**CLI Commands:** `catnip-cli login`, `list`, `show <id>`, `pause/resume/stop <id>`
+**Configuration Files:**
+- `backend/drizzle.config.ts` — Database ORM configuration
+- `frontend/vite.config.ts` — Frontend build configuration
+- `frontend/tailwind.config.ts` — Tailwind CSS customization
 
-**Frontend Components:** NavBar, StepList with StepIcon/StepItem, ProgressBar, StatusBadge, EventLog, ControlButtons, ConnectionStatus, IssuePanel, PRPanel, ProtectedRoute
+**Deployment:**
+- Railway deployment (backend + PostgreSQL)
+- Cloudflare Pages deployment (frontend SPA)
 
 ## Claude Configuration
 
-- **`.claude/settings.local.json`** -- Permissions: git add/commit/push, gh issue operations
-- No CLAUDE.md, rules, or skills
-- Worktrees directory at `.claude/worktrees/` (active worktree: `roadmaps-api`)
+**Location:** `.claude/settings.local.json`
+
+**Permissions:**
+- Allows git operations (add, commit, push)
+- Allows gh issue commands for GitHub integration
+- Supports worktree-based development
 
 ## Planning & Research Documents
 
-**`Roadmaps/CatnipWebService-Roadmap.md`** -- Complete. Full feature roadmap covering: Railway setup, Cloudflare setup, OAuth, backend scaffolding, auth endpoints, token management, API endpoints, WebSocket real-time, frontend dashboard, deployment config.
+**Feature Planning:**
+- `Roadmaps/` — Feature roadmaps in File Record structure format
+- Historical roadmaps show completion of major features:
+  - CatnipWebService feature (archived)
+  - Steps tracking (11-12 completed)
 
-**Deferred items:** Agent back-channel (how UI control signals reach remote agents), control signal implementation.
+**Project Documentation:**
+- `docs/project/description.md` — Project purpose, features, tech stack, and status
 
 ## Git History & Current State
 
-- **Branch:** main
-- **Working tree:** Clean
-- **Recent activity (2026-04-06):** Standardize worktree directory, rename cat-herding references, refactor runs to roadmaps
+**Current Branch:** main
 
-Recent commits:
-```
-0c6264a chore: standardize worktree directory to .claude/worktrees/
-3894133 chore: rename cat-herding -> agentic-roadmaps in roadmap and demo script
-ccea5a3 refactor: rename runs to roadmaps across frontend, backend, and CLI
-d6daec6 refactor: migrate 1 roadmaps to flat file format
-5cb0120 refactor: migrate roadmaps to per-directory File Record structure
-0ebecbf docs: add author and GUID metadata to all roadmap files
-4db6e8a refactor: move roadmap files from .claude/Features/ to Roadmaps/
-01fb5a6 docs: complete feature CatnipWebService -- archive roadmap
-ed9ffd9 docs: mark Step 12 as Complete in CatnipWebService Roadmap (#12)
-3b390ec feat: add deployment configuration for Railway and Cloudflare Pages (#22)
-```
+**Remote:** git@github.com:mikefullerton/catnip.git
+
+**Recent Commits:**
+- `b473105` — docs: add standardized project description
+- `0c6264a` — chore: standardize worktree directory to .claude/worktrees/
+- `3894133` — chore: rename cat-herding → agentic-roadmaps in roadmap and demo script
+- `ccea5a3` — refactor: rename runs to roadmaps across frontend, backend, and CLI
+- `d6daec6` — refactor: migrate 1 roadmaps to flat file format
+- `5cb0120` — refactor: migrate roadmaps to per-directory File Record structure
+- `0ebecbf` — docs: add author and GUID metadata to all roadmap files
+- `4db6e8a` — refactor: move roadmap files from .claude/Features/ to Roadmaps/
+- `01fb5a6` — docs: complete feature CatnipWebService — archive roadmap
+- `ed9ffd9` — docs: mark Step 12 as Complete in CatnipWebService Roadmap (#12)
+- `3b390ec` — feat: add deployment configuration for Railway and Cloudflare Pages (#22)
+- (15+ more commits with features, deployment, and refactoring)
+
+**Status:** Recently completed / stable. Major features complete with ongoing maintenance.
 
 ## Build & Test Commands
 
 ```bash
-# Backend
+# Install dependencies
+npm install
+
+# Development - run backend
 cd backend
-npm run dev              # Dev server (tsx watch)
-npm run build            # tsc -> dist/
-npm start                # node dist/index.js
-npm run start:prod       # Run migrations then start
-npm run db:generate      # Drizzle generate
-npm run db:migrate       # Run pending migrations
-npm test                 # vitest run
-npm run demo             # Simulate agent workflow
+npm run dev              # Watch mode with hot reload
 
-# Frontend
+# Development - run frontend
 cd frontend
-npm run dev              # Vite dev server (:5173)
-npm run build            # tsc + vite build
-npm run preview          # Vite preview
-npm test                 # vitest run
+npm run dev              # Vite development server
 
-# CLI
-cd cli
-npm start                # tsx src/index.ts
+# Production build
+cd backend
+npm run build            # TypeScript compilation
+
+cd frontend
+npm run build            # Vite build for production
+npm run preview          # Preview production build locally
+
+# Database operations
+cd backend
+npm run db:generate      # Generate migration files
+npm run db:migrate       # Run pending migrations
+npm run db:migrate:prod  # Run migrations with node (for production)
+npm run db:seed          # Seed database with test data
+
+# Testing
+cd backend
+npm run test             # Run Vitest suite
+
+cd frontend
+npm run test             # Run Vitest suite
+
+# Demo
+cd backend
+npm run demo             # Run demo-roadmap.ts script
+
+# Production deployment
+cd backend
+npm run start:prod       # Run migrations then start server
 ```
 
 ## Notes
 
-- Monorepo with 3 independent npm projects (backend, frontend, cli) -- no workspace manager
-- TypeScript throughout for full type safety
-- Recent refactoring renamed "runs" to "roadmaps" across the entire codebase
-- Backend uses Hono with WebSocket support via `@hono/node-ws`
-- Frontend uses React 19, Vite 6, Tailwind CSS 4, and TanStack Query
-- Backend tests cover routes, middleware, and WebSocket handlers
-- Frontend tests use Testing Library with jsdom
-- Demo script (`scripts/demo-roadmap.ts`) validates API contracts during development
+- Full-stack monorepo with backend, frontend, and CLI in separate directories
+- Backend uses Hono framework for lightweight HTTP server with WebSocket support
+- WebSocket integration via @hono/node-ws for real-time push updates to clients
+- GitHub OAuth provides secure multi-user authentication
+- JWT bearer tokens for stateless API authentication
+- PostgreSQL database with Drizzle ORM for type-safe queries
+- React 19 with modern hooks and functional components
+- TanStack Query for sophisticated data fetching and caching
+- React Router 7 for client-side navigation
+- Tailwind CSS 4 for responsive styling
+- Vitest for both backend and frontend testing with jsdom for browser simulation
+- Dashboard shows real-time agent progress with WebSocket updates
+- CLI tool enables agents to push status updates autonomously
+- Feature planning uses File Record structure for roadmap organization
+- Recent refactoring renamed "runs" to "roadmaps" for better semantics
+- Deployment to Railway (backend) and Cloudflare Pages (frontend)
+- Production backend runs migrations automatically on startup
+- Replaced earlier local-only Python progress tracking tool
+- Related to Whippet (native macOS menu bar app approach) and Catnip Terminal (terminal emulator)
