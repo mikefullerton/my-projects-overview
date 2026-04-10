@@ -1,82 +1,114 @@
-# my-agentic-interviews
+# My Agentic Interviews
 
 ## Project Summary
 
-A personal interview repository for the Agentic Interview Team system. Stores user profiles, per-project interview transcripts, specialist analyses, coverage checklists, and accumulated knowledge across interviews. Designed to be invoked via `/interview` from any project directory. Also previously contained Whippet cookbook docs (now moved elsewhere). Includes structured file conventions with YAML frontmatter and timestamp-based naming.
+My Agentic Interviews is a personal interview repository and knowledge management system for the Agentic Interview Team system. It stores structured interview data across multiple projects using an AI-driven specialist interview system, tracking user profiles, per-project interviews (transcripts and analysis), and accumulated learnings. The system reads and writes markdown files with standardized YAML frontmatter for metadata, enabling systematic knowledge capture from development work across all projects. Designed to integrate with Claude Code interview commands and feed learnings back into project development workflows.
 
 ## Type & Tech Stack
 
-- **Type**: Knowledge base / data repository (no compiled code)
-- **Format**: Markdown files with YAML frontmatter
-- **Naming**: Timestamp-based (`YYYY-MM-DD-HH-MM-SS-descriptive-slug.md`)
-- **Config**: External config at `~/.agentic-interviewer/config.json`
+**Type:** Knowledge Management System / Interview Repository
+
+**Tech Stack:**
+- **Language:** Markdown (structured with YAML frontmatter)
+- **Storage:** Git repository (version-controlled)
+- **Integration:** Claude Code (via /interview command)
+- **Configuration:** JSON (system config at ~/.agentic-interviewer/config.json)
+- **Metadata:** YAML frontmatter in markdown files
+- **No Code Runtime:** Pure data/documentation project
 
 ## GitHub URL
 
-`git@github.com:mikefullerton/my-agentic-interviews.git`
+Not specified in current files; appears to be a personal/internal repository
 
 ## Directory Structure
 
 ```
 my-agentic-interviews/
+├── profiles/               # User profiles
+│   └── mike/
+│       ├── profile.md      # Auto-maintained developer profile (YAML frontmatter + markdown)
+│       └── resume/         # Resume files for interview context
+├── projects/               # Per-project interview data
+│   ├── <project-name>/
+│   │   ├── transcript/     # Raw Q&A files (timestamped)
+│   │   ├── analysis/       # Specialist analysis files
+│   │   └── checklist.md    # Living coverage checklist
+│   └── ...
+├── knowledge/              # Accumulated learnings across all interviews
+│   └── insights/           # Cross-project patterns and learnings
+├── README.md               # Project overview and usage
 ├── .claude/
-│   ├── CLAUDE.md                    # Agent context (structure, conventions)
-│   └── rules/
-│       └── always-commit-and-push.md  # Auto-commit rule
-├── knowledge/                        # Accumulated learnings across interviews
-├── profiles/
-│   └── mike/                        # User profile and resume
-│       └── resume/                  # Resume files
-│       └── profile.md              # Auto-maintained profile
-├── projects/                        # Per-project interview data
-│   └── <project-name>/
-│       ├── transcript/             # Raw Q&A transcript files
-│       ├── analysis/               # Specialist analysis files
-│       └── checklist.md            # Living coverage checklist
-└── README.md                        # Usage docs
+│   ├── CLAUDE.md          # Claude Code configuration
+│   └── rules/             # Interview system rules and prompts
+└── .git/
 ```
 
 ## Key Files & Components
 
-- `.claude/CLAUDE.md` -- Agent context: directory structure, file conventions (YAML frontmatter with id, title, type, created, modified, author, summary, tags, platforms, related, project, session, specialist fields), file naming scheme
-- `.claude/rules/always-commit-and-push.md` -- Rule requiring immediate commit and push after every file change
-- `profiles/mike/` -- User profile directory with resume and auto-maintained profile
-- `projects/` -- Per-project interview data (transcripts, analyses, checklists)
-- `knowledge/` -- Cross-interview accumulated learnings
-- `README.md` -- Usage documentation and structure overview
+- **README.md** - Project description, usage instructions, file structure, config location
+- **.claude/CLAUDE.md** - Claude Code configuration for interview system, file naming conventions, frontmatter schema, usage instructions
+- **.claude/rules/** - Interview system rules and specialist prompts
+- **profiles/mike/profile.md** - Developer profile with YAML frontmatter including:
+  - id, title, type (profile)
+  - created/modified timestamps (ISO 8601)
+  - summary, tags, platforms (ios, macos, windows, android, web)
+  - author, related projects metadata
+- **projects/<name>/transcript/** - Timestamped interview Q&A files (format: YYYY-MM-DD-HH-MM-SS-descriptive-slug.md)
+- **projects/<name>/analysis/** - Specialist analysis files (extraction, insights, recommendations)
+- **projects/<name>/checklist.md** - Living coverage checklist tracking interview topics covered
+- **knowledge/** - Accumulated cross-project insights and patterns discovered through interviews
 
 ## Claude Configuration
 
-- `.claude/CLAUDE.md` -- Defines file conventions: all markdown files use YAML frontmatter (id UUID, title, type, created/modified ISO 8601, author, summary, tags, platforms, related, project, session, specialist)
-- `.claude/rules/always-commit-and-push.md` -- Non-negotiable rule: commit and push after every file change
-- No settings.json or settings.local.json
+Stored in **.claude/CLAUDE.md** - Comprehensive documentation of:
+- **File Conventions:** YAML frontmatter schema for all markdown files with fields: id (UUID), title, type (transcript/analysis/checklist/profile/summary), created/modified (ISO 8601), author, summary, tags, platforms, related, project, session, specialist
+- **File Naming:** Timestamp-based convention for transcripts and analysis (YYYY-MM-DD-HH-MM-SS-descriptive-slug.md)
+- **Usage:** Invoke `/interview` from any project directory; system automatically reads/writes to this repository
+- **Structure:** Organized by profiles, projects, and knowledge domains for systematic learning capture
 
 ## Planning & Research Documents
 
-- Previously contained Whippet cookbook docs (removed in commit "chore: remove whippet-cookbook docs (moved elsewhere)")
-- Various interview transcripts and analyses stored in `projects/` subdirectories
+- **README.md** - Project overview, structure, usage instructions, configuration location
+- **.claude/CLAUDE.md** - Detailed file conventions, YAML frontmatter schema, file naming patterns, usage instructions for interview system
+- **projects/<name>/checklist.md** - Per-project coverage checklists tracking interview progress
+- **knowledge/** - Accumulated learnings and cross-project insights
 
 ## Git History & Current State
 
-- **Branch**: main
-- **Last commit**: 2026-04-07 -- "Ignore .DS_Store files"
-- **Working tree**: Clean
-- **Total commits**: 15+ (viewed)
-- **Recent activity**: Active through April 2026 -- Whippet cookbook recipe additions (Apr 2026), cookbook docs removal, gitignore updates
-- **Key recent changes**: SQLite persistence recipe, AIRequestBuilder recipe, launch-at-login recipe, floating session panel recipe, menu-bar-status-item recipe, NotificationManager recipe (all for Whippet cookbook, later moved)
+- **Remote:** Not specified in output; appears to be personal/internal
+- **Current Branch:** main
+- **Status:** Clean working tree (no uncommitted changes)
+- **Recent Activity:**
+  - Latest: Ignore .DS_Store files (34ab4bf)
+  - chore: remove whippet-cookbook docs (moved elsewhere) (5078664)
+  - Multiple recipe additions (SQLite persistence, AIRequestBuilder, floating session panel, etc.) (f86b7cc onwards)
+  - Last 15 commits show addition of Whippet cookbook recipes for infrastructure patterns (session panels, menu bar, notifications, window activation, etc.)
 
 ## Build & Test Commands
 
 ```bash
-# No build step -- pure markdown knowledge base
-# Usage: Invoke /interview from any project directory
-# Config: ~/.agentic-interviewer/config.json
+# No build process; pure markdown repository
+# Usage is via Claude Code /interview command:
+/interview                            # Run interview for current project
+# (System automatically reads/writes to this repository)
+
+# Manual operations:
+git status                            # View uncommitted changes
+git add <files>                       # Stage interview outputs
+git commit -m "..."                   # Commit new interview data
 ```
 
 ## Notes
 
-- This is a data-only repository -- no executable code
-- Designed to work with the Agentic Interview Team system (invoked via `/interview` command)
-- YAML frontmatter fields are extensive (id, title, type, created, modified, author, summary, tags, platforms, related, project, session, specialist)
-- The always-commit-and-push rule ensures the remote is always in sync
-- Previously hosted Whippet cookbook recipes before they were moved to a separate location
+- **Status:** Active development for interview data capture and knowledge management
+- **Purpose:** Systematic interview-driven knowledge capture across all development projects; feed learnings back into development workflows
+- **System Integration:** Designed to integrate with Claude Code via `/interview` command that reads project context and writes structured interview outputs
+- **Data Format:** YAML frontmatter + markdown for flexible, version-controllable knowledge storage
+- **Configuration:** System configuration at ~/.agentic-interviewer/config.json (external, not in repo)
+- **Coverage Tracking:** Per-project checklists track which topics have been interviewed, enabling progressive knowledge building
+- **Knowledge Accumulation:** Cross-project insights extracted and stored in knowledge/ directory for pattern recognition across projects
+- **Metadata:** Comprehensive frontmatter (id, created, modified, author, specialist, session, platform tags) enables rich querying and knowledge extraction
+- **File Naming:** Timestamp-based naming (YYYY-MM-DD-HH-MM-SS-slug) ensures chronological ordering and prevents conflicts
+- **Specialist System:** Different specialists can contribute analysis (marked by specialist field in frontmatter)
+- **Related Projects:** Feeds into multiple projects (Hairball, Whippet, etc.) through extracted patterns and insights
+- **Recipes:** Repository includes cookbook recipes for common patterns (SQLite persistence, launch-at-login, floating panels, menu bar items, notifications, window activation, click actions, session summarization, event ingestion, hooks, liveness monitoring, etc.)
