@@ -1,235 +1,201 @@
-# Shared Website Components
+# shared-website-components
 
 ## Project Summary
 
-A reusable React + TypeScript component library providing theme system, chat widgets, and design tokens for Agentic Cookbook family websites. Designed as a git submodule for consistent UI/UX across multiple sites. Includes multiple chat modes (inline, three-pane, mobile), theme provider with dark/light/auto modes, and comprehensive CSS styling system.
+Shared React + TypeScript component library providing an Agentic design system (theme tokens, ThemeProvider, ThemeToggle) and a full-featured chat widget with three display modes (inline, three-pane, mobile), a typed backend contract, and 10 CSS themes. Consumed as a git submodule by other Agentic Cookbook family sites.
 
 ## Type & Tech Stack
 
-**Project Type:** React component library (npm package)
-
-**Core Technologies:**
-- **React 19** — Modern component framework
-- **TypeScript** — Type-safe development
-- **Tailwind CSS 4** — Utility-first styling
-- **Vite** — Build tool and dev server
-- **Vitest** — Unit testing framework
-- **CSS** — Structural and theme styling
-- **npm** — Package management
-
-**Architecture:**
-- Modular component exports with TypeScript
-- CSS-based theming system with custom properties
-- Functional components with hooks
-- Backend abstraction for chat functionality
-- Multiple layout modes for different contexts
+- **Type:** Shared React component library, private (`"private": true`), distributed as a git submodule -- not published to npm
+- **Language:** TypeScript, CSS
+- **Framework:** React 19 (peer dependency; consuming sites provide React)
+- **Styling:** CSS custom properties (design tokens), mode-specific CSS files, 10 chat theme CSS files
+- **Build:** No library build step -- consumers import TypeScript source directly through their own bundler. Example app uses Vite.
+- **Testing:** Vitest + @testing-library/react + jsdom (61 tests across 8 files per README)
+- **TypeScript:** target ES2020, ESNext modules, bundler module resolution, JSX `react-jsx`, strict
 
 ## GitHub URL
 
-`git@github.com:agentic-cookbook/shared-website-components.git`
-
-https://github.com/agentic-cookbook/shared-website-components
+- SSH: `git@github.com:agentic-cookbook/shared-website-components.git`
+- Web: https://github.com/agentic-cookbook/shared-website-components
 
 ## Directory Structure
 
 ```
 shared-website-components/
-├── src/                                 # Core library exports
-│   ├── index.ts                         # Barrel export
+├── package.json                 # Multi-path exports, peer dep on React 19
+├── tsconfig.json
+├── vitest.config.ts
+├── vitest.setup.ts
+├── README.md
+├── .claude/
+│   ├── CLAUDE.md                # Tech stack + architecture notes
+│   └── settings.json            # Enables superpowers plugin
+├── src/
+│   ├── index.ts                 # Barrel export
 │   └── theme/
-│       ├── tokens.css                   # Design tokens (colors, fonts)
-│       ├── base.css                     # Reset, body, selection, grain
-│       ├── ThemeProvider.tsx            # React context + useTheme hook
-│       └── ThemeToggle.tsx              # Three-way toggle (auto/dark/light)
-├── chat/                                # Chat widget system
-│   ├── index.ts                         # Chat barrel export
-│   ├── types.ts                         # ChatMessage, ChatParticipant, etc.
+│       ├── index.ts
+│       ├── tokens.css           # Core design tokens
+│       ├── tokens-light.css     # Opt-in light mode overrides
+│       ├── base.css             # Reset, body, selection, grain overlay
+│       ├── layout.css
+│       ├── components.css
+│       ├── markdown.css
+│       ├── ThemeProvider.tsx    # Context + useTheme hook
+│       └── ThemeToggle.tsx      # Three-way toggle (auto/dark/light)
+├── chat/
+│   ├── index.ts                 # Chat barrel export
+│   ├── types.ts                 # ChatMessage, ChatParticipant, PopoverData, ...
+│   ├── persona-chat.js          # DEPRECATED vanilla JS class (back-compat)
+│   ├── persona-chat.d.ts        # DEPRECATED type declarations
+│   ├── base.css                 # DEPRECATED (replaced by css/base.css)
 │   ├── backends/
-│   │   ├── types.ts                     # ChatBackend interface
-│   │   ├── MockBackend.ts               # Canned responses
-│   │   └── FetchBackend.ts              # HTTP POST backend
+│   │   ├── types.ts             # ChatBackend interface
+│   │   ├── MockBackend.ts       # Canned responses for dev/tests
+│   │   └── FetchBackend.ts      # HTTP POST backend
 │   ├── components/
-│   │   ├── Transcript.tsx               # Message list + typing
-│   │   ├── MessageBubble.tsx            # Single message rendering
-│   │   ├── ChatInput.tsx                # Input + send button
-│   │   ├── InlinePopover.tsx            # Collapsible popover
-│   │   ├── RichContent.tsx              # Links/images in bubbles
-│   │   ├── SendIcon.tsx                 # Paper plane SVG
-│   │   └── TypingIndicator.tsx          # Animated dots
+│   │   ├── ChatInput.tsx
+│   │   ├── InlinePopover.tsx
+│   │   ├── MessageBubble.tsx
+│   │   ├── RichContent.tsx
+│   │   ├── SendIcon.tsx
+│   │   ├── Transcript.tsx
+│   │   └── TypingIndicator.tsx
 │   ├── modes/
-│   │   ├── InlineChat.tsx               # Simple centered chat
-│   │   ├── ThreePaneChat.tsx            # Chat + detail + topics
-│   │   ├── MobileChat.tsx               # Full-screen overlay
-│   │   ├── PersonaChat.tsx              # Convenience wrapper
-│   │   └── three-pane/                  # Sub-components
+│   │   ├── InlineChat.tsx       # Simple centered chat
+│   │   ├── ThreePaneChat.tsx    # Chat + detail + topics sidebar
+│   │   ├── MobileChat.tsx       # Full-screen slide-in overlay
+│   │   ├── PersonaChat.tsx      # Convenience wrapper delegating via mode prop
+│   │   └── three-pane/          # Three-pane sub-components
 │   ├── hooks/
-│   │   ├── useChatSession.ts            # Core state management
-│   │   └── useScrollToBottom.ts         # Auto-scroll behavior
+│   │   ├── useChatSession.ts    # Core state: messages, send queue, typing
+│   │   └── useScrollToBottom.ts
 │   ├── css/
-│   │   ├── base.css                     # Structural styles
+│   │   ├── base.css             # Shared structural styles
 │   │   └── modes/
-│   │       ├── inline.css               # Inline mode positioning
-│   │       ├── three-pane.css           # Three-pane layout
-│   │       └── mobile.css               # Mobile overlay
-│   └── themes/                          # 10 theme files (colors, fonts)
-├── examples/                            # React/Vite example app
-│   └── chat/                            # Chat demo with theme switcher
-├── docs/                                # Documentation
-│   ├── usage.md                         # Chat Usage & API
-│   └── theming.md                       # Chat Theming Guide
-├── package.json                         # npm configuration & exports
-├── package-lock.json
-├── tsconfig.json                        # TypeScript configuration
-├── vitest.config.ts                     # Vitest configuration
-├── vitest.setup.ts                      # Test setup
-├── .claude/                             # Claude Code configuration
-└── README.md
+│   │       ├── inline.css
+│   │       ├── three-pane.css
+│   │       └── mobile.css
+│   ├── themes/                  # 10 CSS themes
+│   │   ├── cookbook-web.css
+│   │   ├── dev-team.css
+│   │   ├── mikefullerton.css
+│   │   ├── my-projects-overview.css
+│   │   ├── my-projects.css
+│   │   ├── professional.css
+│   │   ├── techy.css
+│   │   ├── terminal-split.css
+│   │   ├── terminal.css
+│   │   └── whimsical.css
+│   └── __tests__/
+├── examples/
+│   └── chat/                    # React/Vite example app w/ theme switcher
+│       ├── index.html
+│       ├── package.json
+│       ├── tsconfig.json
+│       ├── vite.config.ts
+│       └── src/
+└── docs/
+    ├── usage.md                 # Chat usage & API
+    ├── theming.md               # Chat theming guide
+    ├── message-layout.md        # Message layout spec
+    ├── project-guidelines.md
+    ├── planning/
+    │   └── planning.md          # Placeholder (TBD)
+    └── project/
+        └── description.md       # Short standardized description
 ```
 
 ## Key Files & Components
 
-**Theme System:**
-- `src/theme/tokens.css` — Design tokens (colors, fonts, status colors)
-- `src/theme/base.css` — Reset, body styles, selection, grain overlay
-- `src/theme/ThemeProvider.tsx` — React context for theme management
-- `src/theme/ThemeToggle.tsx` — Three-way toggle UI component
+**Theme system (`src/theme/`):**
+- `ThemeProvider.tsx` -- React context providing theme state and `useTheme` hook.
+- `ThemeToggle.tsx` -- Three-way control (auto / dark / light).
+- `tokens.css` -- Core CSS custom properties for colors, fonts, status colors.
+- `tokens-light.css` -- Opt-in light-mode token overrides (split for selective import).
+- `base.css`, `layout.css`, `components.css`, `markdown.css` -- Shared style layers.
 
-**Chat Widget System:**
-- `chat/types.ts` — Type definitions (ChatMessage, ChatParticipant, PopoverData)
-- `chat/backends/types.ts` — ChatBackend interface for extensibility
-- `chat/components/` — Reusable UI components (Transcript, MessageBubble, ChatInput)
-- `chat/modes/` — Layout modes (Inline, ThreePane, Mobile, PersonaChat)
-- `chat/hooks/` — State management (useChatSession, useScrollToBottom)
-- `chat/css/` — CSS styling for structural and mode-specific layouts
-- `chat/themes/` — 10 pre-built color themes
+**Chat library (`chat/`):**
+- `types.ts` -- `ChatMessage`, `ChatParticipant`, `PopoverData`, etc.
+- `backends/types.ts` -- `ChatBackend` interface defining the contract between UI and transport.
+- `backends/MockBackend.ts` -- Canned-response backend for demos/tests.
+- `backends/FetchBackend.ts` -- HTTP POST backend for real APIs.
+- `hooks/useChatSession.ts` -- Core state hook: messages, send queue, typing indicators.
+- `hooks/useScrollToBottom.ts` -- Auto-scroll helper for the transcript.
+- `components/Transcript.tsx`, `MessageBubble.tsx`, `ChatInput.tsx`, etc. -- Shared UI building blocks.
+- `modes/InlineChat.tsx` -- Simple centered chat.
+- `modes/ThreePaneChat.tsx` -- Chat + detail pane + topics sidebar layout.
+- `modes/MobileChat.tsx` -- Full-screen slide-in overlay.
+- `modes/PersonaChat.tsx` -- Convenience wrapper that picks a mode via prop.
 
-**Example Application:**
-- `examples/chat/` — React/Vite demo app with theme switcher
-
-**Testing:**
-- `vitest.config.ts` — Test runner configuration
-- `vitest.setup.ts` — Test environment setup
-- 61 tests across 8 test files
-
-**Configuration:**
-- `package.json` — npm exports, peer dependencies, dev dependencies
-- `tsconfig.json` — TypeScript strict mode
-- `.claude/` — Claude Code configuration
+**Package exports (`package.json`):**
+Fine-grained export paths for `"."`, `"./chat"`, `"./theme"`, plus individual CSS files under `./chat/css/...` and `./theme/...css`, so consumers can import only what they need.
 
 ## Claude Configuration
 
-**Configuration Files:**
-- `.claude/` — Project settings for Claude Code
+- `.claude/CLAUDE.md` -- Documents tech stack (React 19, TypeScript, Tailwind CSS 4, Vite), architecture overview of `src/theme/` and `chat/`, and an explicit list of deprecated files kept for backward compatibility (`chat/persona-chat.js`, `chat/persona-chat.d.ts`, `chat/base.css`).
+- `.claude/settings.json` -- Enables the `superpowers` plugin: `{"enabledPlugins": {"superpowers@claude-plugins-official": true}}`.
+- No `.claude/rules/` directory and no commands/hooks configured.
 
 ## Planning & Research Documents
 
-No dedicated planning/research directories. Documentation provided via:
-- `docs/usage.md` — Chat Widget Usage & API
-- `docs/theming.md` — Chat Theming Guide
+- `docs/project/description.md` -- One-line standardized description: "PersonaChat -- A React/TypeScript chat component library for AI persona conversations, with three display modes (inline, three-pane, mobile), a typed backend contract, and 10 CSS themes."
+- `docs/planning/planning.md` -- Placeholder (`(to be determined)`).
+- `docs/project-guidelines.md` -- Project-level guidelines.
+- `docs/usage.md` -- Chat widget usage & API reference.
+- `docs/theming.md` -- Guide for applying and authoring chat themes.
+- `docs/message-layout.md` -- Message layout specification.
 
 ## Git History & Current State
 
-**Recent Activity:**
+- **Remote:** `origin` -> `git@github.com:agentic-cookbook/shared-website-components.git`
+- **Branch:** `main`
+- **Working tree:** clean
+
+**Recent commits (last 15):**
 - `ea9fcc9` docs: update all docs for React component library
 - `78f81b8` refactor: convert examples to React/Vite, deprecate vanilla JS
 - `718af02` chore: add chat exports to package.json, include chat in tsconfig
 - `7998d77` feat: add InlineChat, MobileChat, ThreePaneChat modes with CSS
 - `670eaed` feat: add shared React chat components
-- `af3c41e` feat: add chat types, backend abstraction, core session hook
+- `af3c41e` feat: add chat types, backend abstraction, and core session hook
 - `37b6a27` refactor: split light mode tokens into separate opt-in file
 - `206b504` feat: add TypeScript type declaration for persona-chat
 - `b80c163` feat: add shared layout, components, and markdown CSS
 - `34a92b1` refactor: convert to React + TypeScript component library
-- `f934aaa` feat: add three-way theme toggle and light mode tokens
-- `a5b207e` feat: add agentic theme with design tokens and base styles
+- `f934aaa` feat: add three-way theme toggle control and light mode tokens
+- `a5b207e` feat: add agentic theme with shared design tokens and base styles
 - `4b054b4` refactor: restructure repo for git submodule consumption
-- `5fdd4b7` feat: canned responses, mobile support, mikefullerton theme
-- `8791d1d` docs: comprehensive project guidelines
+- `5fdd4b7` feat: canned responses, mobile support, mikefullerton theme refresh
+- `8791d1d` docs: comprehensive project guidelines and updated layout spec
 
-**Pattern:** Major refactoring to React/TypeScript, comprehensive feature development for chat system, consistent documentation.
-
-**Current State:**
-- **Branch:** main
-- **Status:** Clean working tree
+**Trajectory:** started as a vanilla-JS `persona-chat` widget, restructured for submodule consumption, then converted to a full React + TypeScript component library with a chat backend abstraction, three display modes, and a shared Agentic theme system.
 
 ## Build & Test Commands
 
-**Install Dependencies:**
+`package.json` defines no `scripts` block -- there is no `npm run build` or `npm run dev` at the library root. Consumers import source directly.
+
 ```bash
+# Install dev dependencies (library)
 npm install
-```
 
-**Development Server:**
-```bash
-npm run dev
-```
+# Run the Vitest test suite (library)
+npx vitest run          # one-shot
+npx vitest              # watch mode
 
-**Build:**
-```bash
-npm run build
-```
-
-**Run Tests:**
-```bash
-npx vitest run          # Run all tests
-npx vitest             # Watch mode
-npx vitest --ui        # Web UI
-```
-
-**Test Coverage:**
-```bash
-npx vitest run --coverage
+# Run the React/Vite example app
+cd examples/chat
+npm install
+npx vite                # dev server
+npx vite build          # production build of the example
 ```
 
 ## Notes
 
-**Architecture Highlights:**
-
-1. **Modular Exports** — Fine-grained exports for theme, chat components, and modes
-2. **Backend Abstraction** — ChatBackend interface allows MockBackend or custom implementations
-3. **CSS-Based Theming** — Custom properties for easy theme switching without JS
-4. **Multiple Chat Modes** — Inline, ThreePane, Mobile, and PersonaChat layouts
-5. **Type-Safe** — Full TypeScript with strict mode enabled
-6. **Submodule-Ready** — Designed to be included as git submodule in other projects
-
-**Chat Widget Features:**
-
-- **Modes:** Inline (simple centered), ThreePane (chat + detail + topics), Mobile (overlay), PersonaChat (wrapper)
-- **Typing Indicators** — Animated dots while waiting for responses
-- **Reactions & Rich Content** — Links and images in message bubbles
-- **Auto-Scroll** — Transcript scrolls to latest message
-- **Backend Flexibility** — MockBackend for demos, FetchBackend for real APIs
-- **10 Themes** — Pre-built color schemes for different contexts
-
-**Theme System:**
-
-- **Design Tokens** — Centralized colors, fonts, status colors in CSS
-- **Three-Way Toggle** — Auto (system), Dark, Light modes
-- **Light Mode Opt-In** — Split tokens for selective inclusion
-- **Grain Overlay** — Optional texture for visual depth
-- **Custom Properties** — CSS variables for dynamic theming
-
-**Testing:**
-
-- 61 tests covering backends, hooks, components, and all three modes
-- Integration-focused testing with Vitest and Testing Library
-- Mock backend for isolated component testing
-
-**Submodule Usage:**
-
-```bash
-git submodule add git@github.com:agentic-cookbook/shared-website-components.git
-```
-
-Then import components:
-```typescript
-import { InlineChat, MockBackend } from './shared-website-components/chat'
-import './shared-website-components/chat/css/base.css'
-import './shared-website-components/chat/css/modes/inline.css'
-```
-
-**Documentation:**
-
-- `docs/usage.md` — Complete API reference for chat widget
-- `docs/theming.md` — Theming guide with examples
-- `examples/chat/` — Working demo application
+- **Submodule-first design:** the library is not published; consuming sites add it via `git submodule add git@github.com:agentic-cookbook/shared-website-components.git` and import source files directly.
+- **No build step at the library level** -- `tsconfig.json` has `declaration: true` but there is no output emit configured, and `package.json` exports point at `.ts`/`.tsx` source. The consuming site's bundler is responsible for compilation.
+- **PersonaChat wrapper** acts as a single entry point that delegates to `InlineChat`, `ThreePaneChat`, or `MobileChat` based on a `mode` prop, simplifying adoption.
+- **Theming** is pure CSS custom properties -- 10 drop-in theme files in `chat/themes/` with no JS coupling, making it easy to add new looks.
+- **Backward-compat surface:** the deprecated vanilla JS files (`chat/persona-chat.js`, `chat/persona-chat.d.ts`, `chat/base.css`) are intentionally retained per `.claude/CLAUDE.md` so existing submodule consumers don't break during the React migration.
+- **Peer dependency:** React 19 (and `react-dom` 19) must be provided by the consumer.
+- **Superpowers plugin** is the only Claude tooling enabled; no custom commands, hooks, or rules directories.
