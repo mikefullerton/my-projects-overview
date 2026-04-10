@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "python3 ../scripts/build_static_site.py",
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
