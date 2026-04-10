@@ -1,176 +1,196 @@
-# AgenticDeveloperHub
+# agenticdeveloperhub
 
 ## Project Summary
 
-A full-stack web application providing a unified hub for the agentic ecosystem. AgenticDeveloperHub features multiple sites (main, admin, dashboard, API docs) with a shared backend, database, and authentication system. Built from the Configurator v1.19.0 template with unified authentication and admin features.
+A full-stack multi-site web application scaffolded from the configurator (v1.19.0). It provides a shared Hono/PostgreSQL backend with unified auth (email + GitHub OAuth), admin features, feature flags, messaging, and feedback -- plus four Cloudflare-hosted frontends (main, admin, dashboard, api-docs).
 
 ## Type & Tech Stack
 
-**Type:** Full-Stack Web Application (Multi-site Monorepo)
+**Type:** Full-stack multi-site monorepo (npm workspaces)
 
-**Tech Stack:**
-- **Frontend:** TypeScript, React, Vite, Tailwind CSS 4
-- **Backend:** TypeScript, Node.js, Hono, Drizzle ORM, PostgreSQL
-- **Runtime:** npm workspaces
-- **Deployment:** Railway (backend + PostgreSQL), Cloudflare Pages (frontend)
-- **Auth:** Unified auth system (inherited from Configurator)
-- **Testing:** vitest
+| Layer | Technology |
+|-------|-----------|
+| Backend framework | Hono (TypeScript, Node 22) |
+| Database | PostgreSQL 16 + Drizzle ORM / drizzle-kit |
+| Auth | JWT (jose), bcrypt, GitHub OAuth, unified auth-methods table |
+| Frontend (main/admin/dashboard) | React 19, Vite 6, TanStack Router + Query, Tailwind CSS 4 |
+| api-docs site | Cloudflare Worker only (no React) |
+| Backend hosting | Railway (Docker multi-stage build) |
+| Frontend hosting | Cloudflare Workers + Assets |
+| Dashboard DB | Cloudflare D1 (SQLite) |
+| Testing | vitest |
+| CI/CD | GitHub Actions (per-site deploy workflows) |
 
 ## GitHub URL
 
-https://github.com/agentic-cookbook/agenticdeveloperhub
+`git@github.com:agentic-cookbook/agenticdeveloperhub.git`
 
 ## Directory Structure
 
 ```
-.
-├── .claude/              # Claude Code configuration
-│   ├── CLAUDE.md
-│   └── settings.json
-├── .github/              # GitHub workflows and CI/CD
-├── .site/                # Deployment configuration
-├── docs/
-│   ├── planning/
-│   │   └── planning.md
-│   └── project/
-│       └── description.md
-├── backend/              # Shared backend API (Hono + Drizzle)
+agenticdeveloperhub/
+├── .claude/
+│   ├── CLAUDE.md               # Placeholder (to be determined)
+│   └── settings.json           # Enables superpowers plugin
+├── .github/workflows/          # deploy-main, deploy-admin, deploy-dashboard, deploy-api-docs
+├── .site/manifest.json         # Configurator deployment state (v1.19.0)
+├── backend/
 │   ├── src/
-│   │   ├── index.ts      # Server entry point
-│   │   ├── db/           # Database schema and migrations
-│   │   ├── routes/       # API endpoints
-│   │   └── (other modules)
-│   ├── package.json
-│   ├── tsconfig.json
-│   └── drizzle.config.ts
-├── shared/               # Shared TypeScript types and utilities
-│   ├── src/
-│   │   └── (shared code)
+│   │   ├── index.ts            # Server entry (port 3000)
+│   │   ├── app.ts              # Hono app wiring: middleware + routes
+│   │   ├── auth/               # github.ts, middleware.ts, password.ts, session.ts
+│   │   ├── config/env.ts
+│   │   ├── db/
+│   │   │   ├── schema.ts       # Drizzle schema (12 tables)
+│   │   │   ├── client.ts
+│   │   │   ├── migrate.ts
+│   │   │   ├── seed.ts
+│   │   │   └── migrations/     # 0000_ordinary_typhoid_mary.sql, 0001_unified_auth_v1_19.sql
+│   │   ├── middleware/         # cors, error, logger, rate-limit
+│   │   ├── routes/
+│   │   │   ├── auth.ts
+│   │   │   ├── health.ts
+│   │   │   ├── openapi.ts      # Auto-generated OpenAPI spec
+│   │   │   ├── public.ts
+│   │   │   └── admin/          # users, flags, messaging, feedback, settings, api-tokens
+│   │   └── services/           # feature-flags, messaging, settings
+│   ├── drizzle.config.ts
 │   └── package.json
-├── sites/                # Multiple frontend sites
-│   ├── main/             # Main site
-│   │   ├── src/
-│   │   ├── package.json
-│   │   └── vite.config.ts
-│   ├── admin/            # Admin panel
-│   │   ├── src/
-│   │   └── package.json
-│   ├── dashboard/        # Dashboard
-│   │   ├── src/
-│   │   └── package.json
-│   └── api-docs/         # API documentation
-│       ├── src/
-│       └── package.json
-├── Dockerfile            # Backend container image
-├── docker-compose.yml    # Local development setup
-├── package.json          # Root workspace configuration
-├── railway.toml          # Railway deployment config
-├── .env                  # Environment variables (local)
-├── .env.example          # Environment template
+├── shared/
+│   └── src/
+│       ├── index.ts
+│       ├── types.ts            # User, Auth, FeatureFlag, Feedback, etc.
+│       ├── constants.ts
+│       └── api-client.ts       # Typed API client for frontends
+├── sites/
+│   ├── main/                   # Public site (React + Vite + Cloudflare Worker)
+│   ├── admin/                  # Admin panel (React + Vite + Cloudflare Worker)
+│   ├── dashboard/              # User dashboard (React + Vite + Cloudflare + D1)
+│   └── api-docs/               # API docs (Cloudflare Worker, no React)
+├── docs/
+│   ├── planning/planning.md    # Placeholder
+│   └── project/description.md  # Placeholder
+├── Dockerfile                  # Multi-stage backend build (node:22-alpine)
+├── docker-compose.yml          # Local PostgreSQL 16
+├── railway.toml                # Railway deploy config (healthcheck /api/health)
+├── package.json                # Root workspace
+├── .env / .env.example
 └── .gitignore
 ```
 
 ## Key Files & Components
 
-**Root Configuration:**
-- `package.json` — npm workspaces configuration with dev/build scripts
-- `docker-compose.yml` — PostgreSQL container for local development
-- `Dockerfile` — Backend container image
+### Database Schema (`backend/src/db/schema.ts`, 12 tables)
 
-**Backend (Hono + Drizzle):**
-- `backend/src/index.ts` — Server entry point
-- `backend/src/db/` — Database schema, migrations, seed
-- `backend/src/routes/` — API endpoint handlers
-- `backend/drizzle.config.ts` — ORM configuration
+- **users** -- core user (id, email, role, displayName, avatarUrl, emailVerified)
+- **userAuthMethods** -- unified provider table (password, github, google, apple)
+- **userCapabilities** -- fine-grained permissions (e.g. `admin:users`, `api:write`)
+- **refreshTokens** -- JWT refresh rotation with revocation + replacement chain
+- **apiTokens** -- API keys with per-token capabilities
+- **settings** -- JSONB key/value app settings
+- **featureFlags** -- with JSON rule payload
+- **messageLog** -- email/SMS delivery tracking
+- **feedbackSubmissions** -- feedback with admin workflow
+- **notificationPreferences** -- per-user, per-category email/SMS opt-in
+- **integrationConnections** -- third-party OAuth (Google Calendar, etc.) with sync state
+- **schemaVersions** -- migration tracking
 
-**Shared Code:**
-- `shared/src/` — Shared TypeScript types and utilities used by all sites
+### API Routes (`backend/src/app.ts`)
 
-**Frontend Sites:**
-- `sites/main/` — Main public-facing site (React + Vite + Tailwind)
-- `sites/admin/` — Admin panel for managing the ecosystem
-- `sites/dashboard/` — Dashboard with monitoring/analytics
-- `sites/api-docs/` — Interactive API documentation
+Public: `/api/health`, `/api/auth`, `/api/auth/github`, `/api/openapi.json`, `/api/public`
 
-**Environment Configuration:**
-- `.env` — Local development environment variables
-- `.env.example` — Template for required env vars
-- `.site/` — Deployment configuration files
+Admin (auth + admin role): `/api/admin/{users,flags,messaging,feedback,settings,api-tokens}`
+
+### Shared Package
+
+`shared/src/` exports TypeScript types and a typed API client consumed by all frontend sites.
+
+### Deployment State (from `.site/manifest.json`)
+
+All 5 services show as deployed (as of 2026-04-09):
+
+| Service | Platform | URL |
+|---------|----------|-----|
+| backend | Railway | backend-production-5770.up.railway.app |
+| main | Cloudflare | agenticdeveloperhub-main.mwfullerton.workers.dev |
+| admin | Cloudflare | agenticdeveloperhub-admin.mwfullerton.workers.dev |
+| dashboard | Cloudflare + D1 | agenticdeveloperhub-dashboard.mwfullerton.workers.dev |
+| api-docs | Cloudflare | agenticdeveloperhub-api-docs.mwfullerton.workers.dev |
+
+Custom domains: `agenticdeveloperhub.com`, `admin.`, `dashboard.`, `api.`, `backend.`
+
+Features enabled: auth (email + github, admin seeded), featureFlags, observability (built-in), structured logging. Disabled: email, sms, abTesting, 2FA, emailVerification.
 
 ## Claude Configuration
 
-**Location:** `.claude/CLAUDE.md` and `.claude/settings.json`
-
-**settings.json:**
-- Enables superpowers plugin (official Claude plugins)
+- **`.claude/CLAUDE.md`** -- 12 lines, all placeholders (tech stack, build, architecture marked "to be determined").
+- **`.claude/settings.json`** -- Enables `superpowers@claude-plugins-official` plugin.
 
 ## Planning & Research Documents
 
-**Planning:**
-- `docs/planning/planning.md` — Development roadmap and feature planning
+- `docs/planning/planning.md` -- "(to be determined)"
+- `docs/project/description.md` -- Placeholder (title only, no content)
 
-**Project Documentation:**
-- `docs/project/description.md` — Project purpose, features, tech stack, and status
+Both files are scaffolded stubs yet to be filled in.
 
 ## Git History & Current State
 
-**Current Branch:** main
+**Branch:** `main` -- clean working tree (zero staged/unstaged/untracked)
 
-**Remote:** git@github.com:agentic-cookbook/agenticdeveloperhub.git
+```
+e63711c chore: update manifest with v1.19.0 deployment state and api-docs service
+8bcecc0 feat: upgrade to configurator v1.19.0 -- unified auth, admin features, API docs
+5ecf294 chore: update manifest with deployment URLs
+183abc6 chore: add initial database migration
+fe108e9 feat: initial scaffold from configurator v1.18.0
+ec00627 Initial project scaffolding
+```
 
-**Recent Commits:**
-- `e63711c` — chore: update manifest with v1.19.0 deployment state and api-docs service
-- `8bcecc0` — feat: upgrade to configurator v1.19.0 — unified auth, admin features, API docs
-- `5ecf294` — chore: update manifest with deployment URLs
-- `183abc6` — chore: add initial database migration
-- `fe108e9` — feat: initial scaffold from configurator v1.18.0
-- `ec00627` — Initial project scaffolding
-
-**Status:** Active development. Recently upgraded to Configurator v1.19.0 with unified auth and admin features.
+Only 6 commits; project was initialized 2026-04-09 and immediately upgraded from configurator v1.18.0 -> v1.19.0.
 
 ## Build & Test Commands
 
 ```bash
-# Install dependencies
+# Install
 npm install
 
-# Development - run all sites and backend concurrently
+# Start local PostgreSQL
+docker compose up -d
+
+# Development (runs backend + main + admin + dashboard concurrently)
 npm run dev
 
 # Build individual workspaces
-npm run build:shared     # Build shared utilities
-npm run build:backend    # Build API backend
-npm run build:main       # Build main site
-npm run build:admin      # Build admin site
-npm run build:dashboard  # Build dashboard
-npm run build:all        # Build everything
-
-# Deployment
-npm run deploy:main      # Deploy main site
-npm run deploy:admin     # Deploy admin site
-npm run deploy:dashboard # Deploy dashboard
+npm run build:shared
+npm run build:backend
+npm run build:main
+npm run build:admin
+npm run build:dashboard
+npm run build:all
 
 # Database
-npm run db:generate      # Generate migration files
-npm run db:migrate       # Run pending migrations
-npm run db:seed          # Seed database with initial data
+npm run db:generate         # drizzle-kit generate
+npm run db:migrate          # tsx src/db/migrate.ts
+npm run db:seed             # seed admin user
 
-# Testing (backend)
-npm run test -w backend  # Run backend tests with vitest
+# Deploy Cloudflare sites
+npm run deploy:main
+npm run deploy:admin
+npm run deploy:dashboard
+npm run deploy:all
+# Backend deploys to Railway via git push (Dockerfile)
+
+# Test
+npm run test -w backend     # vitest
 ```
 
 ## Notes
 
-- Multi-site monorepo using npm workspaces for code sharing
-- All sites share the same backend API (Hono + Drizzle ORM)
-- Shared code in `shared/` workspace used by backend and all frontend sites
-- PostgreSQL database shared by all sites and backend
-- Authentication is unified across all sites
-- Recent upgrade to Configurator v1.19.0 adds admin panel and API docs
-- Local development uses docker-compose for PostgreSQL
-- Frontend sites use Vite for fast development and optimized builds
-- Each site can be independently deployed to Cloudflare Pages
-- Backend deploys to Railway with auto-migrations
-- Uses TypeScript across entire stack for type safety
-- Development workflow supports concurrent running of all sites/backend
-- Configuration template inherited from Configurator project template
+- Very early-stage: 6 commits, all project docs (CLAUDE.md, planning.md, description.md) are placeholders.
+- Generated entirely by the configurator scaffolding tool -- structure closely mirrors the standard configurator v1.19.0 template.
+- Dashboard site uniquely binds a Cloudflare D1 (SQLite) database (id `7a324733-3cbd-4b81-8a6a-daf72f8b2760`) in addition to the shared PostgreSQL backend.
+- OAuth providers: GitHub (implemented); Google/Apple scaffolded in the schema but not wired up.
+- Optional integrations: Postmark (email) and Twilio (SMS) -- env vars commented out, currently disabled.
+- The `.env` file is tracked in the repo despite `.gitignore` listing `.env` -- but it's byte-identical to `.env.example` (1656 bytes), so no real secrets are committed.
+- Backend healthcheck path `/api/health` is wired into `railway.toml`.
+- The api-docs site is a pure Cloudflare Worker (no React bundle) and likely serves the OpenAPI spec generated by `backend/src/routes/openapi.ts`.
