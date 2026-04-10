@@ -1,22 +1,22 @@
 ---
 name: update-project-overview
-description: "Scan all projects in ~/projects/active/, update overview.md files with current info, remove stale projects, add new ones, and regenerate index.md. Triggers on 'update project overview', 'sync project docs', 'refresh overviews', or /update-project-overview."
+description: "Scan all projects in ~/projects/, update overview.md files with current info, remove stale projects, add new ones, and regenerate index.md. Triggers on 'update project overview', 'sync project docs', 'refresh overviews', or /update-project-overview."
 argument-hint: "[project-name] (optional — update a single project instead of all)"
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash, Agent
 ---
 
 # Update Project Overview
 
-Scan all projects in `~/projects/active/`, update their `overview.md` files with current information, remove stale entries for deleted projects, add new projects, and regenerate `index.md`.
+Scan all projects in `~/projects/`, update their `overview.md` files with current information, remove stale entries for deleted projects, add new projects, and regenerate `index.md`.
 
 ## Constants
 
-- **PROJECTS_DIR**: `~/projects/active`
-- **OVERVIEW_REPO**: `~/projects/active/my-projects-overview`
-- **PROJECTS_SUBDIR**: `~/projects/active/my-projects-overview/projects`
-- **INDEX_FILE**: `~/projects/active/my-projects-overview/index.md`
+- **PROJECTS_DIR**: `~/projects`
+- **OVERVIEW_REPO**: `~/projects/my-projects-overview`
+- **PROJECTS_SUBDIR**: `~/projects/my-projects-overview/projects`
+- **INDEX_FILE**: `~/projects/my-projects-overview/index.md`
 - **SKIP_SUFFIXES**: `-tests` (test directories)
-- **SKIP_NAMES**: `my-projects-overview` (this repo itself)
+- **SKIP_NAMES**: `my-projects-overview`, `tests`, `experiments`, `external`, `old ci pipeline` (skip these)
 
 ## Execution
 

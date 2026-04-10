@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Deterministic project scanner for update-project-overview skill.
 
-Scans ~/projects/active/ for project directories, gathers git info,
+Scans ~/projects/ for project directories, gathers git info,
 tech stack, directory structure, docs, and Claude config. Outputs
 structured JSON to stdout.
 
@@ -22,7 +22,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-PROJECTS_DIR = Path.home() / "projects" / "active"
+PROJECTS_DIR = Path.home() / "projects"
 OVERVIEW_REPO = PROJECTS_DIR / "my-projects-overview"
 PROJECTS_SUBDIR = OVERVIEW_REPO / "projects"
 INDEX_FILE = OVERVIEW_REPO / "index.md"
@@ -597,8 +597,11 @@ def regenerate_index(projects_subdir: Path, index_file: Path) -> None:
             if lang_match:
                 tech = lang_match.group(1).strip()
 
-        # Extract org from GitHub URL
-        url_match = re.search(r"`git@github\.com:([^/]+)/", content)
+        # Extract org from GitHub URL (ssh, https, or plain forms)
+        url_match = re.search(
+            r"(?:git@github\.com:|https?://github\.com/)([^/\s`]+)/",
+            content,
+        )
         if url_match:
             org = url_match.group(1)
 
@@ -631,7 +634,7 @@ def regenerate_index(projects_subdir: Path, index_file: Path) -> None:
     lines = [
         "# My Projects Overview",
         "",
-        "A comprehensive reference for all active projects in `~/projects/active/`."
+        "A comprehensive reference for all active projects in `~/projects/`."
         " Each project has a detailed `overview.md` with directory structure, tech stack,"
         " git history, Claude configuration, planning docs, and build commands.",
         "",

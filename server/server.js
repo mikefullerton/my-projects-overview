@@ -4,19 +4,19 @@ import { join } from 'node:path';
 
 const PORT = Number(process.env.PORT || 3457);
 const PROJECTS_BASE = join(import.meta.dirname, '..', 'projects');
-
-// Map of folder names to disk paths
-const PROJECT_FOLDERS = {
-  active: join(process.env.HOME, 'projects', 'active'),
-  other: join(process.env.HOME, 'projects', 'other'),
-  paused: join(process.env.HOME, 'projects', 'paused'),
-  personal: join(process.env.HOME, 'projects', 'personal'),
-  tests: join(process.env.HOME, 'projects', 'tests'),
-};
+const PROJECTS_LIVE = join(process.env.HOME, 'projects');
 
 async function getProjects() {
   const entries = await readdir(PROJECTS_BASE, { withFileTypes: true });
   const projects = [];
+
+  // Read live projects dir once to check existence
+  let liveEntries = new Set();
+  try {
+    liveEntries = new Set(await readdir(PROJECTS_LIVE));
+  } catch {
+    // ignore
+  }
 
   for (const entry of entries) {
     if (!entry.isDirectory()) continue;
@@ -28,19 +28,8 @@ async function getProjects() {
       continue;
     }
 
-    // Determine which folder this project lives in on disk
-    let folder = 'unknown';
-    for (const [name, dirPath] of Object.entries(PROJECT_FOLDERS)) {
-      try {
-        const contents = await readdir(dirPath);
-        if (contents.includes(entry.name)) {
-          folder = name;
-          break;
-        }
-      } catch {
-        // folder doesn't exist
-      }
-    }
+    // All live projects now live directly under ~/projects/
+    const folder = liveEntries.has(entry.name) ? 'active' : 'unknown';
 
     projects.push({
       id: entry.name,
@@ -49,14 +38,8 @@ async function getProjects() {
     });
   }
 
-  // Sort by folder order, then alphabetically within folder
-  const folderOrder = ['active', 'other', 'paused', 'personal', 'tests', 'unknown'];
-  projects.sort((a, b) => {
-    const fa = folderOrder.indexOf(a.folder);
-    const fb = folderOrder.indexOf(b.folder);
-    if (fa !== fb) return fa - fb;
-    return a.id.localeCompare(b.id);
-  });
+  // Sort alphabetically (case-insensitive)
+  projects.sort((a, b) => a.id.toLowerCase().localeCompare(b.id.toLowerCase()));
 
   return projects;
 }
