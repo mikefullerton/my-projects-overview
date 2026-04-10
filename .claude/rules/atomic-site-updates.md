@@ -1,13 +1,24 @@
 ---
-description: Site HTML must be regenerated whenever overview files or index.md change
+description: Rebuild and redeploy the local-server app after any overview change
 globs: "projects/*/overview.md,index.md,site/**"
 ---
 
-# Atomic Site Updates
+# Site Rebuild After Overview Changes
 
-When `/update-project-overview` is invoked, the HTML site under `site/` must be regenerated as part of the same atomic commit.
+The dashboard under `site/` is a Vite React app deployed as a local-server
+app at `dev.local/projects-overview/`. The built output (`site/dist/`) is
+gitignored — the source of truth for project data is the set of
+`projects/<name>/overview.md` files, baked into `site/public/projects.json`
+by the `prebuild` step.
 
-- Every `projects/<name>/overview.md` change must produce an updated `site/projects/<name>.html`
-- Every `index.md` change must produce an updated `site/index.html`
-- The commit that updates overviews must also include the regenerated site files
-- Never commit overview changes without the corresponding site update, and vice versa
+After any commit that modifies `projects/<name>/overview.md` or `index.md`,
+rebuild and redeploy:
+
+```bash
+cd site && npm run build
+```
+
+The `prebuild` script (`scripts/build_static_site.py`) regenerates
+`projects.json` from the current overview files before `vite build` runs.
+The app manifest at `~/.local-server/apps/projects-overview.json` points
+Caddy at `site/dist/` in place, so no copying is needed after the build.
