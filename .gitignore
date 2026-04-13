@@ -1,1 +1,4 @@
 .DS_Store
+
+# graphify output (generated)
+graphify-out/
