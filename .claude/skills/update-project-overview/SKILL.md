@@ -12,9 +12,9 @@ Scan all projects in `~/projects/`, update their `overview.md` files with curren
 ## Constants
 
 - **PROJECTS_DIR**: `~/projects`
-- **OVERVIEW_REPO**: `~/projects/my-projects-overview`
-- **PROJECTS_SUBDIR**: `~/projects/my-projects-overview/projects`
-- **INDEX_FILE**: `~/projects/my-projects-overview/index.md`
+- **OVERVIEW_REPO**: `~/projects/active/my-projects-overview`
+- **PROJECTS_SUBDIR**: `~/projects/active/my-projects-overview/projects`
+- **INDEX_FILE**: `~/projects/active/my-projects-overview/index.md`
 - **SKIP_SUFFIXES**: `-tests` (test directories)
 - **SKIP_NAMES**: `my-projects-overview`, `tests`, `experiments`, `external`, `old ci pipeline` (skip these)
 
