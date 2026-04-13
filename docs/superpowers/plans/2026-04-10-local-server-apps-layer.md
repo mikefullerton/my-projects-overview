@@ -30,8 +30,8 @@
   "id": "projects-overview",
   "title": "Projects Overview",
   "description": "Dashboard of all ~/projects repos with overview.md metadata",
-  "static_root": "/Users/mfullerton/projects/my-projects-overview/site/dist",
-  "source_repo": "/Users/mfullerton/projects/my-projects-overview"
+  "static_root": "/Users/mfullerton/projects/active/my-projects-overview/site/dist",
+  "source_repo": "/Users/mfullerton/projects/active/my-projects-overview"
 }
 ```
 
@@ -70,7 +70,7 @@
 
 ## Phase 1: Core mechanism (devtools-web-server)
 
-> **Worktree:** Create a worktree in `~/projects/devtools-web-server` via `EnterWorktree` before starting.
+> **Worktree:** Create a worktree in `~/projects/active/devtools-web-server` via `EnterWorktree` before starting.
 
 ### Task 1: Create `AppManifest` dataclass and failing validation test
 
@@ -134,7 +134,7 @@ def test_manifest_rejects_id_mismatch(tmp_path):
 
 - [ ] **Step 2: Run test to verify it fails**
 
-Run: `cd ~/projects/devtools-web-server/site-template && python3 -m pytest tests/test_apps_registry.py -v`
+Run: `cd ~/projects/active/devtools-web-server/site-template && python3 -m pytest tests/test_apps_registry.py -v`
 Expected: FAIL with `ModuleNotFoundError: No module named 'apps_registry'`
 
 - [ ] **Step 3: Implement `AppManifest`**
@@ -207,7 +207,7 @@ class AppManifest:
 
 - [ ] **Step 4: Run tests to verify they pass**
 
-Run: `cd ~/projects/devtools-web-server/site-template && python3 -m pytest tests/test_apps_registry.py -v`
+Run: `cd ~/projects/active/devtools-web-server/site-template && python3 -m pytest tests/test_apps_registry.py -v`
 Expected: 4 passed
 
 - [ ] **Step 5: Commit**
@@ -289,7 +289,7 @@ def test_registry_ignores_non_json_files(tmp_path):
 
 - [ ] **Step 2: Run tests to verify they fail**
 
-Run: `cd ~/projects/devtools-web-server/site-template && python3 -m pytest tests/test_apps_registry.py -v`
+Run: `cd ~/projects/active/devtools-web-server/site-template && python3 -m pytest tests/test_apps_registry.py -v`
 Expected: 4 new tests FAIL with `ImportError: cannot import name 'AppRegistry'`
 
 - [ ] **Step 3: Implement `AppRegistry`**
@@ -329,7 +329,7 @@ class AppRegistry:
 
 - [ ] **Step 4: Run all registry tests**
 
-Run: `cd ~/projects/devtools-web-server/site-template && python3 -m pytest tests/test_apps_registry.py -v`
+Run: `cd ~/projects/active/devtools-web-server/site-template && python3 -m pytest tests/test_apps_registry.py -v`
 Expected: 8 passed
 
 - [ ] **Step 5: Commit**
@@ -376,7 +376,7 @@ def test_build_app_route_static_only():
 
 - [ ] **Step 2: Run test to verify it fails**
 
-Run: `cd ~/projects/devtools-web-server/site-template && python3 -m pytest tests/test_caddy_admin.py -v`
+Run: `cd ~/projects/active/devtools-web-server/site-template && python3 -m pytest tests/test_caddy_admin.py -v`
 Expected: FAIL with `ModuleNotFoundError`
 
 - [ ] **Step 3: Implement `build_app_route`**
@@ -432,7 +432,7 @@ def build_app_route(app_id: str, static_root: str) -> dict[str, Any]:
 
 - [ ] **Step 4: Run test**
 
-Run: `cd ~/projects/devtools-web-server/site-template && python3 -m pytest tests/test_caddy_admin.py -v`
+Run: `cd ~/projects/active/devtools-web-server/site-template && python3 -m pytest tests/test_caddy_admin.py -v`
 Expected: PASS
 
 - [ ] **Step 5: Commit**
@@ -519,7 +519,7 @@ def test_remove_route_by_id(stub_caddy):
 
 - [ ] **Step 2: Run tests to verify they fail**
 
-Run: `cd ~/projects/devtools-web-server/site-template && python3 -m pytest tests/test_caddy_admin.py -v`
+Run: `cd ~/projects/active/devtools-web-server/site-template && python3 -m pytest tests/test_caddy_admin.py -v`
 Expected: 2 new tests FAIL with `ImportError`
 
 - [ ] **Step 3: Implement install/remove**
@@ -567,7 +567,7 @@ def remove_route(route_id: str) -> None:
 
 - [ ] **Step 4: Run tests**
 
-Run: `cd ~/projects/devtools-web-server/site-template && python3 -m pytest tests/test_caddy_admin.py -v`
+Run: `cd ~/projects/active/devtools-web-server/site-template && python3 -m pytest tests/test_caddy_admin.py -v`
 Expected: 3 passed
 
 - [ ] **Step 5: Verify the Caddyfile srv0 assumption**
@@ -722,7 +722,7 @@ git commit -m "feat(apps): add GET /_api/apps endpoint"
 
 - [ ] **Step 1: Locate the home page source**
 
-Run: `grep -rn "Local Sites\|useSites\|_api/sites" ~/projects/devtools-web-server 2>/dev/null | head`
+Run: `grep -rn "Local Sites\|useSites\|_api/sites" ~/projects/active/devtools-web-server 2>/dev/null | head`
 Expected: find the source directory (likely `devtools-web-server/home-page/` or similar).
 
 - [ ] **Step 2: Add `useApps` hook**
@@ -910,7 +910,7 @@ ExitWorktree (action: remove)
 
 ## Phase 2: Migrate my-projects-overview as the first app
 
-> **Worktree:** This repo now opts into worktree-workflow-rule. Create a worktree in `~/projects/my-projects-overview` via `EnterWorktree` before starting.
+> **Worktree:** This repo now opts into worktree-workflow-rule. Create a worktree in `~/projects/active/my-projects-overview` via `EnterWorktree` before starting.
 
 ### Task 10: Vite base path + smoke test a local build
 
@@ -1115,7 +1115,7 @@ git commit -m "feat(site): load projects from baked projects.json"
 - [ ] **Step 1: Full build from clean**
 
 ```bash
-cd ~/projects/my-projects-overview/site
+cd ~/projects/active/my-projects-overview/site
 rm -rf dist public/projects.json
 npm run build
 ls dist/index.html dist/projects.json dist/assets/
