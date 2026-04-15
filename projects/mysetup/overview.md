@@ -214,7 +214,7 @@ Allowed operations for Claude agents:
 1. **Shell Configuration**
    - Default: zsh with oh-my-zsh
    - Theme: Custom `mikefullerton.zsh-theme`
-   - PATH entries: `~/projects/active/mysetup/bin`, `~/.local/bin`
+   - PATH entries: `~/projects/mysetup/bin`, `~/.local/bin`
    - Aliases: git shortcuts (ga, gc, gs, gl, gpush, gpull, gfpush, co, gnb, gcb), claude-yolo/cy
    - Tab title hook from `setup_files/tab-title-hook.zsh`
    - Environment variables checked: CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID
