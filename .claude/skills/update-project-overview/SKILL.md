@@ -12,19 +12,37 @@ Scan all projects in `~/projects/`, update their `overview.md` files with curren
 ## Constants
 
 - **PROJECTS_DIR**: `~/projects`
+- **CATEGORY_DIRS**: `active`, `data`, `experimental`, `external`, `paused`, `tests` (subdirs of `PROJECTS_DIR` that contain projects — scan each for projects one level deeper)
+- **ROOT_PROJECTS**: projects that live directly at `~/projects/<name>/` rather than inside a category subdir (currently: `mysetup`)
 - **OVERVIEW_REPO**: `~/projects/active/my-projects-overview`
 - **PROJECTS_SUBDIR**: `~/projects/active/my-projects-overview/projects`
 - **INDEX_FILE**: `~/projects/active/my-projects-overview/index.md`
 - **SKIP_SUFFIXES**: `-tests` (test directories)
-- **SKIP_NAMES**: `my-projects-overview`, `tests`, `experiments`, `external`, `old ci pipeline` (skip these)
+- **SKIP_NAMES**: `my-projects-overview`, `worktrees` (skip these everywhere)
 
 ## Execution
 
 ### Step 1: Discover Projects
 
-Scan `PROJECTS_DIR` for all directories. Filter out:
+Scan two sources to build the **live project list**:
+
+1. **Root-level projects**: Directories at `~/projects/<name>/` that are not category dirs, not `worktrees`, and are git repos. Currently: `mysetup`.
+
+2. **Category subdirs**: For each dir in `CATEGORY_DIRS` that exists under `~/projects/`, list its immediate subdirectories:
+   - `~/projects/active/` — main active projects
+   - `~/projects/data/` — data/content repos
+   - `~/projects/experimental/` — exploratory work
+   - `~/projects/external/` — external/forked repos
+   - `~/projects/paused/` — paused/inactive work
+   - `~/projects/tests/` — test pipeline repos
+
+Filter out from any source:
 - Directories ending with `-tests`
 - `my-projects-overview` (this repo)
+- `worktrees` (worktree staging dir)
+- `old ci pipeline` (has spaces, not a git repo)
+
+Each discovered project entry must record its **full absolute path** (e.g. `~/projects/experimental/Hairball`) and **category** (e.g. `experimental`) for use in Step 5 (index regeneration).
 
 This produces the **live project list**.
 
@@ -112,14 +130,19 @@ After all project overviews are written, read every `overview.md` to extract:
 - GitHub organization (mikefullerton, agentic-cookbook, temporal-company, or other)
 - Project status (active development, stable, planning, empty/placeholder)
 
-Group projects into categories based on their type:
-- **macOS Native Apps** — Swift/SwiftUI/AppKit projects
-- **Cross-Platform Apps** — Kotlin Multiplatform or multi-platform projects
-- **Agentic Cookbook Ecosystem** — Projects in the agentic-cookbook org
-- **Web Applications & SaaS** — Web apps, websites, SaaS platforms
-- **Claude Code Extensions & Tools** — Plugins, skills, CLI tools for Claude Code
-- **Fun & Creative** — Side projects, experiments, creative tools
-- **Infrastructure & Meta** — Setup, dashboards, meta-projects
+Group projects into categories. Use the project's **category** (from Step 1) to assign it to the correct section:
+
+- **macOS Native Apps** — Swift/SwiftUI/AppKit projects (from `active/`)
+- **Cross-Platform Apps** — Kotlin Multiplatform or multi-platform projects (from `active/`)
+- **Agentic Cookbook Ecosystem** — Projects in the agentic-cookbook org (from `active/`)
+- **Web Applications & SaaS** — Web apps, websites, SaaS platforms (from `active/`)
+- **Claude Code Extensions & Tools** — Plugins, skills, CLI tools for Claude Code (from `active/`)
+- **Infrastructure & Meta** — Setup, dashboards, meta-projects (from `active/` or root-level)
+- **Experimental** — All projects from `experimental/`
+- **Paused** — All projects from `paused/`
+- **Data & Content** — All projects from `data/`
+- **External** — All projects from `external/`
+- **Tests** — All projects from `tests/`
 
 Write `index.md` with:
 - Header with generation date
