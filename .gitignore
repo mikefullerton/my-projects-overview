@@ -3,5 +3,8 @@
 # graphify output (generated)
 graphify-out/
 
+# Claude Code worktrees
+.claude/worktrees/
+
 # Claude Code scheduled tasks runtime lock
 .claude/scheduled_tasks.lock
