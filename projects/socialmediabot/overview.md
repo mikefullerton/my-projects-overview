@@ -30,14 +30,14 @@ An AI-powered autonomous content pipeline that analyzes development work from gi
 
 ## GitHub URL
 
-`git@github.com:mikefullerton/social-media-bot.git`
+`git@github.com:mikefullerton/socialmediabot.git`
 
-https://github.com/mikefullerton/social-media-bot
+https://github.com/mikefullerton/socialmediabot
 
 ## Directory Structure
 
 ```
-social-media-bot/
+socialmediabot/
 ├── .claude/                             # Claude Code configuration
 ├── .pytest_cache/                       # Pytest artifacts
 ├── .venv/                               # Python virtual environment
@@ -84,7 +84,7 @@ social-media-bot/
 ├── README.md                            # Project documentation
 ├── CLAUDE.md                            # Claude Code project rules
 ├── .gitignore
-└── social-media-bot.egg-info/           # Package metadata
+└── socialmediabot.egg-info/           # Package metadata
 ```
 
 ## Key Files & Components
@@ -120,12 +120,12 @@ social-media-bot/
 - `platforms/linkedin_platform.py` — LinkedIn client
 
 **Data Management:**
-- Per-run storage: `~/Library/Mobile Documents/com~apple~CloudDocs/social-media-bot/bot-runs/run-YYYY-MM-DD-HH-MM-SS/`
+- Per-run storage: `~/Library/Mobile Documents/com~apple~CloudDocs/socialmediabot/bot-runs/run-YYYY-MM-DD-HH-MM-SS/`
   - `manifest.json` — Bot statuses, timing, artifacts
   - `overview.html` — Live-updating dashboard
   - `[bot-name]/` — Per-bot output directories
 - `arch-maps/` — Cached repository architecture maps
-- `social-media-bot.db` — SQLite operational state
+- `socialmediabot.db` — SQLite operational state
 
 **Dashboard & UI:**
 - `templates/index.html` — Run history with status tracking
@@ -154,7 +154,7 @@ social-media-bot/
 - `6721dbc` feat: per-run data storage with live HTML dashboard
 - `10fb707` feat: deep activity pipeline with commit-by-commit analysis
 - `83759e2` fix: activity scanner recursive discovery, better filtering
-- `4d34e70` feat: move data directory to ~/social-media-bot
+- `4d34e70` feat: move data directory to ~/socialmediabot
 - `d56ef59` feat: deterministic activity scanner, JSON extraction
 - `ee1aa31` fix: make data directory configurable via SMBOT_DATA_DIR
 - `e962de3` fix: e2e test harness uses venv Python

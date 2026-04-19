@@ -1,4 +1,4 @@
-# cookbook-backend
+# agenticcookbookbackend
 
 ## Project Summary
 
@@ -12,17 +12,17 @@ Backend API service (plus co-located auth service and admin/dashboard frontends)
 - **Auth service (`auth/`)**: Hono 4, Drizzle ORM 0.38, `pg` driver, `jose`, `bcryptjs`, `uuid`, Zod
 - **Shared (`shared/`)**: TypeScript types library built with `tsc`, Zod
 - **Admin site (`sites/admin/`)**: React 19, Vite 6, TanStack Query + Router, Tailwind 4, deployed as a Cloudflare Worker (static assets via `ASSETS` binding)
-- **Dashboard site (`sites/dashboard/`)**: React 19, Vite 6, TanStack Query + Router, Tailwind 4, Cloudflare Worker with a D1 database binding (`cookbook-backend-dashboard-db`)
+- **Dashboard site (`sites/dashboard/`)**: React 19, Vite 6, TanStack Query + Router, Tailwind 4, Cloudflare Worker with a D1 database binding (`agenticcookbookbackend-dashboard-db`)
 - **Infrastructure**: Docker + Railway for `backend` and `auth`; Cloudflare Workers/D1 for the two sites; local Postgres 16 via `docker-compose.yml`
 
 ## GitHub URL
 
-git@github.com:agentic-cookbook/cookbook-backend.git
+git@github.com:agentic-cookbook/agenticcookbookbackend.git
 
 ## Directory Structure
 
 ```
-cookbook-backend/
+agenticcookbookbackend/
 ├── .claude/
 │   ├── CLAUDE.md
 │   └── settings.json
@@ -100,12 +100,12 @@ cookbook-backend/
 - **`Dockerfile`** — Multi-stage Node 22 Alpine build for the main `backend` service. Entrypoint runs `backend/dist/db/migrate.js` then `backend/dist/index.js`, copying migration SQL into the image.
 - **`railway.toml`** — Railway deploy config for the backend, healthcheck `/api/health`.
 - **`auth/Dockerfile`** + **`auth/railway.toml`** — Separate Railway service for the auth API, port 3001, healthcheck `/health`.
-- **`docker-compose.yml`** — Local Postgres 16 (`cookbook-backend_dev`, user/pass `postgres`, port 5432).
+- **`docker-compose.yml`** — Local Postgres 16 (`agenticcookbookbackend_dev`, user/pass `postgres`, port 5432).
 - **`backend/src/db/schema.ts`**, **`backend/src/db/migrate.ts`**, **`backend/src/db/migrations/`** — Drizzle schema, runtime migrator, and generated SQL migrations.
 - **`backend/src/routes/`** — `health.ts`, `auth.ts`, `public.ts`, plus `admin/` subroutes.
 - **`backend/src/services/`** — `feature-flags.ts`, `messaging.ts`, `settings.ts`.
 - **`sites/admin/wrangler.jsonc`** — Cloudflare Worker serving built Vite assets; `API_BACKEND_URL` points at the deployed Railway backend (`https://backend-production-8dd93.up.railway.app`).
-- **`sites/dashboard/wrangler.jsonc`** — Same pattern plus a D1 database binding (`cookbook-backend-dashboard-db`, id `d93842d4-8966-43da-bc4e-b454a4991a97`) and `MAIN_SITE_URL` / `ADMIN_SITE_URL` vars pointing at `agentic-cookbook.com` and `admin.agentic-cookbook.com`.
+- **`sites/dashboard/wrangler.jsonc`** — Same pattern plus a D1 database binding (`agenticcookbookbackend-dashboard-db`, id `d93842d4-8966-43da-bc4e-b454a4991a97`) and `MAIN_SITE_URL` / `ADMIN_SITE_URL` vars pointing at `agentic-cookbook.com` and `admin.agentic-cookbook.com`.
 
 ## Claude Configuration
 
@@ -120,7 +120,7 @@ cookbook-backend/
 
 ## Git History & Current State
 
-- **Remote**: `git@github.com:agentic-cookbook/cookbook-backend.git`
+- **Remote**: `git@github.com:agentic-cookbook/agenticcookbookbackend.git`
 - **Current branch**: `main`
 - **Working tree**: clean
 - **Recent commits**:
@@ -152,7 +152,7 @@ Local infra: `docker compose up` for the Postgres dev database.
 
 ## Notes
 
-- Despite the repo name "cookbook-backend", this is effectively a full-stack monorepo for the Agentic Cookbook product — it also contains the admin site, user dashboard, and a standalone auth service. The name reflects its origin as the backend repo that later absorbed the other services.
+- Despite the repo name "agenticcookbookbackend", this is effectively a full-stack monorepo for the Agentic Cookbook product — it also contains the admin site, user dashboard, and a standalone auth service. The name reflects its origin as the backend repo that later absorbed the other services.
 - Two different Postgres drivers in use: `postgres` (postgres.js) in `backend/`, and `pg` (node-postgres) in `auth/`. Drizzle ORM versions also differ slightly (0.39 vs 0.38). A future harmonization target.
 - Two different bcrypt libraries: `bcrypt` (native) in backend, `bcryptjs` (pure JS) in auth.
 - `backend/` is deployed to Railway via the root `Dockerfile` + `railway.toml`; `auth/` is deployed to Railway via its own `auth/Dockerfile` + `auth/railway.toml`. Note `auth/Dockerfile` installs pnpm but then uses `npm install --frozen-lockfile`, which is inconsistent and likely a scaffolding bug.

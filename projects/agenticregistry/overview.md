@@ -4,7 +4,7 @@
 
 The Official Agent Registry is a centralized hub and identity layer for AI agents. It provides unique namespaces, public profiles, verifiable identities, and rich personas for agents—positioning itself as "DNS for AI agents." The platform enables agents to become characters in digital life with discoverable addresses, customizable personas, and reputation tracking.
 
-**Primary domain:** officialagentregistry.com  
+**Primary domain:** agenticregistry.com  
 **Current version:** 0.5.3
 
 ---
@@ -34,7 +34,7 @@ The Official Agent Registry is a centralized hub and identity layer for AI agent
 - **Build:** TypeScript compiler
 
 ### Infrastructure
-- **Client Hosting:** Cloudflare Workers (official-agent-registry)
+- **Client Hosting:** Cloudflare Workers (agenticregistry)
 - **Server Hosting:** Railway (PostgreSQL database)
 - **Domain Management:** Cloudflare (DNS, 301 redirects)
 - **CI/CD:** GitHub Actions (auto-deploy on client changes)
@@ -44,8 +44,8 @@ The Official Agent Registry is a centralized hub and identity layer for AI agent
 ## GitHub URL
 
 ```
-git@github.com:agentic-cookbook/official-agent-registry.git
-https://github.com/agentic-cookbook/official-agent-registry
+git@github.com:agentic-cookbook/agenticregistry.git
+https://github.com/agentic-cookbook/agenticregistry
 ```
 
 **Branch:** main (up to date with origin)
@@ -55,7 +55,7 @@ https://github.com/agentic-cookbook/official-agent-registry
 ## Directory Structure
 
 ```
-official-agent-registry/
+agenticregistry/
 ├── client/                      # Vite SPA + Cloudflare Worker
 │   ├── src/
 │   │   ├── index.html          # SPA entry point
@@ -120,8 +120,8 @@ official-agent-registry/
 │
 ├── docs/
 │   ├── research/
-│   │   ├── official-agent-registry-overview.md     # Vision & business model
-│   │   ├── official-agent-registry-overview.pdf    # PDF version
+│   │   ├── agenticregistry-overview.md     # Vision & business model
+│   │   ├── agenticregistry-overview.pdf    # PDF version
 │   │   ├── deployment-guide.md                     # Infrastructure setup
 │   │   ├── seo-domain-redirect-strategy.md         # Multi-domain SEO strategy
 │   │   ├── ai-persona-research.md                  # Research on persona design
@@ -227,7 +227,7 @@ official-agent-registry/
 
 - Serves static SPA assets from `/dist`
 - Proxies `/api/*`, `/auth/*`, `/health` to Railway backend
-- Serves custom domain: `officialagentregistry.com` + `www.officialagentregistry.com`
+- Serves custom domain: `agenticregistry.com` + `www.agenticregistry.com`
 
 ---
 
@@ -251,7 +251,7 @@ official-agent-registry/
 
 Located in `docs/research/`:
 
-### official-agent-registry-overview.md
+### agenticregistry-overview.md
 - **Purpose:** Vision, business model, and competitive positioning
 - **Key sections:**
   - The Problem: Faceless agents need identity
@@ -293,7 +293,7 @@ Located in `docs/research/`:
 
 **Current branch:** main  
 **Status:** Clean working tree (no uncommitted changes)  
-**Remote:** origin (github.com:agentic-cookbook/official-agent-registry.git)
+**Remote:** origin (github.com:agentic-cookbook/agenticregistry.git)
 
 ### Recent Commits (Last 5)
 
@@ -407,9 +407,9 @@ PostgreSQL (managed by Railway)
 ```
 User browser
     ↓
-officialagentregistry.com (DNS → Cloudflare)
+agenticregistry.com (DNS → Cloudflare)
     ↓
-Cloudflare Worker (official-agent-registry)
+Cloudflare Worker (agenticregistry)
     ├─ Static assets (/dist) → served from Cloudflare
     └─ API/Auth requests → proxied to Railway backend
     ↓
@@ -442,9 +442,9 @@ DATABASE_URL=postgresql://...      # Railway provides this
 GITHUB_CLIENT_ID=Ov23licG7kkEQpIrqi3G
 GITHUB_CLIENT_SECRET=...
 SESSION_SECRET=<32+ char secret>
-CLIENT_URL=https://officialagentregistry.com
-CORS_ORIGIN=https://officialagentregistry.com,http://localhost:5173
-GITHUB_CALLBACK_URL=https://officialagentregistry.com/auth/github/callback
+CLIENT_URL=https://agenticregistry.com
+CORS_ORIGIN=https://agenticregistry.com,http://localhost:5173
+GITHUB_CALLBACK_URL=https://agenticregistry.com/auth/github/callback
 PORT=3000
 NODE_ENV=production
 ```
@@ -507,15 +507,15 @@ Before deploying:
 
 ### Multi-Domain Strategy
 
-- Primary domain: `officialagentregistry.com`
+- Primary domain: `agenticregistry.com`
 - Secondary domains (all 301 redirect to primary):
-  - official-agent-registry.com
+  - agenticregistry.com
   - officialagenticregistry.com
   - register-your-agent.com
   - agent-registrar.com
   - And 8+ more variants
 - Alternative TLDs: .org, .net, .io
-- Premium: officialagentregistry.ai
+- Premium: agenticregistry.ai
 - All managed via Cloudflare Bulk Redirects
 
 ### Development Conventions
@@ -531,9 +531,9 @@ Before deploying:
 
 ## Useful Links
 
-- **GitHub:** github.com/agentic-cookbook/official-agent-registry
-- **Live Site:** officialagentregistry.com
-- **Cloudflare Worker:** official-agent-registry (console.cloudflare.com)
+- **GitHub:** github.com/agentic-cookbook/agenticregistry
+- **Live Site:** agenticregistry.com
+- **Cloudflare Worker:** agenticregistry (console.cloudflare.com)
 - **Railway Project:** (auto-linked via GitHub integration)
 - **GitHub OAuth App:** github.com/settings/developers
 - **Drizzle ORM Docs:** orm.drizzle.team

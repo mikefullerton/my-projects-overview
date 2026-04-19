@@ -8,12 +8,12 @@ def test_gather_single_project():
     """Script gathers info for a known project and outputs valid JSON."""
     result = subprocess.run(
         [sys.executable, "scripts/generate_description_drafts.py",
-         "--project", "my-projects-overview", "--json"],
+         "--project", "myprojectsoverview", "--json"],
         capture_output=True, text=True, cwd=str(Path(__file__).parent.parent),
     )
     assert result.returncode == 0, "stderr: %s" % result.stderr
     data = json.loads(result.stdout)
-    assert data["name"] == "my-projects-overview"
+    assert data["name"] == "myprojectsoverview"
     assert "remote_url" in data
     assert "tech_stack" in data
     assert isinstance(data["tech_stack"], list)
@@ -30,4 +30,4 @@ def test_gather_all_projects():
     assert isinstance(data, list)
     assert len(data) >= 20
     names = [p["name"] for p in data]
-    assert "cat-herding" in names
+    assert "catherding" in names

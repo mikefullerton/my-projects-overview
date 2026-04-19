@@ -4,7 +4,7 @@
 
 **Goal:** Add a standardized `docs/project/description.md` to every project in `~/projects/active/`, giving each project a consistent, human-curated description using progressive disclosure.
 
-**Architecture:** A Python script (`scripts/generate_description_drafts.py`) in my-projects-overview gathers raw info from each project (README, CLAUDE.md, file structure, git remotes, tech detectors) and outputs a draft `description.md` per project. The drafts are then reviewed, refined, and committed into each project's own repo.
+**Architecture:** A Python script (`scripts/generate_description_drafts.py`) in myprojectsoverview gathers raw info from each project (README, CLAUDE.md, file structure, git remotes, tech detectors) and outputs a draft `description.md` per project. The drafts are then reviewed, refined, and committed into each project's own repo.
 
 **Tech Stack:** Python 3.9+, git CLI
 
@@ -52,7 +52,7 @@ Only include if the project is complex enough to warrant it. Omit for simple pro
 
 **Rules:**
 - The file lives at `docs/project/description.md` inside each project's own repo
-- The `# Title` MUST be the human-friendly project name (e.g., "Cat Herding", not "cat-herding")
+- The `# Title` MUST be the human-friendly project name (e.g., "Cat Herding", not "catherding")
 - Sections that don't apply can be omitted (e.g., Architecture for trivial projects, Related Projects if none)
 - Content should be curated, not auto-generated dumps — concise and useful for both humans and AI agents
 - No directory trees, no git history, no build commands — those belong in README or overview.md
@@ -78,12 +78,12 @@ def test_gather_single_project():
     """Script gathers info for a known project and outputs valid JSON."""
     result = subprocess.run(
         [sys.executable, "scripts/generate_description_drafts.py",
-         "--project", "my-projects-overview", "--json"],
+         "--project", "myprojectsoverview", "--json"],
         capture_output=True, text=True, cwd=str(Path(__file__).parent.parent)
     )
     assert result.returncode == 0, f"stderr: {result.stderr}"
     data = json.loads(result.stdout)
-    assert data["name"] == "my-projects-overview"
+    assert data["name"] == "myprojectsoverview"
     assert "remote_url" in data
     assert "tech_stack" in data
     assert isinstance(data["tech_stack"], list)
@@ -99,12 +99,12 @@ def test_gather_all_projects():
     assert isinstance(data, list)
     assert len(data) >= 20  # we have ~27 projects
     names = [p["name"] for p in data]
-    assert "cat-herding" in names
+    assert "catherding" in names
 ```
 
 - [ ] **Step 2: Run tests to verify they fail**
 
-Run: `cd ~/projects/active/my-projects-overview && python3 -m pytest tests/test_generate_description_drafts.py -v`
+Run: `cd ~/projects/active/myprojectsoverview && python3 -m pytest tests/test_generate_description_drafts.py -v`
 Expected: FAIL — script doesn't exist yet
 
 - [ ] **Step 3: Implement the script**
@@ -271,7 +271,7 @@ if __name__ == "__main__":
 
 - [ ] **Step 4: Run tests to verify they pass**
 
-Run: `cd ~/projects/active/my-projects-overview && python3 -m pytest tests/test_generate_description_drafts.py -v`
+Run: `cd ~/projects/active/myprojectsoverview && python3 -m pytest tests/test_generate_description_drafts.py -v`
 Expected: PASS
 
 - [ ] **Step 5: Commit**
@@ -284,7 +284,7 @@ git push
 
 ---
 
-### Task 2: Create description.md for my-projects-overview (this project)
+### Task 2: Create description.md for myprojectsoverview (this project)
 
 This serves as the reference example for all other projects.
 
@@ -324,14 +324,14 @@ Active development — index and overviews are regenerated regularly as projects
 ## Related Projects
 
 - All projects in `~/projects/active/` are tracked by this project
-- [My Projects](../my-projects/docs/project/description.md) — a separate web dashboard for project management
+- [My Projects](../myprojects/docs/project/description.md) — a separate web dashboard for project management
 ```
 
 - [ ] **Step 2: Commit**
 
 ```
 git add docs/project/description.md
-git commit -m "feat: add standardized docs/project/description.md for my-projects-overview"
+git commit -m "feat: add standardized docs/project/description.md for myprojectsoverview"
 git push
 ```
 
@@ -359,29 +359,29 @@ For each project in `~/projects/active/`, create `docs/project/description.md` u
 
 **Batch C — Agentic Cookbook Ecosystem (8 projects):**
 - cookbook
-- cookbook-web
+- agenticcookbookweb
 - dev-team
 - roadmaps
 - tools
-- official-agent-registry
-- agentic-auth-service
+- agenticregistry
+- agenticauthservice
 - agentic-kitchen
 
 **Batch D — Claude Code Extensions & Tools (3 projects):**
-- cat-herding
+- catherding
 - code-review-pipline
-- social-media-bot
+- socialmediabot
 
 **Batch E — Infrastructure, Fun & Meta (5 projects):**
 - mysetup
-- my-projects
+- myprojects
 - myagenticworkspace
 - name-craft
-- agentic-daemon
+- agenticdaemon
 
 For each project:
 
-- [ ] **Step 1: Read the overview file from `my-projects-overview/projects/{name}/overview.md`**
+- [ ] **Step 1: Read the overview file from `myprojectsoverview/projects/{name}/overview.md`**
 
 This is the richest source of structured info. Also check README.md and CLAUDE.md in the project repo itself.
 
@@ -426,7 +426,7 @@ Expected output: list of all projects with HAS/NEEDS description status.
 
 - [ ] **Step 3: Run tests**
 
-Run: `cd ~/projects/active/my-projects-overview && python3 -m pytest tests/ -v`
+Run: `cd ~/projects/active/myprojectsoverview && python3 -m pytest tests/ -v`
 Expected: all tests pass
 
 - [ ] **Step 4: Commit**

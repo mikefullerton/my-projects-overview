@@ -29,4 +29,4 @@ Active development — index and overviews are regenerated regularly as projects
 ## Related Projects
 
 - All projects in `~/projects/active/` are tracked by this project
-- [My Projects](../../my-projects/docs/project/description.md) — a separate web dashboard for project management
+- [My Projects](../../myprojects/docs/project/description.md) — a separate web dashboard for project management

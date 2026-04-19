@@ -17,7 +17,7 @@ A shared RS256 JWT authentication microservice providing centralized user manage
 
 ## GitHub URL
 
-https://github.com/agentic-cookbook/agentic-auth-service
+https://github.com/agentic-cookbook/agenticauthservice
 
 ## Directory Structure
 
@@ -108,7 +108,7 @@ Contains quick reference including:
 
 **Current Branch:** main
 
-**Remote:** git@github.com:agentic-cookbook/agentic-auth-service.git
+**Remote:** git@github.com:agentic-cookbook/agenticauthservice.git
 
 **Recent Commits:**
 - `9023adb` — docs: add standardized project description

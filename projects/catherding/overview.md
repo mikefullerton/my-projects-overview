@@ -16,7 +16,7 @@ Personal collection of Claude Code skills, plugins, hooks, and workflow extensio
 
 ## GitHub URL
 
-https://github.com/mikefullerton/cat-herding
+https://github.com/mikefullerton/catherding
 
 ## Directory Structure
 
@@ -123,7 +123,7 @@ https://github.com/mikefullerton/cat-herding
 
 **Current Branch:** main
 
-**Remote:** git@github.com:mikefullerton/cat-herding.git
+**Remote:** git@github.com:mikefullerton/catherding.git
 
 **Recent Commits:**
 - `bd20fa8` — fix(status-line): add col0 prefix to session line for column alignment (#31)
@@ -131,8 +131,8 @@ https://github.com/mikefullerton/cat-herding
 - `18ab356` — fix(status-line): always show session name column on model line
 - `e4aa071` — refactor(status-line): centralize column reformatting for all line types
 - `4b2ba4c` — fix(status-line): version upgrade line uses plain separators and aligned columns
-- `5c516e2` — Move claude-skills-tester-cli and plugins research to dev-tools
-- `3473770` — Move 6 skills and related docs to dev-tools repo
+- `5c516e2` — Move claude-skills-tester-cli and plugins research to devtools
+- `3473770` — Move 6 skills and related docs to devtools repo
 - `9b571ef` — rename: tests/ to claude-skills-tester-cli/
 - `c76b813` — chore: move CLAUDE.md into .claude/
 - `00e06f5` — chore: move research/ contents into docs/research/
@@ -172,5 +172,5 @@ pytest -v                # Verbose test output
 - Rules enforce workflow standards (CLI versioning, plugin development, worktree cleanup)
 - Wrangler configuration suggests potential Cloudflare Workers integration
 - Superpowers plugin provides additional development workflows
-- Several skills and tools previously developed here were moved to dev-tools repo
+- Several skills and tools previously developed here were moved to devtools repo
 - This repo centralizes personal Claude Code customizations and extensions

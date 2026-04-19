@@ -18,12 +18,12 @@ My Projects is a personal project management dashboard providing a unified web U
 
 ## GitHub URL
 
-https://github.com/mikefullerton/my-projects
+https://github.com/mikefullerton/myprojects
 
 ## Directory Structure
 
 ```
-my-projects/
+myprojects/
 ├── config.json                    # Project registry (~35 projects)
 │                                  # Maps project slugs to filesystem paths
 ├── site/                          # React frontend (Vite)
@@ -65,7 +65,7 @@ my-projects/
 ## Key Files & Components
 
 - **config.json** - Project registry mapping ~35 project slugs to paths (relative to ../../). Examples:
-  - cat-herding, social-media-bot, mysetup, dev-team, cookbook, roadmaps, whippet, hairball, catnip, etc.
+  - catherding, socialmediabot, mysetup, dev-team, cookbook, roadmaps, whippet, hairball, catnip, etc.
   - Maps to ../../active/, ../../paused/, ../../deprecated/, ../../other/, ../../personal/, ../../tests/ directories
   - projectOrder array controls dashboard display order
 - **site/package.json** - React 19, Vite 8.0, TypeScript, Playwright (testing)
@@ -101,11 +101,11 @@ Stored in **.claude/skills/** - Contains custom Claude Code skills for project m
 
 ## Git History & Current State
 
-- **Remote:** git@github.com:mikefullerton/my-projects.git
+- **Remote:** git@github.com:mikefullerton/myprojects.git
 - **Current Branch:** main
 - **Status:** Clean working tree (no uncommitted changes)
 - **Recent Activity:**
-  - Latest: fix: update cat-herding description after reorg (3f29d19)
+  - Latest: fix: update catherding description after reorg (3f29d19)
   - docs: add standardized project description (0ebd20f)
   - style: stats cards in joined pill shape with rounded ends (d952b59)
   - style: center stats cards side by side with flexbox (a0f0270)

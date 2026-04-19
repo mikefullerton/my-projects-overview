@@ -23,11 +23,11 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 PROJECTS_DIR = Path.home() / "projects"
-OVERVIEW_REPO = PROJECTS_DIR / "my-projects-overview"
+OVERVIEW_REPO = PROJECTS_DIR / "myprojectsoverview"
 PROJECTS_SUBDIR = OVERVIEW_REPO / "projects"
 INDEX_FILE = OVERVIEW_REPO / "index.md"
 SKIP_SUFFIXES = ["-tests"]
-SKIP_NAMES = ["my-projects-overview"]
+SKIP_NAMES = ["myprojectsoverview"]
 MAX_WORKERS = 8
 MAX_DOC_LINES = 200
 

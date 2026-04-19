@@ -1,4 +1,4 @@
-# persona-creator
+# personacreator
 
 ## Project Summary
 
@@ -16,16 +16,16 @@ A Python library and Claude Code skill for generating AI personas from minimal s
   - `click>=8.0` — CLI framework
   - `vtracer>=0.6` (optional, `[flux]` extra) — raster-to-SVG vectorization
 - **Dev tooling**: pytest, pytest-asyncio, ruff (line length 100, rules E/F/I/UP/B/SIM)
-- **CLI entry point**: `persona-creator` (from `persona_creator.cli:main`)
+- **CLI entry point**: `personacreator` (from `persona_creator.cli:main`)
 
 ## GitHub URL
 
-https://github.com/agentic-cookbook/persona-creator
+https://github.com/agentic-cookbook/personacreator
 
 ## Directory Structure
 
 ```
-persona-creator/
+personacreator/
 ├── persona_creator/            # Main package
 │   ├── __init__.py             # Public API exports
 │   ├── cli.py                  # Click CLI: generate, preview, mapping
@@ -62,8 +62,8 @@ persona-creator/
 │   ├── project/description.md  # Standardized project description
 │   ├── planning/planning.md    # (placeholder)
 │   └── superpowers/
-│       ├── plans/2026-04-08-persona-creator.md
-│       └── specs/2026-04-08-persona-creator-design.md
+│       ├── plans/2026-04-08-personacreator.md
+│       └── specs/2026-04-08-personacreator-design.md
 ├── .claude/
 │   ├── CLAUDE.md               # Project instructions
 │   ├── settings.json           # Enables superpowers plugin
@@ -77,7 +77,7 @@ persona-creator/
 ### Persona generation (text)
 - **`persona_creator/models.py`** — Pydantic models for three tiers: `FullPersona` (14 sections), `LightweightPersona` (7 sections), `SpecialistPersona` (4 sections), plus supporting types (`Trait`, `Value`, `Emotion`, `Flaw`, `Voice`, `GrowthArc`, `AntiPattern`, `SampleInteraction`, `Contradiction`, `PersonaSeed`, `PersonaMetadata`).
 - **`persona_creator/generator.py`** — `generate_prompt(seed, tier)` builds an LLM prompt from tier templates; `parse_response(text, tier, name)` parses the response back into a model. Library is LLM-agnostic.
-- **`persona_creator/serializers.py`** — `to_markdown`, `from_markdown` (YAML frontmatter + headed sections), `to_json`, `from_json` (supports `format="registry"` for official-agent-registry compatibility).
+- **`persona_creator/serializers.py`** — `to_markdown`, `from_markdown` (YAML frontmatter + headed sections), `to_json`, `from_json` (supports `format="registry"` for agenticregistry compatibility).
 - **`persona_creator/prompts/*.md`** — Tier-specific generation prompt templates encoding persona design research.
 
 ### Visual generation
@@ -91,7 +91,7 @@ persona-creator/
 
 ### Skill
 - **`skill/SKILL.md`** — `/create-persona` slash command (v1.0.0, sonnet model). Interactive flow: gathers name/role/tier, asks for 2-3 personality hints, reads research context, generates the persona, iterates, and writes YAML-frontmattered markdown.
-- **`skill/references/persona-research.md`** — Design principles extracted from agentic-cookbook and official-agent-registry (structural ingredients, core principles, tier comparison).
+- **`skill/references/persona-research.md`** — Design principles extracted from agentic-cookbook and agenticregistry (structural ingredients, core principles, tier comparison).
 
 ## Claude Configuration
 
@@ -102,15 +102,15 @@ persona-creator/
 
 ## Planning & Research Documents
 
-- **`docs/project/description.md`** — Standardized one-paragraph project description (aligns with the my-projects-overview convention).
+- **`docs/project/description.md`** — Standardized one-paragraph project description (aligns with the myprojectsoverview convention).
 - **`docs/planning/planning.md`** — Placeholder (`(to be determined)`).
-- **`docs/superpowers/specs/2026-04-08-persona-creator-design.md`** — Design spec (Draft, authored 2026-04-08 by Mike Fullerton + Claude). Defines goals, non-goals, tier structures, and library/skill architecture. Full persona tier based on `official-agent-registry/docs/research/ai-persona-template.md`.
-- **`docs/superpowers/plans/2026-04-08-persona-creator.md`** — Corresponding implementation plan.
+- **`docs/superpowers/specs/2026-04-08-personacreator-design.md`** — Design spec (Draft, authored 2026-04-08 by Mike Fullerton + Claude). Defines goals, non-goals, tier structures, and library/skill architecture. Full persona tier based on `agenticregistry/docs/research/ai-persona-template.md`.
+- **`docs/superpowers/plans/2026-04-08-personacreator.md`** — Corresponding implementation plan.
 - **`skill/references/persona-research.md`** — Research notes on persona design principles, used by the `/create-persona` skill at runtime.
 
 ## Git History & Current State
 
-- **Remote**: `git@github.com:agentic-cookbook/persona-creator.git`
+- **Remote**: `git@github.com:agentic-cookbook/personacreator.git`
 - **Current branch**: `main`
 - **Status**: 1 uncommitted change — `docs/feedback/cookbook-review-2026-04-08.md` shows as deleted (the `docs/feedback/` directory no longer exists on disk). This predates the current session.
 - **Recent commits** (most recent first):
@@ -128,7 +128,7 @@ persona-creator/
   - `2a7d275` Add ComponentProvider protocol for swappable generation backends
   - `20b7fef` Add core data models for persona visual generation
   - `3dd8a58` Add Python project structure with src layout
-  - `e11face` Initial implementation: persona-creator library and skill (#8)
+  - `e11face` Initial implementation: personacreator library and skill (#8)
 
 Project started as a text-only persona library/skill (PR #8), then a second arc of work added visual character generation on a `worktree-visual-generator` branch that merged as PR #9.
 
@@ -148,9 +148,9 @@ pytest -v
 ruff check .
 
 # CLI
-persona-creator generate ...
-persona-creator preview ...
-persona-creator mapping ...
+personacreator generate ...
+personacreator preview ...
+personacreator mapping ...
 
 # Slash command (in Claude Code)
 /create-persona
@@ -160,10 +160,10 @@ persona-creator mapping ...
 
 - **Two architectural layers, one package**: original text-persona generation (models, serializers, generator, prompts, skill) and a later visual-generation layer (visual_models, trait_mapper, spec_builder, layout, compositor, providers, CLI). They share the `persona_creator` namespace but the text API is what's exported from `__init__.py`; visual generation is accessed via the CLI and direct submodule imports.
 - **LLM-agnostic by design** — the library produces prompts and parses responses; callers provide the LLM. No provider lock-in for text generation.
-- **Output-compatible with official-agent-registry** — `to_json(persona, format="registry")` produces the minimal `config.persona` shape consumed by that project.
+- **Output-compatible with agenticregistry** — `to_json(persona, format="registry")` produces the minimal `config.persona` shape consumed by that project.
 - **Provider pattern for visuals** — `ComponentProvider` protocol makes backends swappable; Recraft (direct SVG) and FLUX+VTracer (raster + vectorize) ship in-repo.
 - **Frozen pydantic models** in `visual_models.py` (`BaseModel, frozen=True`) enforce immutability — consistent with the `b00d584` commit applying cookbook principles (separation of concerns, DI, immutability, linting).
 - **CLAUDE.md is stale** — describes only the text-generation architecture. Does not mention the visual generation additions merged in PR #9. A refresh would help future Claude sessions.
 - **Uncommitted deletion** of `docs/feedback/cookbook-review-2026-04-08.md` exists on `main` and is unrelated to this overview task; should be resolved with the user.
 - **Superpowers plugin enabled** via `.claude/settings.json`; the design spec and implementation plan live under `docs/superpowers/`, suggesting the project was scaffolded using a superpowers-style plan-then-build workflow.
-- **Org**: `agentic-cookbook` GitHub org — part of a cluster of related projects (agentic-cookbook, official-agent-registry) that inform the persona design research.
+- **Org**: `agentic-cookbook` GitHub org — part of a cluster of related projects (agentic-cookbook, agenticregistry) that inform the persona design research.

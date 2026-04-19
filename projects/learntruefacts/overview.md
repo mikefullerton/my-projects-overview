@@ -2,7 +2,7 @@
 
 ## Project Summary
 
-Learn True Facts is a public-facing AI improv comedian chat application that blends real historical facts with absurdly plausible fictional details. Currently in the design and research phase, the project serves as a test bed for a modern tech stack (Cloudflare Workers + Railway + Hono + React) and persona-driven AI applications before scaling to production use with Temporal. Features include AI chat interface with improv comedian persona, multi-provider LLM abstraction, server-sent events for streaming, admin portal, analytics dashboard, and RS256 JWT authentication via a shared agentic-auth-service.
+Learn True Facts is a public-facing AI improv comedian chat application that blends real historical facts with absurdly plausible fictional details. Currently in the design and research phase, the project serves as a test bed for a modern tech stack (Cloudflare Workers + Railway + Hono + React) and persona-driven AI applications before scaling to production use with Temporal. Features include AI chat interface with improv comedian persona, multi-provider LLM abstraction, server-sent events for streaming, admin portal, analytics dashboard, and RS256 JWT authentication via a shared agenticauthservice.
 
 ## Type & Tech Stack
 
@@ -12,7 +12,7 @@ Learn True Facts is a public-facing AI improv comedian chat application that ble
 - **Frontend:** React 19, Vite, Tailwind CSS 4, TanStack Router/Query
 - **Backend:** Hono (web framework), Drizzle ORM, PostgreSQL, Zod (schema validation)
 - **Infrastructure:** Cloudflare Workers (frontend), Railway (backend/database)
-- **Authentication:** RS256 JWT via shared agentic-auth-service
+- **Authentication:** RS256 JWT via shared agenticauthservice
 - **Real-time:** Server-Sent Events for streaming responses
 - **Build:** npm workspaces (monorepo structure)
 - **Node.js Version:** 20+ (for Hono + async runtime support)
@@ -142,7 +142,7 @@ npm run preview            # Preview production build
 - **Status:** Design and research phase — no application code fully committed yet, infrastructure scaffolding in progress
 - **Architecture:** Monorepo with shared workspace pattern; backend uses Hono + Drizzle ORM for type-safe database access; frontend uses React 19 + Vite for fast builds
 - **Deployment:** Cloudflare Workers (frontend), Railway (backend + PostgreSQL database)
-- **Authentication:** Centralized RS256 JWT via agentic-auth-service shared workspace
+- **Authentication:** Centralized RS256 JWT via agenticauthservice shared workspace
 - **Domain:** learntruefacts.com
 - **Related Projects:** MyAgenticProjects (similar Hono + React + Railway + Cloudflare stack), Agentic Auth Service (shared auth infrastructure)
 - **Development:** Docker Compose for local PostgreSQL; environment variables from .env.example

@@ -28,12 +28,12 @@ A Cloudflare Workers web application that serves as the public-facing browsable 
 
 ## GitHub URL
 
-https://github.com/agentic-cookbook/cookbook-web
+https://github.com/agentic-cookbook/agenticcookbookweb
 
 ## Directory Structure
 
 ```
-cookbook-web/
+agenticcookbookweb/
 ├── .claude/
 │   └── rules/
 │       ├── cookbook.md                # 6 core development principles

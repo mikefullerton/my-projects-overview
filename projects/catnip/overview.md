@@ -130,7 +130,7 @@ https://github.com/mikefullerton/catnip
 **Recent Commits:**
 - `b473105` — docs: add standardized project description
 - `0c6264a` — chore: standardize worktree directory to .claude/worktrees/
-- `3894133` — chore: rename cat-herding → agentic-roadmaps in roadmap and demo script
+- `3894133` — chore: rename catherding → agentic-roadmaps in roadmap and demo script
 - `ccea5a3` — refactor: rename runs to roadmaps across frontend, backend, and CLI
 - `d6daec6` — refactor: migrate 1 roadmaps to flat file format
 - `5cb0120` — refactor: migrate roadmaps to per-directory File Record structure

@@ -18,7 +18,7 @@ A collection of distributable Claude Code skills for project scaffolding, deploy
 
 ## GitHub URL
 
-https://github.com/agentic-cookbook/dev-tools
+https://github.com/agentic-cookbook/devtools
 
 ## Directory Structure
 
@@ -79,7 +79,7 @@ https://github.com/agentic-cookbook/dev-tools
 - `site-manager` — `skills/configurator/cli/` — 8-command deployment CLI (cli, deploy, verify, verify_all, e2e, dns_check, repair, status, test, manifest, check, claude).
 - `webinator` — `skills/webinitor/cli/` — 11-command-group web infra CLI (api, config, configure, deploy, dns, domains, status).
 
-**Test harness:** `claude-skills-tester-cli/` — copies `harness/` (package.json, vitest config, tsconfig, lib/assertions.ts, lib/fixtures.ts, lib/runner.ts), `fixtures/`, and `specs/` into a disposable sandbox at `../dev-tools-tests` (or `$TEST_SANDBOX`), runs `npm install` + `npx vitest run`, prints `cost-report.json` if present.
+**Test harness:** `claude-skills-tester-cli/` — copies `harness/` (package.json, vitest config, tsconfig, lib/assertions.ts, lib/fixtures.ts, lib/runner.ts), `fixtures/`, and `specs/` into a disposable sandbox at `../devtools-tests` (or `$TEST_SANDBOX`), runs `npm install` + `npx vitest run`, prints `cost-report.json` if present.
 
 ## Claude Configuration
 
@@ -90,7 +90,7 @@ https://github.com/agentic-cookbook/dev-tools
 
 ## Planning & Research Documents
 
-**`docs/project/description.md`** — Standardized project description (per the my-projects-overview rollout). Confirms Python 3.11+, uv-based build, status: Active development.
+**`docs/project/description.md`** — Standardized project description (per the myprojectsoverview rollout). Confirms Python 3.11+, uv-based build, status: Active development.
 
 **`docs/planning/planning.md`** — Placeholder (`(to be determined)`).
 
@@ -106,23 +106,23 @@ https://github.com/agentic-cookbook/dev-tools
 
 ## Git History & Current State
 
-- **Remote:** `git@github.com:agentic-cookbook/dev-tools.git` (org: `agentic-cookbook`)
+- **Remote:** `git@github.com:agentic-cookbook/devtools.git` (org: `agentic-cookbook`)
 - **Current branch:** `main`
 - **Working tree:** clean
 - **Total commits:** 7 (new repo — scaffolded 2026-04-10)
 
 Full log:
 ```
-d3217f6 Update configurator to v1.29.0 from cat-herding branch
+d3217f6 Update configurator to v1.29.0 from catherding branch
 246f530 Remove build artifacts and add them to .gitignore
 7086c78 Add web-view skill for rendering markdown as local web pages
-4d457c8 fix: update stale cat-herding references in test runner
-4857319 Move claude-skills-tester-cli and plugins research from cat-herding
-8a71e7a Move 6 skills from cat-herding into dev-tools
+4d457c8 fix: update stale catherding references in test runner
+4857319 Move claude-skills-tester-cli and plugins research from catherding
+8a71e7a Move 6 skills from catherding into devtools
 05f7c92 Initial project scaffolding
 ```
 
-The history shows `dev-tools` was carved out of `cat-herding` on 2026-04-10 — the initial 6 skills plus the test harness were migrated, then `web-view` was added and `configurator` was upgraded to v1.29.0.
+The history shows `devtools` was carved out of `catherding` on 2026-04-10 — the initial 6 skills plus the test harness were migrated, then `web-view` was added and `configurator` was upgraded to v1.29.0.
 
 ## Build & Test Commands
 
@@ -144,7 +144,7 @@ Removes the matching symlinks and runs `uv tool uninstall` for each managed CLI.
 # or
 TEST_SANDBOX=/path/to/sandbox ./claude-skills-tester-cli/run.sh
 ```
-Default sandbox is `../dev-tools-tests` (resolved via `git rev-parse --git-common-dir` so it works from worktrees). Harness cleans the sandbox (preserving `.git`, `node_modules`, `research`), copies `harness/` + `fixtures/` + `specs/`, runs `npm install`, then `npx vitest run`.
+Default sandbox is `../devtools-tests` (resolved via `git rev-parse --git-common-dir` so it works from worktrees). Harness cleans the sandbox (preserving `.git`, `node_modules`, `research`), copies `harness/` + `fixtures/` + `specs/`, runs `npm install`, then `npx vitest run`.
 
 **Python CLI dev loop:** Edits under `skills/*/cli*/src/**` are live immediately (editable installs). Reinstall is only needed when `pyproject.toml` entry points or dependencies change, or when the repo moves on disk.
 
@@ -157,7 +157,7 @@ No linter, formatter, or CI config is committed in the repo.
 
 ## Notes
 
-- The repo is the new home for skills and CLIs that previously lived in `cat-herding` — history of the migration is visible in the 7-commit log, and the research doc on CLI packaging (originally written for the old layout) still references `cli/site-manager/` and `cli/webinator/` rather than the current `skills/configurator/cli/` and `skills/webinitor/cli/` layout.
+- The repo is the new home for skills and CLIs that previously lived in `catherding` — history of the migration is visible in the 7-commit log, and the research doc on CLI packaging (originally written for the old layout) still references `cli/site-manager/` and `cli/webinator/` rather than the current `skills/configurator/cli/` and `skills/webinitor/cli/` layout.
 - Skill directory naming is slightly inconsistent with the SKILL.md `name:` fields: the directory is `webinitor` but the CLI and skill reference the name `webinator`; the directory is `configurator` and ships two CLIs (`configurator` for config authoring, `site-manager` for deployment execution).
 - Both shipped shell scripts (`install.sh`, `uninstall.sh`) are the only bash in the repo — consistent with the global exception allowing install/uninstall scripts to remain shell.
 - `configurator`'s `features/` module (20+ files) is the largest body of code in the repo and suggests the configurator CLI is the flagship component — the skill itself is ~67KB and at v1.29.0, dwarfing every other skill by size and version.

@@ -25,7 +25,7 @@ skill (update-project-overview)
 
 ### Location
 
-`scripts/scan_projects.py` in the `my-projects-overview` repo.
+`scripts/scan_projects.py` in the `myprojectsoverview` repo.
 
 ### CLI Interface
 
@@ -39,11 +39,11 @@ python3 scripts/scan_projects.py --regenerate-index  # regenerate index.md from 
 
 ```python
 PROJECTS_DIR = Path.home() / "projects" / "active"
-OVERVIEW_REPO = PROJECTS_DIR / "my-projects-overview"
+OVERVIEW_REPO = PROJECTS_DIR / "myprojectsoverview"
 PROJECTS_SUBDIR = OVERVIEW_REPO / "projects"
 INDEX_FILE = OVERVIEW_REPO / "index.md"
 SKIP_SUFFIXES = ["-tests"]
-SKIP_NAMES = ["my-projects-overview"]
+SKIP_NAMES = ["myprojectsoverview"]
 ```
 
 ### Output Format (scan mode)

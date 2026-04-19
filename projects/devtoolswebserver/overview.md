@@ -1,4 +1,4 @@
-# devtools-web-server
+# devtoolswebserver
 
 ## Project Summary
 
@@ -15,12 +15,12 @@ An always-on local development web server built on Caddy, providing a site lifec
 
 ## GitHub URL
 
-`git@github.com:agentic-cookbook/devtools-web-server.git`
+`git@github.com:agentic-cookbook/devtoolswebserver.git`
 
 ## Directory Structure
 
 ```
-devtools-web-server/
+devtoolswebserver/
   README.md
   install.sh                  # Full setup: Caddy, DNS, daemon, home page build
   uninstall.sh                # Tear down everything cleanly
@@ -125,7 +125,7 @@ Skill for deploying a test page at `https://dev.local/test-site/` to verify clau
 
 - **Branch:** `main`
 - **Status:** Clean working tree
-- **Remote:** `git@github.com:agentic-cookbook/devtools-web-server.git`
+- **Remote:** `git@github.com:agentic-cookbook/devtoolswebserver.git`
 - **Total commits:** 14
 
 Recent history (newest first):
@@ -174,6 +174,6 @@ launchctl load/unload ~/Library/LaunchAgents/com.local-server.site-manager.plist
 - The project installs infrastructure into `~/.local-server/` and writes a Caddy config section into the global `~/.claude/CLAUDE.md`, making it a system-wide development tool rather than a standalone app.
 - `site_watcher.py` is the legacy daemon; `site_manager.py` is its replacement with the full REST API. The install script handles migration from watcher to manager.
 - The `claude-bridge.ts` module is the key integration point between Claude Code and browser-based sites -- it enables Claude to push refresh signals, state changes, and custom events to running sites, and to poll for events posted by site JavaScript.
-- The React template at `~/.local-server/react-template/` can optionally symlink to `~/projects/active/shared-website-components` if that project exists.
+- The React template at `~/.local-server/react-template/` can optionally symlink to `~/projects/active/agenticwebtoolkit` if that project exists.
 - All three React sub-projects (home-page, api-tester, react-template) use identical dependency stacks: React 19 + Vite 6 + TypeScript 5.8.
 - Ports used: 443 (dev.local HTTPS), 2080 (HTTP fallback), 2081 (site manager API), 2019 (Caddy admin).

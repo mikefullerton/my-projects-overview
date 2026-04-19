@@ -12,11 +12,11 @@ Scan all projects in `~/projects/`, update their `overview.md` files with curren
 ## Constants
 
 - **PROJECTS_DIR**: `~/projects`
-- **OVERVIEW_REPO**: `~/projects/active/my-projects-overview`
-- **PROJECTS_SUBDIR**: `~/projects/active/my-projects-overview/projects`
-- **INDEX_FILE**: `~/projects/active/my-projects-overview/index.md`
+- **OVERVIEW_REPO**: `~/projects/active/myprojectsoverview`
+- **PROJECTS_SUBDIR**: `~/projects/active/myprojectsoverview/projects`
+- **INDEX_FILE**: `~/projects/active/myprojectsoverview/index.md`
 - **SKIP_SUFFIXES**: `-tests` (test directories)
-- **SKIP_NAMES**: `my-projects-overview`, `tests`, `experiments`, `external`, `old ci pipeline` (skip these)
+- **SKIP_NAMES**: `myprojectsoverview`, `tests`, `experiments`, `external`, `old ci pipeline` (skip these)
 
 ## Execution
 
@@ -24,7 +24,7 @@ Scan all projects in `~/projects/`, update their `overview.md` files with curren
 
 Scan `PROJECTS_DIR` for all directories. Filter out:
 - Directories ending with `-tests`
-- `my-projects-overview` (this repo)
+- `myprojectsoverview` (this repo)
 
 This produces the **live project list**.
 

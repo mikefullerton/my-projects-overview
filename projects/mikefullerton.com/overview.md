@@ -13,7 +13,7 @@ mikefullerton.com is a personal portfolio and resume website showcasing professi
 - **Styling:** CSS (custom styles with CSS variables), Tailwind CSS (via shared components)
 - **Deployment:** GitHub Pages (via GitHub Actions)
 - **Infrastructure:** Cloudflare Workers (wrangler deploy)
-- **Shared Components:** Custom submodule (shared-website-components) for reusable React components
+- **Shared Components:** Custom submodule (agenticwebtoolkit) for reusable React components
 - **Build:** TypeScript compilation + Vite bundling
 - **Browser Support:** Modern browsers (HTML5, CSS3)
 
@@ -36,7 +36,7 @@ mikefullerton.com/
 │   ├── tsconfig.json
 │   ├── package.json
 │   └── wrangler.toml                   # Cloudflare Workers config
-├── shared-website-components/          # Shared React components (submodule)
+├── agenticwebtoolkit/          # Shared React components (submodule)
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── Chat.tsx               # Persona-driven chat component
@@ -74,7 +74,7 @@ mikefullerton.com/
 - **site/index.html** - Entry HTML with React root
 - **site/src/** - React components and application logic
 - **site/public/** - Static assets (images, fonts, etc.)
-- **shared-website-components/** - Git submodule with reusable React components:
+- **agenticwebtoolkit/** - Git submodule with reusable React components:
   - **Chat.tsx / PersonaChat.tsx** - Persona-driven chat UI components (inline mode support)
   - **theme tokens** - Shared styling and dark mode support
   - **examples/** - Example implementations
@@ -102,13 +102,13 @@ Worktree management in **.claude/worktrees/** for isolated feature development.
 - **Current Branch:** main
 - **Status:** Clean working tree (no uncommitted changes)
 - **Recent Activity:**
-  - Latest: chore: update shared-website-components submodule (b4ff294)
-  - chore: update shared-website-components submodule (d996a21)
+  - Latest: chore: update agenticwebtoolkit submodule (b4ff294)
+  - chore: update agenticwebtoolkit submodule (d996a21)
   - refactor: replace site chat code with shared React components (2d3ba70)
   - feat: add inline mode to Chat component (5e3c072)
   - fix: remove dark class hack, update submodule (682f026)
   - fix: add dark class to html element for shared theme tokens (019a70a)
-  - feat: integrate shared-website-components submodule (9b2a3cd)
+  - feat: integrate agenticwebtoolkit submodule (9b2a3cd)
   - Recent commits focus on shared component integration and theme/styling fixes
   - Mobile website worktree work completed and merged
 

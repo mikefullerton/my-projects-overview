@@ -1,4 +1,4 @@
-# shared-website-components
+# agenticwebtoolkit
 
 ## Project Summary
 
@@ -16,13 +16,13 @@ Shared React + TypeScript component library providing an Agentic design system (
 
 ## GitHub URL
 
-- SSH: `git@github.com:agentic-cookbook/shared-website-components.git`
-- Web: https://github.com/agentic-cookbook/shared-website-components
+- SSH: `git@github.com:agentic-cookbook/agenticwebtoolkit.git`
+- Web: https://github.com/agentic-cookbook/agenticwebtoolkit
 
 ## Directory Structure
 
 ```
-shared-website-components/
+agenticwebtoolkit/
 ├── package.json                 # Multi-path exports, peer dep on React 19
 ├── tsconfig.json
 ├── vitest.config.ts
@@ -77,11 +77,11 @@ shared-website-components/
 │   │       ├── three-pane.css
 │   │       └── mobile.css
 │   ├── themes/                  # 10 CSS themes
-│   │   ├── cookbook-web.css
+│   │   ├── agenticcookbookweb.css
 │   │   ├── dev-team.css
 │   │   ├── mikefullerton.css
-│   │   ├── my-projects-overview.css
-│   │   ├── my-projects.css
+│   │   ├── myprojectsoverview.css
+│   │   ├── myprojects.css
 │   │   ├── professional.css
 │   │   ├── techy.css
 │   │   ├── terminal-split.css
@@ -148,7 +148,7 @@ Fine-grained export paths for `"."`, `"./chat"`, `"./theme"`, plus individual CS
 
 ## Git History & Current State
 
-- **Remote:** `origin` -> `git@github.com:agentic-cookbook/shared-website-components.git`
+- **Remote:** `origin` -> `git@github.com:agentic-cookbook/agenticwebtoolkit.git`
 - **Branch:** `main`
 - **Working tree:** clean
 
@@ -192,7 +192,7 @@ npx vite build          # production build of the example
 
 ## Notes
 
-- **Submodule-first design:** the library is not published; consuming sites add it via `git submodule add git@github.com:agentic-cookbook/shared-website-components.git` and import source files directly.
+- **Submodule-first design:** the library is not published; consuming sites add it via `git submodule add git@github.com:agentic-cookbook/agenticwebtoolkit.git` and import source files directly.
 - **No build step at the library level** -- `tsconfig.json` has `declaration: true` but there is no output emit configured, and `package.json` exports point at `.ts`/`.tsx` source. The consuming site's bundler is responsible for compilation.
 - **PersonaChat wrapper** acts as a single entry point that delegates to `InlineChat`, `ThreePaneChat`, or `MobileChat` based on a `mode` prop, simplifying adoption.
 - **Theming** is pure CSS custom properties -- 10 drop-in theme files in `chat/themes/` with no JS coupling, making it easy to add new looks.

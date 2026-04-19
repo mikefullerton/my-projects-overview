@@ -1,4 +1,4 @@
-# my-projects-overview
+# myprojectsoverview
 
 ## Project-specific rules
 

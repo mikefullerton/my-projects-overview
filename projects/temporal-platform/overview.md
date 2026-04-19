@@ -164,7 +164,7 @@ No separate planning directory — specs are versioned specifications.
 **Recent Activity:**
 - `afe9c15` docs: add standardized project description
 - `f600b40` chore: standardize worktree directory to .claude/worktrees/
-- `cf2749c` chore: rename cat-herding → agentic-roadmaps
+- `cf2749c` chore: rename catherding → agentic-roadmaps
 - `83c4a21` Update CLAUDE.md: litterbox → agentic-cookbook
 - `a3e849b` fix: remove Swift .build artifacts and fix .gitignore
 - `6cf7187` feat: add full-stack verification playbook

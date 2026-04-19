@@ -60,7 +60,7 @@ def tmp_projects_dir(tmp_path):
     (projects / "alpha").mkdir()
     (projects / "bravo").mkdir()
     (projects / "charlie-tests").mkdir()
-    (projects / "my-projects-overview").mkdir()
+    (projects / "myprojectsoverview").mkdir()
     (projects / ".hidden").mkdir()
     return projects
 
@@ -80,7 +80,7 @@ class TestDiscoverProjects:
 
     def test_skips_overview_repo(self, tmp_projects_dir):
         result = discover_projects(tmp_projects_dir)
-        assert "my-projects-overview" not in result
+        assert "myprojectsoverview" not in result
 
     def test_skips_hidden(self, tmp_projects_dir):
         result = discover_projects(tmp_projects_dir)

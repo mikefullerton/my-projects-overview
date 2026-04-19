@@ -2,22 +2,22 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Add a second tier (`~/.local-server/apps/`) alongside `sites/` for permanent, curated applications whose source lives outside `~/.local-server`. Ship `my-projects-overview` as the first app to validate the mechanism end-to-end.
+**Goal:** Add a second tier (`~/.local-server/apps/`) alongside `sites/` for permanent, curated applications whose source lives outside `~/.local-server`. Ship `myprojectsoverview` as the first app to validate the mechanism end-to-end.
 
 **Architecture:** Each app is declared by a single JSON manifest in `~/.local-server/apps/`. The manifest points at a built static directory anywhere on disk. On startup, `site_manager.py` loads every manifest, validates it, and registers a Caddy route via the Caddy admin API (`localhost:2019`) that serves the app's static root at `dev.local/<id>/`. The landing page fetches both apps and sites and renders them as separate sections. MVP is **static-only** — backend supervision is deliberately out of scope and documented as a follow-up.
 
 **Tech Stack:** Python 3 (stdlib only, matches `site_manager.py` conventions), Caddy admin API (HTTP/JSON), Vite + React 19 (home page), standard `urllib.request` for Caddy calls.
 
 **Repo scope:**
-- **devtools-web-server** — core mechanism (manifest loader, Caddy client, site_manager integration, home page UI)
-- **my-projects-overview** — pilot app (Vite base path, prebuild script for static data, manifest file)
+- **devtoolswebserver** — core mechanism (manifest loader, Caddy client, site_manager integration, home page UI)
+- **myprojectsoverview** — pilot app (Vite base path, prebuild script for static data, manifest file)
 
 ---
 
 ## Design Decisions (locked in)
 
 1. **Apps are pointers, not copies.** Manifest's `static_root` field is an absolute path to a directory somewhere on disk. Caddy reads it in place.
-2. **MVP is static-only.** No backend supervision in v1. `my-projects-overview` uses a prebuild step that bakes `projects.json` from `scan_projects.py` output into `site/dist/`. Backend proxying is a Phase 3 follow-up.
+2. **MVP is static-only.** No backend supervision in v1. `myprojectsoverview` uses a prebuild step that bakes `projects.json` from `scan_projects.py` output into `site/dist/`. Backend proxying is a Phase 3 follow-up.
 3. **Caddy routes are added via the admin API**, not by editing the Caddyfile. Routes are ephemeral — re-created on each `site_manager` startup from the manifests, which are the source of truth.
 4. **Route pattern:** `https://dev.local/<app-id>/*` → file_server rooted at `static_root`. `<app-id>` collides with `sites/<app-id>` — apps take precedence by being registered with higher route priority.
 5. **Manifest location:** `~/.local-server/apps/<app-id>.json` (flat directory of JSON files, not subdirectories).
@@ -30,8 +30,8 @@
   "id": "projects-overview",
   "title": "Projects Overview",
   "description": "Dashboard of all ~/projects repos with overview.md metadata",
-  "static_root": "/Users/mfullerton/projects/active/my-projects-overview/site/dist",
-  "source_repo": "/Users/mfullerton/projects/active/my-projects-overview"
+  "static_root": "/Users/mfullerton/projects/active/myprojectsoverview/site/dist",
+  "source_repo": "/Users/mfullerton/projects/active/myprojectsoverview"
 }
 ```
 
@@ -41,7 +41,7 @@
 
 ## File Structure
 
-### devtools-web-server (new + modified files)
+### devtoolswebserver (new + modified files)
 
 - **Create** `site-template/apps_registry.py` — `AppManifest` dataclass + `AppRegistry` class that loads and validates `~/.local-server/apps/*.json`. Isolated from `site_manager.py` so it can be tested in isolation.
 - **Create** `site-template/caddy_admin.py` — small client for the Caddy admin API (`localhost:2019`). Only the calls we need: `add_route`, `remove_route`, `list_routes`. stdlib only.
@@ -52,7 +52,7 @@
 - **Modify** `site-template/browse.html` OR the home-page build output — add "Apps" section.
 - **Modify** `README.md` and `~/.local-server/instructions.md` — document the apps layer, manifest schema, and static-only limitation.
 
-### my-projects-overview (new + modified files)
+### myprojectsoverview (new + modified files)
 
 - **Create** `scripts/build_static_site.py` — wraps `scan_projects.py` + `npm run build`. Produces `site/dist/` with `projects.json` baked into `public/` before the Vite build copies it.
 - **Create** `site/public/.gitkeep` (if needed) — Vite serves `public/` as static assets.
@@ -68,9 +68,9 @@
 
 ---
 
-## Phase 1: Core mechanism (devtools-web-server)
+## Phase 1: Core mechanism (devtoolswebserver)
 
-> **Worktree:** Create a worktree in `~/projects/active/devtools-web-server` via `EnterWorktree` before starting.
+> **Worktree:** Create a worktree in `~/projects/active/devtoolswebserver` via `EnterWorktree` before starting.
 
 ### Task 1: Create `AppManifest` dataclass and failing validation test
 
@@ -134,7 +134,7 @@ def test_manifest_rejects_id_mismatch(tmp_path):
 
 - [ ] **Step 2: Run test to verify it fails**
 
-Run: `cd ~/projects/active/devtools-web-server/site-template && python3 -m pytest tests/test_apps_registry.py -v`
+Run: `cd ~/projects/active/devtoolswebserver/site-template && python3 -m pytest tests/test_apps_registry.py -v`
 Expected: FAIL with `ModuleNotFoundError: No module named 'apps_registry'`
 
 - [ ] **Step 3: Implement `AppManifest`**
@@ -207,7 +207,7 @@ class AppManifest:
 
 - [ ] **Step 4: Run tests to verify they pass**
 
-Run: `cd ~/projects/active/devtools-web-server/site-template && python3 -m pytest tests/test_apps_registry.py -v`
+Run: `cd ~/projects/active/devtoolswebserver/site-template && python3 -m pytest tests/test_apps_registry.py -v`
 Expected: 4 passed
 
 - [ ] **Step 5: Commit**
@@ -289,7 +289,7 @@ def test_registry_ignores_non_json_files(tmp_path):
 
 - [ ] **Step 2: Run tests to verify they fail**
 
-Run: `cd ~/projects/active/devtools-web-server/site-template && python3 -m pytest tests/test_apps_registry.py -v`
+Run: `cd ~/projects/active/devtoolswebserver/site-template && python3 -m pytest tests/test_apps_registry.py -v`
 Expected: 4 new tests FAIL with `ImportError: cannot import name 'AppRegistry'`
 
 - [ ] **Step 3: Implement `AppRegistry`**
@@ -329,7 +329,7 @@ class AppRegistry:
 
 - [ ] **Step 4: Run all registry tests**
 
-Run: `cd ~/projects/active/devtools-web-server/site-template && python3 -m pytest tests/test_apps_registry.py -v`
+Run: `cd ~/projects/active/devtoolswebserver/site-template && python3 -m pytest tests/test_apps_registry.py -v`
 Expected: 8 passed
 
 - [ ] **Step 5: Commit**
@@ -357,7 +357,7 @@ from caddy_admin import build_app_route
 def test_build_app_route_static_only():
     route = build_app_route(
         app_id="projects-overview",
-        static_root="/Users/mike/projects/my-projects-overview/site/dist",
+        static_root="/Users/mike/projects/myprojectsoverview/site/dist",
     )
     assert route["@id"] == "app-projects-overview"
     assert route["match"] == [{"path": ["/projects-overview/*"]}]
@@ -371,12 +371,12 @@ def test_build_app_route_static_only():
     assert strip["strip_path_prefix"] == "/projects-overview"
     fs = subroute["routes"][0]["handle"][1]
     assert fs["handler"] == "file_server"
-    assert fs["root"] == "/Users/mike/projects/my-projects-overview/site/dist"
+    assert fs["root"] == "/Users/mike/projects/myprojectsoverview/site/dist"
 ```
 
 - [ ] **Step 2: Run test to verify it fails**
 
-Run: `cd ~/projects/active/devtools-web-server/site-template && python3 -m pytest tests/test_caddy_admin.py -v`
+Run: `cd ~/projects/active/devtoolswebserver/site-template && python3 -m pytest tests/test_caddy_admin.py -v`
 Expected: FAIL with `ModuleNotFoundError`
 
 - [ ] **Step 3: Implement `build_app_route`**
@@ -432,7 +432,7 @@ def build_app_route(app_id: str, static_root: str) -> dict[str, Any]:
 
 - [ ] **Step 4: Run test**
 
-Run: `cd ~/projects/active/devtools-web-server/site-template && python3 -m pytest tests/test_caddy_admin.py -v`
+Run: `cd ~/projects/active/devtoolswebserver/site-template && python3 -m pytest tests/test_caddy_admin.py -v`
 Expected: PASS
 
 - [ ] **Step 5: Commit**
@@ -519,7 +519,7 @@ def test_remove_route_by_id(stub_caddy):
 
 - [ ] **Step 2: Run tests to verify they fail**
 
-Run: `cd ~/projects/active/devtools-web-server/site-template && python3 -m pytest tests/test_caddy_admin.py -v`
+Run: `cd ~/projects/active/devtoolswebserver/site-template && python3 -m pytest tests/test_caddy_admin.py -v`
 Expected: 2 new tests FAIL with `ImportError`
 
 - [ ] **Step 3: Implement install/remove**
@@ -567,7 +567,7 @@ def remove_route(route_id: str) -> None:
 
 - [ ] **Step 4: Run tests**
 
-Run: `cd ~/projects/active/devtools-web-server/site-template && python3 -m pytest tests/test_caddy_admin.py -v`
+Run: `cd ~/projects/active/devtoolswebserver/site-template && python3 -m pytest tests/test_caddy_admin.py -v`
 Expected: 3 passed
 
 - [ ] **Step 5: Verify the Caddyfile srv0 assumption**
@@ -722,8 +722,8 @@ git commit -m "feat(apps): add GET /_api/apps endpoint"
 
 - [ ] **Step 1: Locate the home page source**
 
-Run: `grep -rn "Local Sites\|useSites\|_api/sites" ~/projects/active/devtools-web-server 2>/dev/null | head`
-Expected: find the source directory (likely `devtools-web-server/home-page/` or similar).
+Run: `grep -rn "Local Sites\|useSites\|_api/sites" ~/projects/active/devtoolswebserver 2>/dev/null | head`
+Expected: find the source directory (likely `devtoolswebserver/home-page/` or similar).
 
 - [ ] **Step 2: Add `useApps` hook**
 
@@ -816,8 +816,8 @@ git commit -m "feat(home): render apps section alongside sites"
 ### Task 8: Document the apps layer
 
 **Files:**
-- Modify: `~/.local-server/instructions.md` (bump the version in the devtools-web-server template source that installs it)
-- Modify: `devtools-web-server/README.md`
+- Modify: `~/.local-server/instructions.md` (bump the version in the devtoolswebserver template source that installs it)
+- Modify: `devtoolswebserver/README.md`
 
 - [ ] **Step 1: Append "Complex Sites (Apps)" section to instructions.md**
 
@@ -908,9 +908,9 @@ ExitWorktree (action: remove)
 
 ---
 
-## Phase 2: Migrate my-projects-overview as the first app
+## Phase 2: Migrate myprojectsoverview as the first app
 
-> **Worktree:** This repo now opts into worktree-workflow-rule. Create a worktree in `~/projects/active/my-projects-overview` via `EnterWorktree` before starting.
+> **Worktree:** This repo now opts into worktree-workflow-rule. Create a worktree in `~/projects/active/myprojectsoverview` via `EnterWorktree` before starting.
 
 ### Task 10: Vite base path + smoke test a local build
 
@@ -1115,7 +1115,7 @@ git commit -m "feat(site): load projects from baked projects.json"
 - [ ] **Step 1: Full build from clean**
 
 ```bash
-cd ~/projects/active/my-projects-overview/site
+cd ~/projects/active/myprojectsoverview/site
 rm -rf dist public/projects.json
 npm run build
 ls dist/index.html dist/projects.json dist/assets/
@@ -1132,8 +1132,8 @@ cat > ~/.local-server/apps/projects-overview.json <<EOF
   "id": "projects-overview",
   "title": "Projects Overview",
   "description": "Dashboard of all ~/projects repos with overview.md metadata",
-  "static_root": "$HOME/projects/my-projects-overview/site/dist",
-  "source_repo": "$HOME/projects/my-projects-overview"
+  "static_root": "$HOME/projects/myprojectsoverview/site/dist",
+  "source_repo": "$HOME/projects/myprojectsoverview"
 }
 EOF
 ```
@@ -1172,7 +1172,7 @@ Expected: "Apps" section at the top, "Projects Overview" card, clicking it navig
 
 The current rule says "HTML site under `site/`" must be regenerated atomically with overview changes. Update it to reflect that `site/` is now a Vite app, and that a `site/dist/` rebuild (via `npm run build`) is the correct regeneration — the prebuild step handles baking `projects.json` automatically.
 
-- [ ] **Step 7: Commit (inside my-projects-overview)**
+- [ ] **Step 7: Commit (inside myprojectsoverview)**
 
 ```bash
 git add .claude/rules/atomic-site-updates.md
@@ -1208,7 +1208,7 @@ ExitWorktree (action: remove)
 
 site_manager would spawn and supervise the process, install a reverse-proxy route for `/<id>/api/*` → `localhost:<port>`, restart on crash with backoff, stream stdout/stderr to `~/.local-server/logs/<id>.log`, and stop on manifest removal or site_manager shutdown.
 
-This is a real project in its own right (pid tracking, signal handling, log rotation, crash backoff, graceful shutdown). Defer until there's a second app that actually needs it — the static-bundle approach is sufficient for my-projects-overview and most dashboard-style apps.
+This is a real project in its own right (pid tracking, signal handling, log rotation, crash backoff, graceful shutdown). Defer until there's a second app that actually needs it — the static-bundle approach is sufficient for myprojectsoverview and most dashboard-style apps.
 
 ---
 
@@ -1218,7 +1218,7 @@ This is a real project in its own right (pid tracking, signal handling, log rota
 - Apps tier alongside sites ✓ (Tasks 1–5)
 - Pointer-based (no copies) ✓ (AppManifest.static_root is a Path to external location)
 - Landing page shows both ✓ (Task 7)
-- my-projects-overview as first app ✓ (Tasks 10–13)
+- myprojectsoverview as first app ✓ (Tasks 10–13)
 - Backends optional ✓ (v1 static only, Phase 3 documented)
 
 **Placeholder scan:** none found — every step has concrete code, file paths, and expected output.

@@ -53,13 +53,13 @@ site-demos/
     │   └── index.html
     ├── terminal-split/           # right-justified user variant
     │   └── index.html
-    ├── cookbook-web/             # site-matched theme demo
+    ├── agenticcookbookweb/             # site-matched theme demo
     │   └── index.html
     ├── dev-team/                 # site-matched theme demo
     │   └── index.html
-    ├── my-projects/              # site-matched theme demo
+    ├── myprojects/              # site-matched theme demo
     │   └── index.html
-    └── my-projects-overview/     # site-matched theme demo
+    └── myprojectsoverview/     # site-matched theme demo
         └── index.html
 ```
 
@@ -69,7 +69,7 @@ site-demos/
 - **`persona-chat/index.html`** — The main "theme browser" (main entry). Sidebar lists themes, preview pane renders the same widget against each. Recent commits added a chat pane + detail pane + topics-index pane layout with keyboard navigation (arrow keys over messages), SVG connector lines in a "separated" layout, click-to-select topic from transcript, and full-width rows.
 - **Per-theme `DESIGN.md` files** (`professional`, `techy`, `whimsical`) — Document the concept, visual language, palette, typography, and reusability notes for each theme. The shared-JS / CSS-only-theming pattern is a core architectural decision.
 - **Per-theme `style.css`** — Theme-specific styling. The JS component emits class names like `pc-transcript`, `pc-message`, `pc-persona`, `pc-user`, `pc-bubble`, `pc-avatar`, `pc-sender`, `pc-text`, `pc-time`, `pc-dots`, `pc-typing`, `pc-input`, `pc-send-btn`, so themes restyle via those hooks.
-- **Site-matched theme demos** (`cookbook-web`, `dev-team`, `my-projects`, `my-projects-overview`, `mikefullerton`) — Small `index.html` files demonstrating PersonaChat styled to blend into specific sister projects.
+- **Site-matched theme demos** (`agenticcookbookweb`, `dev-team`, `myprojects`, `myprojectsoverview`, `mikefullerton`) — Small `index.html` files demonstrating PersonaChat styled to blend into specific sister projects.
 - **Note:** `mikefullerton/index.html` and the theme browser reference a `persona-chat/themes/` directory (e.g. `themes/base.css`, `themes/mikefullerton.css`) that does not exist in the current tree — likely missing/untracked assets or a broken link.
 
 ## Claude Configuration
@@ -117,4 +117,4 @@ There is no build step, no package manager, no test runner. To work on it:
 - Despite the plural "site-demos" name and README ("for anything I need going forward"), the repo currently only contains the `persona-chat/` family. Future demos would live as sibling top-level directories.
 - The theme browser (`persona-chat/index.html`) and `mikefullerton/index.html` both reference a `persona-chat/themes/` directory that is **not present in the committed tree** — this is a likely broken reference worth investigating before working on those pages.
 - The remote is hosted under the `agentic-cookbook` GitHub org, suggesting this repo is a companion to other "agentic cookbook" material rather than a personal scratchpad.
-- The `cookbook-web`, `dev-team`, `my-projects`, and `my-projects-overview` theme variants appear to correspond to sister sites — the chat widget is being designed to be dropped into each of those projects.
+- The `agenticcookbookweb`, `dev-team`, `myprojects`, and `myprojectsoverview` theme variants appear to correspond to sister sites — the chat widget is being designed to be dropped into each of those projects.

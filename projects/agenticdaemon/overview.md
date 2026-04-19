@@ -18,7 +18,7 @@ A macOS user-space daemon that watches a jobs directory for Swift scripts, auto-
 
 ## GitHub URL
 
-https://github.com/agentic-cookbook/agentic-daemon
+https://github.com/agentic-cookbook/agenticdaemon
 
 ## Directory Structure
 
@@ -119,7 +119,7 @@ Contains quick reference including:
 
 **Current Branch:** main
 
-**Remote:** git@github.com:agentic-cookbook/agentic-daemon.git
+**Remote:** git@github.com:agentic-cookbook/agenticdaemon.git
 
 **Recent Commits:**
 - `5e239f6` — Add crash reporting: PLCrashReporter + DiagnosticReports (#1)

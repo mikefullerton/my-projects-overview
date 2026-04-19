@@ -107,7 +107,7 @@ A self-contained, platform-agnostic project definition assembling recipes and in
 
 ### Rules (3)
 1. **always-use-worktrees-and-prs.md**: All changes through worktrees + PRs. Draft PR before code. Small commits pushed after each. Squash merge via `gh pr merge --squash`. Clean up worktree after merge.
-2. **after-adding-an-artifact.md**: Run `/approve-artifact`, update `index.md`, fix cross-references, update README/CLAUDE.md counts, sync to cookbook-web via `/update-website`.
+2. **after-adding-an-artifact.md**: Run `/approve-artifact`, update `index.md`, fix cross-references, update README/CLAUDE.md counts, sync to agenticcookbookweb via `/update-website`.
 3. **artifact-formatting.md**: Read type-specific compliance file before writing. Follow required section orders. Use RFC 2119 keywords and kebab-case requirement names.
 
 ### Skills (7)
@@ -116,7 +116,7 @@ A self-contained, platform-agnostic project definition assembling recipes and in
 3. **add-artifact**: Interactive artifact creation
 4. **create-artifact**: Scaffolded artifact creation
 5. **repair-cookbook**: Fix referential integrity, broken cross-references
-6. **update-website**: Rsync content to cookbook-web repo
+6. **update-website**: Rsync content to agenticcookbookweb repo
 7. **install-cookbook-global**: Onboarding -- set up CLAUDE.md and install rules
 
 ### Permissions (settings.json)
@@ -185,7 +185,7 @@ npm run test:e2e         # end-to-end (slower)
 
 2. **Artifact format**: YAML frontmatter + named requirements (kebab-case, RFC 2119) + test vectors + change history + cross-references via domain URLs (`agentic-cookbook://principles/simplicity`).
 
-3. **Sibling projects**: dev-team (multi-agent plugin, provides user-facing skills), cookbook-web (React 19 + Cloudflare Workers web app at agentic-cookbook.com).
+3. **Sibling projects**: dev-team (multi-agent plugin, provides user-facing skills), agenticcookbookweb (React 19 + Cloudflare Workers web app at agentic-cookbook.com).
 
 4. **Git workflow**: Owner edits direct to main. Claude Code sessions through worktree + branch + PR. Worktree directory: `.claude/worktrees/`.
 
